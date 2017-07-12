@@ -1,13 +1,8 @@
 import React from 'react';
 
-const getChampionNameFromOrigin = (name) =>
-  document.origin.includes('localhost')
-    ? name
-    : name.toLowerCase().replace(/[^a-zA-Z]+/g, '');
-
 const getIcon = name => {
   try {
-    return require(`../../assets/champ-icons/min/${getChampionNameFromOrigin(name)}Square-min.png`);
+    return require(`../../assets/champ-icons/min/${name}Square-min.png`);
   } catch (err) {
     return require('../../assets/champ-icons/min/questionmark.png');
   }
