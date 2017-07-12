@@ -1,8 +1,8 @@
 {
   "main.css": "static/css/main.e95eb74c.css",
   "main.css.map": "static/css/main.e95eb74c.css.map",
-  "main.js": "static/js/main.cb472e9a.js",
-  "main.js.map": "static/js/main.cb472e9a.js.map",
+  "main.js": "static/js/main.ba175cb7.js",
+  "main.js.map": "static/js/main.ba175cb7.js.map",
   "static/media/AatroxSquare-min.png": "static/media/AatroxSquare-min.e2a6d3ff.png",
   "static/media/AhriSquare-min.png": "static/media/AhriSquare-min.5032c13c.png",
   "static/media/AkaliSquare-min.png": "static/media/AkaliSquare-min.194eac94.png",
@@ -85,7 +85,6 @@
   "static/media/PantheonSquare-min.png": "static/media/PantheonSquare-min.55509066.png",
   "static/media/PoppySquare-min.png": "static/media/PoppySquare-min.3683eca7.png",
   "static/media/QuinnSquare-min.png": "static/media/QuinnSquare-min.ed3697b4.png",
-  "static/media/RakanSquare-min.png": "static/media/RakanSquare-min.02b83372.png",
   "static/media/RammusSquare-min.png": "static/media/RammusSquare-min.7c350e45.png",
   "static/media/RekSaiSquare-min.png": "static/media/RekSaiSquare-min.480770d3.png",
   "static/media/RenektonSquare-min.png": "static/media/RenektonSquare-min.5f8b1279.png",
@@ -128,7 +127,6 @@
   "static/media/VolibearSquare-min.png": "static/media/VolibearSquare-min.22a32237.png",
   "static/media/WarwickSquare-min.png": "static/media/WarwickSquare-min.6db281d5.png",
   "static/media/WukongSquare-min.png": "static/media/WukongSquare-min.05ba4f4f.png",
-  "static/media/XayahSquare-min.png": "static/media/XayahSquare-min.f8d4a6b8.png",
   "static/media/XerathSquare-min.png": "static/media/XerathSquare-min.14ab49ef.png",
   "static/media/XinZhaoSquare-min.png": "static/media/XinZhaoSquare-min.88a192a6.png",
   "static/media/YasuoSquare-min.png": "static/media/YasuoSquare-min.1e92fdae.png",
@@ -142,5 +140,8 @@
   "static/media/drmundoSquare-min.png": "static/media/drmundoSquare-min.efbbfc10.png",
   "static/media/loading.svg": "static/media/loading.5bf036ea.svg",
   "static/media/masters.png": "static/media/masters.1a67e4b1.png",
-  "static/media/monkeykingSquare-min.png": "static/media/monkeykingSquare-min.05ba4f4f.png"
+  "static/media/monkeykingSquare-min.png": "static/media/monkeykingSquare-min.05ba4f4f.png",
+  "static/media/questionmark.png": "static/media/questionmark.1a831426.png",
+  "static/media/rakanSquare-min.png": "static/media/rakanSquare-min.02b83372.png",
+  "static/media/xayahSquare-min.png": "static/media/xayahSquare-min.f8d4a6b8.png"
 }
