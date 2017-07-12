@@ -1,12 +1,12 @@
 import React from 'react';
 
-const fixName = (name) =>
+const getChampionNameFromOrigin = (name) =>
   document.origin.includes('localhost')
-    ? name.replace(/[^a-zA-Z]+/g, '')
-    : name.charAt(0).toLowerCase() + name.slice(1);
+    ? name
+    : name.toLowerCase().replace(/[^a-zA-Z]+/g, '');
 
 const getIcon = name =>
-  require(`../../assets/champ-icons/min/${fixName(name)}Square-min.png`);
+  require(`../../assets/champ-icons/min/${getChampionNameFromOrigin(name)}Square-min.png`);
 
 const ChampIcon = ({ name, mini, handleImageLoad }) =>
   <img
