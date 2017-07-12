@@ -159,14 +159,14 @@ const enhance = compose(
         if (region === regionsTemp[i]) {
           const index = regionsTemp.indexOf(region);
           regionsTemp.splice(index, 1);
-          setRegions(regions);
+          setRegions(regionsTemp);
           found = true;
           break;
         }
       }
 
       if (!found) {
-        setRegions(prevState => ({ regions: [...prevState.regions, region] }));
+        setRegions([...regions, region]);
       }
     },
 
