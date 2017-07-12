@@ -6,7 +6,6 @@ const getChampionNameFromOrigin = (name) =>
     : name.toLowerCase().replace(/[^a-zA-Z]+/g, '');
 
 const getIcon = name => {
-  name ='test'
   try {
     return require(`../../assets/champ-icons/min/${getChampionNameFromOrigin(name)}Square-min.png`);
   } catch (err) {
