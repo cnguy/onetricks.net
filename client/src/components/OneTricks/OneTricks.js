@@ -1,3 +1,5 @@
+// @flow
+
 import React, { Component } from 'react';
 import Perf from 'react-addons-perf';
 

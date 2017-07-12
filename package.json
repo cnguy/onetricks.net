@@ -1,5 +1,5 @@
 {
-  "name": "1trickgg",
+  "name": "onetricks.net",
   "version": "0.0.1",
   "private": true,
   "babel": {
@@ -28,7 +28,9 @@
     "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1",
     "build": "cd client && npm run build && ..",
     "deploy": "git push https://git.heroku.com/onetricks.git master",
-    "lint": "node_modules/.bin/eslint client/src"
+    "lint": "node_modules/.bin/eslint client",
+    "flow": "flow --show-all-errors client/src",
+    "test": "yarn eslint && yarn flow"
   },
   "devDependencies": {
     "concurrently": "^3.1.0",
