@@ -2,7 +2,7 @@ import React from 'react';
 
 const fixName = (name) =>
   document.origin.includes('localhost')
-    ? name
+    ? name.replace(/[^a-zA-Z]+/g, '')
     : name.charAt(0).toLowerCase() + name.slice(1);
 
 const getIcon = name =>
