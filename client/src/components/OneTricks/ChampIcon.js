@@ -1,7 +1,7 @@
 import React from 'react';
 
 const getIcon = name =>
-  require(`../../assets/champ-icons/min/${name.toLowerCase().replace(/[^a-zA-Z]+/g, '')}Square-min.png`); // eslint-disable-line global-require import/no-dynamic-require
+  require(`../../assets/champ-icons/min/${name.replace(/[^a-zA-Z]+/g, '')}Square-min.png`);
 
 const ChampIcon = ({ name, mini, handleImageLoad }) =>
   <img
