@@ -183,9 +183,9 @@ const enhance = compose(
       } else {
         if (region === 'all') {
           setRegions(DEFAULT_REGIONS.slice());
+        } else {
+          setRegions([region]);
         }
-        else
-          setRegions([this.state.region]);
       }
 
       setAdvFilter(!advFilter);
