@@ -1,8 +1,8 @@
 {
   "main.css": "static/css/main.e95eb74c.css",
   "main.css.map": "static/css/main.e95eb74c.css.map",
-  "main.js": "static/js/main.7ea6adc6.js",
-  "main.js.map": "static/js/main.7ea6adc6.js.map",
+  "main.js": "static/js/main.7ca9d2cc.js",
+  "main.js.map": "static/js/main.7ca9d2cc.js.map",
   "static/media/AatroxSquare-min.png": "static/media/AatroxSquare-min.e2a6d3ff.png",
   "static/media/AhriSquare-min.png": "static/media/AhriSquare-min.5032c13c.png",
   "static/media/AkaliSquare-min.png": "static/media/AkaliSquare-min.194eac94.png",
@@ -142,6 +142,5 @@
   "static/media/drmundoSquare-min.png": "static/media/drmundoSquare-min.efbbfc10.png",
   "static/media/loading.svg": "static/media/loading.5bf036ea.svg",
   "static/media/masters.png": "static/media/masters.1a67e4b1.png",
-  "static/media/monkeykingSquare-min.png": "static/media/monkeykingSquare-min.05ba4f4f.png",
-  "static/media/questionmark.png": "static/media/questionmark.1a831426.png"
+  "static/media/monkeykingSquare-min.png": "static/media/monkeykingSquare-min.05ba4f4f.png"
 }

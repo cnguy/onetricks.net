@@ -29,18 +29,20 @@
     "build": "cd client && npm run build && ..",
     "deploy": "git push https://git.heroku.com/onetricks.git master",
     "lint": "node_modules/.bin/eslint client",
-    "flow": "flow --show-all-errors client/src",
-    "test": "yarn eslint && yarn flow"
+    "flow": "cd client && flow --show-all-errors",
+    "test": "yarn lint && yarn flow"
   },
   "devDependencies": {
+    "babel-eslint": "^7.2.3",
     "concurrently": "^3.1.0",
     "dotenv": "^4.0.0",
     "eslint": "^3.12.2",
     "eslint-config-airbnb": "^13.0.0",
+    "eslint-plugin-flowtype": "^2.35.0",
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
     "flow": "^0.2.3",
-    "flow-bin": "^0.49.1"
+    "flow-bin": "^0.50.0"
   }
 }

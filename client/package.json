@@ -5,18 +5,18 @@
   "proxy": "http://localhost:3001/",
   "devDependencies": {
     "enzyme": "^2.4.1",
-    "react-addons-perf": "^15.4.2",
     "react-addons-test-utils": "^15.4.0",
-    "react-scripts": "0.7.0",
-    "recompose": "^0.23.5"
+    "react-scripts": "0.7.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
     "classnames": "^2.2.5",
     "lodash": "^4.17.4",
     "react": "^15.4.0",
+    "react-addons-perf": "^15.4.2",
     "react-dom": "^15.4.0",
     "react-redux": "^5.0.5",
+    "recompose": "^0.24.0",
     "redux": "^3.7.1"
   },
   "scripts": {
