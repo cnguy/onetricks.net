@@ -30,7 +30,7 @@ type PropTypes = {
   show: boolean,
   onSort: (sortKey: sortKeyType) => void,
   sortKey: sortKeyType,
-  sortReverse: boolean
+  sortReverse: boolean,
 }
 
 const PlayersView = ({

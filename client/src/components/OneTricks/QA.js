@@ -4,7 +4,7 @@ import React from 'react';
 
 type PropTypes = {
   question: string,
-  answer: string
+  answer: string,
 }
 
 const QA = ({ question, answer }: PropTypes): React$Element<any> =>

@@ -10,7 +10,7 @@ import ChampIcon from './ChampIcon';
 type PropTypes = {
   name: string,
   number: number,
-  handleImageLoad: () => void
+  handleImageLoad: () => void,
 }
 
 const Champion = ({ name, number, handleImageLoad }: PropTypes): React$Element<any> => {

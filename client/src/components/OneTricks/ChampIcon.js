@@ -11,7 +11,7 @@ const getIcon = (name: string) => // $FlowFixMe disable require literal string
 type PropTypes = {
   name: string,
   mini: boolean,
-  handleImageLoad: (() => void) | null
+  handleImageLoad: (() => void) | null,
 }
 
 const ChampIcon = ({ name, mini, handleImageLoad }: PropTypes): React$Element<any> =>

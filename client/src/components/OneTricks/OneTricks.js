@@ -3,6 +3,8 @@
 
 import React from 'react';
 /* FlowFixMe */
+import { connect } from 'react-redux';
+/* FlowFixMe */
 import compose from 'recompose/compose';
 /* FlowFixMe */
 import withState from 'recompose/withState';
@@ -14,6 +16,8 @@ import lifecycle from 'recompose/lifecycle';
 import Perf from 'react-addons-perf'; // eslint-disable-line no-unused-vars
 /* FlowFixMe */
 import { cloneDeep } from 'lodash';
+
+import { toggleMerge } from '../../redux/misc';
 
 import Champion from './Champion';
 import Copyright from './Copyright';
@@ -32,6 +36,8 @@ import type {
   player as playerType,
   region as regionType,
   sortKey as sortKeyType,
+  toggleMerge as toggleMergeType,
+  state as stateType,
 } from '../../constants/flowTypes';
 
 let numOfImagesLeft = 0; // Performance :)
@@ -47,7 +53,6 @@ type PropTypes = {
   regions: Array<regionType>,
   champ: string,
   players: Array<playerType>,
-  merged: boolean,
   searchKey: string,
   showChamps: boolean,
   sortKey: sortKeyType,
@@ -72,7 +77,7 @@ type PropTypes = {
   addRegion: () => void,
   togglePane: () => void,
   toggleAdvFilter: () => void,
-  toggleMerge: () => void,
+  handleMerge: () => void,
   onSort: (S: sortKeyType) => void,
   handleImageLoad: () => void,
   renderSpinner: () => void,
@@ -85,7 +90,10 @@ type PropTypes = {
   generateChampPaneUtility: () => void,
   createChampPane: (P: Array<playerType>) => void,
   forcePlayersUpdate: (A: regionType | Array<regionType>) => void,
-  createChampPanesHolder: (C: AAAnyAlias, M: AAAnyAlias, A: AAAnyAlias) => void
+  createChampPanesHolder: (C: AAAnyAlias, M: AAAnyAlias, A: AAAnyAlias) => void,
+  // redux
+  merged: boolean,
+  toggleMerge: toggleMergeType,
 }
 
 const makeCompact = ({
@@ -176,7 +184,7 @@ const generateChampPaneUtility = ({
   searchKey,
   setSearchKey,
   regions,
-  toggleMerge,
+  handleMerge,
   onChange,
   addRegion,
   toggleAdvFilter,
@@ -186,7 +194,7 @@ const generateChampPaneUtility = ({
     <div className="champs-pane-utility">
       <div className="instructions flash">Click a Champ's Icon to Get Links to the One Trick Ponies' Profiles</div>
       <div className="merged-input">
-        <button className="merge-sep-button" onClick={toggleMerge}>
+        <button className="merge-sep-button" onClick={handleMerge}>
           <span className="merge-sep-text">
             <span className="merge-sep-action">
               {merged ? 'Separate' : 'Combine'}
@@ -297,13 +305,18 @@ const createChampPanesHolder = ({
 };
 
 const enhance = compose(
+  connect(
+    (state: stateType) => ({
+      merged: state.misc.merged,
+    }), { toggleMerge },
+  ),
   withState('all', 'setAll', {}),
   withState('region', 'setRegion', 'all'),
   withState('advFilter', 'setAdvFilter', false),
   withState('regions', 'setRegions', DEFAULT_REGIONS.slice()),
   withState('champ', 'setChampionName', ''),
   withState('players', 'setPlayers', []),
-  withState('merged', 'setMerged', true),
+  // withState('merged', 'setMerged', true),
   withState('searchKey', 'setSearchKey', ''),
   withState('showChamps', 'setShowChamps', true),
   withState('sortKey', 'setSortKey', 'NONE'),
@@ -349,7 +362,7 @@ const enhance = compose(
       return setAdvFilter(!advFilter);
     },
 
-    toggleMerge: ({ merged, setMerged }) => () => setMerged(!merged),
+    handleMerge: ({ toggleMerge }: PropTypes) => () => toggleMerge(),
 
     onSort,
 

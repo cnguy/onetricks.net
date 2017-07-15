@@ -29,7 +29,7 @@ const getRankIcon = (rank: rankType): any =>
 const getRankImage = rank => <img className="player-rank-icon" src={getRankIcon(rank)} alt="rank" />;
 
 type PropTypes = {
-  player: playerType
+  player: playerType,
 }
 
 const PlayerRow = ({ player }: PropTypes): React$Element<any> =>

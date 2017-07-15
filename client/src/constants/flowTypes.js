@@ -18,3 +18,11 @@ export type player = {
 }
 
 export type winRateStats = { wins: number, losses: number }
+
+export type state = {
+  misc: {
+    merged: boolean,
+  },
+}
+
+export type toggleMerge = () => void

@@ -12,7 +12,7 @@ import type {
 type PropTypes = {
   onClick: (region: regionType) => void,
   active: Array<regionType>,
-  children: regionType
+  children: regionType,
 }
 
 const FilterButton = ({ onClick, active, children }: PropTypes): React$Element<any> => {

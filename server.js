@@ -42,7 +42,7 @@ const k = new KindredAPI.Kindred({
     auto: true,
     numberOfRetriesBeforeBreak: 3,
   },
-  timeout: 10000,
+  timeout: 250000,
   cache: new KindredAPI.RedisCache(),
   cacheTTL: {
     CHAMPION: KindredAPI.TIME_CONSTANTS.MONTH,
