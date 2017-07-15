@@ -17,6 +17,7 @@ import Perf from 'react-addons-perf'; // eslint-disable-line no-unused-vars
 /* FlowFixMe */
 import { cloneDeep } from 'lodash';
 
+import { toggleAdvancedFilter } from '../../redux/championPane';
 import { toggleMerge } from '../../redux/misc';
 import {
   setSortKey,
@@ -24,6 +25,7 @@ import {
 } from '../../redux/playersView';
 
 import {
+  advancedFilterSelector,
   mergedSelector,
   sortKeySelector,
   sortReverseSelector,
@@ -43,9 +45,11 @@ import REGIONS_TEXT from '../../constants/regionsText';
 import SORTS from '../../helpers/sorts';
 
 import type {
+  advFilter as advFilterType,
   merged as mergedType,
   players as playersType,
   region as regionType,
+  toggleAdvancedFilter as toggleAdvancedFilterType,
   setSortKey as setSortKeyType,
   setSortReverse as setSortReverseType,
   sortKey as sortKeyType,
@@ -63,7 +67,6 @@ type PropTypes = {
     [championName: string]: playersType
   },
   region: regionType,
-  advFilter: boolean,
   regions: Array<regionType>,
   champ: string,
   players: playersType,
@@ -74,7 +77,6 @@ type PropTypes = {
   // state setters
   setAll: (A: Object, CB?: Function) => void,
   setRegion: (R: regionType) => void,
-  setAdvFilter: (B: boolean) => void,
   setRegions: (R: Array<regionType>) => void,
   setChampionName: (S: string) => void,
   setPlayers: (P: playersType) => void,
@@ -86,7 +88,7 @@ type PropTypes = {
   setRegionFilter: () => void,
   addRegion: () => void,
   togglePane: () => void,
-  toggleAdvFilter: () => void,
+  handleToggleAdvancedFilter: () => void,
   onSort: (S: sortKeyType) => void,
   handleImageLoad: () => void,
   renderSpinner: () => void,
@@ -101,6 +103,8 @@ type PropTypes = {
   forcePlayersUpdate: (A: regionType | Array<regionType>) => void,
   createChampPanesHolder: (C: AAAnyAlias, M: AAAnyAlias, A: AAAnyAlias) => void,
   // redux
+  advFilter: advFilterType,
+  toggleAdvancedFilter: toggleAdvancedFilterType,
   merged: mergedType,
   toggleMerge: toggleMergeType,
   sortKey: sortKeyType,
@@ -200,7 +204,7 @@ const generateChampPaneUtility = ({
   toggleMerge,
   onChange,
   addRegion,
-  toggleAdvFilter,
+  handleToggleAdvancedFilter,
   generateSelectMenu,
 }: PropTypes) => () => (
   showChamps ? (
@@ -228,11 +232,11 @@ const generateChampPaneUtility = ({
       </div>
       <div className="multiple-filter">
         {!advFilter ? (
-          <div className="adv-filtering-open" onClick={toggleAdvFilter}>Multiple Regions</div>
+          <div className="adv-filtering-open" onClick={handleToggleAdvancedFilter}>Multiple Regions</div>
         ) : (
           <FilterRegion
             toggleRegion={addRegion}
-            toggleAdvFilter={toggleAdvFilter}
+            toggleAdvFilter={handleToggleAdvancedFilter}
             regions={regions}
           />
         )}
@@ -320,10 +324,12 @@ const createChampPanesHolder = ({
 const enhance = compose(
   connect(
     (state: stateType) => ({
+      advFilter: advancedFilterSelector(state),
       merged: mergedSelector(state),
       sortKey: sortKeySelector(state),
       sortReverse: sortReverseSelector(state),
     }), {
+      toggleAdvancedFilter,
       setSortKey,
       setSortReverse,
       toggleMerge,
@@ -331,7 +337,6 @@ const enhance = compose(
   ),
   withState('all', 'setAll', {}),
   withState('region', 'setRegion', 'all'),
-  withState('advFilter', 'setAdvFilter', false),
   withState('regions', 'setRegions', DEFAULT_REGIONS.slice()),
   withState('champ', 'setChampionName', ''),
   withState('players', 'setPlayers', []),
@@ -363,7 +368,7 @@ const enhance = compose(
 
     togglePane,
 
-    toggleAdvFilter: ({ advFilter, setAdvFilter, region, setRegions }: PropTypes) => () => {
+    handleToggleAdvancedFilter: ({ advFilter, toggleAdvancedFilter, region, setRegions }: PropTypes) => () => {
       if (advFilter) {
         setRegions([]);
       }
@@ -374,7 +379,7 @@ const enhance = compose(
         setRegions([region]);
       }
 
-      setAdvFilter(!advFilter);
+      toggleAdvancedFilter();
     },
 
     onSort,

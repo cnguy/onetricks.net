@@ -10,10 +10,12 @@ import './index.css';
 
 import App from './App';
 
+import championPaneReducer from './redux/championPane';
 import miscReducer from './redux/misc';
 import playersViewReducer from './redux/playersView';
 
 const rootReducer = combineReducers({
+  championPane: championPaneReducer,
   misc: miscReducer,
   playersView: playersViewReducer,
 });

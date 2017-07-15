@@ -42,6 +42,6 @@ export type state = {
 
 /* ACTION CREATORS */
 export type toggleMerge = () => void
-export type setAdvFilter = (advFilter: advFilter) => void
+export type toggleAdvancedFilter = () => void
 export type setSortKey = (sortKey: sortKey) => void
 export type setSortReverse = (sortReverse: sortReverse) => void
