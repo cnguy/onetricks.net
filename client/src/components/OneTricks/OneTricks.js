@@ -150,6 +150,25 @@ const togglePane = ({
   setSortReverse(false);
 };
 
+const handleToggleAdvancedFilter = ({
+  advFilter,
+  toggleAdvancedFilter,
+  region,
+  setRegions,
+}: PropTypes) => () => {
+  if (advFilter) {
+    setRegions([]);
+  }
+
+  if (region === 'all') {
+    setRegions(DEFAULT_REGIONS.slice());
+  } else {
+    setRegions([region]);
+  }
+
+  toggleAdvancedFilter();
+};
+
 const onSort = ({
   sortKey,
   sortReverse,
@@ -368,20 +387,7 @@ const enhance = compose(
 
     togglePane,
 
-    handleToggleAdvancedFilter: ({ advFilter, toggleAdvancedFilter, region, setRegions }: PropTypes) => () => {
-      if (advFilter) {
-        setRegions([]);
-      }
-
-      if (region === 'all') {
-        setRegions(DEFAULT_REGIONS.slice());
-      } else {
-        setRegions([region]);
-      }
-
-      toggleAdvancedFilter();
-    },
-
+    handleToggleAdvancedFilter,
     onSort,
 
     handleImageLoad: ({ setImagesLoaded }: PropTypes) => () => {
