@@ -45,6 +45,11 @@ import PlayersView from './PlayersView';
 
 import FILTERS from '../../helpers/filters';
 import SORTS from '../../helpers/sorts';
+import {
+  executeCollection,
+  executeConditionalCollection,
+} from '../../helpers/dispatchHelpers';
+import renderOnCondition from '../../helpers/renderOnCondition';
 import createFetchPlayersUrl from '../../helpers/createFetchPlayersUrl';
 
 import DEFAULT_REGIONS from '../../constants/regions';
@@ -101,7 +106,7 @@ type PropTypes = {
   onSort: (S: sortKeyType) => void,
   handleImageLoad: () => void,
   renderSpinner: () => void,
-  renderEmptyResults: () => void,
+  renderEmptyResults: () => React$Element<any> | null,
   setDisplayValue: () => void,
   onChange: () => void,
   generateSelectMenu: () => void,
@@ -155,59 +160,58 @@ const togglePane = ({
   resetSearchKey,
   setSortKey,
   setSortReverse,
-}: PropTypes) => () => {
-  setShowChamps(!showChamps);
-  resetSearchKey();
-  setSortKey('NONE');
-  setSortReverse(false);
-};
+}: PropTypes) => () => executeCollection(
+  () => setShowChamps(!showChamps),
+  () => resetSearchKey(),
+  () => setSortKey('NONE'),
+  () => setSortReverse(false),
+);
 
 const handleToggleAdvancedFilter = ({
   advFilter,
   toggleAdvancedFilter,
   region,
   setRegions,
-}: PropTypes) => () => {
-  if (advFilter) {
-    setRegions([]);
-  }
-
-  if (region === 'all') {
-    setRegions(DEFAULT_REGIONS.slice());
-  } else {
-    setRegions([region]);
-  }
-
-  toggleAdvancedFilter();
-};
+}: PropTypes) => () => executeConditionalCollection(
+  {
+    cond: advFilter,
+    onTrue: () => setRegions([]),
+  },
+  {
+    cond: region === 'all',
+    onTrue: () => setRegions(DEFAULT_REGIONS.slice()),
+    onFalse: () => setRegions([region]),
+  },
+  toggleAdvancedFilter(),
+);
 
 const onSort = ({
   sortKey,
   sortReverse,
   setSortKey,
   setSortReverse,
-}: PropTypes) => (key: sortKeyType) => {
-  setSortKey(key);
-  setSortReverse(key === sortKey && !sortReverse);
-};
+}: PropTypes) => (key: sortKeyType) => executeCollection(
+  () => setSortKey(key),
+  () => setSortReverse(key === sortKey && !sortReverse),
+);
 
 const generateSelectMenu = ({
   advFilter,
   region,
   setRegionFilter,
-}: PropTypes) => (): React$Element<any> | string =>
+}: PropTypes) => (): React$Element<any> | null =>
 // This select menu shouldn't be created if multiple regions is enabled.
-!advFilter ? (
-  <select id="region" onChange={setRegionFilter} value={region}>
-    <option value="all">All</option>
-    {
-      DEFAULT_REGIONS.map((item, index) =>
-        <option value={item} key={index}>
-          {item.toUpperCase()}
-        </option>)
-    }
-  </select>
-) : '';
+  renderOnCondition(!advFilter,
+    <select id="region" onChange={setRegionFilter} value={region}>
+      <option value="all">All</option>
+      {
+        DEFAULT_REGIONS.map((item, index) =>
+          <option value={item} key={index}>
+            {item.toUpperCase()}
+          </option>)
+      }
+    </select>,
+  );
 
 const getPlayers = ({
   setPlayers,
@@ -237,8 +241,8 @@ const generateChampPaneUtility = ({
   addRegion,
   handleToggleAdvancedFilter,
   generateSelectMenu,
-}: PropTypes) => () => (
-  showChamps ? (
+}: PropTypes) => () =>
+  renderOnCondition(showChamps,
     <div className="champs-pane-utility">
       <div className="instructions flash">Click a Champ's Icon to Get Links to the One Trick Ponies' Profiles</div>
       <div className="merged-input">
@@ -272,9 +276,8 @@ const generateChampPaneUtility = ({
           />
         )}
       </div>
-    </div>
-  ) : ''
-);
+    </div>,
+  );
 
 const createChampPane = ({
   getPlayers,
@@ -321,14 +324,24 @@ const createChampPanesHolder = ({
 
   return (
     <div style={{ display: setDisplayValue() }}>
-      {advFilter && regions.length === 0 ? (<div className="empty-results">No region is selected.</div>) : ''}
+      {renderOnCondition(advFilter && regions.length === 0, <div className="empty-results">No region is selected.</div>)}
       {showChamps ? ( // eslint-disable-line no-nested-ternary
         !merged ?
           (
             <div className="content-pane merged-pane">
               <div className="rank-pane challengers-pane">
-                {challengers.length === 0 && masters.length === 0 ? renderEmptyResults() : ''}
-                {challengers.length > 0 ? (<h5 className="rank-header">Challenger One Tricks\ Ponies in {advFilter ? mulRegionsDisplayText : regionDisplayText}</h5>) : ''}
+                {
+                  renderOnCondition(
+                    challengers.length === 0 && masters.length === 0,
+                    renderEmptyResults(),
+                  )
+                }
+                {
+                  renderOnCondition(
+                    challengers.length > 0,
+                    <h5 className="rank-header">Challenger One Tricks\ Ponies in {advFilter ? mulRegionsDisplayText : regionDisplayText}</h5>,
+                  )
+                }
                 {createChampPane(challengers)}
               </div>
               <div className="rank-pane masters-pane">
@@ -383,20 +396,16 @@ const enhance = compose(
     addRegion: ({ regions, setRegions }: PropTypes) => (region: regionType) => {
       const regionsTemp = regions.slice();
 
-      let found = false;
       for (let i = 0; i < regionsTemp.length; i += 1) {
         // Toggle region logic.
         if (region === regionsTemp[i]) {
           regionsTemp.splice(regionsTemp.indexOf(region), 1);
           setRegions(regionsTemp);
-          found = true;
-          break;
+          return;
         }
       }
 
-      if (!found) {
-        setRegions([...regions, region]);
-      }
+      setRegions([...regions, region]);
     },
 
     togglePane,
@@ -411,14 +420,10 @@ const enhance = compose(
     },
 
     renderSpinner: ({ imagesLoaded }: PropTypes) => () =>
-      !imagesLoaded
-        ? <Loader />
-        : null,
+      renderOnCondition(!imagesLoaded, <Loader />),
 
-    renderEmptyResults: ({ searchKey }: PropTypes) => () =>
-      searchKey
-      ? <div className="empty-results">No champions found.</div>
-      : null,
+    renderEmptyResults: ({ searchKey }: PropTypes) => (): React$Element<any> | null =>
+      renderOnCondition(searchKey, <div className="empty-results">No champions found.</div>),
 
     setDisplayValue: ({ imagesLoaded }: PropTypes) => () => imagesLoaded ? 'inline' : 'none',
 

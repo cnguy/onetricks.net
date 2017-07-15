@@ -42,7 +42,7 @@ describe('redux/championPane', function () {
     });
 
     describe('setSearchKey', function () {
-      it('should set state/championPane/searchKey=(something else) (ex: Riven)', function () {
+      it('should set state/championPane/searchKey=(something else) (e.g., Riven)', function () {
         expect(championPaneReducer(states.SEARCH_KEY[0], setSearchKey('Riven'))).to.deep.equal({
           searchKey: 'Riven',
         });

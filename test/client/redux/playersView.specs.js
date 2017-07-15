@@ -36,13 +36,13 @@ describe('redux/playersView', function () {
     });
 
     describe('setSortKey', function () {
-      it('should set state/playersView/sortKey -> something else (eg: RANK)', function () {
+      it('should set state/playersView/sortKey -> something else (e.g., RANK)', function () {
         expect(playersViewReducer(states.SORT_KEY[0], setSortKey('RANK'))).to.deep.equal({
           sortKey: 'RANK',
         });
       });
 
-      it('should set state/playersView/sortKey -> something else (eg: NONE)', function () {
+      it('should set state/playersView/sortKey -> something else (e.g, NONE)', function () {
         expect(playersViewReducer(states.SORT_KEY[1], setSortKey('NONE'))).to.deep.equal({
           sortKey: 'NONE',
         });
