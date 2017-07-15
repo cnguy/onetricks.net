@@ -10,16 +10,24 @@ import {
   setSortReverse,
 } from '../../../client/src/redux/playersView';
 
-const states = [
-  {
-    sortKey: 'NONE',
+const states = {
+  SORT_KEY: [
+    {
+      sortKey: 'NONE',
+    },
+    {
+      sortKey: 'RANK',
+    },
+  ],
+  SORT_REVERSE: [
+    {
     sortReverse: true,
-  },
-  {
-    sortKey: 'RANK',
-    sortReverse: false,
-  },
-];
+    },
+    {
+      sortReverse: false,
+    },
+  ]
+};
 
 describe('redux/playersView', function () {
   describe('setSortKey', function () {
@@ -28,13 +36,13 @@ describe('redux/playersView', function () {
     });
 
     it('should set state/playersView/sortKey -> something else (eg: RANK)', function () {
-      expect(playersViewReducer(states[0], setSortKey('RANK'))).to.deep.equal({
+      expect(playersViewReducer(states.SORT_KEY[0], setSortKey('RANK'))).to.deep.equal({
         sortKey: 'RANK',
       });
     });
 
     it('should set state/playersView/sortKey -> something else (eg: NONE)', function () {
-      expect(playersViewReducer(states[1], setSortKey('NONE'))).to.deep.equal({
+      expect(playersViewReducer(states.SORT_KEY[1], setSortKey('NONE'))).to.deep.equal({
         sortKey: 'NONE',
       });
     });
@@ -46,13 +54,13 @@ describe('redux/playersView', function () {
     });
 
     it('should set state/playersView/sortReverse -> false', function () {
-      expect(playersViewReducer(states[0], setSortReverse(false))).to.deep.equal({
+      expect(playersViewReducer(states.SORT_REVERSE[0], setSortReverse(false))).to.deep.equal({
         sortReverse: false,
       });
     });
 
     it('should set state/playersView/sortReverse -> true', function () {
-      expect(playersViewReducer(states[1], setSortReverse(true))).to.deep.equal({
+      expect(playersViewReducer(states.SORT_REVERSE[1], setSortReverse(true))).to.deep.equal({
         sortReverse: true,
       });
     });

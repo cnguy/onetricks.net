@@ -44,7 +44,7 @@ import SORTS from '../../helpers/sorts';
 
 import type {
   merged as mergedType,
-  player as playerType,
+  players as playersType,
   region as regionType,
   setSortKey as setSortKeyType,
   setSortReverse as setSortReverseType,
@@ -60,13 +60,13 @@ type AAAnyAlias = ?Array<Array<any>>
 type PropTypes = {
   // state
   all: {
-    [championName: string]: Array<playerType>
+    [championName: string]: playersType
   },
   region: regionType,
   advFilter: boolean,
   regions: Array<regionType>,
   champ: string,
-  players: Array<playerType>,
+  players: playersType,
   searchKey: string,
   showChamps: boolean,
   // sortReverse: boolean,
@@ -77,12 +77,12 @@ type PropTypes = {
   setAdvFilter: (B: boolean) => void,
   setRegions: (R: Array<regionType>) => void,
   setChampionName: (S: string) => void,
-  setPlayers: (P: Array<playerType>) => void,
+  setPlayers: (P: playersType) => void,
   setSearchKey: (S: string) => void,
   setShowChamps: (B: boolean) => void,
   setImagesLoaded: (B: boolean) => void,
   // handlers
-  makeCompact: (P: Array<playerType>) => void,
+  makeCompact: (P: playersType) => void,
   setRegionFilter: () => void,
   addRegion: () => void,
   togglePane: () => void,
@@ -97,7 +97,7 @@ type PropTypes = {
   fetchPlayers: (A: regionType | Array<regionType>) => void,
   getPlayers: (A: Array<Array<any>>, C: string) => void,
   generateChampPaneUtility: () => void,
-  createChampPane: (P: Array<playerType>) => void,
+  createChampPane: (P: playersType) => void,
   forcePlayersUpdate: (A: regionType | Array<regionType>) => void,
   createChampPanesHolder: (C: AAAnyAlias, M: AAAnyAlias, A: AAAnyAlias) => void,
   // redux
@@ -113,8 +113,8 @@ const makeCompact = ({
   imagesLoaded,
   showChamps,
   setAll,
-}: PropTypes) => (list: Array<playerType>) => {
-  const compList: { [championName: string]: Array<playerType> } = {};
+}: PropTypes) => (list: playersType) => {
+  const compList: { [championName: string]: playersType } = {};
 
   for (const player of list) {
     compList[player.champ] = compList[player.champ]
@@ -178,7 +178,7 @@ const getPlayers = ({
   setPlayers,
   setChampionName,
   togglePane,
-}: PropTypes) => (array: Array<playerType>, champion: string) => {
+}: PropTypes) => (array: playersType, champion: string) => {
   togglePane();
 
   for (let i = 0; i < array.length; i += 1) {
@@ -278,7 +278,7 @@ const createChampPanesHolder = ({
   setDisplayValue,
   renderEmptyResults,
   createChampPane,
-}: PropTypes) => (challengers, masters, all) => {
+}: PropTypes) => (challengers: playersType, masters: playersType, all: playersType) => {
   const regionDisplayText = REGIONS_TEXT[region];
   const mulRegionsDisplayText = regions.length === DEFAULT_REGIONS.length
     ? 'All Regions'
@@ -349,8 +349,7 @@ const enhance = compose(
       for (let i = 0; i < regionsTemp.length; i += 1) {
         // Toggle region logic.
         if (region === regionsTemp[i]) {
-          const index = regionsTemp.indexOf(region);
-          regionsTemp.splice(index, 1);
+          regionsTemp.splice(regionsTemp.indexOf(region), 1);
           setRegions(regionsTemp);
           found = true;
           break;
@@ -366,7 +365,7 @@ const enhance = compose(
 
     toggleAdvFilter: ({ advFilter, setAdvFilter, region, setRegions }: PropTypes) => () => {
       if (advFilter) {
-        return setRegions([]);
+        setRegions([]);
       }
 
       if (region === 'all') {
@@ -375,7 +374,7 @@ const enhance = compose(
         setRegions([region]);
       }
 
-      return setAdvFilter(!advFilter);
+      setAdvFilter(!advFilter);
     },
 
     onSort,

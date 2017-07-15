@@ -17,14 +17,20 @@ export type player = {
   _id: number
 }
 
+export type players = Array<player>
+
 export type winRateStats = { wins: number, losses: number }
 
 /* REDUX */
+export type advFilter = boolean
 export type merged = boolean
 export type sortReverse = boolean
 export type sortKey = "NONE" | "RANK" | "REGION" | "NAME" | "WINS" | "LOSSES" | "WINRATE" | "ONETRICKS"
 
 export type state = {
+  championPane: {
+    advFilter: advFilter,
+  },
   misc: {
     merged: merged,
   },
@@ -36,5 +42,6 @@ export type state = {
 
 /* ACTION CREATORS */
 export type toggleMerge = () => void
+export type setAdvFilter = (advFilter: advFilter) => void
 export type setSortKey = (sortKey: sortKey) => void
 export type setSortReverse = (sortReverse: sortReverse) => void
