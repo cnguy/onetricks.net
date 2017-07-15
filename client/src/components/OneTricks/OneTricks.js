@@ -18,10 +18,14 @@ import Perf from 'react-addons-perf'; // eslint-disable-line no-unused-vars
 import { cloneDeep } from 'lodash';
 
 import { toggleMerge } from '../../redux/misc';
-import { setSortReverse } from '../../redux/playersView';
+import {
+  setSortKey,
+  setSortReverse,
+} from '../../redux/playersView';
 
 import {
   mergedSelector,
+  sortKeySelector,
   sortReverseSelector,
 } from '../../selectors';
 
@@ -42,6 +46,7 @@ import type {
   merged as mergedType,
   player as playerType,
   region as regionType,
+  setSortKey as setSortKeyType,
   setSortReverse as setSortReverseType,
   sortKey as sortKeyType,
   sortReverse as sortReverseType,
@@ -64,7 +69,6 @@ type PropTypes = {
   players: Array<playerType>,
   searchKey: string,
   showChamps: boolean,
-  sortKey: sortKeyType,
   // sortReverse: boolean,
   imagesLoaded: boolean,
   // state setters
@@ -74,10 +78,8 @@ type PropTypes = {
   setRegions: (R: Array<regionType>) => void,
   setChampionName: (S: string) => void,
   setPlayers: (P: Array<playerType>) => void,
-  setMerged: (M: boolean) => void,
   setSearchKey: (S: string) => void,
   setShowChamps: (B: boolean) => void,
-  setSortKey: (S: sortKeyType) => void,
   setImagesLoaded: (B: boolean) => void,
   // handlers
   makeCompact: (P: Array<playerType>) => void,
@@ -101,6 +103,8 @@ type PropTypes = {
   // redux
   merged: mergedType,
   toggleMerge: toggleMergeType,
+  sortKey: sortKeyType,
+  setSortKey: setSortKeyType,
   sortReverse: sortReverseType,
   setSortReverse: setSortReverseType,
 }
@@ -317,8 +321,10 @@ const enhance = compose(
   connect(
     (state: stateType) => ({
       merged: mergedSelector(state),
+      sortKey: sortKeySelector(state),
       sortReverse: sortReverseSelector(state),
     }), {
+      setSortKey,
       setSortReverse,
       toggleMerge,
     },
@@ -331,7 +337,6 @@ const enhance = compose(
   withState('players', 'setPlayers', []),
   withState('searchKey', 'setSearchKey', ''),
   withState('showChamps', 'setShowChamps', true),
-  withState('sortKey', 'setSortKey', 'NONE'),
   withState('imagesLoaded', 'setImagesLoaded', false),
   withHandlers({ // no dependencies
     makeCompact,

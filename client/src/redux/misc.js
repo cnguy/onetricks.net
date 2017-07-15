@@ -6,6 +6,7 @@ export default function reducer(state = {
   switch (action.type) {
     case TOGGLE_MERGE:
       return {
+        ...state,
         merged: !state.merged,
       };
     default:
