@@ -85,7 +85,6 @@ type PropTypes = {
   addRegion: () => void,
   togglePane: () => void,
   toggleAdvFilter: () => void,
-  handleMerge: () => void,
   onSort: (S: sortKeyType) => void,
   handleImageLoad: () => void,
   renderSpinner: () => void,
@@ -194,7 +193,7 @@ const generateChampPaneUtility = ({
   searchKey,
   setSearchKey,
   regions,
-  handleMerge,
+  toggleMerge,
   onChange,
   addRegion,
   toggleAdvFilter,
@@ -204,7 +203,7 @@ const generateChampPaneUtility = ({
     <div className="champs-pane-utility">
       <div className="instructions flash">Click a Champ's Icon to Get Links to the One Trick Ponies' Profiles</div>
       <div className="merged-input">
-        <button className="merge-sep-button" onClick={handleMerge}>
+        <button className="merge-sep-button" onClick={toggleMerge}>
           <span className="merge-sep-text">
             <span className="merge-sep-action">
               {merged ? 'Separate' : 'Combine'}
@@ -373,8 +372,6 @@ const enhance = compose(
 
       return setAdvFilter(!advFilter);
     },
-
-    handleMerge: ({ toggleMerge }: PropTypes) => () => toggleMerge(),
 
     onSort,
 
