@@ -19,6 +19,8 @@ import { cloneDeep } from 'lodash';
 
 import { toggleMerge } from '../../redux/misc';
 
+import { mergedSelector } from '../../selectors/misc';
+
 import Champion from './Champion';
 import Copyright from './Copyright';
 import FAQ from './FAQ';
@@ -307,7 +309,7 @@ const createChampPanesHolder = ({
 const enhance = compose(
   connect(
     (state: stateType) => ({
-      merged: state.misc.merged,
+      merged: mergedSelector(state),
     }), { toggleMerge },
   ),
   withState('all', 'setAll', {}),
