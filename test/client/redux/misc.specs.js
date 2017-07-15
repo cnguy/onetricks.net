@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import chai from 'chai';
 const expect = chai.expect;
 const assert = chai.assert;
@@ -6,9 +8,6 @@ import miscReducer from '../../../client/src/redux/misc';
 import {
   toggleMerge,
 } from '../../../client/src/redux/misc';
-// const toggleMerge = require('../../../client/src/redux/misc');
-// import miscReducer from '../../../client/src/redux/misc';
-// import { toggleMerge } from '../../../client/src/redux/misc';
 
 const states = [
   {
@@ -19,11 +18,17 @@ const states = [
   },
 ];
 
-describe('redux/misc', function() {
-  describe('toggleMerge', function() {
-    it('should work from true->false', function() {
+describe('redux/misc', function () {
+  describe('toggleMerge', function () {
+    it('should work with merged=false', function () {
       expect(miscReducer(states[0], toggleMerge())).to.deep.equal({
-        merged: false,
+        merged: !states[0].merged,
+      });
+    });
+
+    it('should work with merged=true', function () {
+      expect(miscReducer(states[1], toggleMerge())).to.deep.equal({
+        merged: !states[1].merged,
       });
     });
   });
