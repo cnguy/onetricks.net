@@ -8,7 +8,7 @@
         "react",
         "jsx-a11y",
         "import",
-        "flowtype",
+        "flowtype"
     ],
     "rules": {
         "import/extensions": 0,
