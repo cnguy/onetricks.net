@@ -38,11 +38,13 @@ import FilterRegion from './FilterRegion';
 import Loader from './Loader';
 import PlayersView from './PlayersView';
 
-import DEFAULT_REGIONS from '../../constants/regions';
 import FILTERS from '../../helpers/filters';
+import SORTS from '../../helpers/sorts';
+import createFetchPlayersUrl from '../../helpers/createFetchPlayersUrl';
+
+import DEFAULT_REGIONS from '../../constants/regions';
 import RANKS from '../../constants/ranks';
 import REGIONS_TEXT from '../../constants/regionsText';
-import SORTS from '../../helpers/sorts';
 
 import type {
   advFilter as advFilterType,
@@ -396,17 +398,15 @@ const enhance = compose(
       }
     },
 
-    renderSpinner: ({ imagesLoaded }: PropTypes) => () => {
-      if (!imagesLoaded) {
-        return <Loader />;
-      }
-      return null;
-    },
+    renderSpinner: ({ imagesLoaded }: PropTypes) => () =>
+      !imagesLoaded
+        ? <Loader />
+        : null,
 
     renderEmptyResults: ({ searchKey }: PropTypes) => () =>
-      (searchKey) ? (
-        <div className="empty-results">No champions found.</div>
-      ) : null,
+      searchKey
+      ? <div className="empty-results">No champions found.</div>
+      : null,
 
     setDisplayValue: ({ imagesLoaded }: PropTypes) => () => imagesLoaded ? 'inline' : 'none',
 
@@ -417,18 +417,11 @@ const enhance = compose(
 
   withHandlers({
 
-    fetchPlayers: ({ makeCompact }: PropTypes) => (args: regionType | Array<regionType>) => {
+    fetchPlayers: ({ makeCompact }: PropTypes) => (args: regionType | Array<regionType>) =>
       // Perf.start();
-      let url = 'all?region=';
-
-      url += Array.isArray(args)
-        ? `${args.join(',')}&multiple=true`
-        : `${args}`;
-
-      fetch(url)
+      fetch(createFetchPlayersUrl(args))
         .then(r => r.json())
-        .then(r => makeCompact(r));
-    }, // uses makeCompact
+        .then(r => makeCompact(r)),
 
     getPlayers,
     generateChampPaneUtility,
