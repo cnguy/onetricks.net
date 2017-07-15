@@ -6,7 +6,7 @@ const assert = chai.assert;
 
 import {
   mergedSelector,
-} from '../../../client/src/selectors/misc';
+} from '../../../client/src/selectors';
 
 const states = [
   {
@@ -23,11 +23,11 @@ const states = [
 
 describe('selectors/misc', function () {
   describe('mergedSelector', function () {
-    it('should work with merged=false', function () {
+    it('should select state/misc/merged=true', function () {
       assert.equal(mergedSelector(states[0]), true);
     });
 
-    it('should work with merged=true', function () {
+    it('should select state/misc/merged=false', function () {
       assert.equal(mergedSelector(states[1]), false);
     });
   });

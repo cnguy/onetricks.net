@@ -11,9 +11,11 @@ import './index.css';
 import App from './App';
 
 import miscReducer from './redux/misc';
+import playersViewReducer from './redux/playersView';
 
 const rootReducer = combineReducers({
   misc: miscReducer,
+  playersView: playersViewReducer,
 });
 
 const store = createStore(rootReducer, {

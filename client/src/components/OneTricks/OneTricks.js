@@ -18,8 +18,12 @@ import Perf from 'react-addons-perf'; // eslint-disable-line no-unused-vars
 import { cloneDeep } from 'lodash';
 
 import { toggleMerge } from '../../redux/misc';
+import { setSortReverse } from '../../redux/playersView';
 
-import { mergedSelector } from '../../selectors/misc';
+import {
+  mergedSelector,
+  sortReverseSelector,
+} from '../../selectors';
 
 import Champion from './Champion';
 import Copyright from './Copyright';
@@ -35,11 +39,14 @@ import REGIONS_TEXT from '../../constants/regionsText';
 import SORTS from '../../helpers/sorts';
 
 import type {
+  merged as mergedType,
   player as playerType,
   region as regionType,
+  setSortReverse as setSortReverseType,
   sortKey as sortKeyType,
-  toggleMerge as toggleMergeType,
+  sortReverse as sortReverseType,
   state as stateType,
+  toggleMerge as toggleMergeType,
 } from '../../constants/flowTypes';
 
 let numOfImagesLeft = 0; // Performance :)
@@ -58,7 +65,7 @@ type PropTypes = {
   searchKey: string,
   showChamps: boolean,
   sortKey: sortKeyType,
-  sortReverse: boolean,
+  // sortReverse: boolean,
   imagesLoaded: boolean,
   // state setters
   setAll: (A: Object, CB?: Function) => void,
@@ -71,7 +78,6 @@ type PropTypes = {
   setSearchKey: (S: string) => void,
   setShowChamps: (B: boolean) => void,
   setSortKey: (S: sortKeyType) => void,
-  setSortReverse: (B: boolean) => void,
   setImagesLoaded: (B: boolean) => void,
   // handlers
   makeCompact: (P: Array<playerType>) => void,
@@ -94,8 +100,10 @@ type PropTypes = {
   forcePlayersUpdate: (A: regionType | Array<regionType>) => void,
   createChampPanesHolder: (C: AAAnyAlias, M: AAAnyAlias, A: AAAnyAlias) => void,
   // redux
-  merged: boolean,
+  merged: mergedType,
   toggleMerge: toggleMergeType,
+  sortReverse: sortReverseType,
+  setSortReverse: setSortReverseType,
 }
 
 const makeCompact = ({
@@ -310,7 +318,11 @@ const enhance = compose(
   connect(
     (state: stateType) => ({
       merged: mergedSelector(state),
-    }), { toggleMerge },
+      sortReverse: sortReverseSelector(state),
+    }), {
+      setSortReverse,
+      toggleMerge,
+    },
   ),
   withState('all', 'setAll', {}),
   withState('region', 'setRegion', 'all'),
@@ -318,11 +330,9 @@ const enhance = compose(
   withState('regions', 'setRegions', DEFAULT_REGIONS.slice()),
   withState('champ', 'setChampionName', ''),
   withState('players', 'setPlayers', []),
-  // withState('merged', 'setMerged', true),
   withState('searchKey', 'setSearchKey', ''),
   withState('showChamps', 'setShowChamps', true),
   withState('sortKey', 'setSortKey', 'NONE'),
-  withState('sortReverse', 'setSortReverse', false),
   withState('imagesLoaded', 'setImagesLoaded', false),
   withHandlers({ // no dependencies
     makeCompact,

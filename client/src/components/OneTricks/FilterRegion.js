@@ -11,7 +11,7 @@ import type {
 type PropTypes = {
   toggleRegion: (region: regionType) => void,
   toggleAdvFilter: () => void,
-  regions: Array<regionType>
+  regions: Array<regionType>,
 }
 
 const FilterRegion = ({ toggleRegion, toggleAdvFilter, regions }: PropTypes): React$Element<any> =>
