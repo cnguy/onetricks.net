@@ -17,7 +17,11 @@ import Perf from 'react-addons-perf'; // eslint-disable-line no-unused-vars
 /* FlowFixMe */
 import { cloneDeep } from 'lodash';
 
-import { toggleAdvancedFilter } from '../../redux/championPane';
+import {
+  resetSearchKey,
+  setSearchKey,
+  toggleAdvancedFilter,
+} from '../../redux/championPane';
 import { toggleMerge } from '../../redux/misc';
 import {
   setSortKey,
@@ -27,6 +31,7 @@ import {
 import {
   advancedFilterSelector,
   mergedSelector,
+  searchKeySelector,
   sortKeySelector,
   sortReverseSelector,
 } from '../../selectors';
@@ -51,12 +56,15 @@ import type {
   merged as mergedType,
   players as playersType,
   region as regionType,
-  toggleAdvancedFilter as toggleAdvancedFilterType,
+  resetSearchKey as resetSearchKeyType,
+  searchKey as searchKeyType,
+  setSearchKey as setSearchKeyType,
   setSortKey as setSortKeyType,
   setSortReverse as setSortReverseType,
   sortKey as sortKeyType,
   sortReverse as sortReverseType,
   state as stateType,
+  toggleAdvancedFilter as toggleAdvancedFilterType,
   toggleMerge as toggleMergeType,
 } from '../../constants/flowTypes';
 
@@ -82,7 +90,6 @@ type PropTypes = {
   setRegions: (R: Array<regionType>) => void,
   setChampionName: (S: string) => void,
   setPlayers: (P: playersType) => void,
-  setSearchKey: (S: string) => void,
   setShowChamps: (B: boolean) => void,
   setImagesLoaded: (B: boolean) => void,
   // handlers
@@ -109,6 +116,9 @@ type PropTypes = {
   toggleAdvancedFilter: toggleAdvancedFilterType,
   merged: mergedType,
   toggleMerge: toggleMergeType,
+  searchKey: searchKeyType,
+  resetSearchKey: resetSearchKeyType,
+  setSearchKey: setSearchKeyType,
   sortKey: sortKeyType,
   setSortKey: setSortKeyType,
   sortReverse: sortReverseType,
@@ -142,12 +152,12 @@ const makeCompact = ({
 const togglePane = ({
   showChamps,
   setShowChamps,
-  setSearchKey,
+  resetSearchKey,
   setSortKey,
   setSortReverse,
 }: PropTypes) => () => {
   setShowChamps(!showChamps);
-  setSearchKey('');
+  resetSearchKey();
   setSortKey('NONE');
   setSortReverse(false);
 };
@@ -220,7 +230,7 @@ const generateChampPaneUtility = ({
   merged,
   advFilter,
   searchKey,
-  setSearchKey,
+  resetSearchKey,
   regions,
   toggleMerge,
   onChange,
@@ -247,7 +257,7 @@ const generateChampPaneUtility = ({
           value={searchKey}
           placeholder="champ name filter"
         />
-        <span className="clear-input" onClick={() => setSearchKey('')}>
+        <span className="clear-input" onClick={resetSearchKey}>
           &#10007;
         </span>
       </div>
@@ -347,12 +357,15 @@ const enhance = compose(
     (state: stateType) => ({
       advFilter: advancedFilterSelector(state),
       merged: mergedSelector(state),
+      searchKey: searchKeySelector(state),
       sortKey: sortKeySelector(state),
       sortReverse: sortReverseSelector(state),
     }), {
-      toggleAdvancedFilter,
+      resetSearchKey,
+      setSearchKey,
       setSortKey,
       setSortReverse,
+      toggleAdvancedFilter,
       toggleMerge,
     },
   ),
@@ -361,7 +374,6 @@ const enhance = compose(
   withState('regions', 'setRegions', DEFAULT_REGIONS.slice()),
   withState('champ', 'setChampionName', ''),
   withState('players', 'setPlayers', []),
-  withState('searchKey', 'setSearchKey', ''),
   withState('showChamps', 'setShowChamps', true),
   withState('imagesLoaded', 'setImagesLoaded', false),
   withHandlers({ // no dependencies

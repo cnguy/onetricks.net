@@ -19,22 +19,24 @@ const states = [
 ];
 
 describe('redux/misc', function () {
-  describe('toggleMerge', function () {
+  describe('state/misc/merged', function () {
     it('should default to merged=true', function () {
       expect(miscReducer()).to.deep.equal({
         merged: true,
       });
     });
 
-    it('should toggle state/misc/merged from false -> true', function () {
-      expect(miscReducer(states[0], toggleMerge())).to.deep.equal({
-        merged: !states[0].merged,
+    describe('toggleMerge', function () {
+      it('should toggle state/misc/merged from false -> true', function () {
+        expect(miscReducer(states[0], toggleMerge())).to.deep.equal({
+          merged: !states[0].merged,
+        });
       });
-    });
 
-    it('should toggle state/misc/merged from true -> false', function () {
-      expect(miscReducer(states[1], toggleMerge())).to.deep.equal({
-        merged: !states[1].merged,
+      it('should toggle state/misc/merged from true -> false', function () {
+        expect(miscReducer(states[1], toggleMerge())).to.deep.equal({
+          merged: !states[1].merged,
+        });
       });
     });
   });

@@ -11,7 +11,7 @@ const mocks = [
   'na',
   ['na'],
   ['na', 'kr'],
-]
+];
 
 const expectedPrefix = 'all?region=';
 const expectedSuffix = '&multiple=true';

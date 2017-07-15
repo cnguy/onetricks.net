@@ -30,38 +30,42 @@ const states = {
 };
 
 describe('redux/playersView', function () {
-  describe('setSortKey', function () {
+  describe('state/playersView/sortKey', function () {
     it('should default to sortKey=NONE', function () {
       assert.equal(playersViewReducer().sortKey, 'NONE');
     });
 
-    it('should set state/playersView/sortKey -> something else (eg: RANK)', function () {
-      expect(playersViewReducer(states.SORT_KEY[0], setSortKey('RANK'))).to.deep.equal({
-        sortKey: 'RANK',
+    describe('setSortKey', function () {
+      it('should set state/playersView/sortKey -> something else (eg: RANK)', function () {
+        expect(playersViewReducer(states.SORT_KEY[0], setSortKey('RANK'))).to.deep.equal({
+          sortKey: 'RANK',
+        });
       });
-    });
 
-    it('should set state/playersView/sortKey -> something else (eg: NONE)', function () {
-      expect(playersViewReducer(states.SORT_KEY[1], setSortKey('NONE'))).to.deep.equal({
-        sortKey: 'NONE',
+      it('should set state/playersView/sortKey -> something else (eg: NONE)', function () {
+        expect(playersViewReducer(states.SORT_KEY[1], setSortKey('NONE'))).to.deep.equal({
+          sortKey: 'NONE',
+        });
       });
     });
   });
 
-  describe('setSortReverse', function () {
+  describe('sortReverse', function () {
     it('should default to sortReverse=false', function () {
-      assert.equal(playersViewReducer().sortReverse, false);
+        assert.equal(playersViewReducer().sortReverse, false);
     });
 
-    it('should set state/playersView/sortReverse -> false', function () {
-      expect(playersViewReducer(states.SORT_REVERSE[0], setSortReverse(false))).to.deep.equal({
-        sortReverse: false,
+    describe('setSortReverse', function () {
+      it('should set state/playersView/sortReverse -> false', function () {
+        expect(playersViewReducer(states.SORT_REVERSE[0], setSortReverse(false))).to.deep.equal({
+          sortReverse: false,
+        });
       });
-    });
 
-    it('should set state/playersView/sortReverse -> true', function () {
-      expect(playersViewReducer(states.SORT_REVERSE[1], setSortReverse(true))).to.deep.equal({
-        sortReverse: true,
+      it('should set state/playersView/sortReverse -> true', function () {
+        expect(playersViewReducer(states.SORT_REVERSE[1], setSortReverse(true))).to.deep.equal({
+          sortReverse: true,
+        });
       });
     });
   });

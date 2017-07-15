@@ -6,6 +6,8 @@ const assert = chai.assert;
 
 import championPaneReducer from '../../../client/src/redux/championPane';
 import {
+  resetSearchKey,
+  setSearchKey,
   toggleAdvancedFilter,
 } from '../../../client/src/redux/championPane';
 
@@ -18,23 +20,52 @@ const states = {
       advFilter: false,
     },
   ],
+  SEARCH_KEY: [
+    {
+      searchKey: 'garbage',
+    },
+  ],
 };
 
 describe('redux/championPane', function () {
-  describe('toggleAdvancedFilter', function () {
-    it('should default to advFilte=FALSE', function () {
-      assert.equal(championPaneReducer().advFilter, false);
+  describe('state/championPane/searchKey', function () {
+    it('should default to searchKey=(empty string)', function () {
+      assert.equal(championPaneReducer().searchKey, '');
     });
 
-    it('should toggle state/championPane/advFilter from true -> false', function () {
-      expect(championPaneReducer(states.ADVANCED_FILTER[0], toggleAdvancedFilter())).to.deep.equal({
-        advFilter: false,
+    describe('resetSearchKey', function () {
+      it('should clear state/championPane/searchKey', function () {
+        expect(championPaneReducer(states.SEARCH_KEY[0], resetSearchKey())).to.deep.equal({
+          searchKey: '',
+        });
       });
     });
 
-    it('should toggle state/championPane/advFilter from false -> true', function () {
-      expect(championPaneReducer(states.ADVANCED_FILTER[1], toggleAdvancedFilter())).to.deep.equal({
-        advFilter: true,
+    describe('setSearchKey', function () {
+      it('should set state/championPane/searchKey=(something else) (ex: Riven)', function () {
+        expect(championPaneReducer(states.SEARCH_KEY[0], setSearchKey('Riven'))).to.deep.equal({
+          searchKey: 'Riven',
+        });
+      });
+    });
+  });
+
+  describe('advFilter', function () {
+    it('should default to advFilter=false', function () {
+        assert.equal(championPaneReducer().advFilter, false);
+    });
+
+    describe('toggleAdvancedFilter', function () {
+      it('should toggle state/championPane/advFilter from true -> false', function () {
+        expect(championPaneReducer(states.ADVANCED_FILTER[0], toggleAdvancedFilter())).to.deep.equal({
+          advFilter: false,
+        });
+      });
+
+      it('should toggle state/championPane/advFilter from false -> true', function () {
+        expect(championPaneReducer(states.ADVANCED_FILTER[1], toggleAdvancedFilter())).to.deep.equal({
+          advFilter: true,
+        });
       });
     });
   });
