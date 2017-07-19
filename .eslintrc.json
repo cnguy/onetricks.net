@@ -1,8 +1,26 @@
 {
-    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "extends": [
+        "airbnb",
+        "plugin:flowtype/recommended"
+    ],
     "plugins": [
         "react",
         "jsx-a11y",
-        "import"
-    ]
+        "import",
+        "flowtype"
+    ],
+    "rules": {
+        "import/extensions": 0,
+        "import/no-unresolved": 0,
+        "no-confusing-arrow": 0,
+        "no-restricted-syntax": 0,
+        "no-shadow": 0,
+        "no-underscore-dangle": 0,
+        "import/prefer-default-export": 0,
+        "jsx-a11y/href-no-hash": 0,
+        "jsx-a11y/no-static-element-interactions": 0,
+        "react/no-unescaped-entities": 0,
+        "react/jsx-filename-extension": 0
+    }
 }

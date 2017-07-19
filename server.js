@@ -351,13 +351,13 @@ app.get(`/${process.env.SECRET_URL}`, (req, res) => {
   update('challengers', regions.JAPAN);
   update('masters', regions.JAPAN);
   update('challengers', regions.LATIN_AMERICA_NORTH);
-  update('masters', regions.LATIN_AMERICA_NORTH);
-  update('challengers', regions.LATIN_AMERICA_SOUTH);
-  update('masters', regions.LATIN_AMERICA_SOUTH);
-  update('challengers', regions.TURKEY);
-  update('masters', regions.TURKEY);
-  update('challengers', regions.RUSSIA);
-  update('masters', regions.RUSSIA);
+  // update('masters', regions.LATIN_AMERICA_NORTH);
+  // update('challengers', regions.LATIN_AMERICA_SOUTH);
+  // update('masters', regions.LATIN_AMERICA_SOUTH);
+  // update('challengers', regions.TURKEY);
+  // update('masters', regions.TURKEY);
+  // update('challengers', regions.RUSSIA);
+  // update('masters', regions.RUSSIA);
 });
 
 app.use((req, res, next) =>

@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 
 import ChampIcon from './ChampIcon';
@@ -6,30 +8,57 @@ import PlayersSort from './PlayersSort';
 import Sorts from '../../helpers/sorts';
 import WinRate from './formatters/WinRate';
 
-const getOverallWinRate = players =>
-  players.reduce((t, el) => ({
-    wins: t['wins'] + el.wins,
-    losses: t['losses'] + el.losses
-  }), { 'wins': 0, 'losses': 0 });
+import type {
+  player as playerType,
+  sortKey as sortKeyType,
+  winRateStats as winRateStatsType,
+} from '../../constants/flowTypes';
 
-const renderOverallWinrate = ({ wins, losses }) =>
+const getOverallWinRate = (players: Array<playerType>): winRateStatsType =>
+  players.reduce((t, el) => ({
+    wins: t.wins + el.wins,
+    losses: t.losses + el.losses,
+  }), { wins: 0, losses: 0 });
+
+const renderOverallWinrate = ({ wins, losses }: winRateStatsType): React$Element<any> =>
   <WinRate wins={wins} losses={losses} />;
 
-const PlayersView = ({ players, goBack, champ, show, onSort, sortKey, sortReverse }) => {
+type PropTypes = {
+  players: Array<playerType>,
+  goBack: () => void,
+  champ: string,
+  show: boolean,
+  onSort: (sortKey: sortKeyType) => void,
+  sortKey: sortKeyType,
+  sortReverse: boolean,
+}
+
+const PlayersView = ({
+  players,
+  goBack,
+  champ,
+  show,
+  onSort,
+  sortKey,
+  sortReverse,
+}: PropTypes): (React$Element<any> | null) => {
   const sortedList = (sortReverse) ? Sorts[sortKey](players).reverse() : Sorts[sortKey](players);
   const scores = getOverallWinRate(players);
 
   return (show) ? (
-    <div className='players-list-view fade-in'>
-      <a className='go-back flash' href='#' onClick={goBack}>
+    <div className="players-list-view fade-in">
+      <a className="go-back flash" href="#" onClick={goBack}>
         &#60;&#60;&nbsp;Back to Champions
       </a>
 
-      <div className='players-table-header flash'>
-        {players.length}&nbsp;<ChampIcon name={champ} mini={true} handleImageLoad={null} />&nbsp;One Trick Ponies {renderOverallWinrate(scores)}
+      <div className="players-table-header flash">
+        {
+          players.length}&nbsp;<ChampIcon name={champ} mini handleImageLoad={null} />
+          &nbsp;One Trick Ponies {renderOverallWinrate(scores)
+        }
       </div>
 
-      <table className='players-table'>
+      <table className="players-table">
         <thead>
           <tr>
             <th>
@@ -66,14 +95,12 @@ const PlayersView = ({ players, goBack, champ, show, onSort, sortKey, sortRevers
         </thead>
         <tbody>
           {
-            sortedList.map((item, index) =>
-              <PlayerRow player={item} key={index} />
-            )
+            sortedList.map((item, index) => <PlayerRow player={item} key={index} />)
           }
         </tbody>
       </table>
     </div>
   ) : null;
-}
+};
 
 export default PlayersView;
