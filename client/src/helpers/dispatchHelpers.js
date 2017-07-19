@@ -8,7 +8,7 @@ export function executeConditionalCollection(...actionsWithConditionals) {
       if (actionWithConditional.cond) {
         return actionWithConditional.onTrue();
       }
-      if (actionsWithConditionals.onFalse) {
+      if (actionWithConditional.onFalse) {
         return actionWithConditional.onFalse();
       }
     }
