@@ -36,7 +36,7 @@ import {
   sortReverseSelector,
 } from '../../selectors';
 
-import Champion from './Champion';
+import ChampionPane from './ChampionPane';
 import Copyright from './Copyright';
 import FAQ from './FAQ';
 import FilterRegion from './FilterRegion';
@@ -154,6 +154,15 @@ const makeCompact = ({
   }
 };
 
+const setRegionFilter = ({ setRegion }: PropTypes) => e => setRegion(e.target.value);
+
+const addRegion = ({ regions, setRegions }: PropTypes) => (region: regionType) => {
+  const index = regions.indexOf(region);
+  return index !== -1
+    ? setRegions([...regions.slice(0, index), ...regions.slice(index + 1)])
+    : setRegions([...regions, region]);
+};
+
 const togglePane = ({
   showChamps,
   setShowChamps,
@@ -195,6 +204,22 @@ const onSort = ({
   () => setSortReverse(key === sortKey && !sortReverse),
 );
 
+const handleImageLoad = ({ setImagesLoaded }: PropTypes) => () => {
+  if (--numOfImagesLeft === 0) { // eslint-disable-line no-plusplus
+    setImagesLoaded(true);
+  }
+};
+
+const renderSpinner = ({ imagesLoaded }: PropTypes) => () =>
+  renderOnCondition(!imagesLoaded, <Loader />);
+
+const renderEmptyResults = ({ searchKey }: PropTypes) => (): React$Element<any> | null =>
+  renderOnCondition(searchKey, <div className="empty-results">No champions found.</div>);
+
+const setDisplayValue = ({ imagesLoaded }: PropTypes) => () => imagesLoaded ? 'inline' : 'none';
+
+const onChange = ({ setSearchKey }: PropTypes) => e => setSearchKey(e.target.value.toLowerCase());
+
 const generateSelectMenu = ({
   advFilter,
   region,
@@ -213,19 +238,22 @@ const generateSelectMenu = ({
     </select>,
   );
 
+const fetchPlayers = ({ makeCompact }: PropTypes) => (args: regionType | Array<regionType>) =>
+  // Perf.start();
+  fetch(createFetchPlayersUrl(args))
+    .then(r => r.json())
+    .then(r => makeCompact(r));
+
 const getPlayers = ({
   setPlayers,
   setChampionName,
   togglePane,
 }: PropTypes) => (array: playersType, champion: string) => {
   togglePane();
-
-  for (let i = 0; i < array.length; i += 1) {
-    if (array[i][0] === champion) {
-      setPlayers(array[i][1]);
-      setChampionName(champion);
-      break;
-    }
+  const target = array.filter(l => l[0] === champion);
+  if (target.length === 1) {
+    setPlayers(target[0][1]);
+    setChampionName(champion);
   }
 };
 
@@ -283,24 +311,11 @@ const createChampPane = ({
   getPlayers,
   handleImageLoad,
 }: PropTypes) => (arr: Array<Array<any>>): React$Element<any> =>
-  <div className="champs">
-    {
-      arr.map((item, index) =>
-        <a
-          className="champ-open-links fade-in"
-          key={index} href="#"
-          onClick={() => getPlayers(arr, item[0])}
-        >
-          <Champion
-            name={item[0]}
-            number={item[1].length}
-            handleImageLoad={handleImageLoad}
-            key={index}
-          />
-        </a>,
-      )
-    }
-  </div>;
+  <ChampionPane
+    champions={arr}
+    getPlayers={getPlayers}
+    handleImageLoad={handleImageLoad}
+  />;
 
 const forcePlayersUpdate = ({
   fetchPlayers,
@@ -339,7 +354,7 @@ const createChampPanesHolder = ({
                 {
                   renderOnCondition(
                     challengers.length > 0,
-                    <h5 className="rank-header">Challenger One Tricks\ Ponies in {advFilter ? mulRegionsDisplayText : regionDisplayText}</h5>,
+                    <h5 className="rank-header">Challenger One Trick Ponies in {advFilter ? mulRegionsDisplayText : regionDisplayText}</h5>,
                   )
                 }
                 {createChampPane(challengers)}
@@ -389,67 +404,23 @@ const enhance = compose(
   withState('players', 'setPlayers', []),
   withState('showChamps', 'setShowChamps', true),
   withState('imagesLoaded', 'setImagesLoaded', false),
-  withHandlers({ // no dependencies
+  withHandlers({
     makeCompact,
-    setRegionFilter: ({ setRegion }: PropTypes) => e => setRegion(e.target.value),
-
-    addRegion: ({ regions, setRegions }: PropTypes) => (region: regionType) => {
-      const regionsTemp = regions.slice();
-
-      for (let i = 0; i < regionsTemp.length; i += 1) {
-        // Toggle region logic.
-        if (region === regionsTemp[i]) {
-          regionsTemp.splice(regionsTemp.indexOf(region), 1);
-          setRegions(regionsTemp);
-          return;
-        }
-      }
-
-      setRegions([...regions, region]);
-    },
-
+    setRegionFilter,
+    addRegion,
     togglePane,
-
     handleToggleAdvancedFilter,
     onSort,
-
-    handleImageLoad: ({ setImagesLoaded }: PropTypes) => () => {
-      if (--numOfImagesLeft === 0) { // eslint-disable-line no-plusplus
-        setImagesLoaded(true);
-      }
-    },
-
-    renderSpinner: ({ imagesLoaded }: PropTypes) => () =>
-      renderOnCondition(!imagesLoaded, <Loader />),
-
-    renderEmptyResults: ({ searchKey }: PropTypes) => (): React$Element<any> | null =>
-      renderOnCondition(searchKey, <div className="empty-results">No champions found.</div>),
-
-    setDisplayValue: ({ imagesLoaded }: PropTypes) => () => imagesLoaded ? 'inline' : 'none',
-
-    onChange: ({ setSearchKey }: PropTypes) => e => setSearchKey(e.target.value.toLowerCase()),
+    handleImageLoad,
+    renderSpinner,
+    renderEmptyResults,
+    setDisplayValue,
+    onChange,
   }),
-
   withHandlers({ generateSelectMenu }),
-
-  withHandlers({
-
-    fetchPlayers: ({ makeCompact }: PropTypes) => (args: regionType | Array<regionType>) =>
-      // Perf.start();
-      fetch(createFetchPlayersUrl(args))
-        .then(r => r.json())
-        .then(r => makeCompact(r)),
-
-    getPlayers,
-    generateChampPaneUtility,
-  }),
-
+  withHandlers({ fetchPlayers, getPlayers, generateChampPaneUtility }),
   withHandlers({ createChampPane }),
-
-  withHandlers({
-    forcePlayersUpdate, // uses fetchPlayers
-    createChampPanesHolder, // uses renderEmptyResults
-  }),
+  withHandlers({ forcePlayersUpdate, createChampPanesHolder }),
   lifecycle({
     componentDidMount() {
       const {
