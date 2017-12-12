@@ -1,4 +1,4 @@
-class OneTrick {
+class _OneTrick {
   constructor(summonerID, summonerName, championName) {
     this.summonerID = summonerID;
     this.summonerName = summonerName;
@@ -6,14 +6,19 @@ class OneTrick {
   }
 
   asObject() {
+    const {
+      championName: champ,
+      summonerID: id,
+      summonerName: name,
+    } = this;
+
     return {
-      [summonerID]: {
-        champ: championName,
-        id: summonerID,
-        name: summonerName,
-      }
+      [id]: { champ, id, name },
     }
   }
 };
 
-export default (summonerID, summonerName, championName) => new OneTrick(summonerID, summonerName, championName);
+const OneTrick = (summonerID, summonerName, championName) =>
+  new _OneTrick(summonerID, summonerName, championName);
+
+export default OneTrick;
