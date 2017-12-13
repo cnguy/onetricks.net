@@ -29,6 +29,7 @@
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "new-start": "babel-node ./stats/StatsGenerator.js",
+    "lint-stats": "prettier --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./stats/**/*.js\"",
     "server": "babel-node server.js",
     "client": "babel-node start-client.js",
     "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1",
@@ -51,6 +52,7 @@
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
     "flow": "^0.2.3",
-    "flow-bin": "^0.50.0"
+    "flow-bin": "^0.50.0",
+    "prettier": "^1.9.2"
   }
 }
