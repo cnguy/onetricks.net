@@ -21,11 +21,12 @@ const main = async () => {
             },
         },
     });
+    // TODO: Make this work with multiple regions + the Master league.
     const league = await kayn.Challenger.list('RANKED_SOLO_5x5');
     const summoners = await Promise.all(
         league.entries.map(
             async ({ playerOrTeamId, playerOrTeamName }) =>
-                await Summoner(
+                Summoner(
                     playerOrTeamId,
                     playerOrTeamName,
                     (await kayn.Summoner.by.id(playerOrTeamId)).accountId,
@@ -33,7 +34,9 @@ const main = async () => {
         ),
     );
     const allStats = [];
-    let i = 0;
+    let i = 0; // for debugging
+
+    // Process stats for each summoner.
     await Promise.all(
         summoners.map(async ({ id: summonerID, accountID }) => {
             const matchlist = await kayn.Matchlist.Recent.by.accountID(
@@ -47,6 +50,7 @@ const main = async () => {
 
             const playerStats = PlayerStats(summonerID);
 
+            // Process matches in matchlist.
             await Promise.all(
                 matches.map(async match => {
                     const {
@@ -60,6 +64,7 @@ const main = async () => {
                     const { teamId: teamID } = participant;
                     const { championId: championID } = participant;
                     const { stats } = participant;
+                    const { gameId: gameID } = match;
                     const didWin =
                         match.teams.find(({ teamId }) => teamId === teamID)
                             .win === 'Win';
@@ -67,12 +72,12 @@ const main = async () => {
                         playerStats.editExistingChampion(
                             championID,
                             didWin,
-                            match.gameId,
+                            gameID,
                         );
                     } else {
                         playerStats.pushChampion(
                             ChampionStats(championID, didWin),
-                            match.gameId,
+                            gameID,
                         );
                     }
                     console.log(++i);
