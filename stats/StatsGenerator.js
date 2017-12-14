@@ -24,13 +24,12 @@ const main = async () => {
     // TODO: Make this work with multiple regions + the Master league.
     const league = await kayn.Challenger.list('RANKED_SOLO_5x5');
     const summoners = await Promise.all(
-        league.entries.map(
-            async ({ playerOrTeamId, playerOrTeamName }) =>
-                Summoner(
-                    playerOrTeamId,
-                    playerOrTeamName,
-                    (await kayn.Summoner.by.id(playerOrTeamId)).accountId,
-                ).asObject(),
+        league.entries.map(async ({ playerOrTeamId, playerOrTeamName }) =>
+            Summoner(
+                playerOrTeamId,
+                playerOrTeamName,
+                (await kayn.Summoner.by.id(playerOrTeamId)).accountId,
+            ).asObject(),
         ),
     );
     const allStats = [];
@@ -43,47 +42,43 @@ const main = async () => {
                 accountID,
             );
             const matches = await Promise.all(
-                matchlist.matches.map(async ({ gameId }) =>
-                    kayn.Match.get(gameId),
-                ),
+                matchlist.matches.map(({ gameId }) => kayn.Match.get(gameId)),
             );
 
             const playerStats = PlayerStats(summonerID);
 
             // Process matches in matchlist.
-            await Promise.all(
-                matches.map(async match => {
-                    const {
-                        participantId: participantID,
-                    } = match.participantIdentities.find(
-                        el => el.player.summonerId === parseInt(summonerID),
+            matches.map(match => {
+                const {
+                    participantId: participantID,
+                } = match.participantIdentities.find(
+                    el => el.player.summonerId === parseInt(summonerID),
+                );
+                const participant = match.participants.find(
+                    ({ participantId }) => participantId === participantID,
+                );
+                const { teamId: teamID } = participant;
+                const { championId: championID } = participant;
+                const { stats } = participant;
+                const { gameId: gameID } = match;
+                const didWin =
+                    match.teams.find(({ teamId }) => teamId === teamID).win ===
+                    'Win';
+                if (playerStats.containsChampion(championID)) {
+                    playerStats.editExistingChampion(
+                        championID,
+                        didWin,
+                        gameID,
                     );
-                    const participant = match.participants.find(
-                        ({ participantId }) => participantId === participantID,
+                } else {
+                    playerStats.pushChampion(
+                        ChampionStats(championID, didWin),
+                        gameID,
                     );
-                    const { teamId: teamID } = participant;
-                    const { championId: championID } = participant;
-                    const { stats } = participant;
-                    const { gameId: gameID } = match;
-                    const didWin =
-                        match.teams.find(({ teamId }) => teamId === teamID)
-                            .win === 'Win';
-                    if (playerStats.containsChampion(championID)) {
-                        playerStats.editExistingChampion(
-                            championID,
-                            didWin,
-                            gameID,
-                        );
-                    } else {
-                        playerStats.pushChampion(
-                            ChampionStats(championID, didWin),
-                            gameID,
-                        );
-                    }
-                    console.log(++i);
-                    allStats.push(playerStats);
-                }),
-            );
+                }
+                console.log(++i);
+                allStats.push(playerStats);
+            });
         }),
     );
 
@@ -92,7 +87,9 @@ const main = async () => {
     };
 
     // mock
+    console.log('write');
     const myJson = jsonfile.readFileSync('stats.json');
+    console.log('done');
     // mock api request! :)
     const getStatsOfSummoner = id =>
         myJson.players.find(({ summonerId }) => id === summonerId);
