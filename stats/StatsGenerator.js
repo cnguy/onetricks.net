@@ -7,6 +7,32 @@ import OneTrick from './entities/OneTrick';
 import PlayerStats from './entities/PlayerStats';
 import Summoner from './entities/Summoner';
 
+// Helpers
+const findParticipantIdentity = (match, summonerID) =>
+    match.participantIdentities.find(
+        ({ player }) => player.summonerId === parseInt(summonerID),
+    );
+const findParticipant = (match, participantID) =>
+    match.participants.find(
+        ({ participantId }) => participantId === participantID,
+    );
+
+const didTeamWin = (match, teamID) =>
+    match.teams.find(({ teamId }) => teamId === teamID).win === 'Win';
+
+const leagueEntryToSummoner = kayn => async ({
+    playerOrTeamId,
+    playerOrTeamName,
+}) =>
+    Summoner(
+        playerOrTeamId,
+        playerOrTeamName,
+        (await kayn.Summoner.by.id(playerOrTeamId)).accountId,
+    ).asObject();
+
+const matchlistToMatches = async (matchlist, kayn) =>
+    Promise.all(matchlist.matches.map(({ gameId }) => kayn.Match.get(gameId)));
+
 const main = async () => {
     const kayn = Kayn()({
         cacheOptions: {
@@ -24,13 +50,7 @@ const main = async () => {
     // TODO: Make this work with multiple regions + the Master league.
     const league = await kayn.Challenger.list('RANKED_SOLO_5x5');
     const summoners = await Promise.all(
-        league.entries.map(async ({ playerOrTeamId, playerOrTeamName }) =>
-            Summoner(
-                playerOrTeamId,
-                playerOrTeamName,
-                (await kayn.Summoner.by.id(playerOrTeamId)).accountId,
-            ).asObject(),
-        ),
+        league.entries.map(leagueEntryToSummoner(kayn)),
     );
     const allStats = [];
     let i = 0; // for debugging
@@ -41,29 +61,20 @@ const main = async () => {
             const matchlist = await kayn.Matchlist.Recent.by.accountID(
                 accountID,
             );
-            const matches = await Promise.all(
-                matchlist.matches.map(({ gameId }) => kayn.Match.get(gameId)),
-            );
-
+            const matches = await matchlistToMatches(matchlist, kayn);
             const playerStats = PlayerStats(summonerID);
 
             // Process matches in matchlist.
             matches.forEach(match => {
                 const {
                     participantId: participantID,
-                } = match.participantIdentities.find(
-                    el => el.player.summonerId === parseInt(summonerID),
-                );
-                const participant = match.participants.find(
-                    ({ participantId }) => participantId === participantID,
-                );
+                } = findParticipantIdentity(match, summonerID);
+                const participant = findParticipant(match, participantID);
                 const { teamId: teamID } = participant;
                 const { championId: championID } = participant;
                 const { stats } = participant;
                 const { gameId: gameID } = match;
-                const didWin =
-                    match.teams.find(({ teamId }) => teamId === teamID).win ===
-                    'Win';
+                const didWin = didTeamWin(match, teamID);
                 if (playerStats.containsChampion(championID)) {
                     playerStats.editExistingChampion(
                         championID,
