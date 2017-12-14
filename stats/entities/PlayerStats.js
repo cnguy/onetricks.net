@@ -5,10 +5,26 @@ class _PlayerStats {
         this.matchesProcessed = [];
     }
 
+    editExistingChampion(championID, didWin, matchID) {
+      const { ChampionStats } = this;
+      const i = ChampionStats.findIndex(({ id }) => id === championID);
+      if (didWin) {
+        ChampionStats[i].incrementWins();
+      } else {
+        ChampionStats[i].incrementLosses();
+      }
+      this.matchesProcessed.push(matchID);
+    }
+
     pushChampion(ChampionStat, matchID) {
         const { ChampionStats } = this;
         ChampionStats.push(ChampionStat);
         this.matchesProcessed.push(matchID);
+    }
+
+    containsChampion(championID) {
+        const { ChampionStats } = this;
+        return ChampionStats.find(({ id }) => id === championID);
     }
 
     asObject() {

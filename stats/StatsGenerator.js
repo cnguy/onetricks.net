@@ -32,21 +32,32 @@ const main = async () => {
     const matchlist = await kayn.Matchlist.Recent.by.accountID(
         summoners[0].accountID,
     );
-    const match = await kayn.Match.get(matchlist.matches[0].gameId);
-    const { participantId: participantID } = match.participantIdentities.find(
-        el => el.player.summonerId === parseInt(summoners[0].id),
+    const matches = await Promise.all(
+        matchlist.matches.map(async ({ gameId }) => kayn.Match.get(gameId)),
     );
-    const participant = match.participants.find(
-        ({ participantId }) => participantId === participantID,
-    );
-    const { teamId: teamID } = participant;
-    const { championId: championID } = participant;
-    const { stats } = participant;
-    const didWin =
-        match.teams.find(({ teamId }) => teamId === teamID).win === 'Win';
+    console.log(matches);
 
     const playerStats = PlayerStats(summoners[0].id);
-    playerStats.pushChampion(ChampionStats(championID, didWin), match.gameId);
+    matches.forEach(match => {
+        const {
+            participantId: participantID,
+        } = match.participantIdentities.find(
+            el => el.player.summonerId === parseInt(summoners[0].id),
+        );
+        const participant = match.participants.find(
+            ({ participantId }) => participantId === participantID,
+        );
+        const { teamId: teamID } = participant;
+        const { championId: championID } = participant;
+        const { stats } = participant;
+        const didWin =
+            match.teams.find(({ teamId }) => teamId === teamID).win === 'Win';
+        if (playerStats.containsChampion(championID)) {
+          playerStats.editExistingChampion(championID, didWin, match.gameId);
+        } else {
+          playerStats.pushChampion(ChampionStats(championID, didWin), match.gameId);
+        }
+    });
 
     console.log(playerStats);
 };
