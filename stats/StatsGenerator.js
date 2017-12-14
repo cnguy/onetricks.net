@@ -34,50 +34,58 @@ const main = async () => {
     );
     const allStats = [];
     let i = 0;
-    await Promise.all(summoners.map(async ({ id: summonerID, accountID }) => {
-        const matchlist = await kayn.Matchlist.Recent.by.accountID(accountID);
-        const matches = await Promise.all(
-            matchlist.matches.map(async ({ gameId }) => kayn.Match.get(gameId)),
-        );
-
-        const playerStats = PlayerStats(summonerID);
-
-        await Promise.all(matches.map(async match => {
-            const {
-                participantId: participantID,
-            } = match.participantIdentities.find(
-                el => el.player.summonerId === parseInt(summonerID),
+    await Promise.all(
+        summoners.map(async ({ id: summonerID, accountID }) => {
+            const matchlist = await kayn.Matchlist.Recent.by.accountID(
+                accountID,
             );
-            const participant = match.participants.find(
-                ({ participantId }) => participantId === participantID,
+            const matches = await Promise.all(
+                matchlist.matches.map(async ({ gameId }) =>
+                    kayn.Match.get(gameId),
+                ),
             );
-            const { teamId: teamID } = participant;
-            const { championId: championID } = participant;
-            const { stats } = participant;
-            const didWin =
-                match.teams.find(({ teamId }) => teamId === teamID).win ===
-                'Win';
-            if (playerStats.containsChampion(championID)) {
-                playerStats.editExistingChampion(
-                    championID,
-                    didWin,
-                    match.gameId,
-                );
-            } else {
-                playerStats.pushChampion(
-                    ChampionStats(championID, didWin),
-                    match.gameId,
-                );
-            }
-            console.log(++i);
-            allStats.push(playerStats);
-        }));
-    }));
-    
+
+            const playerStats = PlayerStats(summonerID);
+
+            await Promise.all(
+                matches.map(async match => {
+                    const {
+                        participantId: participantID,
+                    } = match.participantIdentities.find(
+                        el => el.player.summonerId === parseInt(summonerID),
+                    );
+                    const participant = match.participants.find(
+                        ({ participantId }) => participantId === participantID,
+                    );
+                    const { teamId: teamID } = participant;
+                    const { championId: championID } = participant;
+                    const { stats } = participant;
+                    const didWin =
+                        match.teams.find(({ teamId }) => teamId === teamID)
+                            .win === 'Win';
+                    if (playerStats.containsChampion(championID)) {
+                        playerStats.editExistingChampion(
+                            championID,
+                            didWin,
+                            match.gameId,
+                        );
+                    } else {
+                        playerStats.pushChampion(
+                            ChampionStats(championID, didWin),
+                            match.gameId,
+                        );
+                    }
+                    console.log(++i);
+                    allStats.push(playerStats);
+                }),
+            );
+        }),
+    );
+
     const json = {
         players: allStats.map(el => el.asObject()),
-    }
-    
+    };
+
     // mock
     const myJson = jsonfile.readFileSync('stats.json');
     // mock api request! :)
