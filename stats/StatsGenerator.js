@@ -7,6 +7,12 @@ import OneTrick from './entities/OneTrick';
 import PlayerStats from './entities/PlayerStats';
 import Summoner from './entities/Summoner';
 
+// const mockBaseStats = {
+//     players: [
+//         PlayerStats(19770082, ChampionStats())
+//     ]
+// }
+
 // Helpers
 const findParticipantIdentity = (match, summonerID) =>
     match.participantIdentities.find(
@@ -88,8 +94,8 @@ const main = async () => {
                     );
                 }
                 console.log(++i);
-                allStats.push(playerStats);
             });
+            allStats.push(playerStats);
         }),
     );
 
@@ -98,13 +104,16 @@ const main = async () => {
     };
 
     // mock
-    console.log('write');
-    const myJson = jsonfile.readFileSync('stats.json');
+    //console.log('write');
+    //const myJson = jsonfile.readFileSync('stats.json');
+    //jsonfile.writeFileSync('stats.json', json);
+    /*
     console.log('done');
     // mock api request! :)
     const getStatsOfSummoner = id =>
         myJson.players.find(({ summonerId }) => id === summonerId);
-    console.log(getStatsOfSummoner(19770082));
+    //console.log(getStatsOfSummoner(19770082));
+    console.log(myJson.players.filter(({ summonerId }) => summonerId === 19770082))*/
     // yes! :)
 };
 

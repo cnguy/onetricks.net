@@ -27,6 +27,11 @@ class _PlayerStats {
         return ChampionStats.find(({ id }) => id === championID);
     }
 
+    containsMatch(matchID) {
+        const { matchesProcessed } = this;
+        return matchesProcessed.some(id => id === matchID);
+    }
+
     asObject() {
         const { summonerID, ChampionStats } = this;
 
