@@ -48,7 +48,7 @@ const main = async () => {
             const playerStats = PlayerStats(summonerID);
 
             // Process matches in matchlist.
-            matches.map(match => {
+            matches.forEach(match => {
                 const {
                     participantId: participantID,
                 } = match.participantIdentities.find(
