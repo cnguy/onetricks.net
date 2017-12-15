@@ -7,81 +7,8 @@ import OneTrick from './entities/OneTrick';
 import PlayerStats from './entities/PlayerStats';
 import Summoner from './entities/Summoner';
 
-const mockBaseStats = {
-    players: [
-        {
-            summonerId: 19770082,
-            champions: [
-                {
-                    id: 98,
-                    stats: { wins: 1, losses: 0, totalSessionsPlayed: 1 },
-                },
-                {
-                    id: 92,
-                    stats: { wins: 2, losses: 5, totalSessionsPlayed: 7 },
-                },
-                {
-                    id: 240,
-                    stats: { wins: 1, losses: 2, totalSessionsPlayed: 3 },
-                },
-                {
-                    id: 58,
-                    stats: { wins: 0, losses: 1, totalSessionsPlayed: 1 },
-                },
-                {
-                    id: 68,
-                    stats: { wins: 1, losses: 0, totalSessionsPlayed: 1 },
-                },
-                {
-                    id: 64,
-                    stats: { wins: 2, losses: 0, totalSessionsPlayed: 2 },
-                },
-                {
-                    id: 126,
-                    stats: { wins: 0, losses: 1, totalSessionsPlayed: 1 },
-                },
-                {
-                    id: 57,
-                    stats: { wins: 1, losses: 0, totalSessionsPlayed: 1 },
-                },
-                {
-                    id: 127,
-                    stats: { wins: 0, losses: 1, totalSessionsPlayed: 1 },
-                },
-                {
-                    id: 516,
-                    stats: { wins: 0, losses: 1, totalSessionsPlayed: 1 },
-                },
-                {
-                    id: 150,
-                    stats: { wins: 1, losses: 0, totalSessionsPlayed: 1 },
-                },
-            ],
-            matchesProcessed: [
-                2670483986,
-                2670455322,
-                2670353451,
-                2670233122,
-                2670135394,
-                2670081071,
-                2670016512,
-                2669979339,
-                2669960909,
-                2669681284,
-                2669628753,
-                2669626307,
-                2669641148,
-                2669616188,
-                2669612901,
-                2669578154,
-                2669581642,
-                2669515711,
-                2669449345,
-                2669437434,
-            ],
-        },
-    ],
-};
+const mockBaseStats = jsonfile.readFileSync('stats.json');
+console.log(mockBaseStats.players.length);
 
 // Helpers
 const findParticipantIdentity = (match, summonerID) =>
@@ -132,9 +59,11 @@ const main = async () => {
         league.entries.map(leagueEntryToSummoner(kayn)),
     );
     const allStats = [];
-    const p = PlayerStats();
-    p.load(mockBaseStats.players[0]);
-    allStats.push(p);
+    mockBaseStats.players.forEach(player => {
+        const p = PlayerStats();
+        p.load(player);
+        allStats.push(p);    
+    });
 
     const playerExists = id => allStats.some(el => el.summonerID === id);
     const getPlayer = id => allStats.find(el => el.summonerID === id);
@@ -157,6 +86,7 @@ const main = async () => {
                 const { gameId: gameID } = match;
 
                 if (playerStats.containsMatch(gameID)) {
+                    ++i;
                     return;
                 }
 
@@ -202,8 +132,9 @@ const main = async () => {
     //console.log(getStatsOfSummoner(19770082));
 
     console.log(
-        myJson.players.filter(({ summonerId }) => summonerId === 19770082),
+        myJson.players.filter(({ summonerId }) => summonerId === 19770082)
     );
+    console.log('ignored:', i)
 
     // yes! :)
 };
