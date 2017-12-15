@@ -67,7 +67,19 @@ const main = async () => {
             },
         },
     });
-    // TODO: Make this work with multiple regions + the Master league.
+
+    const allStats = [];
+    mockBaseStats.players.forEach(player => {
+        const p = PlayerStats();
+        p.load(player);
+        allStats.push(p);
+    });
+    const playerExists = id => allStats.some(el => el.summonerID === id);
+
+    // TODO: Is this unique?
+    // Removed `region` property because players can transfer regions.
+    const getPlayer = (id) =>
+        allStats.find(el => el.summonerID === id);
 
     const fn = async region => {
         const challengerLeague = await kayn.Challenger.list(
@@ -86,17 +98,9 @@ const main = async () => {
         );
         let numberOfPlayers = summoners.length;
         console.log('going to process:', numberOfPlayers);
-        const allStats = [];
-        mockBaseStats.players.forEach(player => {
-            const p = PlayerStats();
-            p.load(player);
-            allStats.push(p);
-        });
-
-        const playerExists = id => allStats.some(el => el.summonerID === id);
-        const getPlayer = (id, region) =>
-            allStats.find(el => el.summonerID === id && el.region === region);
-        let i = 0; // for debugging
+    //     const playerExists = id => allStats.some(el => el.summonerID === id);
+    // const getPlayer = (id, region) =>
+    //     allStats.find(el => el.summonerID === id && el.region === region);
 
         // Process stats for each summoner.
         await Promise.all(
@@ -104,37 +108,19 @@ const main = async () => {
                 const matchlist = await kayn.Matchlist.Recent.by
                     .accountID(accountID)
                     .region(region);
+                // if (playerExists(summonerID) && getPlayer(summonerID, accountID) === undefined) {
+                //     console.log('found the shithead', summonerID, accountID, region)
+                // }
+
                 const playerStats = playerExists(summonerID)
-                    ? getPlayer(summonerID, region)
+                    ? getPlayer(summonerID)
                     : PlayerStats(summonerID, region);
                 const trimmedMatchlist = cloneDeep(matchlist);
 
                 trimmedMatchlist.matches = trimmedMatchlist.matches.filter(
                     match => !playerStats.containsMatch(match.gameId),
                 );
-                // const trimmedMatchlist = matchlist.matches.filter(match => {
-                //     return !playerStats.containsMatch(match.gameId);
-                // })
 
-                if (
-                    trimmedMatchlist.matches.some(el => el.gameId === 643506234)
-                ) {
-                    // Some matches return 404 for some reason.
-                    // This is because they're from a different region.
-                    console.log('this matchlist exists');
-                }
-                // console.log(
-                //     'trimmed match list......:',
-                //     trimmedMatchlist.matches.length,
-                // );
-                // console.log('matchlist...:', matchlist.matches.length);
-
-                // map(match => {
-                //     if (playerStats.containsMatch(match.gameId)) {
-
-                //     }
-                // })
-                // const matches = await matchlistToMatches(matchlist, kayn, region);
                 const matches = (await matchlistToMatches(
                     trimmedMatchlist,
                     kayn,
@@ -143,16 +129,7 @@ const main = async () => {
 
                 // Process matches in matchlist.
                 matches.forEach(match => {
-                    if (typeof match === 'boolean') {
-                        console.log('still a boolean');
-                    }
                     const { gameId: gameID } = match;
-                    // console.log(gameId);
-
-                    // if (playerStats.containsMatch(gameID)) {
-                    //     ++i;
-                    //     return;
-                    // }
 
                     const {
                         participantId: participantID,
@@ -174,10 +151,9 @@ const main = async () => {
                             gameID,
                         );
                     }
-                    //console.log(++i);
                 });
                 if (!playerExists(summonerID)) allStats.push(playerStats);
-                // console.log(--numberOfPlayers);
+                console.log(--numberOfPlayers);
             }),
         );
 
@@ -209,9 +185,7 @@ const main = async () => {
         // yes! :)
     };
 
-    await fn(REGIONS.NORTH_AMERICA);
-    await fn(REGIONS.EUROPE_WEST);
-    await fn(REGIONS.EUROPE);
+    await Promise.all(Object.keys(REGIONS).map(r => fn(REGIONS[r])));
 };
 
 main();
