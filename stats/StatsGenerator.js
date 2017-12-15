@@ -2,6 +2,8 @@ import { Kayn, REGIONS, METHOD_NAMES, RedisCache } from 'kayn';
 
 import mongoose from 'mongoose';
 
+import cloneDeep from 'lodash.cloneDeep';
+
 import jsonfile from 'jsonfile';
 
 import ChampionStats from './entities/ChampionStats';
@@ -37,15 +39,20 @@ const leagueEntryToSummoner = (kayn, region) => async ({
 
 const matchlistToMatches = async (matchlist, kayn, region) =>
     Promise.all(
-        matchlist.matches.map(({ gameId }) =>
-            kayn.Match.get(gameId).region(region),
-        ),
+        matchlist.matches.map(async ({ gameId }) => {
+            try {
+                return await kayn.Match.get(gameId).region(region);
+            } catch (ex) {
+                return false;
+            }
+        }),
     );
 
 const main = async () => {
     const kayn = Kayn()({
         debugOptions: {
             isEnabled: false,
+            // showKey: true,
         },
         cacheOptions: {
             cache: new RedisCache(),
@@ -54,6 +61,7 @@ const main = async () => {
                 [METHOD_NAMES.SUMMONER.GET_BY_ACCOUNT_ID]: 1000 * 60 * 60 * 60,
                 [METHOD_NAMES.LEAGUE.GET_CHALLENGER_LEAGUE]:
                     1000 * 60 * 60 * 60,
+                [METHOD_NAMES.LEAGUE.GET_MASTER_LEAGUE]: 1000 * 60 * 60 * 60,
                 [METHOD_NAMES.MATCH.GET_RECENT_MATCHLIST]: 1000 * 60 * 60 * 60,
                 [METHOD_NAMES.MATCH.GET_MATCH]: 1000 * 60 * 60 * 60 * 60 * 60,
             },
@@ -62,16 +70,20 @@ const main = async () => {
     // TODO: Make this work with multiple regions + the Master league.
 
     const fn = async region => {
-        const challengerLeague = await kayn.Challenger.list('RANKED_SOLO_5x5').region(
-            region,
-        );
+        const challengerLeague = await kayn.Challenger.list(
+            'RANKED_SOLO_5x5',
+        ).region(region);
         const mastersLeague = await kayn.Master.list('RANKED_SOLO_5x5').region(
             region,
         );
 
         const summoners = (await Promise.all(
             challengerLeague.entries.map(leagueEntryToSummoner(kayn, region)),
-        )).concat(await Promise.all(mastersLeague.entries.map(leagueEntryToSummoner(kayn, region))));
+        )).concat(
+            await Promise.all(
+                mastersLeague.entries.map(leagueEntryToSummoner(kayn, region)),
+            ),
+        );
         let numberOfPlayers = summoners.length;
         console.log('going to process:', numberOfPlayers);
         const allStats = [];
@@ -82,7 +94,8 @@ const main = async () => {
         });
 
         const playerExists = id => allStats.some(el => el.summonerID === id);
-        const getPlayer = (id, region) => allStats.find(el => el.summonerID === id && el.region === region);
+        const getPlayer = (id, region) =>
+            allStats.find(el => el.summonerID === id && el.region === region);
         let i = 0; // for debugging
 
         // Process stats for each summoner.
@@ -91,19 +104,55 @@ const main = async () => {
                 const matchlist = await kayn.Matchlist.Recent.by
                     .accountID(accountID)
                     .region(region);
-                const matches = await matchlistToMatches(matchlist, kayn, region);
                 const playerStats = playerExists(summonerID)
                     ? getPlayer(summonerID, region)
                     : PlayerStats(summonerID, region);
+                const trimmedMatchlist = cloneDeep(matchlist);
+
+                trimmedMatchlist.matches = trimmedMatchlist.matches.filter(
+                    match => !playerStats.containsMatch(match.gameId),
+                );
+                // const trimmedMatchlist = matchlist.matches.filter(match => {
+                //     return !playerStats.containsMatch(match.gameId);
+                // })
+
+                if (
+                    trimmedMatchlist.matches.some(el => el.gameId === 643506234)
+                ) {
+                    // Some matches return 404 for some reason.
+                    // This is because they're from a different region.
+                    console.log('this matchlist exists');
+                }
+                // console.log(
+                //     'trimmed match list......:',
+                //     trimmedMatchlist.matches.length,
+                // );
+                // console.log('matchlist...:', matchlist.matches.length);
+
+                // map(match => {
+                //     if (playerStats.containsMatch(match.gameId)) {
+
+                //     }
+                // })
+                // const matches = await matchlistToMatches(matchlist, kayn, region);
+                const matches = (await matchlistToMatches(
+                    trimmedMatchlist,
+                    kayn,
+                    region,
+                )).filter(match => match);
 
                 // Process matches in matchlist.
                 matches.forEach(match => {
-                    const { gameId: gameID } = match;
-
-                    if (playerStats.containsMatch(gameID)) {
-                        ++i;
-                        return;
+                    if (typeof match === 'boolean') {
+                        console.log('still a boolean');
                     }
+                    const { gameId: gameID } = match;
+                    // console.log(gameId);
+
+                    // if (playerStats.containsMatch(gameID)) {
+                    //     ++i;
+                    //     return;
+                    // }
 
                     const {
                         participantId: participantID,
@@ -128,7 +177,7 @@ const main = async () => {
                     //console.log(++i);
                 });
                 if (!playerExists(summonerID)) allStats.push(playerStats);
-                console.log(--numberOfPlayers);
+                // console.log(--numberOfPlayers);
             }),
         );
 
@@ -155,14 +204,14 @@ const main = async () => {
         console.log(
             myJson.players.filter(({ summonerId }) => summonerId === 19770082),
         );
-        console.log('ignored:', i);
-
+        // console.log('ignored:', i);
+        console.log(allStats.length);
         // yes! :)
     };
 
     await fn(REGIONS.NORTH_AMERICA);
     await fn(REGIONS.EUROPE_WEST);
-    await fn(REGIONS.EUROPE)
+    await fn(REGIONS.EUROPE);
 };
 
 main();
