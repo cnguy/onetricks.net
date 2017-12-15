@@ -62,7 +62,7 @@ const main = async () => {
     mockBaseStats.players.forEach(player => {
         const p = PlayerStats();
         p.load(player);
-        allStats.push(p);    
+        allStats.push(p);
     });
 
     const playerExists = id => allStats.some(el => el.summonerID === id);
@@ -132,9 +132,9 @@ const main = async () => {
     //console.log(getStatsOfSummoner(19770082));
 
     console.log(
-        myJson.players.filter(({ summonerId }) => summonerId === 19770082)
+        myJson.players.filter(({ summonerId }) => summonerId === 19770082),
     );
-    console.log('ignored:', i)
+    console.log('ignored:', i);
 
     // yes! :)
 };
