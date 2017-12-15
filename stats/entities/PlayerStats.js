@@ -1,10 +1,11 @@
 import ChampionStats from './ChampionStats';
 
 class _PlayerStats {
-    constructor(summonerID) {
+    constructor(summonerID, region) {
         this.summonerID = parseInt(summonerID);
         this.ChampionStats = [];
         this.matchesProcessed = [];
+        this.region = region;
     }
 
     load(playerStats) {
@@ -15,6 +16,7 @@ class _PlayerStats {
             return c;
         });
         this.matchesProcessed = playerStats.matchesProcessed;
+        this.region = playerStats.region;
     }
 
     editExistingChampion(championID, didWin, matchID) {
@@ -45,12 +47,13 @@ class _PlayerStats {
     }
 
     asObject() {
-        const { summonerID, ChampionStats } = this;
+        const { summonerID, ChampionStats, region } = this;
 
         return {
             summonerId: summonerID,
             champions: ChampionStats.map(el => el.asObject()),
             matchesProcessed: this.matchesProcessed,
+            region,
         };
     }
 }
