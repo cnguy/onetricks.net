@@ -42,7 +42,7 @@ const matchlistToMatches = async (matchlist, kayn, region) =>
         ),
     );
 
-const main = () => {
+const main = async () => {
     const kayn = Kayn()({
         debugOptions: {
             isEnabled: false,
@@ -62,12 +62,18 @@ const main = () => {
     // TODO: Make this work with multiple regions + the Master league.
 
     const fn = async region => {
-        const league = await kayn.Challenger.list('RANKED_SOLO_5x5').region(
+        const challengerLeague = await kayn.Challenger.list('RANKED_SOLO_5x5').region(
             region,
         );
-        const summoners = await Promise.all(
-            league.entries.map(leagueEntryToSummoner(kayn, region)),
+        const mastersLeague = await kayn.Master.list('RANKED_SOLO_5x5').region(
+            region,
         );
+
+        const summoners = (await Promise.all(
+            challengerLeague.entries.map(leagueEntryToSummoner(kayn, region)),
+        )).concat(await Promise.all(mastersLeague.entries.map(leagueEntryToSummoner(kayn, region))));
+        let numberOfPlayers = summoners.length;
+        console.log('going to process:', numberOfPlayers);
         const allStats = [];
         mockBaseStats.players.forEach(player => {
             const p = PlayerStats();
@@ -122,6 +128,7 @@ const main = () => {
                     //console.log(++i);
                 });
                 if (!playerExists(summonerID)) allStats.push(playerStats);
+                console.log(--numberOfPlayers);
             }),
         );
 
@@ -153,8 +160,9 @@ const main = () => {
         // yes! :)
     };
 
-    fn(REGIONS.NORTH_AMERICA);
-    fn(REGIONS.EUROPE_WEST);
+    await fn(REGIONS.NORTH_AMERICA);
+    await fn(REGIONS.EUROPE_WEST);
+    await fn(REGIONS.EUROPE)
 };
 
 main();
