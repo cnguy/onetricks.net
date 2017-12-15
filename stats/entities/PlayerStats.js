@@ -1,8 +1,20 @@
+import ChampionStats from './ChampionStats';
+
 class _PlayerStats {
     constructor(summonerID) {
         this.summonerID = parseInt(summonerID);
         this.ChampionStats = [];
         this.matchesProcessed = [];
+    }
+
+    load(playerStats) {
+        this.summonerID = playerStats.summonerId;
+        this.ChampionStats = playerStats.champions.map(champion => {
+            const c = ChampionStats();
+            c.load(champion);
+            return c;
+        });
+        this.matchesProcessed = playerStats.matchesProcessed;
     }
 
     editExistingChampion(championID, didWin, matchID) {

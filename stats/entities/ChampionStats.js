@@ -5,6 +5,12 @@ class _ChampionStats {
         this.losses = win ? 0 : 1;
     }
 
+    load(championStats) {
+        this.id = championStats.id;
+        this.wins = championStats.stats.wins;
+        this.losses = championStats.stats.losses;
+    }
+
     incrementWins() {
         this.wins += 1;
     }

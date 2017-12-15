@@ -7,11 +7,81 @@ import OneTrick from './entities/OneTrick';
 import PlayerStats from './entities/PlayerStats';
 import Summoner from './entities/Summoner';
 
-// const mockBaseStats = {
-//     players: [
-//         PlayerStats(19770082, ChampionStats())
-//     ]
-// }
+const mockBaseStats = {
+    players: [
+        {
+            summonerId: 19770082,
+            champions: [
+                {
+                    id: 98,
+                    stats: { wins: 1, losses: 0, totalSessionsPlayed: 1 },
+                },
+                {
+                    id: 92,
+                    stats: { wins: 2, losses: 5, totalSessionsPlayed: 7 },
+                },
+                {
+                    id: 240,
+                    stats: { wins: 1, losses: 2, totalSessionsPlayed: 3 },
+                },
+                {
+                    id: 58,
+                    stats: { wins: 0, losses: 1, totalSessionsPlayed: 1 },
+                },
+                {
+                    id: 68,
+                    stats: { wins: 1, losses: 0, totalSessionsPlayed: 1 },
+                },
+                {
+                    id: 64,
+                    stats: { wins: 2, losses: 0, totalSessionsPlayed: 2 },
+                },
+                {
+                    id: 126,
+                    stats: { wins: 0, losses: 1, totalSessionsPlayed: 1 },
+                },
+                {
+                    id: 57,
+                    stats: { wins: 1, losses: 0, totalSessionsPlayed: 1 },
+                },
+                {
+                    id: 127,
+                    stats: { wins: 0, losses: 1, totalSessionsPlayed: 1 },
+                },
+                {
+                    id: 516,
+                    stats: { wins: 0, losses: 1, totalSessionsPlayed: 1 },
+                },
+                {
+                    id: 150,
+                    stats: { wins: 1, losses: 0, totalSessionsPlayed: 1 },
+                },
+            ],
+            matchesProcessed: [
+                2670483986,
+                2670455322,
+                2670353451,
+                2670233122,
+                2670135394,
+                2670081071,
+                2670016512,
+                2669979339,
+                2669960909,
+                2669681284,
+                2669628753,
+                2669626307,
+                2669641148,
+                2669616188,
+                2669612901,
+                2669578154,
+                2669581642,
+                2669515711,
+                2669449345,
+                2669437434,
+            ],
+        },
+    ],
+};
 
 // Helpers
 const findParticipantIdentity = (match, summonerID) =>
@@ -41,6 +111,9 @@ const matchlistToMatches = async (matchlist, kayn) =>
 
 const main = async () => {
     const kayn = Kayn()({
+        debugOptions: {
+            isEnabled: false,
+        },
         cacheOptions: {
             cache: new RedisCache(),
             ttls: {
@@ -59,7 +132,14 @@ const main = async () => {
         league.entries.map(leagueEntryToSummoner(kayn)),
     );
     const allStats = [];
+    const p = PlayerStats();
+    p.load(mockBaseStats.players[0]);
+    allStats.push(p);
+
+    const playerExists = id => allStats.some(el => el.summonerID === id);
+    const getPlayer = id => allStats.find(el => el.summonerID === id);
     let i = 0; // for debugging
+    // TODO: How to use allStats as a starting point?
 
     // Process stats for each summoner.
     await Promise.all(
@@ -68,10 +148,18 @@ const main = async () => {
                 accountID,
             );
             const matches = await matchlistToMatches(matchlist, kayn);
-            const playerStats = PlayerStats(summonerID);
+            const playerStats = playerExists(summonerID)
+                ? getPlayer(summonerID)
+                : PlayerStats(summonerID);
 
             // Process matches in matchlist.
             matches.forEach(match => {
+                const { gameId: gameID } = match;
+
+                if (playerStats.containsMatch(gameID)) {
+                    return;
+                }
+
                 const {
                     participantId: participantID,
                 } = findParticipantIdentity(match, summonerID);
@@ -79,7 +167,6 @@ const main = async () => {
                 const { teamId: teamID } = participant;
                 const { championId: championID } = participant;
                 const { stats } = participant;
-                const { gameId: gameID } = match;
                 const didWin = didTeamWin(match, teamID);
                 if (playerStats.containsChampion(championID)) {
                     playerStats.editExistingChampion(
@@ -93,9 +180,9 @@ const main = async () => {
                         gameID,
                     );
                 }
-                console.log(++i);
+                //console.log(++i);
             });
-            allStats.push(playerStats);
+            if (!playerExists(summonerID)) allStats.push(playerStats);
         }),
     );
 
@@ -105,15 +192,19 @@ const main = async () => {
 
     // mock
     //console.log('write');
-    //const myJson = jsonfile.readFileSync('stats.json');
+    const myJson = jsonfile.readFileSync('stats.json');
     //jsonfile.writeFileSync('stats.json', json);
     /*
     console.log('done');
-    // mock api request! :)
+    // mock api request! :)*/
     const getStatsOfSummoner = id =>
         myJson.players.find(({ summonerId }) => id === summonerId);
     //console.log(getStatsOfSummoner(19770082));
-    console.log(myJson.players.filter(({ summonerId }) => summonerId === 19770082))*/
+
+    console.log(
+        myJson.players.filter(({ summonerId }) => summonerId === 19770082),
+    );
+
     // yes! :)
 };
 
