@@ -139,7 +139,7 @@ const main = async () => {
                         if (totalNumOfGames > 100) {
                             for (
                                 let matchlistBeginIndex = 100;
-                                matchlistBeginIndex < 500;
+                                matchlistBeginIndex < totalNumOfGames;
                                 matchlistBeginIndex += 100
                             ) {
                                 try {

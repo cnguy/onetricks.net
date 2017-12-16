@@ -11,7 +11,7 @@ const getIcon = (name: string) => { // $FlowFixMe disable require literal string
   } catch (err) {
     return require('../../assets/champ-icons/min/questionmark.png');
   }
-}
+};
 
 type PropTypes = {
   name: string,
