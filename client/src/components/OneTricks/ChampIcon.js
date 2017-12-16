@@ -6,17 +6,12 @@
 import React from 'react';
 
 const getIcon = (name: string) => { // $FlowFixMe disable require literal string
-  // console.log(`../../assets/champ-icons/min/${getChampionNameFromOrigin(name)}Square-min.png`);
-  console.log(`../../assets/champ-icons/min/${name}Square-min.png`)
   try {
-    return require(`../../assets/champ-icons/min/${name}Square-min.png`);
+    return require(`../../assets/champ-icons/min/${name.toLowerCase()}square-min.png`);
   } catch (err) {
     return require('../../assets/champ-icons/min/questionmark.png');
   }
 }
-
-// const getIcon = (name: string) => // $FlowFixMe disable require literal string
-//   require(`../../assets/champ-icons/min/${name.replace(/[^a-zA-Z]+/g, '')}Square-min.png`);
 
 type PropTypes = {
   name: string,
