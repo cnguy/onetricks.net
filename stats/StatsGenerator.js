@@ -73,7 +73,7 @@ const main = async () => {
     const kayn = Kayn()({
         debugOptions: {
             isEnabled: true,
-            showKey: true,
+            // showKey: true,
         },
         requestOptions: {
             numberOfRetriesBeforeAbort: 1,
@@ -134,26 +134,12 @@ const main = async () => {
                                 season: 9, // 7/8/9 is what we want rn.
                             });
 
-                        console.log(
-                            matchlist.matches.length,
-                            matchlist.matches.filter(
-                                z =>
-                                    z.platformId.toLowerCase() ===
-                                    asPlatformID(region),
-                            ).length,
-                        );
-                        matchlist.matches = matchlist.matches.filter(
-                            z =>
-                                z.platformId.toLowerCase() ===
-                                asPlatformID(region),
-                        );
-
                         const totalNumOfGames = matchlist.totalGames;
 
                         if (totalNumOfGames > 100) {
                             for (
                                 let matchlistBeginIndex = 100;
-                                matchlistBeginIndex < 200; // totalNumOfGames;
+                                matchlistBeginIndex < 500;
                                 matchlistBeginIndex += 100
                             ) {
                                 try {
@@ -179,10 +165,27 @@ const main = async () => {
                             }
                         }
 
-                        console.log(
-                            'total number of matches:',
-                            matchlist.matches.length,
-                            totalNumOfGames,
+                        // console.log(
+                        //     'total number of matches:',
+                        //     matchlist.matches.length,
+                        //     totalNumOfGames,
+                        // );
+
+                        // console.log(
+                        //     matchlist.matches.length,
+                        //     matchlist.matches.filter(
+                        //         z =>
+                        //             z.platformId.toLowerCase() ===
+                        //             asPlatformID(region),
+                        //     ).length,
+                        // );
+
+                        // Filter out matches that belong to a different platform
+                        // than where the summoner currently resides.
+                        matchlist.matches = matchlist.matches.filter(
+                            m =>
+                                m.platformId.toLowerCase() ===
+                                asPlatformID(region),
                         );
 
                         const playerStats = playerExists(summonerID)
