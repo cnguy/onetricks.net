@@ -5,15 +5,11 @@
 
 import React from 'react';
 
-const getChampionNameFromOrigin = (name) =>
-  document.origin.includes('localhost')
-    ? name
-    : name.toLowerCase().replace(/[^a-zA-Z]+/g, '');
-
 const getIcon = (name: string) => { // $FlowFixMe disable require literal string
-  console.log(getChampionNameFromOrigin(name));
+  // console.log(`../../assets/champ-icons/min/${getChampionNameFromOrigin(name)}Square-min.png`);
+  console.log(`../../assets/champ-icons/min/${name}Square-min.png`)
   try {
-    return require(`../../assets/champ-icons/min/${getChampionNameFromOrigin(name)}Square-min.png`);
+    return require(`../../assets/champ-icons/min/${name}Square-min.png`);
   } catch (err) {
     return require('../../assets/champ-icons/min/questionmark.png');
   }
