@@ -133,9 +133,20 @@ const main = async () => {
                                 queue: 420,
                                 season: 9, // 7/8/9 is what we want rn.
                             });
-                        
-                        console.log(matchlist.matches.length, matchlist.matches.filter(z => z.platformId.toLowerCase() === asPlatformID(region)).length)
-                        matchlist.matches = matchlist.matches.filter(z => z.platformId.toLowerCase() === asPlatformID(region));
+
+                        console.log(
+                            matchlist.matches.length,
+                            matchlist.matches.filter(
+                                z =>
+                                    z.platformId.toLowerCase() ===
+                                    asPlatformID(region),
+                            ).length,
+                        );
+                        matchlist.matches = matchlist.matches.filter(
+                            z =>
+                                z.platformId.toLowerCase() ===
+                                asPlatformID(region),
+                        );
 
                         const totalNumOfGames = matchlist.totalGames;
 
