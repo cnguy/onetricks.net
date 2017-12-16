@@ -18,7 +18,7 @@
     "chai": "^4.1.0",
     "compression": "^1.6.2",
     "express": "4.13.3",
-    "kayn": "^0.5.1",
+    "kayn": "^0.5.2",
     "kindred-api": "^2.0.67",
     "lodash.clonedeep": "^4.5.0",
     "mocha": "^3.4.2",

@@ -2705,7 +2705,7 @@ kareem@1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/kareem/-/kareem-1.2.1.tgz#acdb8c8119845834abbfa58ade1cf9dea63dc752"
 
-kayn@^0.5.1:
+kayn@^0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/kayn/-/kayn-0.5.2.tgz#d8b70abf86727485d648b836ce4adaa3c09791ed"
   dependencies:
