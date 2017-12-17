@@ -87,7 +87,8 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 }
 
-const isOneTrick = (otGames, total) => (otGames / total >= 0.45);
+const isOneTrick = (otGames, total) => (otGames / total >= 0.25);
+// 0.45 works for accurate stats + large number of games
 
 const getRank = {
   challengers: (region, cb) => {

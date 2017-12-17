@@ -15,9 +15,14 @@ import type {
   region as regionType,
 } from '../../constants/flowTypes';
 
+const generateOpGGLink = (region: string, name: string): string =>
+  (region === 'kr')
+    ? `http://www.op.gg/summoner/userName=${name}`
+    : `https://${region}.op.gg/summoner/userName=${name}`;
+
 const generateLink = (name: string, region: regionType, opgg: boolean, id: number): string => (
   (opgg)
-    ? `https://${region}.op.gg/summoner/userName=${name}`
+    ? generateOpGGLink(region, name)
     : `http://www.lolking.net/summoner/${region}/${id.toString()}/${name}`
 );
 
