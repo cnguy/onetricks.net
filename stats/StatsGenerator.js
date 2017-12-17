@@ -86,10 +86,10 @@ const main = async () => {
                 [METHOD_NAMES.LEAGUE.GET_CHALLENGER_LEAGUE]:
                     1000 * 60 * 60 * 24,
                 [METHOD_NAMES.LEAGUE.GET_MASTER_LEAGUE]: 1000 * 60 * 60 * 24,
-                [METHOD_NAMES.MATCH.GET_RECENT_MATCHLIST]: 1000 * 60 * 60 * 60,
                 [METHOD_NAMES.MATCH.GET_MATCH]:
-                    1000 * 60 * 60 * 60 * 60 * 60 * 60 * 60 * 60,
-                [METHOD_NAMES.MATCH.GET_MATCHLIST]: 1000 * 60 * 60 * 60,
+                1000 * 60 * 60 * 60 * 60 * 60 * 60 * 60 * 60,
+                [METHOD_NAMES.MATCH.GET_MATCHLIST]: 1000 * 60 * 60 * 24,
+                [METHOD_NAMES.MATCH.GET_RECENT_MATCHLIST]: 1000 * 60 * 60 * 25,
             },
         },
     });
