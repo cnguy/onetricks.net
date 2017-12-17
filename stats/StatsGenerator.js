@@ -30,6 +30,7 @@ const platformIDs = {
 const regionKeys = Object.keys(REGIONS);
 const asPlatformID = regionAbbr => platformIDs[regionKeys.find(eq(regionAbbr))];
 const eq = v => k => REGIONS[k] === v;
+
 // Helpers
 const findParticipantIdentity = (match, summonerID) =>
     match.participantIdentities.find(({ player }) => {
@@ -169,15 +170,6 @@ const main = async () => {
                         //     'total number of matches:',
                         //     matchlist.matches.length,
                         //     totalNumOfGames,
-                        // );
-
-                        // console.log(
-                        //     matchlist.matches.length,
-                        //     matchlist.matches.filter(
-                        //         z =>
-                        //             z.platformId.toLowerCase() ===
-                        //             asPlatformID(region),
-                        //     ).length,
                         // );
 
                         // Filter out matches that belong to a different platform
