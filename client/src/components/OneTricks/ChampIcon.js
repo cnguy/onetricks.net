@@ -7,7 +7,8 @@ import React from 'react';
 
 const getIcon = (name: string) => {
   try {
-    return require(`../../assets/champ-icons/min/${name.toLowerCase()}square-min.png`); // $FlowFixMe disable require literal string
+    // $FlowFixMe disable require literal string
+    return require(`../../assets/champ-icons/min/${name.toLowerCase()}square-min.png`);
   } catch (err) {
     return require('../../assets/champ-icons/min/questionmark.png');
   }
