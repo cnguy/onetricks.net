@@ -38,6 +38,6 @@ However, I found that this heuristic worked really well when there are **accurat
 
 I used my eyes to judge the results and overall, it seemed fine (I used to be a Challenger player for multiple seasons).
 
-# Reddit description
+# Reddit Description
 
 [reddit op](https://www.reddit.com/r/leagueoflegends/comments/5x1c5c/hi_i_made_a_small_website_to_compile_a_list_of/)
