@@ -12,7 +12,7 @@ Note that this codebase is also very old, and my main goal now that I finished b
 
 # Overview
 
-This web application comprises of five components:
+This web application is comprised of five components:
 1) Standard Node.js server
 2) Static React application
 3) Scripts to generate statistics and data
@@ -34,7 +34,7 @@ Secondly, the One Tricks algorithm isn't an algorithm. It simply just determines
 
 So basically grade school division.
 
-However, I found that this heuristic worked really well when there are **accurate** stats (0.45 seemed to be a very good number), and can be outdated because a player may have switched to one trick a different champion.
+However, I found that this heuristic only really worked well when there are **accurate** stats (only then did 45% worked really well). This can also be outdated because a player may have switched to one trick a different champion recently.
 
 I used my eyes to judge the results and overall, it seemed fine (I used to be a Challenger player for multiple seasons).
 
