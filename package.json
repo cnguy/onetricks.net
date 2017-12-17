@@ -14,10 +14,10 @@
   },
   "scripts": {
     "start": "concurrently \"npm run server\" \"npm run client\"",
-    "new-start": "babel-node ./stats/StatsGenerator.js",
-    "lint-stats": "prettier --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./stats/**/*.js\"",
     "server": "babel-node server.js",
     "client": "babel-node start-client.js",
+    "new-start": "babel-node ./stats/StatsGenerator.js",
+    "lint-stats": "prettier --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./stats/**/*.js\"",
     "dev": "echo \"This command has been deprecated. Use 'npm start'\" && exit 1",
     "build": "cd client && npm run build && ..",
     "deploy": "git push https://git.heroku.com/onetricks.git master",
