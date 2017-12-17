@@ -12,8 +12,11 @@ require('./models');
 
 const Player = mongoose.model('Player');
 
-// mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@ds161029.mlab.com:61029/${process.env.MONGO_USER}`);
-mongoose.connect(process.env.LOCAL_MONGO_URL);
+if (process.env.NODE_ENV === 'development') {
+  mongoose.connect(process.env.LOCAL_MONGO_URL);
+} else {
+  mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@ds161029.mlab.com:61029/${process.env.MONGO_USER}`);
+}
 
 app.set('port', (process.env.PORT || 3001));
 
