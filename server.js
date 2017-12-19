@@ -108,32 +108,6 @@ app.get('/challengers', (req, res) => {
   }
 });
 
-app.get(`/${process.env.SECRET_URL}`, (req, res) => {
-  console.log('let us try to update this bullshit');  
-  update('challengers', REGIONS.NORTH_AMERICA);
-  update('masters', REGIONS.NORTH_AMERICA);
-  update('challengers', REGIONS.KOREA);
-  update('masters', REGIONS.KOREA);
-  update('challengers', REGIONS.EUROPE_WEST);
-  update('masters', REGIONS.EUROPE_WEST);
-  update('challengers', REGIONS.EUROPE);
-  update('masters', REGIONS.EUROPE);
-  update('challengers', REGIONS.BRAZIL);
-  update('masters', REGIONS.BRAZIL);
-  update('challengers', REGIONS.OCEANIA);
-  update('masters', REGIONS.OCEANIA);
-  update('challengers', REGIONS.JAPAN);
-  update('masters', REGIONS.JAPAN);
-  update('challengers', REGIONS.LATIN_AMERICA_NORTH);
-  update('masters', REGIONS.LATIN_AMERICA_NORTH);
-  update('challengers', REGIONS.LATIN_AMERICA_SOUTH);
-  update('masters', REGIONS.LATIN_AMERICA_SOUTH);
-  update('challengers', REGIONS.TURKEY);
-  update('masters', REGIONS.TURKEY);
-  update('challengers', REGIONS.RUSSIA);
-  update('masters', REGIONS.RUSSIA);
-});
-// update('challengers', REGIONS.NORTH_AMERICA);
 app.use((req, res, next) =>
   res.render('404', { status: 404, url: req.url }),
 );
