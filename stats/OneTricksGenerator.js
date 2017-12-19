@@ -67,6 +67,32 @@ const getStats = (summonerID, region) => {
     return stats.find(p => parseInt(p.summonerId) === parseInt(summonerID));
 }; // && p.region === region);
 
+/**
+ * createOneTrick products the DTO that will be stored in our MongoDB database.
+ * @param {number} id - The summoner ID.
+ * @param {number} wins - The number of wins on the champion being processed.
+ * @param {number} losses - The number of losses on the champion being processed.
+ * @param {object} champData - The static champion DTO returned by the API.
+ * @returns {object} a one trick DTO that fits into our MongoDB Player Schema.
+ */
+const createOneTrick = (id, wins, losses, champData) => {
+    // Put all bandaid fixes here.
+    if (champData && champData.key === 'MonkeyKing') {
+        return {
+            champ: 'Wukong',
+            id,
+            wins,
+            losses,
+        };
+    } else if (champData) {
+        return {
+            champ: champData.key,
+            id,
+            wins,
+            losses,
+        };
+    }
+};
 async function generate(rank, region) {
     const oneTricks = {};
 
@@ -108,21 +134,12 @@ async function generate(rank, region) {
                         );
                         numOfOneTricksLeft += 1;
                         const { summonerId } = playerStats;
-                        if (champData && champData.key === 'MonkeyKing') {
-                            oneTricks[summonerId] = {
-                                champ: 'Wukong',
-                                id: summonerId,
-                                wins: totalSessionsWon,
-                                losses: totalSessionsLost,
-                            };
-                        } else if (champData) {
-                            oneTricks[summonerId] = {
-                                champ: champData.key,
-                                id: summonerId,
-                                wins: totalSessionsWon,
-                                losses: totalSessionsLost,
-                            };
-                        }
+                        oneTricks[summonerId] = createOneTrick(
+                            summonerId,
+                            wins,
+                            losses,
+                            champData,
+                        );
 
                         console.log(champData.key, 'detected');
 
@@ -159,54 +176,53 @@ async function generate(rank, region) {
                             }
 
                             Player.collection.remove(
-                              {
-                                  rank: rank.charAt(0),
-                                  region,
-                              },
-                              err => {
-                                  if (err) {
-                                      console.log(err);
-                                  }
-                                  if (!err) {
-                                      if (final.length > 0) {
-                                          const count = final.reduce(
-                                              (total, val) =>
-                                                  total + (val === region),
-                                              0,
-                                          );
+                                {
+                                    rank: rank.charAt(0),
+                                    region,
+                                },
+                                err => {
+                                    if (err) {
+                                        console.log(err);
+                                    }
+                                    if (!err) {
+                                        if (final.length > 0) {
+                                            const count = final.reduce(
+                                                (total, val) =>
+                                                    total + (val === region),
+                                                0,
+                                            );
 
-                                          if (count < 2) {
-                                              Player.collection.insert(
-                                                  final,
-                                                  (err, docs) => {
-                                                      if (err) {
-                                                          console.log(err);
-                                                      } else {
-                                                          console.log(
-                                                              `${
-                                                                  final.length
-                                                              } players were successfully stored in ${region}.`,
-                                                          );
-                                                          regionsCompleted.push(
-                                                              region,
-                                                          );
-                                                          console.log(
-                                                              regionsCompleted.sort(),
-                                                          );
-                                                          console.log(
-                                                              regionsCompleted.length,
-                                                          );
-                                                          done = true;
-                                                          return done;
-                                                      }
-                                                  },
-                                              );
-                                          }
-                                      }
-                                  }
-                              },
-                          );
-
+                                            if (count < 2) {
+                                                Player.collection.insert(
+                                                    final,
+                                                    (err, docs) => {
+                                                        if (err) {
+                                                            console.log(err);
+                                                        } else {
+                                                            console.log(
+                                                                `${
+                                                                    final.length
+                                                                } players were successfully stored in ${region}.`,
+                                                            );
+                                                            regionsCompleted.push(
+                                                                region,
+                                                            );
+                                                            console.log(
+                                                                regionsCompleted.sort(),
+                                                            );
+                                                            console.log(
+                                                                regionsCompleted.length,
+                                                            );
+                                                            done = true;
+                                                            return done;
+                                                        }
+                                                    },
+                                                );
+                                            }
+                                        }
+                                    }
+                                },
+                            );
                         }
                     }
                     break; // if first champ shows proof of one trick
