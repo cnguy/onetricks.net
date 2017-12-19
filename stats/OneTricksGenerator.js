@@ -214,23 +214,19 @@ async function generate(rank, region) {
                             numOfOneTricksLeft === 0 &&
                             !done
                         ) {
-                            const final = [];
-
-                            for (const key of Object.keys(oneTricks)) {
-                                final.push({
-                                    ...oneTricks[key],
-                                    ...{
-                                        rank: rank.charAt(0),
-                                        region,
-                                    },
-                                });
-                            }
+                            const payload = Object.keys(oneTricks).map(key => ({
+                                ...oneTricks[key],
+                                ...{
+                                    rank: rank.charAt(0),
+                                    region,
+                                },
+                            }));
 
                             // Possible errors being ignored here.
                             await clearPlayersInDB(rank.charAt(0), region);
 
-                            let done = await insertPlayersIntoDB(
-                                final,
+                            done = await insertPlayersIntoDB(
+                                payload,
                                 region,
                                 regionsCompleted,
                             );
