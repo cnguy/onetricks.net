@@ -125,29 +125,18 @@ const clearPlayersInDB = async (rank, region) => {
  * @param {string} regionsCompleted - Helper array to show what regions have been processed.
  */
 const insertPlayersIntoDB = async (payload, region, regionsCompleted) => {
-    if (payload.length > 0) {
-        const count = payload.reduce(
-            (total, val) => total + (val === region),
-            0,
-        );
-
-        if (count < 2) {
-            Player.collection.insert(payload, (err, docs) => {
-                if (err) {
-                    throw new Error(err);
-                }
-                console.log(
-                    `${
-                        payload.length
-                    } players were successfully stored in ${region}.`,
-                );
-                regionsCompleted.push(region);
-                console.log(regionsCompleted.sort());
-                console.log(regionsCompleted.length);
-                return docs;
-            });
+    Player.collection.insert(payload, (err, docs) => {
+        if (err) {
+            throw new Error(err);
         }
-    }
+        console.log(
+            `${payload.length} players were successfully stored in ${region}.`,
+        );
+        regionsCompleted.push(region);
+        console.log(regionsCompleted.sort());
+        console.log(regionsCompleted.length);
+        return docs;
+    });
 };
 
 /**
