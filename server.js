@@ -18,6 +18,11 @@ if (process.env.NODE_ENV === 'development') {
   mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASS}@ds161029.mlab.com:61029/${process.env.MONGO_USER}`);
 }
 
+// Express only serves static assets in production.
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
+}
+
 app.set('port', (process.env.PORT || 3001));
 
 app.get('/all', (req, res, next) => {
