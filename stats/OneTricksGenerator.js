@@ -6,18 +6,18 @@ require('../models');
 const PLAYER_SCHEMA_NAME = 'Player';
 const Player = mongoose.model(PLAYER_SCHEMA_NAME);
 
-
+const TARGET_QUEUE = 'RANKED_SOLO_5x5';
 
 if (process.env.NODE_ENV === 'development') {
-  mongoose.connect(process.env.LOCAL_MONGO_URL);
+    mongoose.connect(process.env.LOCAL_MONGO_URL);
 } else if (process.env.NODE_ENV === 'production') {
-  mongoose.connect(
-    `mongodb://${process.env.MONGO_USER}:${
-        process.env.MONGO_PASS
-    }@ds161029.mlab.com:61029/${process.env.MONGO_USER}`,
-);
+    mongoose.connect(
+        `mongodb://${process.env.MONGO_USER}:${
+            process.env.MONGO_PASS
+        }@ds161029.mlab.com:61029/${process.env.MONGO_USER}`,
+    );
 } else {
-  throw new Error(".env file is missing NODE_ENV environment variable.");
+    throw new Error('.env file is missing NODE_ENV environment variable.');
 }
 
 const kayn = Kayn()({
@@ -44,409 +44,209 @@ const kayn = Kayn()({
     },
 });
 
-const ranks = {
-    CHALLENGER: 'challengers',
-    MASTER: 'masters',
-};
+const regionsCompleted = [];
 
-var regionsCompleted = [];
-
+// temp
 const isOneTrick = (otGames, total) => otGames / total >= 0.25;
 // 0.45 works for accurate stats + large number of games
 
-const getRank = {
-    challengers: (region, cb) => {
-        console.log('challengers:', region);
-        kayn.Challenger.list('RANKED_SOLO_5x5')
-            .region(region)
-            .callback(cb);
-    },
-    masters: (region, cb) => {
-        console.log('masters:', region);
-        kayn.Master.list('RANKED_SOLO_5x5')
-            .region(region)
-            .callback(cb);
-    },
+const getLeagueByRank = async (region, rank) => {
+    if (rank === 'challengers') {
+        return kayn.Challenger.list(TARGET_QUEUE).region(region);
+    }
+    if (rank === 'masters') {
+        return kayn.Master.list(TARGET_QUEUE).region(region);
+    }
+    throw new Error('Parameter `rank` is not correct.');
 };
 
 import jsonfile from 'jsonfile';
 const stats = jsonfile.readFileSync('./stats.json').players;
-console.log('hello');
+
 const getStats = (summonerID, region) => {
     return stats.find(p => parseInt(p.summonerId) === parseInt(summonerID));
 }; // && p.region === region);
 
-function update(rank, region) {
-    (() => {
-        console.log('begin');
-        const oneTricks = {};
-        // debug variables
-        let numOfOneTricksLeft = 0;
-        let countdown = 0;
-        let done = false;
+async function generate(rank, region) {
+    const oneTricks = {};
 
-        (() => {
-            getRank[rank](region, (err, players) => {
-                // riotApi.get(urlGenerator[rank](region), (err, players) => {
-                if (err) console.log('rankregionerr:', err);
-                if (players && players.entries) {
-                    countdown = players.entries.length;
-                    console.log(countdown);
+    let numOfOneTricksLeft = 0;
+    let done = false;
 
-                    for (const player of players.entries) {
-                        const { wins, losses } = player;
-                        const games = wins + losses;
+    const league = await getLeagueByRank(region, rank);
+    let countdown = league.entries.length;
 
-                        // riotApi.get(urlGenerator.stats(region)(player.playerOrTeamId), (err, playerStats) => {
-                        (() => {
-                            let playerStats = getStats(
-                                player.playerOrTeamId,
-                                region,
-                            );
-                            if (err) {
-                                console.log('playerorteamid err:', err);
+    console.log('countdown:', countdown, 'for', region, rank);
+
+    await Promise.all(
+        league.entries.map(async player => {
+            const { wins, losses } = player;
+            const totalGames = wins + losses;
+
+            const playerStats = getStats(player.playerOrTeamId, region);
+            if (!playerStats) {
+                return;
+            }
+            --countdown;
+            console.log(
+                region,
+                `-COUNTERS: (${countdown},${numOfOneTricksLeft})`,
+            );
+
+            for (const champStats of playerStats.champions) {
+                const {
+                    totalSessionsPlayed,
+                    wins: totalSessionsWon,
+                    losses: totalSessionsLost,
+                } = champStats.stats;
+
+                if (isOneTrick(totalSessionsPlayed, totalGames)) {
+                    const champId = champStats.id;
+                    if (champId !== 0) {
+                        const champData = await kayn.Static.Champion.get(
+                            champId,
+                        );
+                        numOfOneTricksLeft += 1;
+                        const { summonerId } = playerStats;
+                        if (champData && champData.key === 'MonkeyKing') {
+                            oneTricks[summonerId] = {
+                                champ: 'Wukong',
+                                id: summonerId,
+                                wins: totalSessionsWon,
+                                losses: totalSessionsLost,
+                            };
+                        } else if (champData) {
+                            oneTricks[summonerId] = {
+                                champ: champData.key,
+                                id: summonerId,
+                                wins: totalSessionsWon,
+                                losses: totalSessionsLost,
+                            };
+                        }
+
+                        console.log(champData.key, 'detected');
+
+                        const summoner = await kayn.Summoner.by
+                            .id(summonerId)
+                            .region(region);
+
+                        console.log(`checking ${summonerId}`);
+
+                        oneTricks[summonerId].name = summoner.name;
+
+                        numOfOneTricksLeft -= 1;
+
+                        console.log(
+                            region,
+                            `COUNTERS-: (${countdown},${numOfOneTricksLeft})`,
+                        );
+
+                        if (
+                            countdown === 0 &&
+                            numOfOneTricksLeft === 0 &&
+                            !done
+                        ) {
+                            const final = [];
+
+                            for (const key of Object.keys(oneTricks)) {
+                                final.push({
+                                    ...oneTricks[key],
+                                    ...{
+                                        rank: rank.charAt(0),
+                                        region,
+                                    },
+                                });
                             }
 
-                            if (playerStats) {
-                                --countdown;
-                                console.log(
-                                    region,
-                                    `-COUNTERS: (${countdown},${numOfOneTricksLeft})`,
-                                );
+                            Player.collection.remove(
+                              {
+                                  rank: rank.charAt(0),
+                                  region,
+                              },
+                              err => {
+                                  if (err) {
+                                      console.log(err);
+                                  }
+                                  if (!err) {
+                                      if (final.length > 0) {
+                                          const count = final.reduce(
+                                              (total, val) =>
+                                                  total + (val === region),
+                                              0,
+                                          );
 
-                                for (const champStats of playerStats.champions) {
-                                    const {
-                                        totalSessionsPlayed,
-                                        wins: totalSessionsWon,
-                                        losses: totalSessionsLost,
-                                    } = champStats.stats;
-                                    // TODO: CHECK SECOND CHAMP HERE
-                                    if (
-                                        isOneTrick(totalSessionsPlayed, games)
-                                    ) {
-                                        const champId = champStats.id;
-                                        if (champId !== 0) {
-                                            (() => {
-                                                kayn.Static.Champion.get(
-                                                    champId,
-                                                ).callback((err, champData) => {
-                                                    // riotApi.get(urlGenerator.champion(region)(champId), (err, champData) => {
-                                                    if (err) {
-                                                        console.log(
-                                                            'regionchampid:',
-                                                            err,
-                                                        );
-                                                    }
+                                          if (count < 2) {
+                                              Player.collection.insert(
+                                                  final,
+                                                  (err, docs) => {
+                                                      if (err) {
+                                                          console.log(err);
+                                                      } else {
+                                                          console.log(
+                                                              `${
+                                                                  final.length
+                                                              } players were successfully stored in ${region}.`,
+                                                          );
+                                                          regionsCompleted.push(
+                                                              region,
+                                                          );
+                                                          console.log(
+                                                              regionsCompleted.sort(),
+                                                          );
+                                                          console.log(
+                                                              regionsCompleted.length,
+                                                          );
+                                                          done = true;
+                                                          return done;
+                                                      }
+                                                  },
+                                              );
+                                          }
+                                      }
+                                  }
+                              },
+                          );
 
-                                                    if (champData) {
-                                                        numOfOneTricksLeft += 1;
-                                                        const {
-                                                            summonerId,
-                                                        } = playerStats;
-                                                        if (
-                                                            champData &&
-                                                            champData.key ===
-                                                                'MonkeyKing'
-                                                        ) {
-                                                            oneTricks[
-                                                                summonerId
-                                                            ] = {
-                                                                champ: 'Wukong',
-                                                                id: summonerId,
-                                                                wins: totalSessionsWon,
-                                                                losses: totalSessionsLost,
-                                                            };
-                                                        } else if (champData) {
-                                                            oneTricks[
-                                                                summonerId
-                                                            ] = {
-                                                                champ:
-                                                                    champData.key,
-                                                                id: summonerId,
-                                                                wins: totalSessionsWon,
-                                                                losses: totalSessionsLost,
-                                                            };
-                                                        }
-
-                                                        console.log(
-                                                            champData.key +
-                                                                ' detected',
-                                                        );
-                                                        (() => {
-                                                            kayn.Summoner.by
-                                                                .id(summonerId)
-                                                                .region(region)
-                                                                .callback(
-                                                                    (
-                                                                        err,
-                                                                        data,
-                                                                    ) => {
-                                                                        // riotApi.get(urlGenerator.summoner(region)(summonerId), (err, data) => {
-                                                                        if (
-                                                                            err
-                                                                        ) {
-                                                                            console.log(
-                                                                                'summonnername:',
-                                                                                err,
-                                                                            );
-                                                                        }
-
-                                                                        if (
-                                                                            data
-                                                                        ) {
-                                                                            console.log(
-                                                                                `checking ${summonerId}`,
-                                                                            );
-                                                                            // Storing the name could be meh in case they change it. But I want to save API calls. A few errors (1-2) are whatever considering that it'll reset every day.
-                                                                            oneTricks[
-                                                                                summonerId
-                                                                            ].name =
-                                                                                data.name;
-                                                                            // console.log(oneTricks);
-
-                                                                            numOfOneTricksLeft -= 1;
-                                                                            console.log(
-                                                                                region,
-                                                                                `COUNTERS-: (${countdown},${numOfOneTricksLeft})`,
-                                                                            );
-
-                                                                            if (
-                                                                                countdown ===
-                                                                                    0 &&
-                                                                                numOfOneTricksLeft ===
-                                                                                    0 &&
-                                                                                !done
-                                                                            ) {
-                                                                                const final = [];
-
-                                                                                for (const key of Object.keys(
-                                                                                    oneTricks,
-                                                                                )) {
-                                                                                    final.push(
-                                                                                        Object.assign(
-                                                                                            {},
-                                                                                            oneTricks[
-                                                                                                key
-                                                                                            ],
-                                                                                            {
-                                                                                                rank: rank.charAt(
-                                                                                                    0,
-                                                                                                ),
-                                                                                            },
-                                                                                            {
-                                                                                                region,
-                                                                                            },
-                                                                                        ),
-                                                                                    );
-                                                                                }
-                                                                                // TODO: update if duplicate already exists or name is diff
-                                                                                (() => {
-                                                                                    Player.collection.remove(
-                                                                                        {
-                                                                                            rank: rank.charAt(
-                                                                                                0,
-                                                                                            ),
-                                                                                            region,
-                                                                                        },
-                                                                                        err => {
-                                                                                            if (
-                                                                                                err
-                                                                                            )
-                                                                                                console.log(
-                                                                                                    err,
-                                                                                                );
-                                                                                            if (
-                                                                                                !err
-                                                                                            ) {
-                                                                                                // console.log(`removed docs from ${rank}, ${region}`);
-
-                                                                                                if (
-                                                                                                    final.length >
-                                                                                                    0
-                                                                                                ) {
-                                                                                                    const count = final.reduce(
-                                                                                                        (
-                                                                                                            total,
-                                                                                                            val,
-                                                                                                        ) =>
-                                                                                                            total +
-                                                                                                            (val ===
-                                                                                                                region),
-                                                                                                        0,
-                                                                                                    );
-                                                                                                    if (
-                                                                                                        count <
-                                                                                                        2
-                                                                                                    ) {
-                                                                                                        Player.collection.insert(
-                                                                                                            final,
-                                                                                                            (
-                                                                                                                err,
-                                                                                                                docs,
-                                                                                                            ) => {
-                                                                                                                if (
-                                                                                                                    err
-                                                                                                                ) {
-                                                                                                                    console.log(
-                                                                                                                        err,
-                                                                                                                    );
-                                                                                                                } else {
-                                                                                                                    // console.log(docs);
-                                                                                                                    // console.log(oneTricks)
-                                                                                                                    console.log(
-                                                                                                                        `${
-                                                                                                                            final.length
-                                                                                                                        } players were successfully stored in ${region}.`,
-                                                                                                                    );
-                                                                                                                    regionsCompleted.push(
-                                                                                                                        region,
-                                                                                                                    );
-                                                                                                                    console.log(
-                                                                                                                        regionsCompleted.sort(),
-                                                                                                                    );
-                                                                                                                    console.log(
-                                                                                                                        regionsCompleted.length,
-                                                                                                                    );
-                                                                                                                    done = true;
-                                                                                                                    return;
-                                                                                                                }
-                                                                                                            },
-                                                                                                        );
-                                                                                                    }
-                                                                                                }
-                                                                                            } else
-                                                                                                console.log(
-                                                                                                    err,
-                                                                                                    "couldn't remove",
-                                                                                                );
-                                                                                        },
-                                                                                    );
-                                                                                })(
-                                                                                    final,
-                                                                                );
-                                                                            }
-                                                                        }
-                                                                    },
-                                                                );
-                                                        })(summonerId);
-                                                    }
-                                                });
-                                            })(
-                                                playerStats,
-                                                champId,
-                                                totalSessionsWon,
-                                                totalSessionsLost,
-                                            );
-                                            break; // if first champ shows proof of 1trick
-                                        }
-                                    }
-                                }
-
-                                if (
-                                    countdown === 0 &&
-                                    numOfOneTricksLeft === 0 &&
-                                    !done
-                                ) {
-                                    const final = [];
-
-                                    for (const key of Object.keys(oneTricks)) {
-                                        final.push(
-                                            Object.assign(
-                                                {},
-                                                oneTricks[key],
-                                                { rank: rank.charAt(0) },
-                                                { region },
-                                            ),
-                                        );
-                                    }
-                                    // TODO: update if duplicate already exists or name is diff
-                                    (() => {
-                                        Player.collection.remove(
-                                            { rank: rank.charAt(0), region },
-                                            err => {
-                                                if (err) console.log(err);
-                                                if (!err) {
-                                                    // console.log(`removed docs from ${rank}, ${region}`);
-                                                    if (final.length > 0) {
-                                                        const count = final.reduce(
-                                                            (total, val) =>
-                                                                total +
-                                                                (val ===
-                                                                    region),
-                                                            0,
-                                                        );
-                                                        if (count < 2) {
-                                                            Player.collection.insert(
-                                                                final,
-                                                                (err, docs) => {
-                                                                    if (err) {
-                                                                        console.log(
-                                                                            err,
-                                                                        );
-                                                                    } else {
-                                                                        // console.log(docs);
-                                                                        // console.log(oneTricks)
-                                                                        console.log(
-                                                                            '$d players were successfully stored.',
-                                                                            docs.length,
-                                                                        );
-                                                                        console.log(
-                                                                            'done with' +
-                                                                                region,
-                                                                        );
-                                                                        regionsCompleted.push(
-                                                                            region,
-                                                                        );
-                                                                        console.log(
-                                                                            regionsCompleted.sort(),
-                                                                        );
-                                                                        console.log(
-                                                                            regionsCompleted.length,
-                                                                        );
-                                                                        done = true;
-                                                                        return;
-                                                                    }
-                                                                },
-                                                            );
-                                                        }
-                                                    }
-                                                } else
-                                                    console.log(
-                                                        err,
-                                                        "couldn't remove",
-                                                    );
-                                            },
-                                        );
-                                    })(final);
-                                }
-                            }
-                        })();
+                        }
                     }
+                    break; // if first champ shows proof of one trick
                 }
-            });
-        })();
-    })();
+            }
+        }),
+    );
 }
 
-update('challengers', REGIONS.NORTH_AMERICA);
-update('masters', REGIONS.NORTH_AMERICA);
-update('challengers', REGIONS.KOREA);
-update('masters', REGIONS.KOREA);
-update('challengers', REGIONS.EUROPE_WEST);
-update('masters', REGIONS.EUROPE_WEST);
-update('challengers', REGIONS.EUROPE);
-update('masters', REGIONS.EUROPE);
-update('challengers', REGIONS.BRAZIL);
-update('masters', REGIONS.BRAZIL);
-update('challengers', REGIONS.OCEANIA);
-update('masters', REGIONS.OCEANIA);
-update('challengers', REGIONS.JAPAN);
-update('masters', REGIONS.JAPAN);
-update('challengers', REGIONS.LATIN_AMERICA_NORTH);
-update('masters', REGIONS.LATIN_AMERICA_NORTH);
-update('challengers', REGIONS.LATIN_AMERICA_SOUTH);
-update('masters', REGIONS.LATIN_AMERICA_SOUTH);
-update('challengers', REGIONS.TURKEY);
-update('masters', REGIONS.TURKEY);
-update('challengers', REGIONS.RUSSIA);
-update('masters', REGIONS.RUSSIA);
+const main = async () => {
+    const promises = [
+        generate('challengers', REGIONS.NORTH_AMERICA),
+        generate('masters', REGIONS.NORTH_AMERICA),
+        generate('challengers', REGIONS.KOREA),
+        generate('masters', REGIONS.KOREA),
+        generate('challengers', REGIONS.EUROPE_WEST),
+        generate('masters', REGIONS.EUROPE_WEST),
+        generate('challengers', REGIONS.EUROPE),
+        generate('masters', REGIONS.EUROPE),
+        generate('challengers', REGIONS.BRAZIL),
+        generate('masters', REGIONS.BRAZIL),
+        generate('challengers', REGIONS.OCEANIA),
+        generate('masters', REGIONS.OCEANIA),
+        generate('challengers', REGIONS.JAPAN),
+        generate('masters', REGIONS.JAPAN),
+        generate('challengers', REGIONS.LATIN_AMERICA_NORTH),
+        generate('masters', REGIONS.LATIN_AMERICA_NORTH),
+        generate('challengers', REGIONS.LATIN_AMERICA_SOUTH),
+        generate('masters', REGIONS.LATIN_AMERICA_SOUTH),
+        generate('challengers', REGIONS.TURKEY),
+        generate('masters', REGIONS.TURKEY),
+        generate('challengers', REGIONS.RUSSIA),
+        generate('masters', REGIONS.RUSSIA),
+    ];
+
+    await Promise.all(promises);
+};
+
+try {
+    main();
+} catch (exception) {
+    console.error(exception);
+}
