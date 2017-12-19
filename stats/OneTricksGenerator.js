@@ -62,10 +62,13 @@ const getLeagueByRank = async (region, rank) => {
 
 import jsonfile from 'jsonfile';
 const stats = jsonfile.readFileSync('./stats.json').players;
-
-const getStats = (summonerID, region) => {
-    return stats.find(p => parseInt(p.summonerId) === parseInt(summonerID));
-}; // && p.region === region);
+/**
+ * getStats closes over stats, providing a way for us to find a particular summoner
+ * within the stats.json file as if we're making a call to the old stats endpoint.
+ * @param {number} summonerID - The summoner id to look for.
+ * @returns {object} a stats object or `undefined` if not found.
+ */
+const getStats = summonerID => stats.find(p => parseInt(p.summonerId) === parseInt(summonerID));
 
 /**
  * createOneTrick products the DTO that will be stored in our MongoDB database.
@@ -92,7 +95,14 @@ const createOneTrick = (id, wins, losses, champData) => {
             losses,
         };
     }
+    throw new Error("createOneTrick somehow failed.");
 };
+
+/**
+ * generate generates all the one tricks given a combination of rank and region.
+ * @param {string} rank - This should work with getLeagueByRank. (Either 'challengers' or 'masters').
+ * @param {string} region - An abbreviated region ('na1', 'euw', etc). Use `REGIONS` from `kayn`.
+ */
 async function generate(rank, region) {
     const oneTricks = {};
 
