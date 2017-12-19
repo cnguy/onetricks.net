@@ -68,7 +68,8 @@ const stats = jsonfile.readFileSync('./stats.json').players;
  * @param {number} summonerID - The summoner id to look for.
  * @returns {object} a stats object or `undefined` if not found.
  */
-const getStats = summonerID => stats.find(p => parseInt(p.summonerId) === parseInt(summonerID));
+const getStats = summonerID =>
+    stats.find(p => parseInt(p.summonerId) === parseInt(summonerID));
 
 /**
  * createOneTrick products the DTO that will be stored in our MongoDB database.
@@ -95,7 +96,58 @@ const createOneTrick = (id, wins, losses, champData) => {
             losses,
         };
     }
-    throw new Error("createOneTrick somehow failed.");
+    throw new Error('createOneTrick somehow failed.');
+};
+
+/**
+ * clearsPlayerInDB removes all one tricks from the database given a rank and region.
+ * This is an async/awaitable wrapper function to prevent callback hell.
+ * @param {string} rank - 'challengers' or 'masters'.
+ * @param {string} region
+ */
+const clearPlayersInDB = async (rank, region) => {
+    Player.collection.remove(
+        {
+            rank: rank.charAt(0),
+            region,
+        },
+        err => {
+            if (err) throw new Error(err);
+            return true;
+        },
+    );
+};
+
+/**
+ * insertPlayersIntoDB inserts a set of one tricks into the database.
+ * @param {[]object} payload - An object of one trick DTO's.
+ * @param {string} region
+ * @param {string} regionsCompleted - Helper array to show what regions have been processed.
+ */
+const insertPlayersIntoDB = async (payload, region, regionsCompleted) => {
+    if (payload.length > 0) {
+        const count = payload.reduce(
+            (total, val) => total + (val === region),
+            0,
+        );
+
+        if (count < 2) {
+            Player.collection.insert(payload, (err, docs) => {
+                if (err) {
+                    throw new Error(err);
+                }
+                console.log(
+                    `${
+                        payload.length
+                    } players were successfully stored in ${region}.`,
+                );
+                regionsCompleted.push(region);
+                console.log(regionsCompleted.sort());
+                console.log(regionsCompleted.length);
+                return docs;
+            });
+        }
+    }
 };
 
 /**
@@ -185,54 +237,16 @@ async function generate(rank, region) {
                                 });
                             }
 
-                            Player.collection.remove(
-                                {
-                                    rank: rank.charAt(0),
-                                    region,
-                                },
-                                err => {
-                                    if (err) {
-                                        console.log(err);
-                                    }
-                                    if (!err) {
-                                        if (final.length > 0) {
-                                            const count = final.reduce(
-                                                (total, val) =>
-                                                    total + (val === region),
-                                                0,
-                                            );
+                            // Possible errors being ignored here.
+                            await clearPlayersInDB(rank.charAt(0), region);
 
-                                            if (count < 2) {
-                                                Player.collection.insert(
-                                                    final,
-                                                    (err, docs) => {
-                                                        if (err) {
-                                                            console.log(err);
-                                                        } else {
-                                                            console.log(
-                                                                `${
-                                                                    final.length
-                                                                } players were successfully stored in ${region}.`,
-                                                            );
-                                                            regionsCompleted.push(
-                                                                region,
-                                                            );
-                                                            console.log(
-                                                                regionsCompleted.sort(),
-                                                            );
-                                                            console.log(
-                                                                regionsCompleted.length,
-                                                            );
-                                                            done = true;
-                                                            return done;
-                                                        }
-                                                    },
-                                                );
-                                            }
-                                        }
-                                    }
-                                },
+                            let done = await insertPlayersIntoDB(
+                                final,
+                                region,
+                                regionsCompleted,
                             );
+
+                            return done;
                         }
                     }
                     break; // if first champ shows proof of one trick
