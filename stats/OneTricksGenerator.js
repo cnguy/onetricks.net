@@ -22,7 +22,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const kayn = Kayn()({
     debugOptions: {
-        isEnabled: false,
+        isEnabled: true,
         // showKey: true,
     },
     requestOptions: {
@@ -188,16 +188,6 @@ async function generate(rank, region) {
                         losses: totalSessionsLost,
                     } = champStats.stats;
 
-                    console.log(
-                        player.playerOrTeamId,
-                        player.playerOrTeamName,
-                        region,
-                        totalSessionsWon + totalSessionsLost,
-                        totalGames,
-                        (totalSessionsWon + totalSessionsLost) / totalGames)
-                    console.log(champStats);
-                    console.log(getStats(player.playerOrTeamId).matchesProcessed.length)
-    
                     if (isOneTrick(totalSessionsPlayed, totalGames)) {
                         const champId = champStats.id;
                         if (champId !== 0) {
@@ -269,28 +259,28 @@ async function generate(rank, region) {
 
 const main = async () => {
     const promises = [
-        // generate('challengers', REGIONS.NORTH_AMERICA),
+        generate('challengers', REGIONS.NORTH_AMERICA),
         generate('masters', REGIONS.NORTH_AMERICA),
-        // generate('challengers', REGIONS.KOREA),
-        // generate('masters', REGIONS.KOREA),
-        // generate('challengers', REGIONS.EUROPE_WEST),
-        // generate('masters', REGIONS.EUROPE_WEST),
-        // generate('challengers', REGIONS.EUROPE),
-        // generate('masters', REGIONS.EUROPE),
-        // generate('challengers', REGIONS.BRAZIL),
-        // generate('masters', REGIONS.BRAZIL),
-        // generate('challengers', REGIONS.OCEANIA),
-        // generate('masters', REGIONS.OCEANIA),
-        // generate('challengers', REGIONS.JAPAN),
-        // generate('masters', REGIONS.JAPAN),
-        // generate('challengers', REGIONS.LATIN_AMERICA_NORTH),
-        // generate('masters', REGIONS.LATIN_AMERICA_NORTH),
-        // generate('challengers', REGIONS.LATIN_AMERICA_SOUTH),
-        // generate('masters', REGIONS.LATIN_AMERICA_SOUTH),
-        // generate('challengers', REGIONS.TURKEY),
-        // generate('masters', REGIONS.TURKEY),
-        // generate('challengers', REGIONS.RUSSIA),
-        // generate('masters', REGIONS.RUSSIA),
+        generate('challengers', REGIONS.KOREA),
+        generate('masters', REGIONS.KOREA),
+        generate('challengers', REGIONS.EUROPE_WEST),
+        generate('masters', REGIONS.EUROPE_WEST),
+        generate('challengers', REGIONS.EUROPE),
+        generate('masters', REGIONS.EUROPE),
+        generate('challengers', REGIONS.BRAZIL),
+        generate('masters', REGIONS.BRAZIL),
+        generate('challengers', REGIONS.OCEANIA),
+        generate('masters', REGIONS.OCEANIA),
+        generate('challengers', REGIONS.JAPAN),
+        generate('masters', REGIONS.JAPAN),
+        generate('challengers', REGIONS.LATIN_AMERICA_NORTH),
+        generate('masters', REGIONS.LATIN_AMERICA_NORTH),
+        generate('challengers', REGIONS.LATIN_AMERICA_SOUTH),
+        generate('masters', REGIONS.LATIN_AMERICA_SOUTH),
+        generate('challengers', REGIONS.TURKEY),
+        generate('masters', REGIONS.TURKEY),
+        generate('challengers', REGIONS.RUSSIA),
+        generate('masters', REGIONS.RUSSIA),
     ];
 
     await Promise.all(promises);

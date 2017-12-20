@@ -58,17 +58,6 @@ const leagueEntryToSummoner = (kayn, region) => async ({
         (await kayn.Summoner.by.id(playerOrTeamId).region(region)).accountId,
     ).asObject();
 
-// const matchlistToMatches = async (matchlist, kayn, region) =>
-//     Promise.all(
-//         matchlist.matches.map(async ({ gameId }) => {
-//             try {
-//                 return await kayn.Match.get(gameId).region(region);
-//             } catch (ex) {
-//                 // This means that the match belongs to a different region (if 404).
-//                 return false;
-//             }
-//         }),
-//     );
 const matchlistToMatches = async (matchlist, kayn, region) => {
     const matchlistChunkSize = 50;
     let matches = [];
