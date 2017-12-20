@@ -6,8 +6,6 @@ A web application displaying a list of high ELO one trick ponies in League of Le
 
 ![Alt text](/_pictures/small_preview.png?raw=true "onetricks.net")
 
-It used to be much larger than this (around 5-6 rows of champion icons), but it'll take some time until I can build up enough stats for there to be a lot more champions.
-
 Note that this codebase is also very old, and my main goal now that I finished building up some stats is to clean up the code.
 
 # Overview
