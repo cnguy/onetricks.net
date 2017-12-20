@@ -521,7 +521,6 @@ const OneTricks = enhance(({
     }
   }
 
-
   if (sortedPlayers) {
     return (
       <div className="container">
