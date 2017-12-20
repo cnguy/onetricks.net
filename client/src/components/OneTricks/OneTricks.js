@@ -495,14 +495,13 @@ const OneTricks = enhance(({
     _challengers = cloneDeep(_all);
     _masters = cloneDeep(_all);
 
-    for (const [i, oneTricks] of _challengers.entries()) {
-      oneTricks[1] = oneTricks[1].filter(FILTERS.rank(RANKS.challenger));
-      if (oneTricks[1].length === 0) _challengers.splice(i, 1);
+    for (let i = 0; i < _challengers.length; ++i) {
+      _challengers[i][1] = _challengers[i][1].filter(FILTERS.rank(RANKS.challenger));
+      if (_challengers[i][1].length === 0) _challengers.splice(i--, 1);
     }
-
-    for (const [i, oneTricks] of _masters.entries()) {
-      oneTricks[1] = oneTricks[1].filter(FILTERS.rank(RANKS.master));
-      if (oneTricks[1].length === 0) _masters.splice(i, 1);
+    for (let i = 0; i < _masters.length; ++i) {
+      _masters[i][1] = _masters[i][1].filter(FILTERS.rank(RANKS.master));
+      if (_masters[i][1].length === 0) _masters.splice(i--, 1);
     }
 
     _challengers = SORTS.ONETRICKS(_challengers);
@@ -521,6 +520,7 @@ const OneTricks = enhance(({
       }
     }
   }
+
 
   if (sortedPlayers) {
     return (
