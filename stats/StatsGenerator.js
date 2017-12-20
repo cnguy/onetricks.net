@@ -58,17 +58,35 @@ const leagueEntryToSummoner = (kayn, region) => async ({
         (await kayn.Summoner.by.id(playerOrTeamId).region(region)).accountId,
     ).asObject();
 
-const matchlistToMatches = async (matchlist, kayn, region) =>
-    Promise.all(
-        matchlist.matches.map(async ({ gameId }) => {
-            try {
-                return await kayn.Match.get(gameId).region(region);
-            } catch (ex) {
-                // This means that the match belongs to a different region (if 404).
-                return false;
+// const matchlistToMatches = async (matchlist, kayn, region) =>
+//     Promise.all(
+//         matchlist.matches.map(async ({ gameId }) => {
+//             try {
+//                 return await kayn.Match.get(gameId).region(region);
+//             } catch (ex) {
+//                 // This means that the match belongs to a different region (if 404).
+//                 return false;
+//             }
+//         }),
+//     );
+const matchlistToMatches = async (matchlist, kayn, region) => {
+    const matchlistChunkSize = 50;
+    let matches = [];
+    for (let i = 0; i < matchlist.matches.length; i += matchlistChunkSize) {
+        const currentMatches = await Promise.all(matchlist.matches.slice(i, i + matchlistChunkSize).map(
+            async ({ gameId }) => {
+                try {
+                    return await kayn.Match.get(gameId).region(region);
+                } catch (ex) {
+                    // This means that the match belongs to a different region (if 404).
+                    return false;
+                }
             }
-        }),
-    );
+        ))
+        matches = matches.concat(currentMatches);
+    }
+    return matches;
+}
 
 const main = async () => {
     const kayn = Kayn()({
@@ -84,9 +102,9 @@ const main = async () => {
             ttls: {
                 [METHOD_NAMES.SUMMONER.GET_BY_SUMMONER_ID]: 1000 * 60 * 60 * 60,
                 [METHOD_NAMES.SUMMONER.GET_BY_ACCOUNT_ID]: 1000 * 60 * 60 * 60,
-                [METHOD_NAMES.LEAGUE.GET_CHALLENGER_LEAGUE]:
-                    1000 * 60 * 60 * 24,
-                [METHOD_NAMES.LEAGUE.GET_MASTER_LEAGUE]: 1000 * 60 * 60 * 24,
+                // [METHOD_NAMES.LEAGUE.GET_CHALLENGER_LEAGUE]:
+                //     1000 * 60 * 60 * 24,
+                // [METHOD_NAMES.LEAGUE.GET_MASTER_LEAGUE]: 1000 * 60 * 60 * 24,
                 [METHOD_NAMES.MATCH.GET_MATCH]:
                     1000 * 60 * 60 * 60 * 60 * 60 * 60 * 60 * 60,
                 [METHOD_NAMES.MATCH.GET_MATCHLIST]: 1000 * 60 * 60 * 24,
@@ -114,12 +132,15 @@ const main = async () => {
         const mastersLeague = await kayn.Master.list('RANKED_SOLO_5x5').region(
             region,
         );
-        const summoners = (await Promise.all(
+
+        const summoners = await Promise.all([
             challengerLeague.entries.map(leagueEntryToSummoner(kayn, region)),
             mastersLeague.entries.map(leagueEntryToSummoner(kayn, region)),
-        )).reduce((prev, curr) => prev.concat(curr), []);
+        ].reduce((prev, curr) => prev.concat(curr), []));
 
-        const summonersChunkSize = summoners.length / 4;
+        console.log('summoners.length:', summoners.length);
+
+        const summonersChunkSize = 100;
 
         for (let i = 0; i < summoners.length; i += summonersChunkSize) {
             // Process stats for each summoner.
@@ -160,7 +181,6 @@ const main = async () => {
                                     }
                                 } catch (ex) {
                                     console.log('matchlist limit reached.');
-                                    matchlistBeginIndex = 300;
                                     break;
                                 }
                             }
@@ -250,12 +270,11 @@ const main = async () => {
         console.log('allStats.length:', allStats.length);
     };
 
-    // I run out of memory doing this with 100 matches.
     // This works with the recent endpoint (20 matches per perspon).
     // await Promise.all(Object.keys(REGIONS).map(r => fn(REGIONS[r])));
 
     const keys = Object.keys(REGIONS);
-    const chunkSize = 4; // 3 works for challenger
+    const chunkSize = 1;
     const processChunk = async chunk =>
         Promise.all(chunk.map(r => fn(REGIONS[r])));
     for (let i = 0; i < keys.length; i += chunkSize) {

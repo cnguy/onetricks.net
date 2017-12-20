@@ -33,8 +33,8 @@ const kayn = Kayn()({
         ttls: {
             [METHOD_NAMES.SUMMONER.GET_BY_SUMMONER_ID]: 1000 * 60 * 60 * 60,
             [METHOD_NAMES.SUMMONER.GET_BY_ACCOUNT_ID]: 1000 * 60 * 60 * 60,
-            [METHOD_NAMES.LEAGUE.GET_CHALLENGER_LEAGUE]: 1000 * 60 * 60 * 24,
-            [METHOD_NAMES.LEAGUE.GET_MASTER_LEAGUE]: 1000 * 60 * 60 * 24,
+            // [METHOD_NAMES.LEAGUE.GET_CHALLENGER_LEAGUE]: 1000 * 60 * 60 * 24,
+            // [METHOD_NAMES.LEAGUE.GET_MASTER_LEAGUE]: 1000 * 60 * 60 * 24,
             [METHOD_NAMES.MATCH.GET_RECENT_MATCHLIST]: 1000 * 60 * 60 * 60,
             [METHOD_NAMES.MATCH.GET_MATCH]:
                 1000 * 60 * 60 * 60 * 60 * 60 * 60 * 60 * 60,
@@ -44,10 +44,13 @@ const kayn = Kayn()({
     },
 });
 
-const regionsCompleted = [];
+const regionsCompleted = {
+    challengers: [],
+    masters: [],
+};
 
 // temp
-const isOneTrick = (otGames, total) => otGames / total >= 0.25;
+const isOneTrick = (otGames, total) => otGames / total >= 0.45;
 // 0.45 works for accurate stats + large number of games
 
 const getLeagueByRank = async (region, rank) => {
@@ -106,16 +109,18 @@ const createOneTrick = (id, wins, losses, champData) => {
  * @param {string} region
  */
 const clearPlayersInDB = async (rank, region) => {
-    Player.collection.remove(
-        {
-            rank: rank.charAt(0),
-            region,
-        },
-        err => {
-            if (err) throw new Error(err);
-            return true;
-        },
-    );
+    return new Promise((resolve, reject) => {
+        Player.collection.remove(
+            {
+                rank: rank.charAt(0),
+                region,
+            },
+            err => {
+                if (err) reject(err);
+                else resolve(true);
+            },
+        );
+    });
 };
 
 /**
@@ -124,18 +129,24 @@ const clearPlayersInDB = async (rank, region) => {
  * @param {string} region
  * @param {string} regionsCompleted - Helper array to show what regions have been processed.
  */
-const insertPlayersIntoDB = async (payload, region, regionsCompleted) => {
-    Player.collection.insert(payload, (err, docs) => {
-        if (err) {
-            throw new Error(err);
-        }
-        console.log(
-            `${payload.length} players were successfully stored in ${region}.`,
-        );
-        regionsCompleted.push(region);
-        console.log(regionsCompleted.sort());
-        console.log(regionsCompleted.length);
-        return docs;
+const insertPlayersIntoDB = async (payload, region, rank) => {
+    return new Promise((resolve, reject) => {
+        const count = payload.reduce((total, val) => total + (val === region), 0)
+        if (count >= 2 || payload.length === 0) resolve();
+        
+        Player.collection.insert(payload, (err, docs) => {
+            if (err) {
+                throw new Error(err);
+            }
+            console.log(
+                `${payload.length} players were successfully stored in ${region}, ${rank}.`,
+            );
+            console.log(rank);
+            regionsCompleted[rank].push(region);
+            regionsCompleted[rank].sort();
+            console.log(regionsCompleted);
+            resolve(true);
+        });
     });
 };
 
@@ -170,72 +181,87 @@ async function generate(rank, region) {
                 `-COUNTERS: (${countdown},${numOfOneTricksLeft})`,
             );
 
-            for (const champStats of playerStats.champions) {
-                const {
-                    totalSessionsPlayed,
-                    wins: totalSessionsWon,
-                    losses: totalSessionsLost,
-                } = champStats.stats;
+                for (const champStats of playerStats.champions) {
+                    const {
+                        totalSessionsPlayed,
+                        wins: totalSessionsWon,
+                        losses: totalSessionsLost,
+                    } = champStats.stats;
 
-                if (isOneTrick(totalSessionsPlayed, totalGames)) {
-                    const champId = champStats.id;
-                    if (champId !== 0) {
-                        const champData = await kayn.Static.Champion.get(
-                            champId,
-                        );
-                        numOfOneTricksLeft += 1;
-                        const { summonerId } = playerStats;
-                        oneTricks[summonerId] = createOneTrick(
-                            summonerId,
-                            wins,
-                            losses,
-                            champData,
-                        );
-
-                        console.log(champData.key, 'detected');
-
-                        const summoner = await kayn.Summoner.by
-                            .id(summonerId)
-                            .region(region);
-
-                        console.log(`checking ${summonerId}`);
-
-                        oneTricks[summonerId].name = summoner.name;
-
-                        numOfOneTricksLeft -= 1;
-
-                        console.log(
-                            region,
-                            `COUNTERS-: (${countdown},${numOfOneTricksLeft})`,
-                        );
-
-                        if (
-                            countdown === 0 &&
-                            numOfOneTricksLeft === 0 &&
-                            !done
-                        ) {
-                            const payload = Object.keys(oneTricks).map(key => ({
-                                ...oneTricks[key],
-                                ...{
-                                    rank: rank.charAt(0),
-                                    region,
-                                },
-                            }));
-
-                            // Possible errors being ignored here.
-                            await clearPlayersInDB(rank.charAt(0), region);
-
-                            done = await insertPlayersIntoDB(
-                                payload,
-                                region,
-                                regionsCompleted,
+                    console.log(
+                        player.playerOrTeamId,
+                        player.playerOrTeamName,
+                        region,
+                        totalSessionsWon + totalSessionsLost,
+                        totalGames,
+                        (totalSessionsWon + totalSessionsLost) / totalGames)
+                    console.log(champStats);
+                    console.log(getStats(player.playerOrTeamId).matchesProcessed.length)
+    
+                    if (isOneTrick(totalSessionsPlayed, totalGames)) {
+                        const champId = champStats.id;
+                        if (champId !== 0) {
+                            const champData = await kayn.Static.Champion.get(
+                                champId,
                             );
-
-                            return done;
+                            numOfOneTricksLeft += 1;
+                            const { summonerId } = playerStats;
+                            oneTricks[summonerId] = createOneTrick(
+                                summonerId,
+                                wins,
+                                losses,
+                                champData,
+                            );
+    
+                            console.log(champData.key, 'detected');
+    
+                            const summoner = await kayn.Summoner.by
+                                .id(summonerId)
+                                .region(region);
+    
+                            console.log(`checking ${summonerId}`);
+    
+                            oneTricks[summonerId].name = summoner.name;
+    
+                            numOfOneTricksLeft -= 1;
+    
+                            console.log(
+                                region,
+                                `COUNTERS-: (${countdown},${numOfOneTricksLeft})`,
+                            );
+    
+                            if (
+                                countdown === 0 &&
+                                numOfOneTricksLeft === 0 &&
+                                !done
+                            ) {
+                                const payload = Object.keys(oneTricks).map(key => ({
+                                    ...oneTricks[key],
+                                    ...{
+                                        rank: rank.charAt(0),
+                                        region,
+                                    },
+                                }));
+    
+                                // Possible errors being ignored here.
+                                console.log('clearing', rank, region);
+                                await clearPlayersInDB(rank.charAt(0), region);
+                                console.log('finished clearing', rank, region);
+                                console.log('inserting', rank, region);
+                                console.log(payload);
+                                done = await insertPlayersIntoDB(
+                                    payload,
+                                    region,
+                                    rank,
+                                );
+                                console.log('finished inserting', rank, region);
+                                
+                                console.log('returning', rank, region);
+                                return done;
+                            }
                         }
+                        break; // if first champ shows proof of one trick
                     }
-                    break; // if first champ shows proof of one trick
-                }
             }
         }),
     );
@@ -243,31 +269,32 @@ async function generate(rank, region) {
 
 const main = async () => {
     const promises = [
-        generate('challengers', REGIONS.NORTH_AMERICA),
+        // generate('challengers', REGIONS.NORTH_AMERICA),
         generate('masters', REGIONS.NORTH_AMERICA),
-        generate('challengers', REGIONS.KOREA),
-        generate('masters', REGIONS.KOREA),
-        generate('challengers', REGIONS.EUROPE_WEST),
-        generate('masters', REGIONS.EUROPE_WEST),
-        generate('challengers', REGIONS.EUROPE),
-        generate('masters', REGIONS.EUROPE),
-        generate('challengers', REGIONS.BRAZIL),
-        generate('masters', REGIONS.BRAZIL),
-        generate('challengers', REGIONS.OCEANIA),
-        generate('masters', REGIONS.OCEANIA),
-        generate('challengers', REGIONS.JAPAN),
-        generate('masters', REGIONS.JAPAN),
-        generate('challengers', REGIONS.LATIN_AMERICA_NORTH),
-        generate('masters', REGIONS.LATIN_AMERICA_NORTH),
-        generate('challengers', REGIONS.LATIN_AMERICA_SOUTH),
-        generate('masters', REGIONS.LATIN_AMERICA_SOUTH),
-        generate('challengers', REGIONS.TURKEY),
-        generate('masters', REGIONS.TURKEY),
-        generate('challengers', REGIONS.RUSSIA),
-        generate('masters', REGIONS.RUSSIA),
+        // generate('challengers', REGIONS.KOREA),
+        // generate('masters', REGIONS.KOREA),
+        // generate('challengers', REGIONS.EUROPE_WEST),
+        // generate('masters', REGIONS.EUROPE_WEST),
+        // generate('challengers', REGIONS.EUROPE),
+        // generate('masters', REGIONS.EUROPE),
+        // generate('challengers', REGIONS.BRAZIL),
+        // generate('masters', REGIONS.BRAZIL),
+        // generate('challengers', REGIONS.OCEANIA),
+        // generate('masters', REGIONS.OCEANIA),
+        // generate('challengers', REGIONS.JAPAN),
+        // generate('masters', REGIONS.JAPAN),
+        // generate('challengers', REGIONS.LATIN_AMERICA_NORTH),
+        // generate('masters', REGIONS.LATIN_AMERICA_NORTH),
+        // generate('challengers', REGIONS.LATIN_AMERICA_SOUTH),
+        // generate('masters', REGIONS.LATIN_AMERICA_SOUTH),
+        // generate('challengers', REGIONS.TURKEY),
+        // generate('masters', REGIONS.TURKEY),
+        // generate('challengers', REGIONS.RUSSIA),
+        // generate('masters', REGIONS.RUSSIA),
     ];
 
     await Promise.all(promises);
+    console.log(promises);
 };
 
 try {
