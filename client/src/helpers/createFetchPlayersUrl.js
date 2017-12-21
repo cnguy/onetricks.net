@@ -5,7 +5,7 @@ import type {
 } from '../constants/flowTypes.js';
 
 const createFetchPlayersUrl = (args: regionType | Array<regionType>): string =>
-  `all?region=${
+  `http://5e6fcf9e.ngrok.io/all?region=${
     Array.isArray(args)
       ? `${args.join(',')}&multiple=true`
       : `${args}`

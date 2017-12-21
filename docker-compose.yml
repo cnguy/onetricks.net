@@ -1,0 +1,26 @@
+version: "3"
+services:
+  api:
+    container_name: one-tricks-api
+    restart: always
+    build: ./api
+    ports:
+      - "3001:3001"
+    links:
+      - mongo
+      - redis
+  stats:
+    container_name: one-tricks-stats
+    restart: always
+    build: ./stats
+    ports:
+      - "3002:3002"
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+  redis:
+    image: "redis:alpine"

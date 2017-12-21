@@ -240,8 +240,17 @@ const generateSelectMenu = ({
 
 const fetchPlayers = ({ makeCompact }: PropTypes) => (args: regionType | Array<regionType>) =>
   // Perf.start();
-  fetch(createFetchPlayersUrl(args))
-    .then(r => r.json())
+  fetch(createFetchPlayersUrl(args), { mode: 'no-cors' })
+    .then(r => !r.body ? [{
+      champ: "Riven",
+      id: 89881848,
+      losses: 40,
+      name: "Duo Abuse",
+      rank: "c",
+      region: "na",
+      wins: 101,
+      _id: "519307219023hasdhasjkdas",
+    }] : r.json())
     .then(r => makeCompact(r));
 
 const getPlayers = ({
