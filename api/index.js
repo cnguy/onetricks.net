@@ -126,11 +126,12 @@ app.listen(app.get('port'), () => {
   console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
 });
 
-// const main = async () => {
-//   setInterval(async () => {
-//     console.log('run script...');
-//     await generator();
-//   }, 2147483647);
-// }
+const main = async () => {
+  await generator();
+  setInterval(async () => {
+    console.log('run script...');
+    await generator();
+  }, 2147483647);
+}
 
-// main();
+main();
