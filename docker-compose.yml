@@ -30,3 +30,5 @@ services:
       - "27017:27017"
   redis:
     image: "redis:alpine"
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
