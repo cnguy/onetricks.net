@@ -7,6 +7,7 @@ const PLAYER_SCHEMA_NAME = 'Player';
 const Player = mongoose.model(PLAYER_SCHEMA_NAME);
 
 const TARGET_QUEUE = 'RANKED_SOLO_5x5';
+import request from 'superagent';
 
 if (process.env.NODE_ENV === 'development') {
     mongoose.connect(process.env.LOCAL_MONGO_URL);
@@ -22,7 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 
 const kayn = Kayn()({
     debugOptions: {
-        isEnabled: true,
+        isEnabled: false,
         // showKey: true,
     },
     requestOptions: {
@@ -67,16 +68,20 @@ const getLeagueByRank = async (region, rank) => {
     throw new Error('Parameter `rank` is not correct.');
 };
 
-import jsonfile from 'jsonfile';
-const stats = jsonfile.readFileSync('./stats.json').players;
 /**
  * getStats closes over stats, providing a way for us to find a particular summoner
  * within the stats.json file as if we're making a call to the old stats endpoint.
  * @param {number} summonerID - The summoner id to look for.
  * @returns {object} a stats object or `undefined` if not found.
  */
-const getStats = summonerID =>
-    stats.find(p => parseInt(p.summonerId) === parseInt(summonerID));
+const getStats = async summonerID => {
+    try {
+        const res = await request.get(`http://one-tricks-stats:3002/api/stats/${summonerID}`);
+        return res.body;
+    } catch (exception) {
+        return;
+    }
+};
 
 /**
  * createOneTrick products the DTO that will be stored in our MongoDB database.
@@ -168,14 +173,14 @@ async function generate(rank, region) {
     const league = await getLeagueByRank(region, rank);
     let countdown = league.entries.length;
 
-    console.log('countdown:', countdown, 'for', region, rank);
+    // console.log('countdown:', countdown, 'for', region, rank);
 
     await Promise.all(
         league.entries.map(async player => {
             const { wins, losses } = player;
             const totalGames = wins + losses;
 
-            const playerStats = getStats(player.playerOrTeamId, region);
+            const playerStats = await getStats(player.playerOrTeamId, region);
             if (!playerStats) {
                 return;
             }

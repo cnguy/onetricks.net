@@ -1,5 +1,11 @@
 version: "3"
 services:
+  # ui:
+  #   container_name: one-tricks-ui
+  #   restart: always
+  #   build: ./ui/client
+  #   ports:
+  #     - "3000:3000"
   api:
     container_name: one-tricks-api
     restart: always

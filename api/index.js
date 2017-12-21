@@ -127,12 +127,10 @@ app.listen(app.get('port'), () => {
 });
 
 // const main = async () => {
-//   await generator();
-
 //   setInterval(async () => {
 //     console.log('run script...');
 //     await generator();
-//   }, 1000*60*24);
+//   }, 2147483647);
 // }
 
 // main();

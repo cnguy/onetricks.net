@@ -7,7 +7,8 @@
     "express": "4.13.3",
     "jsonfile": "^4.0.0",
     "kayn": "^0.5.2",
-    "mongoose": "^4.8.4"
+    "mongoose": "^4.8.4",
+    "superagent": "^3.8.2"
   },
   "scripts": {
     "start": "babel-node index.js",
