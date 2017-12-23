@@ -131,8 +131,7 @@ const clearPlayersInDB = async (rank, region) => {
  */
 const insertPlayersIntoDB = async (payload, region, rank) => {
     return new Promise((resolve, reject) => {
-        const count = payload.reduce((total, val) => total + (val === region), 0)
-        if (count >= 2 || payload.length === 0) resolve();
+        if (payload.length === 0) resolve();
         
         Player.collection.insert(payload, (err, docs) => {
             if (err) {
@@ -164,7 +163,7 @@ async function generate(rank, region) {
     const league = await getLeagueByRank(region, rank);
     let countdown = league.entries.length;
 
-    console.log('countdown:', countdown, 'for', region, rank);
+    // console.log('countdown:', countdown, 'for', region, rank);
 
     await Promise.all(
         league.entries.map(async player => {
@@ -172,14 +171,15 @@ async function generate(rank, region) {
             const totalGames = wins + losses;
 
             const playerStats = getStats(player.playerOrTeamId, region);
+            console.log(region, rank, playerStats.matchesProcessed.length)
             if (!playerStats) {
                 return;
             }
             --countdown;
-            console.log(
-                region,
-                `-COUNTERS: (${countdown},${numOfOneTricksLeft})`,
-            );
+            // console.log(
+            //     region,
+            //     `-COUNTERS: (${countdown},${numOfOneTricksLeft})`,
+            // );
 
                 for (const champStats of playerStats.champions) {
                     const {
@@ -209,16 +209,14 @@ async function generate(rank, region) {
                                 .id(summonerId)
                                 .region(region);
     
-                            console.log(`checking ${summonerId}`);
-    
                             oneTricks[summonerId].name = summoner.name;
     
                             numOfOneTricksLeft -= 1;
     
-                            console.log(
-                                region,
-                                `COUNTERS-: (${countdown},${numOfOneTricksLeft})`,
-                            );
+                            // console.log(
+                            //     region,
+                            //     `COUNTERS-: (${countdown},${numOfOneTricksLeft})`,
+                            // );
     
                             if (
                                 countdown === 0 &&
@@ -238,7 +236,7 @@ async function generate(rank, region) {
                                 await clearPlayersInDB(rank.charAt(0), region);
                                 console.log('finished clearing', rank, region);
                                 console.log('inserting', rank, region);
-                                console.log(payload);
+
                                 done = await insertPlayersIntoDB(
                                     payload,
                                     region,

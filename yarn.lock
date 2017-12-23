@@ -1101,7 +1101,7 @@ debug@2.6.9, debug@^2.1.1, debug@^2.2.0, debug@^2.6.8:
   dependencies:
     ms "2.0.0"
 
-debug@3.1.0:
+debug@3.1.0, debug@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.1.0.tgz#5bb5a0672628b64149566ba16819e61518c67261"
   dependencies:
@@ -2218,16 +2218,18 @@ kareem@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/kareem/-/kareem-1.5.0.tgz#e3e4101d9dcfde299769daf4b4db64d895d17448"
 
-kayn@^0.5.3:
-  version "0.5.3"
-  resolved "https://registry.yarnpkg.com/kayn/-/kayn-0.5.3.tgz#4e7fb54866abf1d26411392bd26d05dbe140c3b5"
+kayn@^0.6.4:
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/kayn/-/kayn-0.6.4.tgz#132c0661794b99e57b9256a4dce8d0564addae96"
   dependencies:
+    debug "^3.1.0"
     dotenv "^4.0.0"
     lodash.merge "^4.6.0"
     redis "^2.8.0"
     request "^2.83.0"
     riot-ratelimiter "^0.1.1"
     superstruct "^0.2.0"
+    supports-color "^5.1.0"
 
 kind-of@^3.0.2:
   version "3.2.2"
@@ -3331,6 +3333,12 @@ supports-color@^3.2.3:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-3.2.3.tgz#65ac0504b3954171d8a64946b2ae3cbb8a5f54f6"
   dependencies:
     has-flag "^1.0.0"
+
+supports-color@^5.1.0:
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.1.0.tgz#058a021d1b619f7ddf3980d712ea3590ce7de3d5"
+  dependencies:
+    has-flag "^2.0.0"
 
 table@^3.7.8:
   version "3.8.3"
