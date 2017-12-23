@@ -263,7 +263,7 @@ const main = async () => {
     // await Promise.all(Object.keys(REGIONS).map(r => fn(REGIONS[r])));
 
     const keys = Object.keys(REGIONS);
-    const chunkSize = 1;
+    const chunkSize = 3;
     const processChunk = async chunk =>
         Promise.all(chunk.map(r => fn(REGIONS[r])));
     for (let i = 0; i < keys.length; i += chunkSize) {

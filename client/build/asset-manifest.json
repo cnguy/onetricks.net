@@ -1,8 +1,8 @@
 {
   "main.css": "static/css/main.e95eb74c.css",
   "main.css.map": "static/css/main.e95eb74c.css.map",
-  "main.js": "static/js/main.6b028cd0.js",
-  "main.js.map": "static/js/main.6b028cd0.js.map",
+  "main.js": "static/js/main.647eb54d.js",
+  "main.js.map": "static/js/main.647eb54d.js.map",
   "static/media/aatroxsquare-min.png": "static/media/aatroxsquare-min.e2a6d3ff.png",
   "static/media/ahrisquare-min.png": "static/media/ahrisquare-min.5032c13c.png",
   "static/media/akalisquare-min.png": "static/media/akalisquare-min.194eac94.png",
@@ -57,6 +57,7 @@
   "static/media/kassadinsquare-min.png": "static/media/kassadinsquare-min.9e52f092.png",
   "static/media/katarinasquare-min.png": "static/media/katarinasquare-min.db46ae59.png",
   "static/media/kaylesquare-min.png": "static/media/kaylesquare-min.f2bc070d.png",
+  "static/media/kaynsquare-min.png": "static/media/kaynsquare-min.6cbcfa7f.png",
   "static/media/kennensquare-min.png": "static/media/kennensquare-min.e02b3d67.png",
   "static/media/khazixsquare-min.png": "static/media/khazixsquare-min.ff33b5c2.png",
   "static/media/kindredsquare-min.png": "static/media/kindredsquare-min.39bddec9.png",
@@ -143,5 +144,6 @@
   "static/media/zedsquare-min.png": "static/media/zedsquare-min.e81b8b2a.png",
   "static/media/ziggssquare-min.png": "static/media/ziggssquare-min.d13c7609.png",
   "static/media/zileansquare-min.png": "static/media/zileansquare-min.691f5ae1.png",
+  "static/media/zoesquare-min.png": "static/media/zoesquare-min.5c51d4bf.png",
   "static/media/zyrasquare-min.png": "static/media/zyrasquare-min.1ec1d9c1.png"
 }
