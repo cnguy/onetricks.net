@@ -5,8 +5,7 @@
   "dependencies": {
     "compression": "^1.6.2",
     "express": "4.13.3",
-    "kayn": "^0.5.2",
-    "kindred-api": "^2.0.67",
+    "kayn": "^0.5.3",
     "lodash.clonedeep": "^4.5.0",
     "mongoose": "^4.8.4",
     "react": "^15.4.2",
