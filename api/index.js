@@ -130,8 +130,8 @@ const main = async () => {
   try {
     await generator();
     setInterval(async () => {
-      console.log('run script...');
-      await generator();
+      // console.log('run script...');
+      // await generator();
     }, 2147483647);
   } catch (exception) {
     console.log(exception);

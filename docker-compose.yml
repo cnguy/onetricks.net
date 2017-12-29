@@ -11,13 +11,21 @@ services:
     container_name: one-tricks-api
     restart: always
     build: ./api
-    ports:
-      - "3001:3001"
     links:
       - mongo
       - redis
     environment:
       - DEBUG=kayn:*
+  nginx-reverse-proxy:
+    container_name: nginx-reverse-proxy
+    restart: always
+    build: ./nginx-reverse-proxy
+    ports:
+      - "5000:5000"
+  client:
+    container_name: one-tricks-client
+    restart: always
+    build: ./client
   mongo:
     container_name: mongo
     image: mongo
