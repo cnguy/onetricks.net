@@ -1,7 +1,8 @@
-import { Kayn, REGIONS, METHOD_NAMES, RedisCache } from 'kayn';
-import mongoose from 'mongoose';
+require('dotenv').config('./.env');
 
-import cloneDeep from 'lodash.cloneDeep';
+import { Kayn, REGIONS, METHOD_NAMES, RedisCache } from 'kayn';
+
+import cloneDeep from 'lodash.clonedeep';
 
 import jsonfile from 'jsonfile';
 
@@ -87,7 +88,11 @@ const main = async () => {
             numberOfRetriesBeforeAbort: 1,
         },
         cacheOptions: {
-            cache: new RedisCache(),
+            cache: new RedisCache({
+                host: 'redis',
+                port: '6379',
+                keyPrefix: 'kayn',
+            }),
             ttls: {
                 [METHOD_NAMES.SUMMONER.GET_BY_SUMMONER_ID]: 1000 * 60 * 60 * 60,
                 [METHOD_NAMES.SUMMONER.GET_BY_ACCOUNT_ID]: 1000 * 60 * 60 * 60,
@@ -273,4 +278,4 @@ const main = async () => {
     }
 };
 
-main();
+export default main;

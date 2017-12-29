@@ -1,0 +1,31 @@
+
+version: "3"
+services:
+  stats:
+    container_name: one-tricks-stats
+    restart: always
+    build: ./stats
+    ports:
+      - "3002:3002"
+  api:
+    container_name: one-tricks-api
+    restart: always
+    build: ./api
+    ports:
+      - "3001:3001"
+    links:
+      - mongo
+      - redis
+    environment:
+      - DEBUG=kayn:*
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+  redis:
+    image: "redis:alpine"
+    volumes:
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
