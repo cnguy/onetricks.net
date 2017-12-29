@@ -2218,16 +2218,16 @@ kareem@1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/kareem/-/kareem-1.5.0.tgz#e3e4101d9dcfde299769daf4b4db64d895d17448"
 
-kayn@^0.6.4:
-  version "0.6.4"
-  resolved "https://registry.yarnpkg.com/kayn/-/kayn-0.6.4.tgz#132c0661794b99e57b9256a4dce8d0564addae96"
+kayn@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/kayn/-/kayn-0.8.0.tgz#521b6f07114e92764e535b29b57188ea64d8e4db"
   dependencies:
     debug "^3.1.0"
     dotenv "^4.0.0"
     lodash.merge "^4.6.0"
     redis "^2.8.0"
     request "^2.83.0"
-    riot-ratelimiter "^0.1.1"
+    riot-ratelimiter "git+https://github.com/cnguy/RiotRateLimiter-node"
     superstruct "^0.2.0"
     supports-color "^5.1.0"
 
@@ -3058,9 +3058,9 @@ rimraf@2, rimraf@^2.2.8, rimraf@^2.5.1, rimraf@^2.6.1:
   dependencies:
     glob "^7.0.5"
 
-riot-ratelimiter@^0.1.1:
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/riot-ratelimiter/-/riot-ratelimiter-0.1.2.tgz#e520abb6550776cd55b62d05109f95c42c5a1fe4"
+"riot-ratelimiter@git+https://github.com/cnguy/RiotRateLimiter-node":
+  version "0.1.3"
+  resolved "git+https://github.com/cnguy/RiotRateLimiter-node#c431f19cff94e6c70ba928b71386628ef67dfb83"
   dependencies:
     bluebird "~3.5.0"
     request-promise "~4.2.1"
