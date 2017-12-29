@@ -1,3 +1,1 @@
-This will ideally be a microservice on some cheap host.
-
-The frontend will be a static site hosted on surge.sh or github or whatever.
+Stats microservice that aggregates stats and exposes an API at one-tricks-stats:3002/api/stats/:summonerId.

@@ -26,6 +26,8 @@ services:
     container_name: one-tricks-client
     restart: always
     build: ./client
+    ports:
+      - "35729:35729"
   mongo:
     container_name: mongo
     image: mongo

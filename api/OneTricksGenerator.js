@@ -36,7 +36,7 @@ const kayn = Kayn()({
     cacheOptions: {
         cache: new RedisCache({
             host: 'redis',
-            port: '6379',
+            port: 6379,
             keyPrefix: 'kayn',
         }),
         ttls: {
@@ -136,8 +136,8 @@ const createOneTrick = (id, wins, losses, champData) => {
  * @param {string} rank - 'challengers' or 'masters'.
  * @param {string} region
  */
-const clearPlayersInDB = async (rank, region) => {
-    return new Promise((resolve, reject) => {
+const clearPlayersInDB = async (rank, region) =>
+    new Promise((resolve, reject) => {
         Player.collection.remove(
             {
                 rank: rank.charAt(0),
@@ -149,7 +149,6 @@ const clearPlayersInDB = async (rank, region) => {
             },
         );
     });
-};
 
 /**
  * insertPlayersIntoDB inserts a set of one tricks into the database.
@@ -157,7 +156,15 @@ const clearPlayersInDB = async (rank, region) => {
  * @param {string} region
  * @param {string} regionsCompleted - Helper array to show what regions have been processed.
  */
-const insertPlayersIntoDB = async (payload, region, rank) => {
+const insertPlayersIntoDB = async (oneTricks, region, rank) => {
+    const payload = Object.keys(oneTricks).map(key => ({
+        ...oneTricks[key],
+        ...{
+            rank: rank.charAt(0),
+            region,
+        },
+    }));
+
     return new Promise((resolve, reject) => {
         if (payload.length === 0) resolve();
 
@@ -165,18 +172,19 @@ const insertPlayersIntoDB = async (payload, region, rank) => {
             if (err) {
                 throw new Error(err);
             }
-            console.log(
-                `${
-                    payload.length
-                } players were successfully stored in ${region}, ${rank}.`,
-            );
-            console.log(rank);
             regionsCompleted[rank].push(region);
             regionsCompleted[rank].sort();
-            console.log(regionsCompleted);
             resolve(true);
         });
     });
+};
+
+const chunkGenerate = async (generator, entries) => {
+    const summonersChunkSize = entries.length / 4;
+    const processChunk = async chunk => Promise.all(chunk.map(generator));
+    for (let i = 0; i < entries.length; i += summonersChunkSize) {
+        await processChunk(entries.slice(i, i + summonersChunkSize));
+    }
 };
 
 /**
@@ -187,8 +195,8 @@ const insertPlayersIntoDB = async (payload, region, rank) => {
 async function generate(rank, region) {
     const oneTricks = {};
     const league = await getLeagueByRank(region, rank);
-    const summonersChunkSize = league.entries.length / 4;
 
+    // fn is a helper function for allowing us to process requets in chunks.
     const fn = async ({ wins, losses, playerOrTeamId }) => {
         const totalGames = wins + losses;
         const playerStats = await getStats(playerOrTeamId, region);
@@ -208,6 +216,7 @@ async function generate(rank, region) {
 
         const champId = champStats.id;
         if (champId !== 0) {
+            // Some ID's funnily equaled 0 (in the past).
             const champData = getStaticChampion(champId);
             const { summonerId } = playerStats;
             oneTricks[summonerId] = createOneTrick(
@@ -217,55 +226,34 @@ async function generate(rank, region) {
                 champData,
             );
 
-            const { name } = await kayn.Summoner.by
+            oneTricks[summonerId].name = (await kayn.Summoner.by
                 .id(summonerId)
-                .region(region);
-
-            oneTricks[summonerId].name = name;
+                .region(region)).name;
         }
         return true;
     };
 
-    const processChunk = async chunk => Promise.all(chunk.map(fn));
-    for (let i = 0; i < league.entries.length; i += summonersChunkSize) {
-        await processChunk(league.entries.slice(i, i + summonersChunkSize));
-    }
-
-    const payload = Object.keys(oneTricks).map(key => ({
-        ...oneTricks[key],
-        ...{
-            rank: rank.charAt(0),
-            region,
-        },
-    }));
-
-    console.log('payload.length:', payload.length);
-    console.log('clearing', rank, region);
+    await chunkGenerate(fn, league.entries);
     await clearPlayersInDB(rank.charAt(0), region);
-    console.log('inserting', rank, region);
-    await insertPlayersIntoDB(payload, region, rank);
-    console.log('returning', rank, region);
+    await insertPlayersIntoDB(oneTricks, region, rank);
     return true;
 }
 
-const main = async () => {
-    setTimeout(async () => {
-        const processChunk = async (rank, chunk) =>
-            Promise.all(chunk.map(r => generate(rank, REGIONS[r])));
-        const keys = Object.keys(REGIONS);
-        const challengersChunkSize = 4;
-        for (let i = 0; i < keys.length; i += challengersChunkSize) {
-            await processChunk(
-                'challengers',
-                keys.slice(i, i + challengersChunkSize),
-            );
-        }
-
-        const mastersChunkSize = 2;
-        for (let i = 0; i < keys.length; i += mastersChunkSize) {
-            await processChunk('masters', keys.slice(i, i + mastersChunkSize));
-        }
-    }, 20000);
-};
+const main = async () =>
+    new Promise((resolve, reject) =>
+        setTimeout(async () => {
+            const processChunk = async (rank, chunk) =>
+                Promise.all(chunk.map(r => generate(rank, REGIONS[r])));
+            const keys = Object.keys(REGIONS);
+            const start = async (rank, chunkSize) => {
+                for (let i = 0; i < keys.length; i += chunkSize) {
+                    await processChunk(rank, keys.slice(i, i + chunkSize));
+                }
+            };
+            await start('challengers', 4);
+            await start('masters', 2);
+            resolve(true);
+        }, 20000),
+    );
 
 export default main;

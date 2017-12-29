@@ -128,7 +128,8 @@ app.listen(app.get('port'), () => {
 
 const main = async () => {
   try {
-    await generator();
+    const done = await generator();
+    console.log('script done:', done);
     setInterval(async () => {
       // console.log('run script...');
       // await generator();
