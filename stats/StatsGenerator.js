@@ -119,22 +119,27 @@ const main = async () => {
     // Removed `region` property because players can transfer regions.
     const getPlayer = id => allStats.find(el => el.summonerID === id);
 
-    const fn = async region => {
-        const challengerLeague = await kayn.Challenger.list(
-            'RANKED_SOLO_5x5',
-        ).region(region);
-        const mastersLeague = await kayn.Master.list('RANKED_SOLO_5x5').region(
-            region,
+    const fn = async (rank, region) => {
+        // const challengerLeague = await kayn.Challenger.list(
+        //     'RANKED_SOLO_5x5',
+        // ).region(region);
+        // const mastersLeague = await kayn.Master.list('RANKED_SOLO_5x5').region(
+        //     region,
+        // );
+
+        const league = await kayn[rank].list('RANKED_SOLO_5x5').region(region);
+        const summoners = await Promise.all(
+            league.entries.map(leagueEntryToSummoner(kayn, region)),
         );
 
-        const summoners = await Promise.all([
-            challengerLeague.entries.map(leagueEntryToSummoner(kayn, region)),
-            mastersLeague.entries.map(leagueEntryToSummoner(kayn, region)),
-        ].reduce((prev, curr) => prev.concat(curr), []));
+        // const summoners = await Promise.all([
+        //     challengerLeague.entries.map(leagueEntryToSummoner(kayn, region)),
+        //     mastersLeague.entries.map(leagueEntryToSummoner(kayn, region)),
+        // ].reduce((prev, curr) => prev.concat(curr), []));
 
         console.log('summoners.length:', summoners.length);
 
-        const summonersChunkSize = 100;
+        const summonersChunkSize = summoners.length / 5;
 
         for (let i = 0; i < summoners.length; i += summonersChunkSize) {
             // Process stats for each summoner.
@@ -259,23 +264,20 @@ const main = async () => {
         console.log('reading stats.json', region);
         const myJson = jsonfile.readFileSync('stats.json');
         console.log('>> FINISHED');
-        const getStatsOfSummoner = id =>
-            myJson.players.find(({ summonerId }) => id === summonerId);
         console.log('allStats.length:', allStats.length);
     };
 
-    // This works with the recent endpoint (20 matches per perspon).
-    // await Promise.all(Object.keys(REGIONS).map(r => fn(REGIONS[r])));
-
     const keys = Object.keys(REGIONS);
     const chunkSize = 3;
-    const processChunk = async chunk =>
-        Promise.all(chunk.map(r => fn(REGIONS[r])));
+    const processChunk = async (rank, chunk) =>
+        Promise.all(chunk.map(r => fn(rank, REGIONS[r])));
     for (let i = 0; i < keys.length; i += chunkSize) {
-        console.log('processed starting', keys.slice(i, i + chunkSize));
-        await processChunk(keys.slice(i, i + chunkSize));
-        console.log('processed done', keys.slice(i, i + chunkSize));
+        await processChunk('Challenger', keys.slice(i, i + chunkSize));
     }
+    for (let i = 0; i < keys.length; i += chunkSize) {
+        await processChunk('Master', keys.slice(i, i + chunkSize));
+    }
+    return true;
 };
 
 export default main;

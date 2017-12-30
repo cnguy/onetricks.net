@@ -5,10 +5,12 @@ services:
     container_name: one-tricks-stats
     restart: always
     build: ./stats
+    links:
+      - redis
     ports:
       - "3002:3002"
-    environment:
-      - DEBUG=kayn:*
+    # environment:
+    #   - DEBUG=kayn:*
   api:
     container_name: one-tricks-api
     restart: always
