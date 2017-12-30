@@ -239,21 +239,21 @@ async function generate(rank, region) {
     return true;
 }
 
-const main = async () =>
-    new Promise((resolve, reject) =>
-        setTimeout(async () => {
-            const processChunk = async (rank, chunk) =>
-                Promise.all(chunk.map(r => generate(rank, REGIONS[r])));
-            const keys = Object.keys(REGIONS);
-            const start = async (rank, chunkSize) => {
-                for (let i = 0; i < keys.length; i += chunkSize) {
-                    await processChunk(rank, keys.slice(i, i + chunkSize));
-                }
-            };
-            await start('challengers', 4);
-            await start('masters', 2);
-            resolve(true);
-        }, 20000),
-    );
+const main = async () => true;
+    // new Promise((resolve, reject) =>
+    //     setTimeout(async () => {
+    //         const processChunk = async (rank, chunk) =>
+    //             Promise.all(chunk.map(r => generate(rank, REGIONS[r])));
+    //         const keys = Object.keys(REGIONS);
+    //         const start = async (rank, chunkSize) => {
+    //             for (let i = 0; i < keys.length; i += chunkSize) {
+    //                 await processChunk(rank, keys.slice(i, i + chunkSize));
+    //             }
+    //         };
+    //         await start('challengers', 4);
+    //         await start('masters', 2);
+    //         resolve(true);
+    //     }, 20000),
+    // );
 
 export default main;

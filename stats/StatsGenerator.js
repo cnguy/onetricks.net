@@ -82,7 +82,7 @@ const main = async () => {
     const kayn = Kayn()({
         debugOptions: {
             isEnabled: true,
-            // showKey: true,
+            showKey: true,
         },
         requestOptions: {
             numberOfRetriesBeforeAbort: 1,
@@ -90,7 +90,7 @@ const main = async () => {
         cacheOptions: {
             cache: new RedisCache({
                 host: 'redis',
-                port: '6379',
+                port: 6379,
                 keyPrefix: 'kayn',
             }),
             ttls: {

@@ -42,9 +42,9 @@ app.listen(app.get('port'), () => {
 import generator from './StatsGenerator';
 
 const main = async () => {
-  // console.log('start generator');
-  // await generator();
-  // console.log('completely done');
+  console.log('start generator');
+  await generator();
+  console.log('completely done');
 }
 
 main();
