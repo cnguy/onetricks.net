@@ -63,27 +63,6 @@ const leagueEntryToSummoner = kayn => region => async ({
         (await kayn.Summoner.by.id(playerOrTeamId).region(region)).accountId,
     ).asObject();
 
-const rawMatchlistToMatches = kayn => async (matchlist, region) => {
-    const matchlistChunkSize = matchlist.length / 5;
-    let matches = [];
-    for (let i = 0; i < matchlist.length; i += matchlistChunkSize) {
-        const currentMatches = await Promise.all(
-            matchlist
-                .slice(i, i + matchlistChunkSize)
-                .map(async ({ gameId }) => {
-                    try {
-                        return await kayn.Match.get(gameId).region(region);
-                    } catch (ex) {
-                        // This means that the match belongs to a different region (if 404).
-                        return false;
-                    }
-                }),
-        );
-        matches = matches.concat(currentMatches);
-    }
-    return matches.filter(Boolean);
-};
-
 const reducerGetRest = kayn => (accountID, region) => async promise => {
     const { currentMatches, beginIndex } = await promise;
     const newBeginIndex = {
@@ -169,6 +148,24 @@ const asyncMapOverArrayInChunks = async (array, chunkSize, mapFunction) => {
         results = results.concat(playerStatsArray);
     }
     return results;
+};
+
+const rawMatchlistToMatches = kayn => async (matchlist, region) => {
+    const matchlistChunkSize = matchlist.length / 5;
+
+    const matches = await asyncMapOverArrayInChunks(
+        matchlist,
+        matchlistChunkSize,
+        async ({ gameId }) => {
+            try {
+                return await kayn.Match.get(gameId).region(region);
+            } catch (ex) {
+                return false;
+            }
+        },
+    );
+
+    return matches.filter(Boolean);
 };
 
 const main = async () => {
