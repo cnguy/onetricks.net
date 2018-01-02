@@ -2,8 +2,6 @@ require('dotenv').config('./.env');
 
 import { Kayn, REGIONS, METHOD_NAMES, RedisCache } from 'kayn';
 
-import cloneDeep from 'lodash.clonedeep';
-
 import jsonfile from 'jsonfile';
 
 import ChampionStats from './entities/ChampionStats';
@@ -65,12 +63,12 @@ const leagueEntryToSummoner = kayn => region => async ({
         (await kayn.Summoner.by.id(playerOrTeamId).region(region)).accountId,
     ).asObject();
 
-const matchlistToMatches = kayn => async (matchlist, region) => {
-    const matchlistChunkSize = matchlist.matches.length / 5;
+const rawMatchlistToMatches = kayn => async (matchlist, region) => {
+    const matchlistChunkSize = matchlist.length / 5;
     let matches = [];
-    for (let i = 0; i < matchlist.matches.length; i += matchlistChunkSize) {
+    for (let i = 0; i < matchlist.length; i += matchlistChunkSize) {
         const currentMatches = await Promise.all(
-            matchlist.matches
+            matchlist
                 .slice(i, i + matchlistChunkSize)
                 .map(async ({ gameId }) => {
                     try {
@@ -152,13 +150,25 @@ const processMatch = playerStats => match => {
 };
 const inPlatform = region => ({ platformId: platformID }) =>
     platformID.toLowerCase() === asPlatformID(region);
-const containsMatch = playerStats => ({ gameId: gameID }) =>
+const doesNotContainMatch = playerStats => ({ gameId: gameID }) =>
     !playerStats.containsMatch(gameID);
 
 const store = json => {
     console.log('writing to stats.json');
     jsonfile.writeFileSync('/usr/src/stats/stats.json', json);
     console.log('>> FINISHED');
+};
+
+const asyncMapOverArrayInChunks = async (array, chunkSize, mapFunction) => {
+    // Mutation
+    let results = [];
+    for (let i = 0; i < array.length; i += chunkSize) {
+        const playerStatsArray = await Promise.all(
+            array.slice(i, i + chunkSize).map(mapFunction),
+        );
+        results = results.concat(playerStatsArray);
+    }
+    return results;
 };
 
 const main = async () => {
@@ -209,57 +219,53 @@ const main = async () => {
 
         const summonersChunkSize = summoners.length / 2;
 
-        for (let i = 0; i < summoners.length; i += summonersChunkSize) {
-            // Process stats for each summoner.
-            await Promise.all(
-                summoners
-                    .slice(i, i + summonersChunkSize)
-                    .map(async ({ id: summonerID, accountID }) => {
-                        const matchlist = await kayn.Matchlist.by
-                            .accountID(accountID)
-                            .region(region)
-                            .query(MATCHLIST_CONFIG);
+        const allPlayerStats = await asyncMapOverArrayInChunks(
+            summoners,
+            summonersChunkSize,
+            async ({ id: summonerID, accountID }) => {
+                const matchlist = await kayn.Matchlist.by
+                    .accountID(accountID)
+                    .region(region)
+                    .query(MATCHLIST_CONFIG);
 
-                        const totalNumOfGames = matchlist.totalGames;
+                const { totalGames: totalNumOfGames } = matchlist;
 
-                        const rest = await getRestOfMatchlist(kayn)(
-                            accountID,
-                            region,
-                            totalNumOfGames,
-                        );
-                        if (rest.length > 0)
-                            matchlist.matches = matchlist.matches.concat(rest);
+                const rest = await getRestOfMatchlist(kayn)(
+                    accountID,
+                    region,
+                    totalNumOfGames,
+                );
 
-                        // Filter out matches that belong to a different platform
-                        // than where the summoner currently resides.
-                        matchlist.matches = matchlist.matches.filter(
-                            inPlatform(region),
-                        );
+                const playerStats = playerExists(summonerID)
+                    ? getPlayer(summonerID)
+                    : PlayerStats(summonerID, region);
 
-                        const playerStats = playerExists(summonerID)
-                            ? getPlayer(summonerID)
-                            : PlayerStats(summonerID, region);
-                        const trimmedMatchlist = cloneDeep(matchlist);
+                const fullMatchlist = matchlist.matches
+                    .concat(rest)
+                    .filter(inPlatform(region))
+                    .filter(doesNotContainMatch(playerStats));
 
-                        trimmedMatchlist.matches = trimmedMatchlist.matches.filter(
-                            containsMatch(playerStats),
-                        );
+                const matches = await rawMatchlistToMatches(kayn)(
+                    fullMatchlist,
+                    region,
+                );
 
-                        const matches = await matchlistToMatches(kayn)(
-                            trimmedMatchlist,
-                            region,
-                        );
+                // Mutation: Process matches in matchlist.
+                matches.forEach(processMatch(playerStats));
+                return playerStats;
+            },
+        );
 
-                        // Process matches in matchlist.
-                        matches.forEach(processMatch(playerStats));
-                        if (!playerExists(summonerID))
-                            allStats.push(playerStats);
-                    }),
-            );
-        }
+        const newStats = allPlayerStats.reduce(
+            (total, playerStats) =>
+                !playerExists(playerStats.summonerID)
+                    ? total.concat(playerStats)
+                    : total,
+            [],
+        );
 
         const json = {
-            players: allStats.map(el => el.asObject()),
+            players: allStats.concat(newStats).map(el => el.asObject()),
         };
 
         store(json);
