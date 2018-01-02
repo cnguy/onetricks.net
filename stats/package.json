@@ -11,7 +11,7 @@
   },
   "scripts": {
     "start": "babel-node index.js",
-    "prettier": "prettier --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./\""
+    "prettier": "prettier --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./StatsGenerator.js\""
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

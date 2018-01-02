@@ -11,7 +11,13 @@ import OneTrick from './entities/OneTrick';
 import PlayerStats from './entities/PlayerStats';
 import Summoner from './entities/Summoner';
 
-const mockBaseStats = jsonfile.readFileSync('stats.json');
+const LEAGUE_QUEUE = 'RANKED_SOLO_5x5';
+const MATCHLIST_CONFIG = {
+    queue: 420,
+    season: 9,
+};
+
+const mockBaseStats = jsonfile.readFileSync('/usr/src/stats/stats.json');
 console.log(mockBaseStats.players.length);
 
 const platformIDs = {
@@ -49,7 +55,7 @@ const findParticipant = (match, participantID) =>
 const didTeamWin = (match, teamID) =>
     match.teams.find(({ teamId }) => teamId === teamID).win === 'Win';
 
-const leagueEntryToSummoner = (kayn, region) => async ({
+const leagueEntryToSummoner = kayn => region => async ({
     playerOrTeamId,
     playerOrTeamName,
 }) =>
@@ -59,24 +65,101 @@ const leagueEntryToSummoner = (kayn, region) => async ({
         (await kayn.Summoner.by.id(playerOrTeamId).region(region)).accountId,
     ).asObject();
 
-const matchlistToMatches = async (matchlist, kayn, region) => {
-    const matchlistChunkSize = 50;
+const matchlistToMatches = kayn => async (matchlist, region) => {
+    const matchlistChunkSize = matchlist.matches.length / 5;
     let matches = [];
     for (let i = 0; i < matchlist.matches.length; i += matchlistChunkSize) {
-        const currentMatches = await Promise.all(matchlist.matches.slice(i, i + matchlistChunkSize).map(
-            async ({ gameId }) => {
-                try {
-                    return await kayn.Match.get(gameId).region(region);
-                } catch (ex) {
-                    // This means that the match belongs to a different region (if 404).
-                    return false;
-                }
-            }
-        ))
+        const currentMatches = await Promise.all(
+            matchlist.matches
+                .slice(i, i + matchlistChunkSize)
+                .map(async ({ gameId }) => {
+                    try {
+                        return await kayn.Match.get(gameId).region(region);
+                    } catch (ex) {
+                        // This means that the match belongs to a different region (if 404).
+                        return false;
+                    }
+                }),
+        );
         matches = matches.concat(currentMatches);
     }
-    return matches;
-}
+    return matches.filter(Boolean);
+};
+
+const reducerGetRest = kayn => (accountID, region) => async promise => {
+    const { currentMatches, beginIndex } = await promise;
+    const newBeginIndex = {
+        beginIndex: beginIndex + 100,
+    };
+    const defaultReturn = {
+        ...{ currentMatches },
+        ...newBeginIndex,
+    };
+    try {
+        const { matches: newMatches } = await kayn.Matchlist.by
+            .accountID(accountID)
+            .region(region)
+            .query({
+                ...MATCHLIST_CONFIG,
+                beginIndex,
+                endIndex: newBeginIndex.beginIndex,
+            });
+        return newMatches.length > 0
+            ? Promise.resolve({
+                  currentMatches: currentMatches.concat(newMatches),
+                  ...newBeginIndex,
+              })
+            : Promise.resolve(defaultReturn);
+    } catch (ex) {
+        return Promise.resolve(defaultReturn);
+    }
+};
+
+const range = length => Array(Math.ceil(length)).fill();
+
+const getRestOfMatchlist = kayn => async (accountID, region, totalGames) => {
+    if (totalGames > 100) {
+        const initialValue = { currentMatches: [], beginIndex: 100 };
+        const { currentMatches: matches } = await range(
+            totalGames / 100,
+        ).reduce(
+            reducerGetRest(kayn)(accountID, region),
+            Promise.resolve(initialValue),
+        );
+        return matches;
+    }
+    return [];
+};
+
+const processMatch = playerStats => match => {
+    const { gameId: gameID } = match;
+    const summonerID = playerStats.summonerID;
+
+    const participantIdentity = findParticipantIdentity(match, summonerID);
+    if (!participantIdentity) return; // undefined edge case
+    const { participantId: participantID } = participantIdentity;
+    const participant = findParticipant(match, participantID);
+    const { teamId: teamID } = participant;
+    const { championId: championID } = participant;
+    const { stats } = participant;
+    const didWin = didTeamWin(match, teamID);
+    if (playerStats.containsChampion(championID)) {
+        playerStats.editExistingChampion(championID, didWin, gameID);
+    } else {
+        playerStats.pushChampion(ChampionStats(championID, didWin), gameID);
+    }
+    // console.log('MEM:', process.memoryUsage());
+};
+const inPlatform = region => ({ platformId: platformID }) =>
+    platformID.toLowerCase() === asPlatformID(region);
+const containsMatch = playerStats => ({ gameId: gameID }) =>
+    !playerStats.containsMatch(gameID);
+
+const store = json => {
+    console.log('writing to stats.json');
+    jsonfile.writeFileSync('/usr/src/stats/stats.json', json);
+    console.log('>> FINISHED');
+};
 
 const main = async () => {
     const kayn = Kayn()({
@@ -96,9 +179,6 @@ const main = async () => {
             ttls: {
                 [METHOD_NAMES.SUMMONER.GET_BY_SUMMONER_ID]: 1000 * 60 * 60 * 60,
                 [METHOD_NAMES.SUMMONER.GET_BY_ACCOUNT_ID]: 1000 * 60 * 60 * 60,
-                // [METHOD_NAMES.LEAGUE.GET_CHALLENGER_LEAGUE]:
-                //     1000 * 60 * 60 * 24,
-                // [METHOD_NAMES.LEAGUE.GET_MASTER_LEAGUE]: 1000 * 60 * 60 * 24,
                 [METHOD_NAMES.MATCH.GET_MATCH]:
                     1000 * 60 * 60 * 60 * 60 * 60 * 60 * 60 * 60,
                 [METHOD_NAMES.MATCH.GET_MATCHLIST]: 1000 * 60 * 60 * 24,
@@ -120,26 +200,14 @@ const main = async () => {
     const getPlayer = id => allStats.find(el => el.summonerID === id);
 
     const fn = async (rank, region) => {
-        // const challengerLeague = await kayn.Challenger.list(
-        //     'RANKED_SOLO_5x5',
-        // ).region(region);
-        // const mastersLeague = await kayn.Master.list('RANKED_SOLO_5x5').region(
-        //     region,
-        // );
-
-        const league = await kayn[rank].list('RANKED_SOLO_5x5').region(region);
+        const league = await kayn[rank].list(LEAGUE_QUEUE).region(region);
         const summoners = await Promise.all(
-            league.entries.map(leagueEntryToSummoner(kayn, region)),
+            league.entries.map(leagueEntryToSummoner(kayn)(region)),
         );
-
-        // const summoners = await Promise.all([
-        //     challengerLeague.entries.map(leagueEntryToSummoner(kayn, region)),
-        //     mastersLeague.entries.map(leagueEntryToSummoner(kayn, region)),
-        // ].reduce((prev, curr) => prev.concat(curr), []));
 
         console.log('summoners.length:', summoners.length);
 
-        const summonersChunkSize = summoners.length / 5;
+        const summonersChunkSize = summoners.length / 2;
 
         for (let i = 0; i < summoners.length; i += summonersChunkSize) {
             // Process stats for each summoner.
@@ -150,53 +218,22 @@ const main = async () => {
                         const matchlist = await kayn.Matchlist.by
                             .accountID(accountID)
                             .region(region)
-                            .query({
-                                queue: 420,
-                                season: 9, // 7/8/9 is what we want rn.
-                            });
+                            .query(MATCHLIST_CONFIG);
 
                         const totalNumOfGames = matchlist.totalGames;
 
-                        if (totalNumOfGames > 100) {
-                            for (
-                                let matchlistBeginIndex = 100;
-                                matchlistBeginIndex < totalNumOfGames;
-                                matchlistBeginIndex += 100
-                            ) {
-                                try {
-                                    const m = await kayn.Matchlist.by
-                                        .accountID(accountID)
-                                        .region(region)
-                                        .query({
-                                            queue: 420,
-                                            season: 9,
-                                            beginIndex: matchlistBeginIndex,
-                                            endIndex: matchlistBeginIndex + 100,
-                                        });
-                                    if (m.matches.length > 0) {
-                                        matchlist.matches = matchlist.matches.concat(
-                                            m.matches,
-                                        );
-                                    }
-                                } catch (ex) {
-                                    console.log('matchlist limit reached.');
-                                    break;
-                                }
-                            }
-                        }
-
-                        // console.log(
-                        //     'total number of matches:',
-                        //     matchlist.matches.length,
-                        //     totalNumOfGames,
-                        // );
+                        const rest = await getRestOfMatchlist(kayn)(
+                            accountID,
+                            region,
+                            totalNumOfGames,
+                        );
+                        if (rest.length > 0)
+                            matchlist.matches = matchlist.matches.concat(rest);
 
                         // Filter out matches that belong to a different platform
                         // than where the summoner currently resides.
                         matchlist.matches = matchlist.matches.filter(
-                            m =>
-                                m.platformId.toLowerCase() ===
-                                asPlatformID(region),
+                            inPlatform(region),
                         );
 
                         const playerStats = playerExists(summonerID)
@@ -205,49 +242,16 @@ const main = async () => {
                         const trimmedMatchlist = cloneDeep(matchlist);
 
                         trimmedMatchlist.matches = trimmedMatchlist.matches.filter(
-                            match => !playerStats.containsMatch(match.gameId),
+                            containsMatch(playerStats),
                         );
 
-                        const matches = (await matchlistToMatches(
+                        const matches = await matchlistToMatches(kayn)(
                             trimmedMatchlist,
-                            kayn,
                             region,
-                        )).filter(match => match);
+                        );
 
                         // Process matches in matchlist.
-                        matches.forEach(match => {
-                            const { gameId: gameID } = match;
-
-                            const participantIdentity = findParticipantIdentity(
-                                match,
-                                summonerID,
-                            );
-                            if (!participantIdentity) return; // undefined edge case
-                            const {
-                                participantId: participantID,
-                            } = participantIdentity;
-                            const participant = findParticipant(
-                                match,
-                                participantID,
-                            );
-                            const { teamId: teamID } = participant;
-                            const { championId: championID } = participant;
-                            const { stats } = participant;
-                            const didWin = didTeamWin(match, teamID);
-                            if (playerStats.containsChampion(championID)) {
-                                playerStats.editExistingChampion(
-                                    championID,
-                                    didWin,
-                                    gameID,
-                                );
-                            } else {
-                                playerStats.pushChampion(
-                                    ChampionStats(championID, didWin),
-                                    gameID,
-                                );
-                            }
-                            // console.log('MEM:', process.memoryUsage());
-                        });
+                        matches.forEach(processMatch(playerStats));
                         if (!playerExists(summonerID))
                             allStats.push(playerStats);
                     }),
@@ -258,21 +262,18 @@ const main = async () => {
             players: allStats.map(el => el.asObject()),
         };
 
-        console.log('writing to stats.json', region);
-        jsonfile.writeFileSync('stats.json', json);
-        console.log('>> FINISHED');
-        console.log('reading stats.json', region);
-        const myJson = jsonfile.readFileSync('stats.json');
-        console.log('>> FINISHED');
-        console.log('allStats.length:', allStats.length);
+        store(json);
+        return true;
     };
 
     const keys = Object.keys(REGIONS);
-    const chunkSize = 3;
+    const chunkSize = 1;
     const processChunk = async (rank, chunk) =>
         Promise.all(chunk.map(r => fn(rank, REGIONS[r])));
     for (let i = 0; i < keys.length; i += chunkSize) {
+        console.log('starting first chunk');
         await processChunk('Challenger', keys.slice(i, i + chunkSize));
+        console.log('done with first chunk');
     }
     for (let i = 0; i < keys.length; i += chunkSize) {
         await processChunk('Master', keys.slice(i, i + chunkSize));

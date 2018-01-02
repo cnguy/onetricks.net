@@ -9,8 +9,8 @@ services:
       - redis
     ports:
       - "3002:3002"
-    # environment:
-    #   - DEBUG=kayn:*
+   # environment:
+    #  - DEBUG=kayn:*
   api:
     container_name: one-tricks-api
     restart: always
