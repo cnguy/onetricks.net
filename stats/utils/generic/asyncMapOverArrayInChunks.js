@@ -1,13 +1,23 @@
+import range from './range';
+
 const asyncMapOverArrayInChunks = async (array, chunkSize, mapFunction) => {
-    // Mutation
-    let results = [];
-    for (let i = 0; i < array.length; i += chunkSize) {
-        const currentResults = await Promise.all(
-            array.slice(i, i + chunkSize).map(mapFunction),
-        );
-        results = results.concat(currentResults);
+    const initialValue = {
+        total: [],
+        index: 0,
     }
-    return results;
+    const { total } = await range(array.length / chunkSize).reduce(async promise => {
+        const { total, index } = await promise;
+        const endIndex = index + chunkSize;
+        const current = await Promise.all(
+            array.slice(index, endIndex).map(mapFunction),
+        );
+        return Promise.resolve({
+            total: total.concat(current),
+            index: endIndex,
+        });
+    }, Promise.resolve(initialValue));
+
+    return total; 
 };
 
 export default asyncMapOverArrayInChunks;

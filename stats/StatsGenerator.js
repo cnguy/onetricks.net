@@ -164,6 +164,8 @@ const main = async () => {
             players: allStats.concat(newStats).map(el => el.asObject()),
         };
 
+        console.log(json);
+
         store(json);
         return true;
     };
