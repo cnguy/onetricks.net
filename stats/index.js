@@ -18,33 +18,31 @@ const stats = jsonfile.readFileSync('./stats.json').players;
 const getStats = summonerID =>
     stats.find(p => parseInt(p.summonerId) === parseInt(summonerID));
 
-app.set('port', (process.env.PORT || 3002));
+app.set('port', process.env.PORT || 3002);
 
 app.get('/api/stats/:summonerID', (req, res, next) => {
-  return res.json(getStats(req.params.summonerID));
+    return res.json(getStats(req.params.summonerID));
 });
 
-app.use((req, res, next) =>
-  res.render('404', { status: 404, url: req.url }),
-);
+app.use((req, res, next) => res.render('404', { status: 404, url: req.url }));
 
 app.use((err, req, res, next) => {
-  res.render('500', {
-    status: err.status || 500,
-    error: err,
-  });
+    res.render('500', {
+        status: err.status || 500,
+        error: err,
+    });
 });
 
 app.listen(app.get('port'), () => {
-  console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
+    console.log(`Find the server at: http://localhost:${app.get('port')}/`); // eslint-disable-line no-console
 });
 
 import generator from './StatsGenerator';
 
 const main = async () => {
-  console.log('start generator');
-  await generator();
-  console.log('completely done');
-}
+    console.log('start generator');
+    await generator();
+    console.log('completely done');
+};
 
 main();
