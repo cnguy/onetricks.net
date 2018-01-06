@@ -2,7 +2,7 @@
   "name": "one-tricks",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3001/",
+  "proxy": "http://one-tricks-api:3001/",
   "devDependencies": {
     "enzyme": "^2.4.1",
     "react-addons-test-utils": "^15.4.0",

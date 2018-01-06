@@ -1,17 +1,16 @@
-FROM node:8
+FROM node:latest
 
-ADD yarn.lock /yarn.lock
-ADD package.json /package.json
+# Create app directory
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-ENV NODE_PATH=/node_modules
-ENV PATH=$PATH:/node_modules/.bin
-RUN yarn
+COPY package.json ./
+COPY yarn.lock ./
+COPY . .
 
-WORKDIR /app
-ADD . /app
+RUN yarn 
 
 EXPOSE 3000
 EXPOSE 35729
 
-ENTRYPOINT ["/bin/bash", "/app/run.sh"]
-CMD ["start"]
+CMD ["yarn", "start"]

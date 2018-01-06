@@ -41,7 +41,7 @@ import generator from './StatsGenerator';
 
 const main = async () => {
     console.log('start generator');
-    await generator();
+//    await generator();
     console.log('completely done');
 };
 
