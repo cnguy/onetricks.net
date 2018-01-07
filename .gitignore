@@ -8,3 +8,4 @@ dump*
 yarn-error.log
 *rdb
 data
+-v

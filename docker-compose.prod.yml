@@ -1,0 +1,32 @@
+version: "3"
+services:
+  stats:
+    container_name: one-tricks-stats
+    restart: always
+    image: cnguy/one-tricks-stats
+    ports:
+      - "3002:3002"
+   # environment:
+    #  - DEBUG=kayn:*
+  api:
+    container_name: one-tricks-api
+    restart: always
+    image: cnguy/one-tricks-api
+    ports:
+      - "3001:3001"
+    environment:
+      - DEBUG=kayn:*
+      - NODE_ENV=production
+  client:
+    container_name: one-tricks-client
+    restart: always
+    image: cnguy/one-tricks-client
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /www/public
+    links:
+      - api
+    environment:
+      - NODE_ENV=production

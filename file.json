@@ -1,0 +1,886 @@
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca02"},"champ":"Talon","id":19296564,"wins":363,"losses":310,"name":"fwii","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca03"},"champ":"Talon","id":19543076,"wins":175,"losses":84,"name":"fwii Tryn","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca04"},"champ":"Katarina","id":19864171,"wins":243,"losses":174,"name":"FaZe KatEvolved","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca05"},"champ":"Irelia","id":21623482,"wins":320,"losses":262,"name":"Event","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca06"},"champ":"Heimerdinger","id":21794465,"wins":335,"losses":288,"name":"chowdong","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca07"},"champ":"Blitzcrank","id":23245665,"wins":611,"losses":559,"name":"Scrandor","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca08"},"champ":"Singed","id":32544079,"wins":265,"losses":193,"name":"tummysalami","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca09"},"champ":"Irelia","id":36733439,"wins":448,"losses":392,"name":"Irelia Carries U","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca0a"},"champ":"Thresh","id":37512500,"wins":244,"losses":156,"name":"TakatsukiSen","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca0b"},"champ":"JarvanIV","id":37827053,"wins":777,"losses":720,"name":"KiNG Nidhogg","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca0c"},"champ":"Akali","id":40036262,"wins":287,"losses":202,"name":"MLGB BIade","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca0d"},"champ":"Thresh","id":54805628,"wins":119,"losses":47,"name":"OMG CIoud","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca0e"},"champ":"RekSai","id":83312491,"wins":134,"losses":58,"name":"MotionPlan598","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca0f"},"champ":"Pantheon","id":86912471,"wins":159,"losses":83,"name":"Nugeek","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca10"},"champ":"Riven","id":89881848,"wins":101,"losses":40,"name":"Duo Abuse","rank":"c","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca11"},"champ":"Akali","id":1687546,"wins":846,"losses":779,"name":"쿠소만화 보따리","rank":"c","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca12"},"champ":"Poppy","id":5802440,"wins":433,"losses":365,"name":"누구를 위한","rank":"c","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca13"},"champ":"Akali","id":9722804,"wins":616,"losses":544,"name":"아라스톨","rank":"c","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca14"},"champ":"Yasuo","id":10150520,"wins":284,"losses":210,"name":"카페베네설탕도둑","rank":"c","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca15"},"champ":"Karthus","id":44090985,"wins":162,"losses":88,"name":"Xavelin","rank":"c","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca16"},"champ":"Nidalee","id":57330154,"wins":344,"losses":262,"name":"설랜다 Me Likey","rank":"c","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca17"},"champ":"Yasuo","id":156090,"wins":558,"losses":541,"name":"Yassuo","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca18"},"champ":"Anivia","id":587801,"wins":230,"losses":107,"name":"Hyøri","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca19"},"champ":"Draven","id":19074236,"wins":90,"losses":38,"name":"nve","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca1a"},"champ":"Shaco","id":19889688,"wins":161,"losses":119,"name":"AkoyPinoy","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca1b"},"champ":"Fiddlesticks","id":20220845,"wins":370,"losses":340,"name":"Nikkone","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca1c"},"champ":"Heimerdinger","id":20411671,"wins":373,"losses":322,"name":"Heisendong","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca1d"},"champ":"Gangplank","id":20616519,"wins":247,"losses":149,"name":"barrelboy69","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca1e"},"champ":"Tryndamere","id":20916630,"wins":238,"losses":192,"name":"Crits R Easy","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca1f"},"champ":"Talon","id":21686553,"wins":300,"losses":265,"name":"Staxl","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca20"},"champ":"Ekko","id":21949120,"wins":154,"losses":108,"name":"Call Me Jensen","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca21"},"champ":"Brand","id":21982089,"wins":146,"losses":113,"name":"Pleinairz","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca22"},"champ":"Karthus","id":22037820,"wins":78,"losses":46,"name":"Big D Darius","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca23"},"champ":"Viktor","id":22710237,"wins":184,"losses":142,"name":"iRTimmy","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca24"},"champ":"Teemo","id":22736995,"wins":1013,"losses":1000,"name":"hi im a fucboi","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca25"},"champ":"Soraka","id":22742359,"wins":169,"losses":122,"name":"Magi1234","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca26"},"champ":"RekSai","id":23066104,"wins":235,"losses":203,"name":"Pandaren","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca27"},"champ":"Khazix","id":23486163,"wins":65,"losses":22,"name":"Dayuks","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca28"},"champ":"Orianna","id":24255907,"wins":64,"losses":20,"name":"Roll in the Deep","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca29"},"champ":"AurelionSol","id":24326160,"wins":138,"losses":82,"name":"Sweaty ASol","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca2a"},"champ":"Shaco","id":24347016,"wins":239,"losses":185,"name":"TET Doyeon","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca2b"},"champ":"Riven","id":25361095,"wins":178,"losses":138,"name":"Nubsee","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca2c"},"champ":"Tryndamere","id":25490904,"wins":226,"losses":100,"name":"Mini Nilla","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca2d"},"champ":"Rumble","id":25947578,"wins":147,"losses":112,"name":"jkang","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca2e"},"champ":"Zac","id":26359709,"wins":244,"losses":205,"name":"Fidora","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca2f"},"champ":"JarvanIV","id":26379781,"wins":270,"losses":234,"name":"Sonny2o9","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca30"},"champ":"Nami","id":27429926,"wins":796,"losses":772,"name":"Pãwz","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca31"},"champ":"Kennen","id":27519370,"wins":319,"losses":268,"name":"Bobjenkins","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca32"},"champ":"Yasuo","id":27930063,"wins":215,"losses":178,"name":"Cpt Beloo","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca33"},"champ":"Fiora","id":28661837,"wins":607,"losses":569,"name":"Albus NoX","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca34"},"champ":"Katarina","id":28961553,"wins":352,"losses":313,"name":"BusioC","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca35"},"champ":"Draven","id":29168371,"wins":89,"losses":47,"name":"Donahue","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca36"},"champ":"Veigar","id":29293356,"wins":119,"losses":89,"name":"Screaming","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca37"},"champ":"Teemo","id":30085971,"wins":167,"losses":135,"name":"HIKASHIKUN","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca38"},"champ":"Aatrox","id":30645632,"wins":1047,"losses":1013,"name":"Beyonder Aatrox","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca39"},"champ":"Anivia","id":30862532,"wins":207,"losses":168,"name":"Paco","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca3a"},"champ":"Kindred","id":30938784,"wins":111,"losses":49,"name":"Forest Within","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca3b"},"champ":"Talon","id":30972130,"wins":310,"losses":260,"name":"Yamikaze","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca3c"},"champ":"Soraka","id":31320174,"wins":183,"losses":134,"name":"Vanagloria","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca3d"},"champ":"Tryndamere","id":31507479,"wins":155,"losses":91,"name":"foggedftw2","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca3e"},"champ":"Anivia","id":31687588,"wins":275,"losses":238,"name":"Freeze","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca3f"},"champ":"Shaco","id":33081713,"wins":174,"losses":105,"name":"Paper Chàse","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca40"},"champ":"LeeSin","id":33111534,"wins":150,"losses":110,"name":"reallygoodgamer","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca41"},"champ":"Sion","id":34951738,"wins":325,"losses":289,"name":"Calphen","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca42"},"champ":"Xerath","id":35213233,"wins":574,"losses":536,"name":"CC Charmer","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca43"},"champ":"Kalista","id":35459615,"wins":164,"losses":110,"name":"Justín","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca44"},"champ":"Azir","id":36512012,"wins":163,"losses":135,"name":"Body Those Fools","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca45"},"champ":"Elise","id":37032735,"wins":294,"losses":216,"name":"Redhair bb1","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca46"},"champ":"Akali","id":38898105,"wins":210,"losses":169,"name":"IIKairosII","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca47"},"champ":"Elise","id":39863245,"wins":343,"losses":303,"name":"Me Llamo Big D","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca48"},"champ":"Karma","id":39996432,"wins":386,"losses":349,"name":"Unstopebble","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca49"},"champ":"Riven","id":40129524,"wins":578,"losses":547,"name":"Boy Gamer","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca4a"},"champ":"Zilean","id":40784909,"wins":163,"losses":108,"name":"Venerated","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca4b"},"champ":"Gragas","id":41643804,"wins":260,"losses":211,"name":"Vakin","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca4c"},"champ":"Soraka","id":41727487,"wins":130,"losses":93,"name":"Synexes","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca4d"},"champ":"Pantheon","id":41998856,"wins":197,"losses":102,"name":"redbus1","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca4e"},"champ":"Sona","id":43361425,"wins":478,"losses":449,"name":"Blue Guilmon","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca4f"},"champ":"Singed","id":43484392,"wins":394,"losses":369,"name":"Bruised Ego","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca50"},"champ":"Pantheon","id":43588594,"wins":372,"losses":336,"name":"Private ADC","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca51"},"champ":"Annie","id":43873947,"wins":438,"losses":401,"name":"Boyyyyyyyyyyyyyy","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca52"},"champ":"Riven","id":44633286,"wins":120,"losses":72,"name":"Vokster","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca53"},"champ":"Yasuo","id":45191640,"wins":787,"losses":744,"name":"Dàt Boiiiiiiiii","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca54"},"champ":"Nocturne","id":46251158,"wins":253,"losses":201,"name":"Åum","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca55"},"champ":"Kled","id":47401142,"wins":343,"losses":294,"name":"Soulmario","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca56"},"champ":"Rengar","id":47547430,"wins":370,"losses":323,"name":"CallMeExiled","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca57"},"champ":"Riven","id":47587002,"wins":191,"losses":152,"name":"MrPhan","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca58"},"champ":"Renekton","id":47943093,"wins":398,"losses":365,"name":"3in1warrior","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca59"},"champ":"Olaf","id":48240600,"wins":390,"losses":353,"name":"Azrael Olaf","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca5a"},"champ":"Jax","id":48603450,"wins":344,"losses":307,"name":"Kax","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca5b"},"champ":"Rengar","id":49073015,"wins":420,"losses":376,"name":"Rengår","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca5c"},"champ":"Teemo","id":50043186,"wins":885,"losses":853,"name":"iPav","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca5d"},"champ":"AurelionSol","id":50229422,"wins":176,"losses":138,"name":"Mercury","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca5e"},"champ":"Draven","id":50928107,"wins":199,"losses":159,"name":"ROAD TO BRONZE 6","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca5f"},"champ":"Talon","id":54059235,"wins":165,"losses":58,"name":"fwii Talon","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca60"},"champ":"Bard","id":55401833,"wins":332,"losses":302,"name":"HazardFP","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca61"},"champ":"Anivia","id":55629820,"wins":186,"losses":147,"name":"Butler Delta","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca62"},"champ":"Darius","id":55815684,"wins":366,"losses":323,"name":"Deweyyy","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca63"},"champ":"Sona","id":58630068,"wins":189,"losses":132,"name":"Meowaholic","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca64"},"champ":"Kalista","id":60823528,"wins":105,"losses":31,"name":"LinGa","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca65"},"champ":"RekSai","id":62316830,"wins":213,"losses":169,"name":"Shadarek","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca66"},"champ":"Kennen","id":63668112,"wins":286,"losses":219,"name":"jkangˉ","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca67"},"champ":"Draven","id":64199965,"wins":330,"losses":288,"name":"Youuuuuuuuuuuuu","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca68"},"champ":"Tryndamere","id":66591860,"wins":834,"losses":794,"name":"cromelb","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca69"},"champ":"Ekko","id":68382105,"wins":185,"losses":134,"name":"Fulmer","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca6a"},"champ":"Yasuo","id":68752650,"wins":252,"losses":209,"name":"Wôn","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca6b"},"champ":"Thresh","id":69653316,"wins":201,"losses":156,"name":"Sahyeong Seongo","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca6c"},"champ":"Teemo","id":70029234,"wins":172,"losses":118,"name":"Frabjous","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca6d"},"champ":"Draven","id":70769292,"wins":102,"losses":43,"name":"GoodDravenPlayr","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca6e"},"champ":"Swain","id":71350797,"wins":220,"losses":175,"name":"FatMiku","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca6f"},"champ":"Heimerdinger","id":72905368,"wins":187,"losses":119,"name":"Heisendongg","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca70"},"champ":"Gragas","id":74089775,"wins":139,"losses":82,"name":"Season 3 Gragas","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca71"},"champ":"Annie","id":76412589,"wins":309,"losses":269,"name":"Bánh Heroin","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca72"},"champ":"Singed","id":77190026,"wins":372,"losses":302,"name":"NoLaneWinGame","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca73"},"champ":"Thresh","id":78732375,"wins":160,"losses":108,"name":"06 12 98","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca74"},"champ":"Janna","id":82769101,"wins":323,"losses":270,"name":"Invidiant","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca75"},"champ":"Pantheon","id":82950710,"wins":259,"losses":184,"name":"BoxeR KFC","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca76"},"champ":"Twitch","id":87502103,"wins":281,"losses":230,"name":"parq","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca77"},"champ":"Thresh","id":89540151,"wins":116,"losses":61,"name":"ASU THOT","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca78"},"champ":"Akali","id":91362095,"wins":69,"losses":19,"name":"Jg is Top","rank":"m","region":"na"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca79"},"champ":"Riven","id":28892717,"wins":312,"losses":242,"name":"dejan1","rank":"c","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca7a"},"champ":"Jax","id":29939816,"wins":193,"losses":99,"name":"RANGERZX","rank":"c","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca7b"},"champ":"Heimerdinger","id":40198362,"wins":321,"losses":245,"name":"Gland qui Daube","rank":"c","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca7c"},"champ":"TwistedFate","id":84647572,"wins":213,"losses":152,"name":"Twisted Math","rank":"c","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca7d"},"champ":"Twitch","id":102809896,"wins":186,"losses":76,"name":"RATIRL 34224342","rank":"c","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca7e"},"champ":"Talon","id":104178743,"wins":184,"losses":105,"name":"WX 1196255564","rank":"c","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca7f"},"champ":"Karthus","id":1498982,"wins":404,"losses":345,"name":"잠자구있어요","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca80"},"champ":"Leona","id":1882877,"wins":614,"losses":544,"name":"LeonaMaestro","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca81"},"champ":"Swain","id":2370956,"wins":306,"losses":261,"name":"강소라","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca82"},"champ":"Gangplank","id":2485191,"wins":209,"losses":100,"name":"Shi  Yue","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca83"},"champ":"Zilean","id":2804541,"wins":419,"losses":333,"name":"이게뭔딜이지","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca84"},"champ":"Singed","id":3445521,"wins":244,"losses":149,"name":"sdnehel","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca85"},"champ":"Ziggs","id":3469069,"wins":334,"losses":259,"name":"짱귀요미직스","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca86"},"champ":"Teemo","id":3921315,"wins":277,"losses":241,"name":"항 심","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca87"},"champ":"Irelia","id":4887772,"wins":566,"losses":530,"name":"코태는","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca88"},"champ":"Singed","id":5183399,"wins":763,"losses":736,"name":"dbd2","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca89"},"champ":"Blitzcrank","id":5717404,"wins":142,"losses":111,"name":"미남 서폿터","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca8a"},"champ":"Draven","id":5782801,"wins":537,"losses":496,"name":"입닫고빵이나먹어","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca8b"},"champ":"Syndra","id":6701109,"wins":87,"losses":39,"name":"ATT BomU","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca8c"},"champ":"Karthus","id":6803570,"wins":176,"losses":139,"name":"유령카서스장인","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca8d"},"champ":"Zed","id":8019481,"wins":200,"losses":68,"name":"mi amor damaris","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca8e"},"champ":"Leblanc","id":8530195,"wins":380,"losses":324,"name":"박효신사생팬","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca8f"},"champ":"Gangplank","id":8885950,"wins":82,"losses":28,"name":"챌찍으러왔어요","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca90"},"champ":"Talon","id":8890410,"wins":583,"losses":529,"name":"AD Talon Carry","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca91"},"champ":"Olaf","id":9093672,"wins":426,"losses":397,"name":"액션이","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca92"},"champ":"Ziggs","id":9164572,"wins":692,"losses":660,"name":"미친 과학자 직스","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca93"},"champ":"Karthus","id":9601176,"wins":893,"losses":873,"name":"엉덩국 데리버거","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca94"},"champ":"Karthus","id":10380424,"wins":79,"losses":35,"name":"새우사주새우","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca95"},"champ":"Blitzcrank","id":10747297,"wins":1115,"losses":1093,"name":"블리츄","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca96"},"champ":"Leona","id":11079902,"wins":374,"losses":300,"name":"LeonaMaster","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca97"},"champ":"Nunu","id":11153391,"wins":566,"losses":520,"name":"She Jinping","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca98"},"champ":"Shaco","id":11274149,"wins":209,"losses":162,"name":"Toby Grimditch","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca99"},"champ":"Kled","id":11841135,"wins":473,"losses":438,"name":"지아소","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca9a"},"champ":"Orianna","id":11942372,"wins":270,"losses":223,"name":"Center Pole","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca9b"},"champ":"Elise","id":13546646,"wins":213,"losses":166,"name":"우규현","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca9c"},"champ":"Aatrox","id":14027554,"wins":397,"losses":364,"name":"A트록스","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca9d"},"champ":"Syndra","id":17030863,"wins":83,"losses":37,"name":"지옥불 황금 벌레","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca9e"},"champ":"Janna","id":17574803,"wins":381,"losses":300,"name":"찹 또","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972deca9f"},"champ":"Thresh","id":17688373,"wins":754,"losses":722,"name":"3991","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaa0"},"champ":"Karthus","id":17753382,"wins":118,"losses":82,"name":"시오도메 미우나","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaa1"},"champ":"Shaco","id":19421492,"wins":775,"losses":715,"name":"챔프폭 늘리는중","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaa2"},"champ":"Pantheon","id":19445064,"wins":284,"losses":249,"name":"판 친","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaa3"},"champ":"Katarina","id":23743424,"wins":482,"losses":440,"name":"iG루키","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaa4"},"champ":"Zilean","id":23970793,"wins":365,"losses":343,"name":"이마딘","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaa5"},"champ":"Gragas","id":26562566,"wins":206,"losses":156,"name":"gragas zz","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaa6"},"champ":"Fiddlesticks","id":28381183,"wins":71,"losses":33,"name":"Permaban00152248","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaa7"},"champ":"Ekko","id":29482811,"wins":333,"losses":267,"name":"010723","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaa8"},"champ":"Lulu","id":30270329,"wins":174,"losses":109,"name":"I P A","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaa9"},"champ":"Akali","id":30891088,"wins":284,"losses":216,"name":"J푸른하늘","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaaa"},"champ":"Talon","id":35332011,"wins":275,"losses":241,"name":"목탁비트치는스님","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaab"},"champ":"Singed","id":39180949,"wins":162,"losses":113,"name":"LnD 섹지드","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaac"},"champ":"Karthus","id":42183907,"wins":587,"losses":503,"name":"롤 이제 안해야지","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaad"},"champ":"TwistedFate","id":44951171,"wins":87,"losses":37,"name":"to be alone","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaae"},"champ":"Rengar","id":45061579,"wins":639,"losses":518,"name":"고양이못함","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaaf"},"champ":"Katarina","id":46130461,"wins":546,"losses":496,"name":"Excuse","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decab0"},"champ":"Olaf","id":46591036,"wins":409,"losses":375,"name":"포차이니즈켄트윈","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decab1"},"champ":"Evelynn","id":46680159,"wins":114,"losses":53,"name":"퍼플팀 공그","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decab2"},"champ":"Caitlyn","id":47810430,"wins":346,"losses":290,"name":"달래는 지영이","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decab3"},"champ":"Diana","id":50320192,"wins":421,"losses":338,"name":"이야공","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decab4"},"champ":"Irelia","id":53131032,"wins":458,"losses":408,"name":"단소소년","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decab5"},"champ":"Leona","id":55221430,"wins":327,"losses":270,"name":"써거덩","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decab6"},"champ":"Fizz","id":55880274,"wins":1219,"losses":1156,"name":"갬 성","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decab7"},"champ":"Mordekaiser","id":57191340,"wins":212,"losses":141,"name":"해머쇼크","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decab8"},"champ":"Fiora","id":59250284,"wins":651,"losses":590,"name":"준기아기","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decab9"},"champ":"Ekko","id":59790396,"wins":120,"losses":55,"name":"Threaded Volley","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaba"},"champ":"Evelynn","id":59980397,"wins":77,"losses":22,"name":"카카오팀 현웅","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decabb"},"champ":"Kled","id":60051041,"wins":207,"losses":140,"name":"이상호vs이석희","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decabc"},"champ":"Karma","id":60241031,"wins":148,"losses":79,"name":"Mystic My Stick","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decabd"},"champ":"MasterYi","id":61360971,"wins":141,"losses":82,"name":"Niles","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decabe"},"champ":"Singed","id":62361061,"wins":260,"losses":176,"name":"류혜원","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decabf"},"champ":"Teemo","id":63031229,"wins":216,"losses":124,"name":"항물파전","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decac0"},"champ":"RekSai","id":63151147,"wins":231,"losses":172,"name":"o만찐두빵0","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decac1"},"champ":"RekSai","id":63490136,"wins":201,"losses":144,"name":"앙 땅굴띠","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decac2"},"champ":"Draven","id":64680683,"wins":101,"losses":42,"name":"매력있는환이","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decac3"},"champ":"Fizz","id":65470828,"wins":147,"losses":87,"name":"mangguoyu","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decac4"},"champ":"XinZhao","id":65790335,"wins":93,"losses":64,"name":"Diamondprox1","rank":"m","region":"kr"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decac5"},"champ":"Irelia","id":19111161,"wins":408,"losses":363,"name":"tôder","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decac6"},"champ":"Orianna","id":19599184,"wins":133,"losses":88,"name":"Gjisu","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decac7"},"champ":"Pantheon","id":19613642,"wins":218,"losses":148,"name":"Ben Magic","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decac8"},"champ":"Tryndamere","id":19658604,"wins":252,"losses":208,"name":"Yostie","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decac9"},"champ":"Sion","id":19675963,"wins":521,"losses":470,"name":"Tereal","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaca"},"champ":"Ivern","id":20599487,"wins":402,"losses":355,"name":"Pukc","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decacb"},"champ":"Sejuani","id":21550054,"wins":138,"losses":104,"name":"ForceObscure","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decacc"},"champ":"Yasuo","id":21729191,"wins":332,"losses":273,"name":"Lexip","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decacd"},"champ":"Anivia","id":22206550,"wins":289,"losses":245,"name":"Abaks","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decace"},"champ":"Rengar","id":22234041,"wins":192,"losses":104,"name":"Cat facts","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decacf"},"champ":"Zilean","id":22269282,"wins":631,"losses":593,"name":"Rx Dye","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decad0"},"champ":"Jax","id":22303558,"wins":116,"losses":51,"name":"WíLLiSGaming","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decad1"},"champ":"Orianna","id":22518023,"wins":174,"losses":134,"name":"GodlikeKatarina","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decad2"},"champ":"Heimerdinger","id":22675046,"wins":214,"losses":150,"name":"Typhael","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decad3"},"champ":"Khazix","id":22776787,"wins":244,"losses":199,"name":"ßestßae","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decad4"},"champ":"Kalista","id":23034439,"wins":414,"losses":352,"name":"Viel Glück","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decad5"},"champ":"Warwick","id":23221834,"wins":908,"losses":865,"name":"Sander Frost","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decad6"},"champ":"Taric","id":23605635,"wins":394,"losses":346,"name":"PKB Sladier","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decad7"},"champ":"Riven","id":24549536,"wins":229,"losses":189,"name":"Hi Its Berny","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decad8"},"champ":"Velkoz","id":24563497,"wins":715,"losses":662,"name":"Rhobalas","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decad9"},"champ":"Nunu","id":24624311,"wins":229,"losses":176,"name":"Schuhbart","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decada"},"champ":"Malzahar","id":25138519,"wins":536,"losses":480,"name":"killoftissu","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decadb"},"champ":"Velkoz","id":25277585,"wins":265,"losses":226,"name":"Varph","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decadc"},"champ":"Zilean","id":27346882,"wins":185,"losses":133,"name":"TimeØut ","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decadd"},"champ":"Jinx","id":27557270,"wins":373,"losses":334,"name":"Nennad","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decade"},"champ":"Taric","id":29171077,"wins":431,"losses":389,"name":"ClimbMountTargon","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decadf"},"champ":"Sona","id":29237301,"wins":311,"losses":263,"name":"Colazor","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decae0"},"champ":"Katarina","id":29818310,"wins":623,"losses":556,"name":"Katastrophical","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decae1"},"champ":"Twitch","id":30990491,"wins":80,"losses":27,"name":"1996  12  30","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decae2"},"champ":"Darius","id":31318311,"wins":523,"losses":489,"name":"Jean Francois","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decae3"},"champ":"Soraka","id":31470287,"wins":861,"losses":823,"name":"Neurotico","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decae4"},"champ":"Bard","id":31591164,"wins":177,"losses":120,"name":"jbsv","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decae5"},"champ":"Vladimir","id":32707488,"wins":448,"losses":396,"name":"Elite500","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decae6"},"champ":"Riven","id":33578286,"wins":386,"losses":327,"name":"rü to the ven","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decae7"},"champ":"Yasuo","id":35095882,"wins":1059,"losses":1022,"name":"CLT Inugami","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decae8"},"champ":"Diana","id":35159082,"wins":545,"losses":487,"name":"faką","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decae9"},"champ":"Thresh","id":35168725,"wins":593,"losses":536,"name":"Seaz","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaea"},"champ":"Yasuo","id":35447275,"wins":437,"losses":365,"name":"Yasuneri","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaeb"},"champ":"Yasuo","id":35724350,"wins":179,"losses":136,"name":"BarcodeKiIler","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaec"},"champ":"Gangplank","id":37147607,"wins":307,"losses":248,"name":"The Most Fragile","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaed"},"champ":"Janna","id":37631598,"wins":129,"losses":49,"name":"ldeekay","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaee"},"champ":"XinZhao","id":37828149,"wins":99,"losses":70,"name":"prudnah","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaef"},"champ":"Karthus","id":37944342,"wins":215,"losses":131,"name":"qreoxe","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaf0"},"champ":"Akali","id":39518338,"wins":224,"losses":149,"name":"Codein in my cup","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaf1"},"champ":"Karthus","id":40693701,"wins":637,"losses":602,"name":"EN8 Eiji","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaf2"},"champ":"Talon","id":41549966,"wins":369,"losses":336,"name":"  Presumptu0us","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaf3"},"champ":"Blitzcrank","id":42186986,"wins":197,"losses":137,"name":"HAKV Jokton","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaf4"},"champ":"Sion","id":42192684,"wins":370,"losses":316,"name":"Kuma665","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaf5"},"champ":"Talon","id":42248968,"wins":469,"losses":437,"name":"ι              ι","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaf6"},"champ":"Jax","id":42277584,"wins":58,"losses":5,"name":"job man","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaf7"},"champ":"Azir","id":42997436,"wins":331,"losses":283,"name":"Sheykero","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaf8"},"champ":"Malzahar","id":43124224,"wins":272,"losses":203,"name":"IamSunny","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaf9"},"champ":"Trundle","id":44954453,"wins":609,"losses":569,"name":"Trunndle","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decafa"},"champ":"Draven","id":45379441,"wins":453,"losses":384,"name":"JackSpektra","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decafb"},"champ":"XinZhao","id":46588171,"wins":307,"losses":277,"name":"Drusalinka","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decafc"},"champ":"Gangplank","id":46606817,"wins":459,"losses":425,"name":"ZK N3crovision","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decafd"},"champ":"Aatrox","id":46687094,"wins":224,"losses":180,"name":"Deltired","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decafe"},"champ":"Jayce","id":46887514,"wins":94,"losses":50,"name":"Karwox","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decaff"},"champ":"Yasuo","id":49494335,"wins":248,"losses":208,"name":"TheWanderingPro","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb00"},"champ":"Irelia","id":49628047,"wins":283,"losses":240,"name":"Gugaz98","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb01"},"champ":"Zilean","id":50791106,"wins":228,"losses":188,"name":"Rîse","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb02"},"champ":"Rengar","id":51878342,"wins":486,"losses":451,"name":"Xíl","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb03"},"champ":"Jax","id":53197528,"wins":127,"losses":84,"name":"Lucifer is back","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb04"},"champ":"Kayle","id":53436826,"wins":640,"losses":595,"name":"Major z Bombasu","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb05"},"champ":"Taliyah","id":56861927,"wins":297,"losses":257,"name":"Vìrtuozz","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb06"},"champ":"Katarina","id":57109310,"wins":612,"losses":529,"name":"DeathByKatarina","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb07"},"champ":"Yorick","id":57269870,"wins":472,"losses":439,"name":"Comte Magnolias","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb08"},"champ":"Camille","id":58224718,"wins":196,"losses":132,"name":"DefinitlyMaybe","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb09"},"champ":"Darius","id":60148157,"wins":753,"losses":715,"name":"Daddy Dunk S8","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb0a"},"champ":"Vladimir","id":62587431,"wins":818,"losses":791,"name":"Tiberian","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb0b"},"champ":"Veigar","id":72484140,"wins":151,"losses":112,"name":"Véigâr v2","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb0c"},"champ":"Riven","id":73981396,"wins":73,"losses":41,"name":"This Username is","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb0d"},"champ":"Katarina","id":76942740,"wins":521,"losses":428,"name":"Kata Les Mécanix","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb0e"},"champ":"Alistar","id":78307337,"wins":361,"losses":327,"name":"GrimmRipper","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb0f"},"champ":"Kayle","id":79108809,"wins":120,"losses":77,"name":"Syngul4r1ty","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb10"},"champ":"Jayce","id":85781368,"wins":214,"losses":162,"name":"FullMetalRobocop","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb11"},"champ":"Yasuo","id":86527764,"wins":222,"losses":161,"name":"Zednic","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb12"},"champ":"Talon","id":87177242,"wins":1039,"losses":966,"name":"TheWrathSummoner","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb13"},"champ":"Riven","id":90670340,"wins":192,"losses":142,"name":"MILEYCYRUSFAN24","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb14"},"champ":"Veigar","id":95997567,"wins":217,"losses":132,"name":"Véigâr v3","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb15"},"champ":"Evelynn","id":98267247,"wins":142,"losses":74,"name":"EGIRL SLAYER XDD","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb16"},"champ":"Leblanc","id":99888685,"wins":154,"losses":85,"name":"Royal LeBlanc","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb17"},"champ":"Gangplank","id":100208599,"wins":134,"losses":68,"name":"Sail it down Mid","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb18"},"champ":"JarvanIV","id":101039814,"wins":123,"losses":62,"name":"King savage","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb19"},"champ":"RekSai","id":102170099,"wins":215,"losses":146,"name":"mYi Green","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb1a"},"champ":"Lulu","id":102819924,"wins":73,"losses":12,"name":"hm idk zz","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb1b"},"champ":"Zilean","id":103297936,"wins":102,"losses":49,"name":"Ðylean","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb1c"},"champ":"Fizz","id":104007140,"wins":194,"losses":123,"name":"Dane i Matea","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfc3a42a96972decb1d"},"champ":"KogMaw","id":105179926,"wins":81,"losses":26,"name":"ADC TALENT XD","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb1e"},"champ":"Kennen","id":457897,"wins":339,"losses":287,"name":"DJ LuzAzul","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb1f"},"champ":"Riven","id":523125,"wins":529,"losses":482,"name":"BRTWWWWWWWWWWWWW","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb20"},"champ":"Riven","id":534101,"wins":599,"losses":550,"name":"shy eleven","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb21"},"champ":"Leona","id":982346,"wins":423,"losses":367,"name":"Bernardis","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb22"},"champ":"Akali","id":1312446,"wins":467,"losses":399,"name":"l Kagura l","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb23"},"champ":"Thresh","id":1403374,"wins":623,"losses":589,"name":"Frepz","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb24"},"champ":"Khazix","id":1833896,"wins":351,"losses":305,"name":"CNB Hy0g4","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb25"},"champ":"Quinn","id":1872796,"wins":253,"losses":202,"name":"ShaQuinn","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb26"},"champ":"Yasuo","id":2081440,"wins":464,"losses":415,"name":"Ayato Amagiri","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb27"},"champ":"Irelia","id":2618528,"wins":356,"losses":304,"name":"Yoshihisa Manabe","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb28"},"champ":"Syndra","id":3251408,"wins":292,"losses":226,"name":"WFG Guspfc","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb29"},"champ":"Riven","id":4140701,"wins":578,"losses":537,"name":"Distinct","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb2a"},"champ":"Yasuo","id":5400152,"wins":204,"losses":160,"name":"Ayatinho","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb2b"},"champ":"Rengar","id":6556812,"wins":228,"losses":183,"name":"DzzzzzN","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb2c"},"champ":"Fiddlesticks","id":15332948,"wins":442,"losses":415,"name":"Copy","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb2d"},"champ":"Jayce","id":25485566,"wins":209,"losses":134,"name":"Jayce Blindado","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb2e"},"champ":"Riven","id":27574079,"wins":212,"losses":137,"name":"Near1","rank":"c","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb2f"},"champ":"Hecarim","id":20093613,"wins":293,"losses":241,"name":"IS1d30431af74fbd","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb30"},"champ":"Yasuo","id":20911182,"wins":197,"losses":147,"name":"Mortar2","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb31"},"champ":"Khazix","id":22840620,"wins":113,"losses":64,"name":"ConsumeAndAdapt","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb32"},"champ":"Khazix","id":23044128,"wins":145,"losses":68,"name":"Toejoki","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb33"},"champ":"Thresh","id":23438618,"wins":156,"losses":104,"name":"Agammand","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb34"},"champ":"Twitch","id":23963374,"wins":220,"losses":105,"name":"God Twitch","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb35"},"champ":"Anivia","id":24077627,"wins":186,"losses":133,"name":"Anivia only","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb36"},"champ":"Jax","id":25463193,"wins":220,"losses":148,"name":"RANGERZX","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb37"},"champ":"RekSai","id":27136448,"wins":107,"losses":41,"name":"Hayree","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb38"},"champ":"Jayce","id":29321928,"wins":214,"losses":161,"name":"nesfy","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb39"},"champ":"Heimerdinger","id":29947317,"wins":255,"losses":194,"name":"LC Specialkey","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb3a"},"champ":"Jayce","id":30950217,"wins":419,"losses":349,"name":"iG Necromartin","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb3b"},"champ":"MissFortune","id":33093065,"wins":327,"losses":274,"name":"EmdielGG","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb3c"},"champ":"Ryze","id":34226717,"wins":231,"losses":182,"name":"Wansie","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb3d"},"champ":"Rengar","id":34233510,"wins":241,"losses":186,"name":"PaPa PrZyPaŁ","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb3e"},"champ":"Vladimir","id":34366642,"wins":287,"losses":231,"name":"Zest of a Lemon","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb3f"},"champ":"Sion","id":34647447,"wins":278,"losses":221,"name":"Thebausffs","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb40"},"champ":"Tryndamere","id":35473029,"wins":326,"losses":278,"name":"Yuno Gasai","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb41"},"champ":"Janna","id":36359863,"wins":201,"losses":138,"name":"Kysek","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb42"},"champ":"Shen","id":37210416,"wins":276,"losses":200,"name":"PetuTheBeast","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb43"},"champ":"Cassiopeia","id":37627775,"wins":276,"losses":182,"name":"ElDiabloCr7","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb44"},"champ":"Rumble","id":37651913,"wins":363,"losses":321,"name":"Krasitto","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb45"},"champ":"RekSai","id":38122606,"wins":269,"losses":165,"name":"PagChompion","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb46"},"champ":"Riven","id":38685497,"wins":784,"losses":723,"name":"EXSEMIMASTER","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb47"},"champ":"Rengar","id":40937267,"wins":357,"losses":319,"name":"Djres","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb48"},"champ":"RekSai","id":41193225,"wins":253,"losses":180,"name":"XInformersX","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb49"},"champ":"Yasuo","id":42321931,"wins":195,"losses":138,"name":"Goddess Shy","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb4a"},"champ":"Brand","id":42491362,"wins":445,"losses":388,"name":"adolebitque","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb4b"},"champ":"Nocturne","id":51510795,"wins":425,"losses":367,"name":"Psych0social","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb4c"},"champ":"Tryndamere","id":52530080,"wins":210,"losses":131,"name":"PetesAdoptedSon","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb4d"},"champ":"Leona","id":54688616,"wins":192,"losses":101,"name":"Omul in negru","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb4e"},"champ":"Rumble","id":58733130,"wins":202,"losses":110,"name":"Sparklehat","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb4f"},"champ":"Karthus","id":69063064,"wins":364,"losses":294,"name":"romanian phallus","rank":"c","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb50"},"champ":"Leblanc","id":450937,"wins":795,"losses":740,"name":"Le Blanc Blanc","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb51"},"champ":"Fizz","id":459606,"wins":526,"losses":452,"name":"LoneChild","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb52"},"champ":"Talon","id":459699,"wins":304,"losses":282,"name":"Cawabanga","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb53"},"champ":"Evelynn","id":481392,"wins":438,"losses":398,"name":"Aquele Texugo","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb54"},"champ":"Kennen","id":488994,"wins":513,"losses":460,"name":"Zero7","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb55"},"champ":"Rengar","id":527821,"wins":251,"losses":218,"name":"Soul Harper","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb56"},"champ":"Teemo","id":533705,"wins":275,"losses":229,"name":"Arthur Lanches","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb57"},"champ":"TwistedFate","id":595612,"wins":1306,"losses":1270,"name":"BabyMisty","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb58"},"champ":"Riven","id":598639,"wins":176,"losses":131,"name":"NaC Kazumi","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb59"},"champ":"Kassadin","id":637516,"wins":199,"losses":157,"name":"hdef","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb5a"},"champ":"Riven","id":773811,"wins":240,"losses":195,"name":"Mecahawx","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb5b"},"champ":"Mordekaiser","id":789079,"wins":532,"losses":447,"name":"ll Monokaiser ll","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb5c"},"champ":"Draven","id":840819,"wins":311,"losses":289,"name":"Vipeeer","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb5d"},"champ":"Fiddlesticks","id":1162683,"wins":183,"losses":131,"name":"MaiconMNF","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb5e"},"champ":"Akali","id":1165203,"wins":174,"losses":120,"name":"KannonBR","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb5f"},"champ":"Twitch","id":1354865,"wins":131,"losses":76,"name":"irmão do mickey","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb60"},"champ":"Kled","id":1431532,"wins":404,"losses":369,"name":"Skaarl Bot ","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb61"},"champ":"Mordekaiser","id":1492273,"wins":258,"losses":233,"name":"Tang d Tangerina","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb62"},"champ":"Rammus","id":1570860,"wins":426,"losses":377,"name":"lord semi","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb63"},"champ":"Zed","id":1631438,"wins":315,"losses":286,"name":"Galbaroth","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb64"},"champ":"Swain","id":1644261,"wins":168,"losses":143,"name":"lenders","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb65"},"champ":"MasterYi","id":1721215,"wins":258,"losses":216,"name":"FKMaycon","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb66"},"champ":"MasterYi","id":1827128,"wins":591,"losses":563,"name":"MatheusBT","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb67"},"champ":"Kennen","id":1830415,"wins":492,"losses":432,"name":"SóDJax","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb68"},"champ":"Singed","id":1837322,"wins":832,"losses":794,"name":"Aaron Smith","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb69"},"champ":"Gangplank","id":1873302,"wins":123,"losses":80,"name":"Mantheos","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb6a"},"champ":"Blitzcrank","id":1942602,"wins":169,"losses":125,"name":"NzT Human Not","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb6b"},"champ":"Rengar","id":1956865,"wins":266,"losses":192,"name":"kvr0","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb6c"},"champ":"Nami","id":2094676,"wins":483,"losses":460,"name":"Tateyama Ayano","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb6d"},"champ":"Riven","id":2095329,"wins":210,"losses":140,"name":"not this time","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb6e"},"champ":"Kayle","id":2215799,"wins":190,"losses":158,"name":"Lonely Hay","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb6f"},"champ":"Nidalee","id":2301032,"wins":353,"losses":306,"name":"JESUSWALKSWITHME","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb70"},"champ":"Draven","id":2301203,"wins":201,"losses":122,"name":"tyler fking 1","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb71"},"champ":"Vladimir","id":2513338,"wins":123,"losses":66,"name":"maylendd","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb72"},"champ":"Talon","id":2513950,"wins":262,"losses":212,"name":"Savz DELICIOUS","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb73"},"champ":"Ekko","id":2816319,"wins":293,"losses":226,"name":"Skzero","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb74"},"champ":"Draven","id":2901202,"wins":216,"losses":167,"name":"NzT Human Yes","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb75"},"champ":"Kled","id":2984886,"wins":215,"losses":190,"name":"Rhaegalarys","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb76"},"champ":"Riven","id":3072094,"wins":288,"losses":257,"name":"Triguit0","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb77"},"champ":"Riven","id":3171870,"wins":410,"losses":367,"name":"Werhli","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb78"},"champ":"Gangplank","id":3175198,"wins":291,"losses":257,"name":"BiotoniKo","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb79"},"champ":"Soraka","id":3402195,"wins":276,"losses":246,"name":"Zedson e Hudson","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb7a"},"champ":"Singed","id":3417137,"wins":416,"losses":389,"name":"Dragão de Komodo","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb7b"},"champ":"Ahri","id":3930892,"wins":307,"losses":280,"name":"cFox","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb7c"},"champ":"Kalista","id":4002646,"wins":187,"losses":131,"name":"Jack Russel","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb7d"},"champ":"Draven","id":4125957,"wins":142,"losses":79,"name":"Nevard God","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb7e"},"champ":"Sona","id":4181799,"wins":395,"losses":358,"name":"Futuro Gerente","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb7f"},"champ":"Zilean","id":4200372,"wins":230,"losses":181,"name":"Apollogizee","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb80"},"champ":"Riven","id":4825112,"wins":697,"losses":680,"name":"Cookiezi1","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb81"},"champ":"Gnar","id":4842573,"wins":399,"losses":369,"name":"Kialek","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb82"},"champ":"Udyr","id":5662782,"wins":255,"losses":211,"name":"lordcini","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb83"},"champ":"Irelia","id":5891894,"wins":164,"losses":128,"name":"Ralphe","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb84"},"champ":"Talon","id":6711562,"wins":548,"losses":498,"name":"Magane","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb85"},"champ":"Ivern","id":9396485,"wins":226,"losses":151,"name":"JJ Madeira","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb86"},"champ":"Janna","id":9515709,"wins":743,"losses":712,"name":"Vento ventania","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb87"},"champ":"Gangplank","id":9903093,"wins":127,"losses":91,"name":"lTzShadow","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb88"},"champ":"Janna","id":9936055,"wins":169,"losses":106,"name":"10TruidorDeNEXUS","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb89"},"champ":"Quinn","id":10111115,"wins":107,"losses":62,"name":"yiff me daddy","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb8a"},"champ":"Riven","id":14492275,"wins":435,"losses":414,"name":"VAQUINHA MIMOSA1","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb8b"},"champ":"Shaco","id":14520525,"wins":217,"losses":187,"name":"IT IS A CLONE","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb8c"},"champ":"Darius","id":15422394,"wins":936,"losses":918,"name":"Doga o God","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb8d"},"champ":"Yasuo","id":15611919,"wins":910,"losses":860,"name":"Padre Dos Games","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb8e"},"champ":"Irelia","id":17311900,"wins":165,"losses":116,"name":"Demitria Arc","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb8f"},"champ":"Irelia","id":19730920,"wins":146,"losses":105,"name":"Ehplar","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb90"},"champ":"Camille","id":20511482,"wins":768,"losses":724,"name":"Camillee","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb91"},"champ":"Mordekaiser","id":20980220,"wins":478,"losses":434,"name":"Furão Inverso","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb92"},"champ":"Kayle","id":21764358,"wins":214,"losses":132,"name":"Lyanna St4rk","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb93"},"champ":"AurelionSol","id":22055132,"wins":392,"losses":346,"name":"0lkaida","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb94"},"champ":"Blitzcrank","id":23848510,"wins":377,"losses":295,"name":"1 1","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb95"},"champ":"Zed","id":24851746,"wins":176,"losses":112,"name":"II Zed Il","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb96"},"champ":"Singed","id":25000177,"wins":98,"losses":53,"name":"Sínni","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb97"},"champ":"Nidalee","id":27272957,"wins":235,"losses":183,"name":"Diogo a NidaIee","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb98"},"champ":"Fiora","id":27400892,"wins":275,"losses":227,"name":"Galasus","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb99"},"champ":"Rengar","id":28625876,"wins":92,"losses":41,"name":"Cat in bush","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb9a"},"champ":"Draven","id":30600137,"wins":158,"losses":85,"name":"TO MEC DEMAIS","rank":"m","region":"br"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb9b"},"champ":"Thresh","id":19148834,"wins":534,"losses":497,"name":"Thomas Hook","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb9c"},"champ":"Zilean","id":19928394,"wins":175,"losses":133,"name":"Lary","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb9d"},"champ":"Kayle","id":21383178,"wins":127,"losses":74,"name":"Tyrkys","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb9e"},"champ":"Olaf","id":21744162,"wins":151,"losses":77,"name":"Родимич","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decb9f"},"champ":"Taric","id":22183172,"wins":228,"losses":171,"name":"UTT Xartos","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decba0"},"champ":"Draven","id":22315569,"wins":920,"losses":860,"name":"bazilisek2","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decba1"},"champ":"Singed","id":22558959,"wins":704,"losses":680,"name":"Veexer","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decba2"},"champ":"Azir","id":22679299,"wins":587,"losses":524,"name":"Eleyte","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decba3"},"champ":"Camille","id":23214988,"wins":302,"losses":250,"name":"NXG Legion","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decba4"},"champ":"DrMundo","id":23652804,"wins":118,"losses":88,"name":"Qsh","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decba5"},"champ":"Irelia","id":23911183,"wins":539,"losses":487,"name":"Madhõuse","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decba6"},"champ":"Velkoz","id":24316570,"wins":149,"losses":97,"name":"Pikasika","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decba7"},"champ":"Katarina","id":24676700,"wins":437,"losses":402,"name":"Daunt","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decba8"},"champ":"Khazix","id":24723585,"wins":185,"losses":136,"name":"Kha Ζix","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decba9"},"champ":"Brand","id":25119127,"wins":99,"losses":51,"name":"Rafaello9595","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbaa"},"champ":"LeeSin","id":25122155,"wins":155,"losses":100,"name":"Nujgas","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbab"},"champ":"AurelionSol","id":25915525,"wins":339,"losses":301,"name":"Slager","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbac"},"champ":"Rammus","id":26615764,"wins":106,"losses":54,"name":"SerjArm","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbad"},"champ":"Zilean","id":26875834,"wins":361,"losses":338,"name":"szach12","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbae"},"champ":"Gangplank","id":27166971,"wins":287,"losses":239,"name":"ŁowcaDziewic","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbaf"},"champ":"Shaco","id":27393446,"wins":333,"losses":282,"name":"Gamay666","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbb0"},"champ":"Ahri","id":27759381,"wins":488,"losses":418,"name":"Ahri Kid","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbb1"},"champ":"Singed","id":28490400,"wins":440,"losses":403,"name":"She my hoe","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbb2"},"champ":"Blitzcrank","id":28520357,"wins":437,"losses":409,"name":"MVO Skulla","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbb3"},"champ":"Elise","id":29297577,"wins":147,"losses":62,"name":"pao2004","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbb4"},"champ":"Nami","id":30157466,"wins":109,"losses":68,"name":"iCarol","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbb5"},"champ":"Katarina","id":30709257,"wins":1043,"losses":1009,"name":"4nirataK","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbb6"},"champ":"Anivia","id":30866747,"wins":114,"losses":43,"name":"david Ie","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbb7"},"champ":"Anivia","id":31183177,"wins":201,"losses":155,"name":"Mayonnaise4u","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbb8"},"champ":"Akali","id":31272014,"wins":484,"losses":425,"name":"Veliger","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbb9"},"champ":"Darius","id":31354285,"wins":236,"losses":205,"name":"AqroVelon","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbba"},"champ":"Kled","id":32276072,"wins":573,"losses":494,"name":"Drutut","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbbb"},"champ":"Darius","id":32308232,"wins":127,"losses":104,"name":"Kírìto","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbbc"},"champ":"Khazix","id":32668721,"wins":227,"losses":152,"name":"Saya K6","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbbd"},"champ":"JarvanIV","id":33079101,"wins":398,"losses":363,"name":"Saci Fangirl","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbbe"},"champ":"Lulu","id":33338191,"wins":140,"losses":108,"name":"Hasegawa Kobato","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbbf"},"champ":"Gragas","id":33438902,"wins":216,"losses":181,"name":"rymdnisseswe","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbc0"},"champ":"Thresh","id":34020838,"wins":245,"losses":190,"name":"C9 Norgod","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbc1"},"champ":"Zilean","id":34226109,"wins":525,"losses":494,"name":"nezt","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbc2"},"champ":"Khazix","id":34227556,"wins":205,"losses":154,"name":"Khajan","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbc3"},"champ":"Riven","id":34605473,"wins":245,"losses":216,"name":"Enemy Team Riven","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbc4"},"champ":"Shaco","id":34675778,"wins":77,"losses":32,"name":"Barcode Slayer","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbc5"},"champ":"Warwick","id":34815141,"wins":210,"losses":159,"name":"Sweaty Wolf","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbc6"},"champ":"TwistedFate","id":34846049,"wins":116,"losses":69,"name":"Chupa Chupa Chap","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbc7"},"champ":"Graves","id":34970746,"wins":214,"losses":167,"name":"shut up sherlock","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbc8"},"champ":"Yasuo","id":35316636,"wins":497,"losses":450,"name":"Szakin","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbc9"},"champ":"Riven","id":35471685,"wins":200,"losses":177,"name":"I am Budzik","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbca"},"champ":"LeeSin","id":35494788,"wins":270,"losses":226,"name":"Exenøn","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbcb"},"champ":"Katarina","id":35595557,"wins":93,"losses":56,"name":"XWayvernX","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbcc"},"champ":"Gangplank","id":35722130,"wins":468,"losses":416,"name":"Scourge","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbcd"},"champ":"Gragas","id":36133805,"wins":585,"losses":548,"name":"OnlyGragasOnlyGG","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbce"},"champ":"Nami","id":36586403,"wins":241,"losses":208,"name":"DJfaby","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbcf"},"champ":"Darius","id":37168513,"wins":902,"losses":875,"name":"bostybv","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbd0"},"champ":"Fiddlesticks","id":37737788,"wins":576,"losses":485,"name":"Ludwik i Ja","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbd1"},"champ":"Yasuo","id":37803083,"wins":623,"losses":593,"name":"líbí se mi 12ky","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbd2"},"champ":"Janna","id":38328477,"wins":443,"losses":396,"name":"Zippen123","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbd3"},"champ":"TwistedFate","id":38566009,"wins":114,"losses":69,"name":"Mid KG DoPa","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbd4"},"champ":"Hecarim","id":38605595,"wins":459,"losses":416,"name":"nikrooz1379","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbd5"},"champ":"Tryndamere","id":39738916,"wins":333,"losses":283,"name":"KTL Kubsar","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbd6"},"champ":"Khazix","id":40003465,"wins":168,"losses":119,"name":"APE IRL","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbd7"},"champ":"Riven","id":40802868,"wins":261,"losses":200,"name":"Pachoom","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbd8"},"champ":"Riven","id":40993021,"wins":328,"losses":205,"name":"Albatross","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbd9"},"champ":"Katarina","id":41246907,"wins":170,"losses":121,"name":"Raabinz","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbda"},"champ":"Annie","id":42334180,"wins":236,"losses":161,"name":"Darky Psi","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbdb"},"champ":"Riven","id":42340277,"wins":355,"losses":310,"name":"ìmperia","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbdc"},"champ":"Anivia","id":42362867,"wins":170,"losses":130,"name":"MageOrLuck","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbdd"},"champ":"Darius","id":43882883,"wins":190,"losses":151,"name":"NoxianDunk","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbde"},"champ":"Gangplank","id":44103269,"wins":353,"losses":324,"name":"Buyi","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbdf"},"champ":"Kled","id":45293753,"wins":355,"losses":302,"name":"t0p For M4CI3K ","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbe0"},"champ":"Khazix","id":46091764,"wins":287,"losses":250,"name":"Kwt","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbe1"},"champ":"Yasuo","id":46614491,"wins":504,"losses":474,"name":"HARIKEN","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbe2"},"champ":"Gragas","id":47228964,"wins":242,"losses":199,"name":"LaZeRpan","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbe3"},"champ":"Riven","id":47742881,"wins":419,"losses":353,"name":"ChubaKapra","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbe4"},"champ":"Fiora","id":48329575,"wins":142,"losses":95,"name":"RedTigger2000","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbe5"},"champ":"Camille","id":48503828,"wins":203,"losses":136,"name":"Konaa","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbe6"},"champ":"Camille","id":51453082,"wins":133,"losses":96,"name":"Insanyus","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbe7"},"champ":"Zac","id":51973222,"wins":190,"losses":130,"name":"Neο","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbe8"},"champ":"Akali","id":52638381,"wins":258,"losses":227,"name":"Petipino","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbe9"},"champ":"Draven","id":52950119,"wins":253,"losses":201,"name":"NaRkODil3r","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbea"},"champ":"Talon","id":53036922,"wins":213,"losses":103,"name":"Blades Fate","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbeb"},"champ":"RekSai","id":53826633,"wins":125,"losses":86,"name":"GS RekitRalf","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbec"},"champ":"Kled","id":54504268,"wins":628,"losses":583,"name":"Disintegration","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbed"},"champ":"Darius","id":56366993,"wins":533,"losses":480,"name":"Inferiorities","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbee"},"champ":"Darius","id":56867645,"wins":377,"losses":351,"name":"Gay Fart Wizard","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbef"},"champ":"Akali","id":58313948,"wins":81,"losses":29,"name":"FoXXyBG","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbf0"},"champ":"Rengar","id":59184238,"wins":121,"losses":71,"name":"KittyBèhindYou","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbf1"},"champ":"Zilean","id":60733768,"wins":193,"losses":121,"name":"chronó","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbf2"},"champ":"Talon","id":61222996,"wins":674,"losses":641,"name":"A4e","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbf3"},"champ":"Riven","id":63302978,"wins":285,"losses":242,"name":"Xayol","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbf4"},"champ":"Fiddlesticks","id":65302736,"wins":436,"losses":369,"name":"HerkulesSZMEAG0L","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbf5"},"champ":"Swain","id":67237036,"wins":134,"losses":52,"name":"DawidaZ314","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbf6"},"champ":"Riven","id":68557122,"wins":147,"losses":91,"name":"EmeraId","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbf7"},"champ":"Tryndamere","id":68633908,"wins":154,"losses":98,"name":"scuon","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbf8"},"champ":"Akali","id":68947966,"wins":217,"losses":169,"name":"I Am Not Cavane","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbf9"},"champ":"Xayah","id":70146826,"wins":85,"losses":35,"name":"Cantios44","rank":"m","region":"eune"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbfa"},"champ":"Tryndamere","id":33593,"wins":251,"losses":212,"name":"sigifrigi","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbfb"},"champ":"AurelionSol","id":83691,"wins":95,"losses":38,"name":"zeusdead","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbfc"},"champ":"Janna","id":136168,"wins":314,"losses":284,"name":"Nihilist Örlando","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbfd"},"champ":"Khazix","id":182180,"wins":161,"losses":81,"name":"Zatells","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbfe"},"champ":"Elise","id":291244,"wins":310,"losses":278,"name":"Herrscher","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decbff"},"champ":"Soraka","id":331693,"wins":1131,"losses":1106,"name":"DarkShark10","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc00"},"champ":"Ahri","id":394875,"wins":462,"losses":448,"name":"Sparksfly","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc01"},"champ":"Riven","id":1051840,"wins":215,"losses":175,"name":"WILD WARLORD TOP","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc02"},"champ":"Janna","id":1170869,"wins":255,"losses":214,"name":"Samantha","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc03"},"champ":"Taric","id":1570205,"wins":152,"losses":108,"name":"Dárko","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc04"},"champ":"Graves","id":2301170,"wins":210,"losses":186,"name":"Yurén","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc05"},"champ":"Warwick","id":4204450,"wins":115,"losses":60,"name":"Kurocho","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc06"},"champ":"Zed","id":4471723,"wins":244,"losses":185,"name":"Revya","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc07"},"champ":"Darius","id":5140831,"wins":481,"losses":459,"name":"Deiv1d","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc08"},"champ":"Teemo","id":5640133,"wins":191,"losses":165,"name":"xBlotter","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc09"},"champ":"Leblanc","id":6103541,"wins":239,"losses":150,"name":"Negro Amigo","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc0a"},"champ":"Velkoz","id":9683860,"wins":313,"losses":273,"name":"Wørried","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc0b"},"champ":"TwistedFate","id":10810158,"wins":173,"losses":128,"name":"Twisted Fate Bot","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc0c"},"champ":"Riven","id":10841439,"wins":206,"losses":145,"name":"LawlietLelouch","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc0d"},"champ":"Sona","id":11251165,"wins":258,"losses":194,"name":"l Love Sona","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc0e"},"champ":"Thresh","id":13703640,"wins":78,"losses":18,"name":"6SN Choisix","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc0f"},"champ":"Akali","id":14260155,"wins":97,"losses":47,"name":"RRRRRRRRRRANK1","rank":"c","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc10"},"champ":"Annie","id":6160967,"wins":157,"losses":146,"name":"あにーぼっと","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc11"},"champ":"Kayle","id":6173331,"wins":470,"losses":447,"name":"Wings Kayle","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc12"},"champ":"Velkoz","id":6188266,"wins":171,"losses":157,"name":"長井秀和","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc13"},"champ":"Karthus","id":6281048,"wins":99,"losses":55,"name":"Ainz Ooal Gown","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc14"},"champ":"Yasuo","id":6320643,"wins":318,"losses":295,"name":"GraceEye 태형","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc15"},"champ":"Skarner","id":6343670,"wins":75,"losses":55,"name":"さーもん","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc16"},"champ":"Karthus","id":6432935,"wins":228,"losses":195,"name":"寒音真咲","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc17"},"champ":"Rengar","id":6706604,"wins":97,"losses":62,"name":"トロトロの刃牙","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc18"},"champ":"Kayle","id":8920878,"wins":118,"losses":48,"name":"ねむれない","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc19"},"champ":"Leona","id":8990288,"wins":242,"losses":152,"name":"PROJECT LEON4","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc1a"},"champ":"Yasuo","id":11580137,"wins":141,"losses":103,"name":"撕裂的天堂 Bzzb9","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc1b"},"champ":"Katarina","id":12350947,"wins":55,"losses":20,"name":"韓国からきました","rank":"m","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc1c"},"champ":"Rengar","id":276529,"wins":313,"losses":281,"name":"Didnt ask","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc1d"},"champ":"Ahri","id":277256,"wins":297,"losses":272,"name":"Thydah","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc1e"},"champ":"Kalista","id":288335,"wins":132,"losses":112,"name":"Nirphana","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc1f"},"champ":"Bard","id":304980,"wins":177,"losses":153,"name":"iChuckRice","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc20"},"champ":"Yorick","id":316705,"wins":212,"losses":161,"name":"Porygon","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc21"},"champ":"Khazix","id":399473,"wins":129,"losses":109,"name":"Tinjus","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc22"},"champ":"TahmKench","id":433631,"wins":333,"losses":329,"name":"Samuelz","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc23"},"champ":"Gangplank","id":460324,"wins":197,"losses":179,"name":"Yóben","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc24"},"champ":"Sion","id":469261,"wins":244,"losses":220,"name":"iKluzeR","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc25"},"champ":"Janna","id":500977,"wins":184,"losses":166,"name":"Justicee","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc26"},"champ":"Talon","id":563184,"wins":251,"losses":217,"name":"CivilSnake","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc27"},"champ":"RekSai","id":626793,"wins":274,"losses":234,"name":"feifeiAAAAAA","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc28"},"champ":"Riven","id":890992,"wins":203,"losses":178,"name":"RBE Sky","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc29"},"champ":"Riven","id":984019,"wins":191,"losses":138,"name":"nyla","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc2a"},"champ":"RekSai","id":1321671,"wins":173,"losses":152,"name":"Giganaut","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc2b"},"champ":"TwistedFate","id":1403425,"wins":269,"losses":241,"name":"KURT PERRY","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc2c"},"champ":"Gangplank","id":1500529,"wins":219,"losses":191,"name":"Mumps","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc2d"},"champ":"Riven","id":1680225,"wins":173,"losses":149,"name":"Exiled","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc2e"},"champ":"Yasuo","id":1872199,"wins":348,"losses":314,"name":"Arashi","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc2f"},"champ":"Thresh","id":1980384,"wins":231,"losses":201,"name":"Nausicaä","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc30"},"champ":"Swain","id":5981271,"wins":69,"losses":42,"name":"Elpis","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc31"},"champ":"Yorick","id":6400863,"wins":175,"losses":100,"name":"Sandslash","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc32"},"champ":"Riven","id":6860497,"wins":173,"losses":122,"name":"Not balanced","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc33"},"champ":"Riven","id":8100453,"wins":187,"losses":148,"name":"no bb just i c","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc34"},"champ":"Anivia","id":8370536,"wins":569,"losses":487,"name":"Eternally As","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc35"},"champ":"Jax","id":8430194,"wins":322,"losses":248,"name":"RNG AI","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc36"},"champ":"Yorick","id":9101132,"wins":103,"losses":69,"name":"Froslass","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc37"},"champ":"Jax","id":9111878,"wins":225,"losses":164,"name":"Stevens º","rank":"m","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc38"},"champ":"Draven","id":40985,"wins":373,"losses":330,"name":"E01001110D","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc39"},"champ":"Riven","id":74354,"wins":198,"losses":144,"name":"Gonza McFly","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc3a"},"champ":"Alistar","id":151917,"wins":115,"losses":68,"name":"DG Jumpa","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc3b"},"champ":"Mordekaiser","id":220156,"wins":401,"losses":360,"name":"xAnubisDarkx","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc3c"},"champ":"Mordekaiser","id":251657,"wins":229,"losses":195,"name":"Kamnnoriel","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc3d"},"champ":"MasterYi","id":283902,"wins":276,"losses":230,"name":"Hawkeyed Yi","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc3e"},"champ":"Vladimir","id":296168,"wins":174,"losses":139,"name":"UCH SoulWingS","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc3f"},"champ":"Vladimir","id":306156,"wins":457,"losses":414,"name":"SoulSteaIer","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc40"},"champ":"Riven","id":309789,"wins":123,"losses":64,"name":"player of fun","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc41"},"champ":"Janna","id":310373,"wins":264,"losses":222,"name":"Vanníty","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc42"},"champ":"TwistedFate","id":1252358,"wins":214,"losses":164,"name":"hugojos","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc43"},"champ":"Gangplank","id":1460524,"wins":224,"losses":186,"name":"Capitán Salazar","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc44"},"champ":"Riven","id":1740572,"wins":380,"losses":325,"name":"IzænK","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc45"},"champ":"Ryze","id":4586191,"wins":244,"losses":110,"name":"BeFoRee1","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc46"},"champ":"Riven","id":8511827,"wins":101,"losses":47,"name":"   KI STRIKE   ","rank":"c","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc47"},"champ":"Xerath","id":242267,"wins":401,"losses":373,"name":"raXeth","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc48"},"champ":"Thresh","id":650269,"wins":169,"losses":147,"name":"Holo","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc49"},"champ":"Talon","id":942755,"wins":323,"losses":279,"name":"Кейтэн","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc4a"},"champ":"Shen","id":1410266,"wins":84,"losses":67,"name":"Чувство вины","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc4b"},"champ":"Yasuo","id":1844090,"wins":685,"losses":638,"name":"Ztory","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc4c"},"champ":"Aatrox","id":3254071,"wins":160,"losses":100,"name":"NiceSoul","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc4d"},"champ":"Talon","id":4061137,"wins":126,"losses":80,"name":"Ichigook","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc4e"},"champ":"Evelynn","id":5201205,"wins":88,"losses":65,"name":"Nanotooth","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc4f"},"champ":"Xerath","id":8720790,"wins":162,"losses":106,"name":"DoubIeIift","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc50"},"champ":"Anivia","id":9230146,"wins":138,"losses":120,"name":"Tobicoach v2","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc51"},"champ":"Talon","id":10450835,"wins":78,"losses":44,"name":"Teinnerite","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc52"},"champ":"Tryndamere","id":10601489,"wins":133,"losses":95,"name":"Road To Challeng","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc53"},"champ":"Karthus","id":12380217,"wins":148,"losses":117,"name":"Zarackkk IC 1101","rank":"m","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc54"},"champ":"Zed","id":220270,"wins":230,"losses":213,"name":"lmperium","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc55"},"champ":"Pantheon","id":231399,"wins":372,"losses":347,"name":"Zaptar","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc56"},"champ":"Elise","id":280367,"wins":266,"losses":216,"name":"VengeanceLX","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc57"},"champ":"Fizz","id":297478,"wins":146,"losses":71,"name":"AS E BA LI","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc58"},"champ":"Zilean","id":324564,"wins":167,"losses":145,"name":"Submissive Trap","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc59"},"champ":"Soraka","id":456283,"wins":265,"losses":199,"name":"j0hns0nBurger","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc5a"},"champ":"Sion","id":481977,"wins":307,"losses":286,"name":"Tilterella","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc5b"},"champ":"Thresh","id":482979,"wins":116,"losses":90,"name":"bombboy","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc5c"},"champ":"Shen","id":581032,"wins":297,"losses":235,"name":"Káne","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc5d"},"champ":"Anivia","id":583483,"wins":324,"losses":285,"name":"Beaunivia","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc5e"},"champ":"Kalista","id":1132033,"wins":471,"losses":448,"name":"Xajnos","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc5f"},"champ":"Akali","id":1250370,"wins":387,"losses":319,"name":"Akali or GG","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc60"},"champ":"Yorick","id":2361649,"wins":162,"losses":97,"name":"Ninetales","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc61"},"champ":"Shaco","id":4560956,"wins":87,"losses":58,"name":"Shnazza EIïte","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc62"},"champ":"Urgot","id":4973029,"wins":166,"losses":105,"name":"HENRYJWATERNOOSE","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc63"},"champ":"Riven","id":5540365,"wins":341,"losses":308,"name":"Washed Up Riven","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc64"},"champ":"Fizz","id":8091080,"wins":294,"losses":245,"name":"Åkànø","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc65"},"champ":"Pantheon","id":9060723,"wins":198,"losses":124,"name":"Meow Sakura","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc66"},"champ":"Nidalee","id":9241202,"wins":329,"losses":284,"name":"sounghoon","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc67"},"champ":"Riven","id":9970922,"wins":145,"losses":75,"name":"Redemptionˉ","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc68"},"champ":"RekSai","id":10320133,"wins":101,"losses":50,"name":"LORD MASTER POPE","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc69"},"champ":"RekSai","id":10810646,"wins":68,"losses":27,"name":"young popedaddy","rank":"c","region":"oce"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc6a"},"champ":"Zilean","id":26436,"wins":76,"losses":49,"name":"Knight of Yeyo","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc6b"},"champ":"Teemo","id":54552,"wins":135,"losses":67,"name":"JuanfeMr","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc6c"},"champ":"RekSai","id":67943,"wins":120,"losses":37,"name":"Duo Abuse","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc6d"},"champ":"Fizz","id":73140,"wins":400,"losses":385,"name":"laweanoob","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc6e"},"champ":"Leona","id":88837,"wins":286,"losses":254,"name":"DAIMAKUCCBOT","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc6f"},"champ":"Annie","id":89215,"wins":321,"losses":301,"name":"Chemamey Annie","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc70"},"champ":"Gangplank","id":119645,"wins":463,"losses":423,"name":"AlBREIK","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc71"},"champ":"Teemo","id":136198,"wins":362,"losses":336,"name":"bonjo","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc72"},"champ":"Annie","id":156748,"wins":80,"losses":56,"name":"Black RP","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc73"},"champ":"Lulu","id":171271,"wins":258,"losses":233,"name":"Pichu","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc74"},"champ":"Riven","id":349550,"wins":265,"losses":202,"name":"DontSayNoBaby","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc75"},"champ":"Gragas","id":415789,"wins":99,"losses":69,"name":"Rabbler Arouser","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc76"},"champ":"Annie","id":526281,"wins":289,"losses":231,"name":"Destrukcore","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc77"},"champ":"Gangplank","id":545546,"wins":341,"losses":317,"name":"Acuarelas","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc78"},"champ":"Ivern","id":558778,"wins":124,"losses":82,"name":"Bobby Lussier","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc79"},"champ":"Lulu","id":815305,"wins":179,"losses":154,"name":"WHAT ARE U DOING","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc7a"},"champ":"MissFortune","id":841541,"wins":288,"losses":211,"name":"MadTedd","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc7b"},"champ":"Yasuo","id":939450,"wins":696,"losses":682,"name":"Hayashi Yuki","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc7c"},"champ":"Karthus","id":1070594,"wins":216,"losses":191,"name":"Lord Strider","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc7d"},"champ":"Nami","id":1140453,"wins":353,"losses":300,"name":"MeIiodás","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc7e"},"champ":"Kayle","id":1396918,"wins":90,"losses":47,"name":"Danijrm","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc7f"},"champ":"Darius","id":1521328,"wins":146,"losses":129,"name":"Tyraél","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc80"},"champ":"Gangplank","id":1650750,"wins":533,"losses":478,"name":"GodPlank","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc81"},"champ":"Riven","id":1735450,"wins":124,"losses":75,"name":"Kirâ","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc82"},"champ":"Graves","id":2074343,"wins":82,"losses":57,"name":"KillerEtuin","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc83"},"champ":"Shaco","id":2282018,"wins":120,"losses":73,"name":"FelipeL","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc84"},"champ":"Kindred","id":2941141,"wins":336,"losses":306,"name":"JaquenHaghar","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc85"},"champ":"Riven","id":3563178,"wins":170,"losses":137,"name":"Shino","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc86"},"champ":"Xerath","id":3605503,"wins":223,"losses":155,"name":"WILD WARLORD MID","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc87"},"champ":"Katarina","id":4221760,"wins":305,"losses":252,"name":"Balaclava7","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc88"},"champ":"Draven","id":4624282,"wins":250,"losses":221,"name":"ZurkoQl","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc89"},"champ":"Kindred","id":5501463,"wins":221,"losses":178,"name":"OCME","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc8a"},"champ":"Yasuo","id":5513539,"wins":626,"losses":591,"name":"GodAlan","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc8b"},"champ":"Jax","id":5970772,"wins":380,"losses":355,"name":"Roy King","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc8c"},"champ":"Ivern","id":7740252,"wins":222,"losses":179,"name":"NC KeyDash","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc8d"},"champ":"Jax","id":8290129,"wins":124,"losses":67,"name":"NA GRINGO LARRY","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc8e"},"champ":"MasterYi","id":10172797,"wins":117,"losses":60,"name":"KoBoK1","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc8f"},"champ":"Riven","id":10240198,"wins":120,"losses":45,"name":"tzxexile","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc90"},"champ":"Riven","id":10350187,"wins":122,"losses":67,"name":"Yuri K","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc91"},"champ":"Renekton","id":10421574,"wins":91,"losses":39,"name":"Gator of God","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc92"},"champ":"Draven","id":12324557,"wins":79,"losses":31,"name":"NA Lee SÌn","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc93"},"champ":"Riven","id":12441628,"wins":146,"losses":99,"name":"ObeseCat","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc94"},"champ":"Talon","id":13212405,"wins":110,"losses":62,"name":"Memox JnmR","rank":"m","region":"lan"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc95"},"champ":"Hecarim","id":63454,"wins":313,"losses":279,"name":"1st Stack","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc96"},"champ":"Vladimir","id":77626,"wins":119,"losses":90,"name":"Xtabay","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc97"},"champ":"Velkoz","id":131652,"wins":421,"losses":384,"name":"VelKoz OP CiHxpо","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc98"},"champ":"Teemo","id":270777,"wins":265,"losses":249,"name":"Darkslims","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc99"},"champ":"Kennen","id":281941,"wins":470,"losses":449,"name":"ZilanT","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc9a"},"champ":"Jayce","id":325689,"wins":303,"losses":269,"name":"SUPRAAAA","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc9b"},"champ":"Veigar","id":362158,"wins":301,"losses":289,"name":"Xoza1n","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc9c"},"champ":"Aatrox","id":487785,"wins":253,"losses":220,"name":"ДашенькаТащи","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc9d"},"champ":"Evelynn","id":1034134,"wins":157,"losses":104,"name":"Woofasa","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc9e"},"champ":"Yasuo","id":1194623,"wins":203,"losses":190,"name":"azazaza20","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decc9f"},"champ":"Darius","id":1561831,"wins":311,"losses":296,"name":"x Grizz x","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decca0"},"champ":"Riven","id":1635732,"wins":366,"losses":310,"name":"SoyleMr","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decca1"},"champ":"Gangplank","id":3224827,"wins":124,"losses":85,"name":"FINNISHPOWER2002","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decca2"},"champ":"Irelia","id":4083225,"wins":345,"losses":313,"name":"Lexa","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decca3"},"champ":"Tryndamere","id":5170161,"wins":177,"losses":147,"name":"CALLING DESTINY","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decca4"},"champ":"Thresh","id":5420417,"wins":230,"losses":182,"name":"Dimil","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decca5"},"champ":"RekSai","id":7290786,"wins":164,"losses":80,"name":"Vexuss","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decca6"},"champ":"Kayle","id":8580133,"wins":157,"losses":121,"name":"Klauss","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decca7"},"champ":"Anivia","id":9160732,"wins":158,"losses":96,"name":"UkraineChaos","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decca8"},"champ":"Nidalee","id":9370146,"wins":114,"losses":44,"name":"Chall in S6 XD","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decca9"},"champ":"Jax","id":11671158,"wins":123,"losses":75,"name":"fknrandom","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccaa"},"champ":"Soraka","id":12160624,"wins":153,"losses":106,"name":"Soraka Onetrick","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccab"},"champ":"Talon","id":12731894,"wins":111,"losses":67,"name":"sonrisa suicida","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccac"},"champ":"Rammus","id":12770161,"wins":71,"losses":27,"name":"ˉˉˉˉˉˉˉˉˉˉ","rank":"c","region":"ru"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccad"},"champ":"Katarina","id":39062,"wins":221,"losses":149,"name":"iNoah","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccae"},"champ":"Riven","id":63609,"wins":303,"losses":266,"name":"Steff","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccaf"},"champ":"Katarina","id":67297,"wins":111,"losses":80,"name":"MrHamburguesa","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccb0"},"champ":"Ekko","id":75927,"wins":389,"losses":332,"name":"TheGoNz","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccb1"},"champ":"Tryndamere","id":168271,"wins":487,"losses":460,"name":"Gambito de Dama","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccb2"},"champ":"Annie","id":225960,"wins":1209,"losses":1210,"name":"destructorgamer","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccb3"},"champ":"Darius","id":233810,"wins":301,"losses":227,"name":"Warh0ll","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccb4"},"champ":"Khazix","id":308963,"wins":242,"losses":206,"name":"Tortuguita","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccb5"},"champ":"Jax","id":383899,"wins":306,"losses":277,"name":"Jax Bot","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccb6"},"champ":"Draven","id":390613,"wins":302,"losses":266,"name":"Heaven Starfish","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccb7"},"champ":"Renekton","id":421616,"wins":128,"losses":94,"name":"Enjoyer1","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccb8"},"champ":"Heimerdinger","id":492228,"wins":317,"losses":288,"name":"Tembotuja","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccb9"},"champ":"Kennen","id":775449,"wins":377,"losses":336,"name":"LDM Narara","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccba"},"champ":"TwistedFate","id":892204,"wins":323,"losses":294,"name":"ReiN","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccbb"},"champ":"Vladimir","id":904003,"wins":286,"losses":249,"name":"Artic1","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccbc"},"champ":"Talon","id":1095383,"wins":333,"losses":284,"name":"Ace of Blades ","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccbd"},"champ":"LeeSin","id":1371206,"wins":384,"losses":354,"name":"Oi meu anjo","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccbe"},"champ":"Rakan","id":1572237,"wins":173,"losses":100,"name":"eBoy","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccbf"},"champ":"Singed","id":1731315,"wins":111,"losses":76,"name":"Sr Gianni","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccc0"},"champ":"Janna","id":1806294,"wins":197,"losses":136,"name":"Mogölica","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccc1"},"champ":"Karthus","id":1934429,"wins":236,"losses":199,"name":"Emisary Of Death","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccc2"},"champ":"Sona","id":2412423,"wins":589,"losses":570,"name":"Color","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccc3"},"champ":"Fizz","id":2630772,"wins":864,"losses":856,"name":"Vincent Overkill","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccc4"},"champ":"Malzahar","id":3383177,"wins":289,"losses":243,"name":"Jhanxs","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccc5"},"champ":"Shaco","id":3540863,"wins":209,"losses":146,"name":"Bronce","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccc6"},"champ":"Riven","id":3562365,"wins":266,"losses":201,"name":"Z4LTÏ","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccc7"},"champ":"Chogath","id":4060772,"wins":350,"losses":317,"name":"Zico00","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccc8"},"champ":"MasterYi","id":6973851,"wins":172,"losses":55,"name":"Mihåwk","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccc9"},"champ":"RekSai","id":12750147,"wins":136,"losses":64,"name":"mid fekar","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccca"},"champ":"Riven","id":12802341,"wins":130,"losses":77,"name":"El carniZérØ","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decccb"},"champ":"Fiora","id":13090134,"wins":151,"losses":64,"name":"God Church","rank":"m","region":"las"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decccc"},"champ":"Irelia","id":19111161,"wins":408,"losses":363,"name":"tôder","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decccd"},"champ":"Orianna","id":19599184,"wins":133,"losses":88,"name":"Gjisu","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccce"},"champ":"Pantheon","id":19613642,"wins":218,"losses":148,"name":"Ben Magic","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decccf"},"champ":"Tryndamere","id":19658604,"wins":252,"losses":208,"name":"Yostie","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccd0"},"champ":"Sion","id":19675963,"wins":521,"losses":470,"name":"Tereal","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccd1"},"champ":"Ivern","id":20599487,"wins":402,"losses":355,"name":"Pukc","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccd2"},"champ":"Sejuani","id":21550054,"wins":138,"losses":104,"name":"ForceObscure","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccd3"},"champ":"Yasuo","id":21729191,"wins":332,"losses":273,"name":"Lexip","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccd4"},"champ":"Anivia","id":22206550,"wins":289,"losses":245,"name":"Abaks","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccd5"},"champ":"Rengar","id":22234041,"wins":192,"losses":104,"name":"Cat facts","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccd6"},"champ":"Zilean","id":22269282,"wins":631,"losses":593,"name":"Rx Dye","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccd7"},"champ":"Jax","id":22303558,"wins":116,"losses":51,"name":"WíLLiSGaming","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccd8"},"champ":"Orianna","id":22518023,"wins":174,"losses":134,"name":"GodlikeKatarina","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccd9"},"champ":"Heimerdinger","id":22675046,"wins":214,"losses":150,"name":"Typhael","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccda"},"champ":"Khazix","id":22776787,"wins":244,"losses":199,"name":"ßestßae","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccdb"},"champ":"Kalista","id":23034439,"wins":414,"losses":352,"name":"Viel Glück","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccdc"},"champ":"Warwick","id":23221834,"wins":908,"losses":865,"name":"Sander Frost","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccdd"},"champ":"Taric","id":23605635,"wins":394,"losses":346,"name":"PKB Sladier","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccde"},"champ":"Riven","id":24549536,"wins":229,"losses":189,"name":"Hi Its Berny","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccdf"},"champ":"Velkoz","id":24563497,"wins":715,"losses":662,"name":"Rhobalas","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decce0"},"champ":"Nunu","id":24624311,"wins":229,"losses":176,"name":"Schuhbart","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decce1"},"champ":"Malzahar","id":25138519,"wins":536,"losses":480,"name":"killoftissu","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decce2"},"champ":"Velkoz","id":25277585,"wins":265,"losses":226,"name":"Varph","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decce3"},"champ":"Illaoi","id":25908425,"wins":429,"losses":398,"name":"Magoy","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decce4"},"champ":"Zilean","id":27346882,"wins":185,"losses":133,"name":"TimeØut ","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decce5"},"champ":"Jinx","id":27557270,"wins":373,"losses":334,"name":"Nennad","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decce6"},"champ":"Taric","id":29171077,"wins":431,"losses":389,"name":"ClimbMountTargon","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decce7"},"champ":"Sona","id":29237301,"wins":311,"losses":263,"name":"Colazor","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decce8"},"champ":"Katarina","id":29818310,"wins":623,"losses":556,"name":"Katastrophical","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decce9"},"champ":"Twitch","id":30990491,"wins":80,"losses":27,"name":"1996  12  30","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccea"},"champ":"Darius","id":31318311,"wins":523,"losses":489,"name":"Jean Francois","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decceb"},"champ":"Soraka","id":31470287,"wins":861,"losses":823,"name":"Neurotico","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccec"},"champ":"Bard","id":31591164,"wins":177,"losses":120,"name":"jbsv","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decced"},"champ":"Vladimir","id":32707488,"wins":448,"losses":396,"name":"Elite500","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccee"},"champ":"Riven","id":33578286,"wins":386,"losses":327,"name":"rü to the ven","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccef"},"champ":"Yasuo","id":35095882,"wins":1059,"losses":1022,"name":"CLT Inugami","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccf0"},"champ":"Diana","id":35159082,"wins":545,"losses":487,"name":"faką","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccf1"},"champ":"Thresh","id":35168725,"wins":593,"losses":536,"name":"Seaz","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccf2"},"champ":"Yasuo","id":35447275,"wins":437,"losses":365,"name":"Yasuneri","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccf3"},"champ":"Yasuo","id":35724350,"wins":179,"losses":136,"name":"BarcodeKiIler","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccf4"},"champ":"Gangplank","id":37147607,"wins":307,"losses":248,"name":"The Most Fragile","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccf5"},"champ":"Janna","id":37631598,"wins":129,"losses":49,"name":"ldeekay","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccf6"},"champ":"XinZhao","id":37828149,"wins":99,"losses":70,"name":"prudnah","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccf7"},"champ":"Karthus","id":37944342,"wins":215,"losses":131,"name":"qreoxe","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccf8"},"champ":"Akali","id":39518338,"wins":224,"losses":149,"name":"Codein in my cup","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccf9"},"champ":"Karthus","id":40693701,"wins":637,"losses":602,"name":"EN8 Eiji","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccfa"},"champ":"Talon","id":41549966,"wins":369,"losses":336,"name":"  Presumptu0us","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccfb"},"champ":"Blitzcrank","id":42186986,"wins":197,"losses":137,"name":"HAKV Jokton","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccfc"},"champ":"Sion","id":42192684,"wins":370,"losses":316,"name":"Kuma665","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccfd"},"champ":"Talon","id":42248968,"wins":469,"losses":437,"name":"ι              ι","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccfe"},"champ":"Jax","id":42277584,"wins":58,"losses":5,"name":"job man","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972deccff"},"champ":"Azir","id":42997436,"wins":331,"losses":283,"name":"Sheykero","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd00"},"champ":"Malzahar","id":43124224,"wins":272,"losses":203,"name":"IamSunny","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd01"},"champ":"Trundle","id":44954453,"wins":609,"losses":569,"name":"Trunndle","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd02"},"champ":"Draven","id":45379441,"wins":453,"losses":384,"name":"JackSpektra","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd03"},"champ":"XinZhao","id":46588171,"wins":307,"losses":277,"name":"Drusalinka","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd04"},"champ":"Gangplank","id":46606817,"wins":459,"losses":425,"name":"ZK N3crovision","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd05"},"champ":"Aatrox","id":46687094,"wins":224,"losses":180,"name":"Deltired","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd06"},"champ":"Jayce","id":46887514,"wins":94,"losses":50,"name":"Karwox","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd07"},"champ":"Yasuo","id":49494335,"wins":248,"losses":208,"name":"TheWanderingPro","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd08"},"champ":"Irelia","id":49628047,"wins":283,"losses":240,"name":"Gugaz98","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd09"},"champ":"Zilean","id":50791106,"wins":228,"losses":188,"name":"Rîse","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd0a"},"champ":"Rengar","id":51878342,"wins":486,"losses":451,"name":"Xíl","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd0b"},"champ":"Jax","id":53197528,"wins":127,"losses":84,"name":"Lucifer is back","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd0c"},"champ":"Kayle","id":53436826,"wins":640,"losses":595,"name":"Major z Bombasu","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd0d"},"champ":"Taliyah","id":56861927,"wins":297,"losses":257,"name":"Vìrtuozz","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd0e"},"champ":"Katarina","id":57109310,"wins":612,"losses":529,"name":"DeathByKatarina","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd0f"},"champ":"Yorick","id":57269870,"wins":472,"losses":439,"name":"Comte Magnolias","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd10"},"champ":"Camille","id":58224718,"wins":196,"losses":132,"name":"DefinitlyMaybe","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd11"},"champ":"Darius","id":60148157,"wins":753,"losses":715,"name":"Daddy Dunk S8","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd12"},"champ":"Vladimir","id":62587431,"wins":818,"losses":791,"name":"Tiberian","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd13"},"champ":"Veigar","id":72484140,"wins":151,"losses":112,"name":"Véigâr v2","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd14"},"champ":"Riven","id":73981396,"wins":73,"losses":41,"name":"This Username is","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd15"},"champ":"Katarina","id":76942740,"wins":521,"losses":428,"name":"Kata Les Mécanix","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd16"},"champ":"Alistar","id":78307337,"wins":361,"losses":327,"name":"GrimmRipper","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd17"},"champ":"Kayle","id":79108809,"wins":120,"losses":77,"name":"Syngul4r1ty","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd18"},"champ":"Jayce","id":85781368,"wins":214,"losses":162,"name":"FullMetalRobocop","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd19"},"champ":"Yasuo","id":86527764,"wins":222,"losses":161,"name":"Zednic","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd1a"},"champ":"Talon","id":87177242,"wins":1039,"losses":966,"name":"TheWrathSummoner","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd1b"},"champ":"Riven","id":90670340,"wins":192,"losses":142,"name":"MILEYCYRUSFAN24","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd1c"},"champ":"Veigar","id":95997567,"wins":217,"losses":132,"name":"Véigâr v3","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd1d"},"champ":"Evelynn","id":98267247,"wins":142,"losses":74,"name":"EGIRL SLAYER XDD","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd1e"},"champ":"Leblanc","id":99888685,"wins":154,"losses":85,"name":"Royal LeBlanc","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd1f"},"champ":"Gangplank","id":100208599,"wins":134,"losses":68,"name":"Sail it down Mid","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd20"},"champ":"JarvanIV","id":101039814,"wins":123,"losses":62,"name":"King savage","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd21"},"champ":"RekSai","id":102170099,"wins":215,"losses":146,"name":"mYi Green","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd22"},"champ":"Lulu","id":102819924,"wins":73,"losses":12,"name":"hm idk zz","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd23"},"champ":"Zilean","id":103297936,"wins":102,"losses":49,"name":"Ðylean","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd24"},"champ":"Fizz","id":104007140,"wins":194,"losses":123,"name":"Dane i Matea","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd25"},"champ":"KogMaw","id":105179926,"wins":81,"losses":26,"name":"ADC TALENT XD","rank":"m","region":"euw"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd26"},"champ":"Darius","id":6161010,"wins":210,"losses":189,"name":"れいふぁー鬼","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd27"},"champ":"RekSai","id":6170981,"wins":125,"losses":89,"name":"ˇωˇ","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd28"},"champ":"Skarner","id":6173238,"wins":193,"losses":176,"name":"こんそめ","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd29"},"champ":"Shaco","id":6176654,"wins":232,"losses":176,"name":"Anomie","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd2a"},"champ":"Malzahar","id":6180935,"wins":105,"losses":64,"name":"りゅうや","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd2b"},"champ":"TwistedFate","id":6181161,"wins":232,"losses":202,"name":"なつは","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd2c"},"champ":"Karthus","id":6181771,"wins":196,"losses":184,"name":"ZouSenpai","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd2d"},"champ":"Tryndamere","id":6250574,"wins":189,"losses":136,"name":"Clover","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd2e"},"champ":"Yasuo","id":6284157,"wins":252,"losses":225,"name":"ブラッドムン","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd2f"},"champ":"Anivia","id":6306837,"wins":430,"losses":403,"name":"Cryophoenix Only","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd30"},"champ":"Singed","id":6307646,"wins":151,"losses":109,"name":"D2Ks","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd31"},"champ":"Mordekaiser","id":6308458,"wins":244,"losses":203,"name":"太陽騎士ソラール","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd32"},"champ":"Pantheon","id":6321253,"wins":361,"losses":346,"name":"ｳﾝﾁｮｺﾋﾟｰ","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd33"},"champ":"Shaco","id":6632946,"wins":215,"losses":187,"name":"ゲームプレイヤー","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd34"},"champ":"Katarina","id":6695814,"wins":246,"losses":179,"name":"ヤンデレ","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd35"},"champ":"JarvanIV","id":6804563,"wins":197,"losses":147,"name":"丶Alan丶","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd36"},"champ":"Heimerdinger","id":6811621,"wins":147,"losses":126,"name":"そざいごみ","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd37"},"champ":"Darius","id":7410667,"wins":133,"losses":80,"name":"Dârius Bot","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd38"},"champ":"Yasuo","id":8420664,"wins":177,"losses":117,"name":"黑炎使者asuna","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd39"},"champ":"Teemo","id":8890220,"wins":659,"losses":615,"name":"犬蟹狸","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd3a"},"champ":"Taliyah","id":8970756,"wins":88,"losses":53,"name":"Ghost Flash","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd3b"},"champ":"Anivia","id":10130660,"wins":156,"losses":114,"name":"Cacophony","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd3c"},"champ":"Kayn","id":11820713,"wins":106,"losses":55,"name":"斗魚TV丶檸檬人","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd3d"},"champ":"Khazix","id":12290195,"wins":73,"losses":27,"name":"祈り如し","rank":"c","region":"jp"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd3e"},"champ":"Xerath","id":190446,"wins":1012,"losses":932,"name":"BoldZ v2","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd3f"},"champ":"Darius","id":246901,"wins":337,"losses":299,"name":"ChøøseÑ Taichou","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd40"},"champ":"Shaco","id":305494,"wins":100,"losses":67,"name":"New PurposeLess","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd41"},"champ":"Ivern","id":430449,"wins":193,"losses":167,"name":"Restin","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd42"},"champ":"Katarina","id":642200,"wins":188,"losses":114,"name":"Mârry Me Kat","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd43"},"champ":"Gangplank","id":1491640,"wins":437,"losses":409,"name":"NonameGangPlank","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd44"},"champ":"Vladimir","id":2472772,"wins":204,"losses":177,"name":"Tayo","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd45"},"champ":"Zed","id":2571293,"wins":457,"losses":415,"name":"SépuLence","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd46"},"champ":"Kayle","id":2583695,"wins":79,"losses":43,"name":"Hércle","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd47"},"champ":"Ziggs","id":2689432,"wins":222,"losses":183,"name":"crocDubb","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd48"},"champ":"Darius","id":2814118,"wins":450,"losses":411,"name":"OnurTemiz","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd49"},"champ":"Zilean","id":3028798,"wins":166,"losses":103,"name":"ê   m   y","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd4a"},"champ":"Teemo","id":3278090,"wins":167,"losses":139,"name":"Capulcu Teemo","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd4b"},"champ":"Yasuo","id":3307723,"wins":285,"losses":259,"name":"TGS ZedPeke","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd4c"},"champ":"Rengar","id":3842347,"wins":399,"losses":391,"name":"Morissua","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd4d"},"champ":"MasterYi","id":4026234,"wins":252,"losses":212,"name":"Wuju God","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd4e"},"champ":"Trundle","id":4064875,"wins":334,"losses":310,"name":"Diass","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd4f"},"champ":"Soraka","id":4141768,"wins":134,"losses":59,"name":"La Ambulancia","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd50"},"champ":"Darius","id":4897896,"wins":192,"losses":141,"name":"   b T","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd51"},"champ":"Soraka","id":5545410,"wins":91,"losses":71,"name":"P Cruel v8","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd52"},"champ":"Kayle","id":5849695,"wins":110,"losses":62,"name":"Kayle Kid","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd53"},"champ":"Malphite","id":5983214,"wins":532,"losses":505,"name":"SezeryanCivCivi","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd54"},"champ":"Shaco","id":6503084,"wins":410,"losses":313,"name":"ShacoRon","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd55"},"champ":"Rengar","id":6917516,"wins":473,"losses":434,"name":"Hunting Expert","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd56"},"champ":"Riven","id":8234724,"wins":180,"losses":142,"name":"DâwnBringer","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd57"},"champ":"Rengar","id":8760643,"wins":165,"losses":117,"name":"AkSiT      BirSu","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd58"},"champ":"Kennen","id":9214468,"wins":399,"losses":352,"name":"Achilles Heel","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd59"},"champ":"Riven","id":9332902,"wins":182,"losses":135,"name":"DanteX","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd5a"},"champ":"Karma","id":9910611,"wins":82,"losses":46,"name":"LooLy Pex","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd5b"},"champ":"Sona","id":10231830,"wins":584,"losses":538,"name":"Otistik Sona","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd5c"},"champ":"Draven","id":11050820,"wins":148,"losses":120,"name":"Shimaka","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd5d"},"champ":"Kayle","id":12520378,"wins":451,"losses":392,"name":"Challanger","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd5e"},"champ":"Swain","id":12885781,"wins":100,"losses":73,"name":"Expwy v2","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd5f"},"champ":"Soraka","id":13293124,"wins":63,"losses":33,"name":"One Trick Soraka","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd60"},"champ":"Kled","id":14654889,"wins":252,"losses":191,"name":"Mutant syndra","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd61"},"champ":"RekSai","id":14682802,"wins":103,"losses":59,"name":"elpigee","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd62"},"champ":"Rengar","id":15206753,"wins":212,"losses":144,"name":"IlIlıIlılIl","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd63"},"champ":"Nidalee","id":16013765,"wins":518,"losses":469,"name":"Screwer","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd64"},"champ":"Rengar","id":16453744,"wins":171,"losses":120,"name":"Flâwless Rengo","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd65"},"champ":"Evelynn","id":16866255,"wins":102,"losses":45,"name":"KANKA Roulette","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd66"},"champ":"MasterYi","id":17093245,"wins":174,"losses":120,"name":"İlgisizlik","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd67"},"champ":"Hecarim","id":17217520,"wins":105,"losses":55,"name":"Mezzorano","rank":"m","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd68"},"champ":"Zed","id":1471486,"wins":246,"losses":177,"name":"Onikare","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd69"},"champ":"Darius","id":1641491,"wins":217,"losses":183,"name":"Locây","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd6a"},"champ":"Syndra","id":2010757,"wins":314,"losses":283,"name":"Inspectum","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd6b"},"champ":"Irelia","id":2458436,"wins":485,"losses":457,"name":"Hozeri","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd6c"},"champ":"Karma","id":2511867,"wins":322,"losses":290,"name":"DiEdWaRsG","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd6d"},"champ":"Talon","id":2605057,"wins":253,"losses":200,"name":"Street Jesus","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd6e"},"champ":"Yasuo","id":2951827,"wins":246,"losses":215,"name":"Heartie","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd6f"},"champ":"Zed","id":3132428,"wins":663,"losses":604,"name":"G2 Zedxsmurf","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd70"},"champ":"Riven","id":6500193,"wins":381,"losses":320,"name":"LOLPROSUUUUUY","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd71"},"champ":"Xerath","id":7414102,"wins":464,"losses":372,"name":"FreshKiller01","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd72"},"champ":"Sona","id":7573107,"wins":288,"losses":244,"name":"LsaCrf","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd73"},"champ":"Swain","id":8204111,"wins":114,"losses":70,"name":"Expwy","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd74"},"champ":"Katarina","id":12604348,"wins":680,"losses":659,"name":"katkatlife","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd75"},"champ":"Singed","id":14683374,"wins":495,"losses":433,"name":"fling the world","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd76"},"champ":"Vladimir","id":16843317,"wins":169,"losses":110,"name":"Crankworx","rank":"c","region":"tr"}
+{"_id":{"$oid":"5a3b1dfd3a42a96972decd77"},"champ":"Vladimir","id":18042123,"wins":70,"losses":26,"name":"noname elo dôg","rank":"c","region":"tr"}
