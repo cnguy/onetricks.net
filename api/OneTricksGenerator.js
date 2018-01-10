@@ -84,6 +84,9 @@ const getStats = async summonerID =>
     (await request.get(`http://one-tricks-stats:3002/api/stats/${summonerID}`))
         .body;
 
+// Cached Static Champion keys for getStaticChampion.
+const staticChampionKeys = Object.keys(staticChampions.data);
+
 /**
  * getStaticChampion replaces the need for kayn.Static.Champion.get which gets
  * rate limited very easily.
@@ -91,12 +94,10 @@ const getStats = async summonerID =>
  * @returns {object} the static champion object (pretty much always.
  */
 const getStaticChampion = id => {
-    const keys = Object.keys(staticChampions.data);
-    for (let i = 0; i < keys.length; ++i) {
-        if (parseInt(staticChampions.data[keys[i]].key) === id) {
-            return staticChampions.data[keys[i]];
-        }
-    }
+    const targetKey = staticChampionKeys.find(
+        key => parseInt(staticChampions.data[key].key) === id,
+    );
+    return staticChampions.data[targetKey];
     // It should always return.
 };
 
@@ -157,8 +158,8 @@ const clearPlayersInDB = async (rank, region) =>
  * @param {string} regionsCompleted - Helper array to show what regions have been processed.
  */
 const insertPlayersIntoDB = async (oneTricks, region, rank) => {
-    const payload = Object.keys(oneTricks).map(key => ({
-        ...oneTricks[key],
+    const payload = oneTricks.map(el => ({
+        ...el,
         ...{
             rank: rank.charAt(0),
             region,
@@ -179,12 +180,53 @@ const insertPlayersIntoDB = async (oneTricks, region, rank) => {
     });
 };
 
+// Mutating function... I want to use asyncMapOverChunk from ./stats hmm.
 const chunkGenerate = async (generator, entries) => {
+    let results = [];
     const summonersChunkSize = entries.length / 4;
     const processChunk = async chunk => Promise.all(chunk.map(generator));
     for (let i = 0; i < entries.length; i += summonersChunkSize) {
-        await processChunk(entries.slice(i, i + summonersChunkSize));
+        const chunk = await processChunk(
+            entries.slice(i, i + summonersChunkSize),
+        );
+        // Deal with return-early-case in getOneTrick.
+        const filtered = chunk.filter(el => typeof el === 'object');
+        results = results.concat(filtered);
     }
+    return results;
+};
+
+// getOneTrick is a helper function for allowing us to process requests in chunks.
+const getOneTrick = region => async ({ wins, losses, playerOrTeamId }) => {
+    const totalGames = wins + losses;
+    const playerStats = await getStats(playerOrTeamId, region);
+    if (!playerStats) return true;
+    const champStats = playerStats.champions.find(
+        ({ stats: { totalSessionsPlayed } }) =>
+            isOneTrick(totalSessionsPlayed, totalGames),
+    );
+    if (!champStats) return true;
+
+    // Process champion stats.
+    const {
+        totalSessionsPlayed,
+        wins: totalSessionsWon,
+        losses: totalSessionsLost,
+    } = champStats.stats;
+
+    const champId = champStats.id;
+    if (champId !== 0) {
+        // Some ID's funnily equaled 0 (in the past).
+        const champData = getStaticChampion(champId);
+        const { summonerId } = playerStats;
+
+        return {
+            ...createOneTrick(summonerId, wins, losses, champData),
+            name: (await kayn.Summoner.by.id(summonerId).region(region)).name,
+        };
+    }
+
+    throw new Error('getOneTrick somehow failed.');
 };
 
 /**
@@ -193,67 +235,28 @@ const chunkGenerate = async (generator, entries) => {
  * @param {string} region - An abbreviated region ('na1', 'euw', etc). Use `REGIONS` from `kayn`.
  */
 async function generate(rank, region) {
-    const oneTricks = {};
-    const league = await getLeagueByRank(region, rank);
-
-    // fn is a helper function for allowing us to process requets in chunks.
-    const fn = async ({ wins, losses, playerOrTeamId }) => {
-        const totalGames = wins + losses;
-        const playerStats = await getStats(playerOrTeamId, region);
-        if (!playerStats) return true;
-        const champStats = playerStats.champions.find(
-            ({ stats: { totalSessionsPlayed } }) =>
-                isOneTrick(totalSessionsPlayed, totalGames),
-        );
-        if (!champStats) return true;
-
-        // Process champion stats.
-        const {
-            totalSessionsPlayed,
-            wins: totalSessionsWon,
-            losses: totalSessionsLost,
-        } = champStats.stats;
-
-        const champId = champStats.id;
-        if (champId !== 0) {
-            // Some ID's funnily equaled 0 (in the past).
-            const champData = getStaticChampion(champId);
-            const { summonerId } = playerStats;
-            oneTricks[summonerId] = createOneTrick(
-                summonerId,
-                wins,
-                losses,
-                champData,
-            );
-
-            oneTricks[summonerId].name = (await kayn.Summoner.by
-                .id(summonerId)
-                .region(region)).name;
-        }
-        return true;
-    };
-
-    await chunkGenerate(fn, league.entries);
+    const { entries } = await getLeagueByRank(region, rank);
+    const oneTricks = await chunkGenerate(getOneTrick(region), entries);
     await clearPlayersInDB(rank.charAt(0), region);
     await insertPlayersIntoDB(oneTricks, region, rank);
     return true;
 }
 
-const main = async () => true;
-    // new Promise((resolve, reject) =>
-    //     setTimeout(async () => {
-    //         const processChunk = async (rank, chunk) =>
-    //             Promise.all(chunk.map(r => generate(rank, REGIONS[r])));
-    //         const keys = Object.keys(REGIONS);
-    //         const start = async (rank, chunkSize) => {
-    //             for (let i = 0; i < keys.length; i += chunkSize) {
-    //                 await processChunk(rank, keys.slice(i, i + chunkSize));
-    //             }
-    //         };
-    //         await start('challengers', 4);
-    //         await start('masters', 2);
-    //         resolve(true);
-    //     }, 20000),
-    // );
+const main = async () =>
+    new Promise((resolve, reject) =>
+        setTimeout(async () => {
+            const processChunk = async (rank, chunk) =>
+                Promise.all(chunk.map(r => generate(rank, REGIONS[r])));
+            const keys = Object.keys(REGIONS);
+            const start = async (rank, chunkSize) => {
+                for (let i = 0; i < keys.length; i += chunkSize) {
+                    await processChunk(rank, keys.slice(i, i + chunkSize));
+                }
+            };
+            await start('challengers', 4);
+            await start('masters', 2);
+            resolve(true);
+        }, 20000),
+    );
 
 export default main;

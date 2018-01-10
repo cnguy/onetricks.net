@@ -133,6 +133,7 @@ app.listen(app.get('port'), () => {
 });
 
 const main = async () => {
+  /*
   try {
     const done = await generator();
     console.log('script done:', done);
@@ -142,7 +143,7 @@ const main = async () => {
     }, 2147483647);
   } catch (exception) {
     console.log(exception);
-  }
+  }*/
 }
 
 main();
