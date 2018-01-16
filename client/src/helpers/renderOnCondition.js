@@ -3,8 +3,6 @@
 type elementOrNull = React$Element<any> | null
 
 const renderOnCondition = (cond: any, element: elementOrNull): elementOrNull =>
-  cond
-    ? element
-    : null;
+    cond ? element : null
 
-export default renderOnCondition;
+export default renderOnCondition

@@ -1,64 +1,64 @@
-import ChampionStats from './ChampionStats';
+import ChampionStats from './ChampionStats'
 
 class _PlayerStats {
     constructor(summonerID, region) {
-        this.summonerID = parseInt(summonerID);
-        this.ChampionStats = [];
-        this.matchesProcessed = [];
-        this.region = region;
+        this.summonerID = parseInt(summonerID)
+        this.ChampionStats = []
+        this.matchesProcessed = []
+        this.region = region
     }
 
     load(playerStats) {
-        this.summonerID = playerStats.summonerId;
+        this.summonerID = playerStats.summonerId
         this.ChampionStats = playerStats.champions.map(champion => {
-            const c = ChampionStats();
-            c.load(champion);
-            return c;
-        });
-        this.matchesProcessed = playerStats.matchesProcessed;
-        this.region = playerStats.region;
+            const c = ChampionStats()
+            c.load(champion)
+            return c
+        })
+        this.matchesProcessed = playerStats.matchesProcessed
+        this.region = playerStats.region
     }
 
     editExistingChampion(championID, didWin, matchID) {
-        const { ChampionStats } = this;
-        const i = ChampionStats.findIndex(({ id }) => id === championID);
+        const { ChampionStats } = this
+        const i = ChampionStats.findIndex(({ id }) => id === championID)
         if (didWin) {
-            ChampionStats[i].incrementWins();
+            ChampionStats[i].incrementWins()
         } else {
-            ChampionStats[i].incrementLosses();
+            ChampionStats[i].incrementLosses()
         }
-        this.matchesProcessed.push(matchID);
+        this.matchesProcessed.push(matchID)
     }
 
     pushChampion(ChampionStat, matchID) {
-        const { ChampionStats } = this;
-        ChampionStats.push(ChampionStat);
-        this.matchesProcessed.push(matchID);
+        const { ChampionStats } = this
+        ChampionStats.push(ChampionStat)
+        this.matchesProcessed.push(matchID)
     }
 
     containsChampion(championID) {
-        const { ChampionStats } = this;
-        return ChampionStats.find(({ id }) => id === championID);
+        const { ChampionStats } = this
+        return ChampionStats.find(({ id }) => id === championID)
     }
 
     containsMatch(matchID) {
-        const { matchesProcessed } = this;
-        return matchesProcessed.some(id => id === matchID);
+        const { matchesProcessed } = this
+        return matchesProcessed.some(id => id === matchID)
     }
 
     asObject() {
-        const { summonerID, ChampionStats, region } = this;
+        const { summonerID, ChampionStats, region } = this
 
         return {
             summonerId: summonerID,
             champions: ChampionStats.map(el => el.asObject()),
             matchesProcessed: this.matchesProcessed,
             region,
-        };
+        }
     }
 }
 
 const PlayerStats = (summonerID, ChampionStats) =>
-    new _PlayerStats(summonerID, ChampionStats);
+    new _PlayerStats(summonerID, ChampionStats)
 
-export default PlayerStats;
+export default PlayerStats

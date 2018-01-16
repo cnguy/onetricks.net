@@ -2,19 +2,40 @@
 
 /* MISC */
 export type region =
-  | "all" | "na" | "kr" | "euw" | "eune" | "lan" | "las" | "br" | "jp" | "tr" | "ru" | "oce"
-  | "NA" | "KR" | "EUW" | "EUNE" | "LAN" | "LAS" | "BR" | "JP" | "TR" | "RU" | "OCE"
+    | 'all'
+    | 'na'
+    | 'kr'
+    | 'euw'
+    | 'eune'
+    | 'lan'
+    | 'las'
+    | 'br'
+    | 'jp'
+    | 'tr'
+    | 'ru'
+    | 'oce'
+    | 'NA'
+    | 'KR'
+    | 'EUW'
+    | 'EUNE'
+    | 'LAN'
+    | 'LAS'
+    | 'BR'
+    | 'JP'
+    | 'TR'
+    | 'RU'
+    | 'OCE'
 export type rank = 'c' | 'm'
 
 export type player = {
-  champ: string,
-  id: number,
-  losses: number,
-  name: string,
-  rank: rank,
-  region: region,
-  wins: number,
-  _id: number
+    champ: string,
+    id: number,
+    losses: number,
+    name: string,
+    rank: rank,
+    region: region,
+    wins: number,
+    _id: number,
 }
 
 export type players = Array<player>
@@ -26,20 +47,28 @@ export type advFilter = boolean
 export type merged = boolean
 export type searchKey = string
 export type sortReverse = boolean
-export type sortKey = "NONE" | "RANK" | "REGION" | "NAME" | "WINS" | "LOSSES" | "WINRATE" | "ONETRICKS"
+export type sortKey =
+    | 'NONE'
+    | 'RANK'
+    | 'REGION'
+    | 'NAME'
+    | 'WINS'
+    | 'LOSSES'
+    | 'WINRATE'
+    | 'ONETRICKS'
 
 export type state = {
-  championPane: {
-    advFilter: advFilter,
-    searchKey: searchKey,
-  },
-  misc: {
-    merged: merged,
-  },
-  playersView: {
-    sortKey: sortKey,
-    sortReverse: sortReverse,
-  },
+    championPane: {
+        advFilter: advFilter,
+        searchKey: searchKey,
+    },
+    misc: {
+        merged: merged,
+    },
+    playersView: {
+        sortKey: sortKey,
+        sortReverse: sortReverse,
+    },
 }
 
 /* ACTION CREATORS */

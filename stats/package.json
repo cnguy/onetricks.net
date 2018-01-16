@@ -9,8 +9,7 @@
     "kayn": "^0.8.0"
   },
   "scripts": {
-    "start": "babel-node index.js",
-    "prettier": "prettier --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./**/*.js\""
+    "start": "babel-node index.js"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -29,7 +28,6 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^2.2.3",
     "eslint-plugin-react": "^6.8.0",
-    "mocha": "^4.0.1",
-    "prettier": "^1.9.2"
+    "mocha": "^4.0.1"
   }
 }

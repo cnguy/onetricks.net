@@ -3,29 +3,34 @@
 /* eslint-disable global-require */
 /* eslint-disable import/no-dynamic-require */
 
-import React from 'react';
+import React from 'react'
 
 const getIcon = (name: string) => {
-  try {
-    // $FlowFixMe disable require literal string
-    return require(`../../assets/champ-icons/min/${name.toLowerCase()}square-min.png`);
-  } catch (err) {
-    return require('../../assets/champ-icons/min/questionmark.png');
-  }
-};
-
-type PropTypes = {
-  name: string,
-  mini: boolean,
-  handleImageLoad: (() => void) | null,
+    try {
+        // $FlowFixMe disable require literal string
+        return require(`../../assets/champ-icons/min/${name.toLowerCase()}square-min.png`)
+    } catch (err) {
+        return require('../../assets/champ-icons/min/questionmark.png')
+    }
 }
 
-const ChampIcon = ({ name, mini, handleImageLoad }: PropTypes): React$Element<any> =>
-  <img
-    className={(mini) ? 'mini-champ-icon' : 'champ-icon'}
-    src={getIcon(name)}
-    onLoad={handleImageLoad}
-    alt={`${name} One Trick Pony/Ponies`}
-  />;
+type PropTypes = {
+    name: string,
+    mini: boolean,
+    handleImageLoad: (() => void) | null,
+}
 
-export default ChampIcon;
+const ChampIcon = ({
+    name,
+    mini,
+    handleImageLoad,
+}: PropTypes): React$Element<any> => (
+    <img
+        className={mini ? 'mini-champ-icon' : 'champ-icon'}
+        src={getIcon(name)}
+        onLoad={handleImageLoad}
+        alt={`${name} One Trick Pony/Ponies`}
+    />
+)
+
+export default ChampIcon

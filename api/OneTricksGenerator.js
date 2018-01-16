@@ -1,27 +1,27 @@
-require('dotenv').config('./.env');
+require('dotenv').config('./.env')
 
-import { Kayn, REGIONS, RedisCache, METHOD_NAMES } from 'kayn';
-import request from 'superagent';
-import jsonfile from 'jsonfile';
-const mongoose = require('mongoose');
-require('./models');
-const PLAYER_SCHEMA_NAME = 'Player';
-const Player = mongoose.model(PLAYER_SCHEMA_NAME);
+import { Kayn, REGIONS, RedisCache, METHOD_NAMES } from 'kayn'
+import request from 'superagent'
+import jsonfile from 'jsonfile'
+const mongoose = require('mongoose')
+require('./models')
+const PLAYER_SCHEMA_NAME = 'Player'
+const Player = mongoose.model(PLAYER_SCHEMA_NAME)
 
-const TARGET_QUEUE = 'RANKED_SOLO_5x5';
+const TARGET_QUEUE = 'RANKED_SOLO_5x5'
 
-const staticChampions = jsonfile.readFileSync('./static_champions.json');
+const staticChampions = jsonfile.readFileSync('./static_champions.json')
 
 if (process.env.NODE_ENV === 'development') {
-    mongoose.connect(process.env.LOCAL_MONGO_URL);
+    mongoose.connect(process.env.LOCAL_MONGO_URL)
 } else if (process.env.NODE_ENV === 'production') {
     mongoose.connect(
         `mongodb://${process.env.MONGO_USER}:${
             process.env.MONGO_PASS
         }@ds161029.mlab.com:61029/${process.env.MONGO_USER}`,
-    );
+    )
 } else {
-    throw new Error('.env file is missing NODE_ENV environment variable.');
+    throw new Error('.env file is missing NODE_ENV environment variable.')
 }
 
 const kayn = Kayn()({
@@ -49,7 +49,7 @@ const kayn = Kayn()({
             [METHOD_NAMES.CHAMPION.GET_CHAMPIONS]: 9999999999,
         },
     },
-});
+})
 
 // regionsCompleted is simply used for debugging purposes.
 // ex: Challengers regionsCompleted: ['na', 'euw', 'kr']
@@ -58,21 +58,21 @@ const kayn = Kayn()({
 const regionsCompleted = {
     challengers: [],
     masters: [],
-};
+}
 
 // temp
-const isOneTrick = (otGames, total) => otGames / total >= 0.45;
+const isOneTrick = (otGames, total) => otGames / total >= 0.45
 // 0.45 works for accurate stats + large number of games
 
 const getLeagueByRank = async (region, rank) => {
     if (rank === 'challengers') {
-        return kayn.Challenger.list(TARGET_QUEUE).region(region);
+        return kayn.Challenger.list(TARGET_QUEUE).region(region)
     }
     if (rank === 'masters') {
-        return kayn.Master.list(TARGET_QUEUE).region(region);
+        return kayn.Master.list(TARGET_QUEUE).region(region)
     }
-    throw new Error('Parameter `rank` is not correct.');
-};
+    throw new Error('Parameter `rank` is not correct.')
+}
 
 /**
  * getStats closes over stats, providing a way for us to find a particular summoner
@@ -82,10 +82,10 @@ const getLeagueByRank = async (region, rank) => {
  */
 const getStats = async summonerID =>
     (await request.get(`http://one-tricks-stats:3002/api/stats/${summonerID}`))
-        .body;
+        .body
 
 // Cached Static Champion keys for getStaticChampion.
-const staticChampionKeys = Object.keys(staticChampions.data);
+const staticChampionKeys = Object.keys(staticChampions.data)
 
 /**
  * getStaticChampion replaces the need for kayn.Static.Champion.get which gets
@@ -96,10 +96,10 @@ const staticChampionKeys = Object.keys(staticChampions.data);
 const getStaticChampion = id => {
     const targetKey = staticChampionKeys.find(
         key => parseInt(staticChampions.data[key].key) === id,
-    );
-    return staticChampions.data[targetKey];
+    )
+    return staticChampions.data[targetKey]
     // It should always return.
-};
+}
 
 /**
  * createOneTrick products the DTO that will be stored in our MongoDB database.
@@ -119,17 +119,17 @@ const createOneTrick = (id, wins, losses, champData) => {
             id,
             wins,
             losses,
-        };
+        }
     } else if (champData) {
         return {
             champ: champData.id,
             id,
             wins,
             losses,
-        };
+        }
     }
-    throw new Error('createOneTrick somehow failed.');
-};
+    throw new Error('createOneTrick somehow failed.')
+}
 
 /**
  * clearsPlayerInDB removes all one tricks from the database given a rank and region.
@@ -145,11 +145,11 @@ const clearPlayersInDB = async (rank, region) =>
                 region,
             },
             err => {
-                if (err) reject(err);
-                else resolve(true);
+                if (err) reject(err)
+                else resolve(true)
             },
-        );
-    });
+        )
+    })
 
 /**
  * insertPlayersIntoDB inserts a set of one tricks into the database.
@@ -164,70 +164,70 @@ const insertPlayersIntoDB = async (oneTricks, region, rank) => {
             rank: rank.charAt(0),
             region,
         },
-    }));
+    }))
 
     return new Promise((resolve, reject) => {
-        if (payload.length === 0) resolve();
+        if (payload.length === 0) resolve()
 
         Player.collection.insert(payload, (err, docs) => {
             if (err) {
-                throw new Error(err);
+                throw new Error(err)
             }
-            regionsCompleted[rank].push(region);
-            regionsCompleted[rank].sort();
-            resolve(true);
-        });
-    });
-};
+            regionsCompleted[rank].push(region)
+            regionsCompleted[rank].sort()
+            resolve(true)
+        })
+    })
+}
 
 // Mutating function... I want to use asyncMapOverChunk from ./stats hmm.
 const chunkGenerate = async (generator, entries) => {
-    let results = [];
-    const summonersChunkSize = entries.length / 4;
-    const processChunk = async chunk => Promise.all(chunk.map(generator));
+    let results = []
+    const summonersChunkSize = entries.length / 4
+    const processChunk = async chunk => Promise.all(chunk.map(generator))
     for (let i = 0; i < entries.length; i += summonersChunkSize) {
         const chunk = await processChunk(
             entries.slice(i, i + summonersChunkSize),
-        );
+        )
         // Deal with return-early-case in getOneTrick.
-        const filtered = chunk.filter(el => typeof el === 'object');
-        results = results.concat(filtered);
+        const filtered = chunk.filter(el => typeof el === 'object')
+        results = results.concat(filtered)
     }
-    return results;
-};
+    return results
+}
 
 // getOneTrick is a helper function for allowing us to process requests in chunks.
 const getOneTrick = region => async ({ wins, losses, playerOrTeamId }) => {
-    const totalGames = wins + losses;
-    const playerStats = await getStats(playerOrTeamId, region);
-    if (!playerStats) return true;
+    const totalGames = wins + losses
+    const playerStats = await getStats(playerOrTeamId, region)
+    if (!playerStats) return true
     const champStats = playerStats.champions.find(
         ({ stats: { totalSessionsPlayed } }) =>
             isOneTrick(totalSessionsPlayed, totalGames),
-    );
-    if (!champStats) return true;
+    )
+    if (!champStats) return true
 
     // Process champion stats.
     const {
         totalSessionsPlayed,
         wins: totalSessionsWon,
         losses: totalSessionsLost,
-    } = champStats.stats;
+    } = champStats.stats
 
-    const champId = champStats.id;
+    const champId = champStats.id
     if (champId !== 0) {
         // Some ID's funnily equaled 0 (in the past).
-        const champData = getStaticChampion(champId);
-        const { summonerId } = playerStats;
+        const champData = getStaticChampion(champId)
+        const { summonerId } = playerStats
 
         return {
             ...createOneTrick(summonerId, wins, losses, champData),
             name: (await kayn.Summoner.by.id(summonerId).region(region)).name,
-        };
+        }
     }
 
-    throw new Error('getOneTrick somehow failed.');
-};
+    throw new Error('getOneTrick somehow failed.')
+}
 
 /**
  * generate generates all the one tricks given a combination of rank and region.
@@ -235,28 +235,28 @@ const getOneTrick = region => async ({ wins, losses, playerOrTeamId }) => {
  * @param {string} region - An abbreviated region ('na1', 'euw', etc). Use `REGIONS` from `kayn`.
  */
 async function generate(rank, region) {
-    const { entries } = await getLeagueByRank(region, rank);
-    const oneTricks = await chunkGenerate(getOneTrick(region), entries);
-    await clearPlayersInDB(rank.charAt(0), region);
-    await insertPlayersIntoDB(oneTricks, region, rank);
-    return true;
+    const { entries } = await getLeagueByRank(region, rank)
+    const oneTricks = await chunkGenerate(getOneTrick(region), entries)
+    await clearPlayersInDB(rank.charAt(0), region)
+    await insertPlayersIntoDB(oneTricks, region, rank)
+    return true
 }
 
 const main = async () =>
     new Promise((resolve, reject) =>
         setTimeout(async () => {
             const processChunk = async (rank, chunk) =>
-                Promise.all(chunk.map(r => generate(rank, REGIONS[r])));
-            const keys = Object.keys(REGIONS);
+                Promise.all(chunk.map(r => generate(rank, REGIONS[r])))
+            const keys = Object.keys(REGIONS)
             const start = async (rank, chunkSize) => {
                 for (let i = 0; i < keys.length; i += chunkSize) {
-                    await processChunk(rank, keys.slice(i, i + chunkSize));
+                    await processChunk(rank, keys.slice(i, i + chunkSize))
                 }
-            };
-            await start('challengers', 4);
-            await start('masters', 2);
-            resolve(true);
+            }
+            await start('challengers', 4)
+            await start('masters', 2)
+            resolve(true)
         }, 20000),
-    );
+    )
 
-export default main;
+export default main

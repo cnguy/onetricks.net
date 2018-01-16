@@ -1,26 +1,26 @@
 class _ChampionStats {
     constructor(id, win) {
-        this.id = parseInt(id);
-        this.wins = win ? 1 : 0;
-        this.losses = win ? 0 : 1;
+        this.id = parseInt(id)
+        this.wins = win ? 1 : 0
+        this.losses = win ? 0 : 1
     }
 
     load(championStats) {
-        this.id = championStats.id;
-        this.wins = championStats.stats.wins;
-        this.losses = championStats.stats.losses;
+        this.id = championStats.id
+        this.wins = championStats.stats.wins
+        this.losses = championStats.stats.losses
     }
 
     incrementWins() {
-        this.wins += 1;
+        this.wins += 1
     }
 
     incrementLosses() {
-        this.losses += 1;
+        this.losses += 1
     }
 
     asObject() {
-        const { id, wins, losses } = this;
+        const { id, wins, losses } = this
 
         return {
             id,
@@ -29,10 +29,10 @@ class _ChampionStats {
                 losses,
                 totalSessionsPlayed: wins + losses, // kinda unnecessary
             },
-        };
+        }
     }
 }
 
-const ChampionStats = (id, win) => new _ChampionStats(id, win);
+const ChampionStats = (id, win) => new _ChampionStats(id, win)
 
-export default ChampionStats;
+export default ChampionStats

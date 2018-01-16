@@ -1,3 +1,3 @@
-const range = length => Array(Math.ceil(length)).fill();
+const range = length => Array(Math.ceil(length)).fill()
 
-export default range;
+export default range

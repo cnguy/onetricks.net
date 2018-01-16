@@ -1,15 +1,15 @@
-import asyncMapOverArrayInChunks from '../generic/asyncMapOverArrayInChunks';
-import range from '../generic/range';
+import asyncMapOverArrayInChunks from '../generic/asyncMapOverArrayInChunks'
+import range from '../generic/range'
 
 const reducerGetRest = kayn => (accountID, region) => async promise => {
-    const { currentMatches, beginIndex } = await promise;
+    const { currentMatches, beginIndex } = await promise
     const newBeginIndex = {
         beginIndex: beginIndex + 100,
-    };
+    }
     const defaultReturn = {
         ...{ currentMatches },
         ...newBeginIndex,
-    };
+    }
     try {
         const { matches: newMatches } = await kayn.Matchlist.by
             .accountID(accountID)
@@ -18,36 +18,36 @@ const reducerGetRest = kayn => (accountID, region) => async promise => {
                 ...MATCHLIST_CONFIG,
                 beginIndex,
                 endIndex: newBeginIndex.beginIndex,
-            });
+            })
         return newMatches.length > 0
             ? Promise.resolve({
                   currentMatches: currentMatches.concat(newMatches),
                   ...newBeginIndex,
               })
-            : Promise.resolve(defaultReturn);
+            : Promise.resolve(defaultReturn)
     } catch (ex) {
-        return Promise.resolve(defaultReturn);
+        return Promise.resolve(defaultReturn)
     }
-};
+}
 
 class MatchlistKaynHelper {
     static rawMatchlistToMatches = kayn => async (matchlist, region) => {
-        const matchlistChunkSize = matchlist.length / 5;
+        const matchlistChunkSize = matchlist.length / 5
 
         const matches = await asyncMapOverArrayInChunks(
             matchlist,
             matchlistChunkSize,
             async ({ gameId }) => {
                 try {
-                    return await kayn.Match.get(gameId).region(region);
+                    return await kayn.Match.get(gameId).region(region)
                 } catch (ex) {
-                    return false;
+                    return false
                 }
             },
-        );
+        )
 
-        return matches.filter(Boolean);
-    };
+        return matches.filter(Boolean)
+    }
 
     static getRestOfMatchlist = kayn => async (
         accountID,
@@ -55,17 +55,17 @@ class MatchlistKaynHelper {
         totalGames,
     ) => {
         if (totalGames > 100) {
-            const initialValue = { currentMatches: [], beginIndex: 100 };
+            const initialValue = { currentMatches: [], beginIndex: 100 }
             const { currentMatches: matches } = await range(
                 totalGames / 100,
             ).reduce(
                 reducerGetRest(kayn)(accountID, region),
                 Promise.resolve(initialValue),
-            );
-            return matches;
+            )
+            return matches
         }
-        return [];
-    };
+        return []
+    }
 }
 
-export default MatchlistKaynHelper;
+export default MatchlistKaynHelper

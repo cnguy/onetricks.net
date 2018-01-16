@@ -1,4 +1,4 @@
-import Summoner from '../../entities/Summoner';
+import Summoner from '../../entities/Summoner'
 
 class LeagueKaynHelper {
     static leagueEntryToSummoner = kayn => region => async ({
@@ -10,7 +10,7 @@ class LeagueKaynHelper {
             playerOrTeamName,
             (await kayn.Summoner.by.id(playerOrTeamId).region(region))
                 .accountId,
-        ).asObject();
+        ).asObject()
 }
 
-export default LeagueKaynHelper;
+export default LeagueKaynHelper

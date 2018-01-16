@@ -1,6 +1,6 @@
 const RANKS = {
-  challenger: 'c',
-  master: 'm',
-};
+    challenger: 'c',
+    master: 'm',
+}
 
-export default RANKS;
+export default RANKS
