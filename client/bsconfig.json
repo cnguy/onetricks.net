@@ -12,5 +12,9 @@
         "dir": "src/components/OneTricks"
       }
     ],
+    "package-specs": {
+      "module": "commonjs",
+      "in-source": true
+    },
     "refmt": 3
   }
