@@ -34,7 +34,7 @@ import {
 } from '../../selectors'
 
 import ChampionPane from './ChampionPane'
-import Copyright from './Copyright'
+import Copyright from '../../../lib/js/src/components/OneTricks/Copyright'
 import FAQ from './FAQ'
 import FilterRegion from './FilterRegion'
 import Loader from './Loader'
