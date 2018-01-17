@@ -20,3 +20,4 @@ client/lib/**/*.cm*
 *ninja
 client/lib/bs/**/.bs*
 client/lib/bs/**/.ninja*
+.vscode
