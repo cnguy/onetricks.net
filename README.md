@@ -14,6 +14,10 @@ In the future, there will be a CHANGELOG for production releases.
 
 Note that this codebase is also very old, and my main goal now that I finished building up some stats is to clean up the code.
 
+# Development
+
+```make run # docker-compose up --build```
+
 # Overview
 
 This web application is now comprised of five components:
