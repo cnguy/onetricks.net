@@ -23,6 +23,7 @@ services:
       - DEBUG=kayn:*
   client:
     container_name: one-tricks-client
+    command: yarn dev
     restart: always
     build: ./client
     ports:
