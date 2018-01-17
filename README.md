@@ -2,6 +2,12 @@ Source for http://onetricks.net
 
 A web application displaying a list of high ELO one trick ponies in League of Legends, using [kayn](https://github.com/cnguy/kayn).
 
+**Status: WIP**
+
+The `master` branch is not necessarily indicative of its current state in release.
+
+In the future, there will be a CHANGELOG for production releases.
+
 # Preview:
 
 ![Alt text](/_pictures/small_preview.png?raw=true "onetricks.net")
@@ -10,12 +16,12 @@ Note that this codebase is also very old, and my main goal now that I finished b
 
 # Overview
 
-This web application is comprised of five components:
-1) Standard Node.js server
-2) Static React application
-3) Scripts to generate statistics and data
+This web application is now comprised of five components:
+1) Stats microservice (WIP)
+2) Site API microservice (kinda done)
+3) React Client in ES6 and ReasonML
 4) MongoDB for storing One Tricks
-5) Redis for caching
+5) Redis for caching locally
 
 The scripts build up two important datasets:
 
