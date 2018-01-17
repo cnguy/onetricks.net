@@ -30,3 +30,5 @@ services:
       - api
     environment:
       - NODE_ENV=production
+    command:
+      - yarn start

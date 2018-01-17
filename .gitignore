@@ -9,3 +9,14 @@ yarn-error.log
 *rdb
 data
 -v
+client/.bsb.lock
+client/.merlin
+ninja*
+*cmg
+client/lib/**/*.cm*
+*cmt
+*mlast
+*mlast.d
+*ninja
+client/lib/bs/**/.bs*
+client/lib/bs/**/.ninja*

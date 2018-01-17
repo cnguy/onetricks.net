@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import QA from './QA'
+import QA from '../../../lib/js/src/components/OneTricks/QA'
 
 const qas = [
     [

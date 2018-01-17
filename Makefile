@@ -9,6 +9,9 @@ deploy-static:
 	yarn build;\
 	cd build;\
 
+dev-client-dockerless:
+	cd client; yarn dev; ..;
+
 #	echo one-tricks.surge.sh > CNAME;\
 	#surge;\
 	#..;\

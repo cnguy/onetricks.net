@@ -4,9 +4,11 @@
   "private": true,
   "proxy": "http://one-tricks-api:3001/",
   "devDependencies": {
+    "bs-platform": "^2.1.0",
     "enzyme": "^2.4.1",
     "react-addons-test-utils": "^15.4.0",
-    "react-scripts": "0.7.0"
+    "react-scripts": "0.7.0",
+    "concurrently": "3.5.1"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
@@ -16,13 +18,18 @@
     "react-addons-perf": "^15.4.2",
     "react-dom": "^15.4.0",
     "react-redux": "^5.0.5",
+    "reason-js": "^0.3.0",
+    "reason-react": "^0.3.1",
     "recompose": "^0.24.0",
     "redux": "^3.7.1"
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "concurrently \"yarn buckle:up\" \"yarn start\"",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "buckle:up": "bsb -make-world -w",
+    "buckle:clean": "bsb -clean-world"
   }
 }

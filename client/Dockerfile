@@ -13,4 +13,4 @@ RUN yarn
 EXPOSE 3000
 EXPOSE 35729
 
-CMD ["yarn", "start"]
+CMD ["yarn", "dev"]
