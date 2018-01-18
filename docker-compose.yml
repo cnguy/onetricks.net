@@ -34,6 +34,8 @@ services:
       - ./client/public:/usr/src/app/public
     links:
       - api
+    environment:
+      - NODE_ENV=development
   mongo:
     container_name: mongo
     image: mongo

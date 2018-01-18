@@ -22,3 +22,4 @@ client/lib/bs/**/.bs*
 client/lib/bs/**/.ninja*
 .vscode
 r
+client/build
