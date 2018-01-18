@@ -4,7 +4,7 @@ import React from 'react'
 
 import ChampIcon from './ChampIcon'
 import PlayerRow from './PlayerRow'
-import PlayersSort from './PlayersSort'
+import PlayersSortBtn from './PlayersSortBtn'
 import Sorts from '../../helpers/sorts'
 import WinRate from './formatters/WinRate'
 
@@ -73,63 +73,63 @@ const PlayersView = ({
                 <thead>
                     <tr>
                         <th>
-                            <PlayersSort
+                            <PlayersSortBtn
                                 onSort={onSort}
                                 sortKey={'REGION'}
                                 activeSortKey={sortKey}
                                 reverse={sortReverse}
                             >
                                 Region
-                            </PlayersSort>
+                            </PlayersSortBtn>
                         </th>
                         <th>
                             &nbsp;
-                            <PlayersSort
+                            <PlayersSortBtn
                                 onSort={onSort}
                                 sortKey={'RANK'}
                                 activeSortKey={sortKey}
                                 reverse={sortReverse}
                             >
                                 R
-                            </PlayersSort>&nbsp;&nbsp;
-                            <PlayersSort
+                            </PlayersSortBtn>&nbsp;&nbsp;
+                            <PlayersSortBtn
                                 onSort={onSort}
                                 sortKey={'NAME'}
                                 activeSortKey={sortKey}
                                 reverse={sortReverse}
                             >
                                 Name
-                            </PlayersSort>
+                            </PlayersSortBtn>
                         </th>
                         <th>
-                            <PlayersSort
+                            <PlayersSortBtn
                                 onSort={onSort}
                                 sortKey={'WINS'}
                                 activeSortKey={sortKey}
                                 reverse={sortReverse}
                             >
                                 W
-                            </PlayersSort>
+                            </PlayersSortBtn>
                         </th>
                         <th>
-                            <PlayersSort
+                            <PlayersSortBtn
                                 onSort={onSort}
                                 sortKey={'LOSSES'}
                                 activeSortKey={sortKey}
                                 reverse={sortReverse}
                             >
                                 L
-                            </PlayersSort>
+                            </PlayersSortBtn>
                         </th>
                         <th>
-                            <PlayersSort
+                            <PlayersSortBtn
                                 onSort={onSort}
                                 sortKey={'WINRATE'}
                                 activeSortKey={sortKey}
                                 reverse={sortReverse}
                             >
                                 WR
-                            </PlayersSort>
+                            </PlayersSortBtn>
                         </th>
                         <th>op.gg</th>
                         <th>lolking</th>
