@@ -1,0 +1,20 @@
+(version 1.0)
+(allow default)
+
+(deny file-write*
+  (subpath "/"))
+
+(allow file-write*
+  (literal "/dev/null")
+
+  ;
+
+  ; $cur__target_dir
+  (subpath "$ESY_EJECT__STORE/b/reason_cli-3.0.4-99f98981")
+
+  ; $cur__install
+  (subpath "$ESY_EJECT__STORE/s/reason_cli-3.0.4-99f98981")
+
+  ; config.allowFileWrite
+  (subpath "$TMPDIR") (subpath "$TMPDIR_GLOBAL")
+)

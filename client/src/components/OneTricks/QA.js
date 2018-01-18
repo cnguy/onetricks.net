@@ -14,7 +14,7 @@ function aStr(a) {
   return "A: " + a;
 }
 
-function make(question, answer) {
+function make(question, answer, _) {
   var newrecord = component.slice();
   newrecord[/* render */9] = (function () {
       return React.createElement("div", {
@@ -28,15 +28,8 @@ function make(question, answer) {
   return newrecord;
 }
 
-var $$default = ReasonReact.wrapReasonForJs(component, (function (jsProps) {
-        return make(jsProps.question, jsProps.answer);
-      }));
-
 exports.component = component;
 exports.qStr      = qStr;
 exports.aStr      = aStr;
 exports.make      = make;
-exports.$$default = $$default;
-exports.default   = $$default;
-exports.__esModule= true;
 /* component Not a pure module */

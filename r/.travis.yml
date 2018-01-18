@@ -1,0 +1,24 @@
+language: node_js
+os:
+  - linux
+  - osx
+compiler:
+  - gcc
+node_js:
+  - "8"
+  - "6"
+# https://docs.travis-ci.com/user/languages/javascript-with-nodejs/#Node.js-v4-(or-io.js-v3)-compiler-requirements
+install:
+  - npm install --global esy@next
+  - make build-release
+  - npm install --global ./_release/*
+env:
+  - CXX=g++-4.8 TYPE=dev
+  - CXX=g++-4.8 TYPE=pack
+  - CXX=g++-4.8 TYPE=bin
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
