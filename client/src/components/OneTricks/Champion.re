@@ -1,6 +1,6 @@
 let component = ReasonReact.statelessComponent("Champion");
 
-let make = (~name, ~number, ~handleImageLoad) => {
+let make = (~name, ~number, ~handleImageLoad, _children) => {
   ...component,
   render: _self => {
     let len = String.length(string_of_int(number));
@@ -24,12 +24,3 @@ let make = (~name, ~number, ~handleImageLoad) => {
     </div>;
   }
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~name=jsProps##name,
-      ~number=jsProps##number,
-      ~handleImageLoad=jsProps##handleImageLoad
-    )
-  );

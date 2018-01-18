@@ -8,7 +8,7 @@ var ReasonReact = require('reason-react/src/ReasonReact.js')
 
 var component = ReasonReact.statelessComponent('Champion')
 
-function make(name, number, handleImageLoad) {
+function make(name, number, handleImageLoad, _) {
     var newrecord = component.slice()
     newrecord[/* render */ 9] = function() {
         var len = Pervasives.string_of_int(number).length
@@ -47,13 +47,6 @@ function make(name, number, handleImageLoad) {
     return newrecord
 }
 
-var $$default = ReasonReact.wrapReasonForJs(component, function(jsProps) {
-    return make(jsProps.name, jsProps.number, jsProps.handleImageLoad)
-})
-
 exports.component = component
 exports.make = make
-exports.$$default = $$default
-exports.default = $$default
-exports.__esModule = true
 /* component Not a pure module */

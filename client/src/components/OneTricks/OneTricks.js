@@ -332,13 +332,18 @@ const generateChampPaneUtility = ({
 
 const createChampPane = ({ getPlayers, handleImageLoad }: PropTypes) => (
     arr: Array<Array<any>>,
-): React$Element<any> => (
-    <ChampionPane
-        champions={arr}
-        getPlayers={getPlayers}
-        handleImageLoad={handleImageLoad}
-    />
-)
+): React$Element<any> => {
+    console.log('mark')
+    console.log(arr)
+    console.log(arr.map(el => el[0]))
+    return (
+        <ChampionPane
+            champions={arr}
+            getPlayers={getPlayers}
+            handleImageLoad={handleImageLoad}
+        />
+    )
+}
 
 const forcePlayersUpdate = ({ fetchPlayers }: PropTypes) => (
     args: regionType | Array<regionType>,
