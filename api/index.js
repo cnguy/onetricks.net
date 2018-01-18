@@ -27,22 +27,13 @@ import { setInterval } from 'timers'
 
 app.set('port', process.env.PORT || 3001)
 
-app.use(function(req, res, next) {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header(
-        'Access-Control-Allow-Headers',
-        'Origin, X-Requested-With, Content-Type, Accept',
-    )
-    next()
-})
-
 app.get('/all', (req, res, next) => {
     const multiple = req.query.multiple || false
 
     if (multiple) {
         const _regions = req.query.region.split(',') || null
 
-        if (regions) {
+        if (_regions) {
             Player.find({ region: { $in: _regions } }, (err, players) => {
                 if (err) return next(err)
                 res.json(players)
@@ -71,7 +62,7 @@ app.get('/masters', (req, res) => {
     if (multiple) {
         const _regions = req.query.region.split(',') || null
 
-        if (regions) {
+        if (_regions) {
             Player.find({ region: { $in: _regions } }, (err, players) => {
                 if (err) return next(err)
                 res.json(players)
@@ -100,7 +91,7 @@ app.get('/challengers', (req, res) => {
     if (multiple) {
         const _regions = req.query.region.split(',') || null
 
-        if (regions) {
+        if (_regions) {
             Player.find({ region: { $in: _regions } }, (err, players) => {
                 if (err) return next(err)
                 res.json(players)
