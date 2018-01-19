@@ -12,7 +12,7 @@ let make = (~champions, ~getPlayers, ~handleImageLoad) => {
                 className="champ-open-links fade-in"
                 key=championName
                 href="#"
-                onClick=(_event => getPlayers(champions, championName))>
+                onClick=(_event => getPlayers((champions, championName)))>
                 <Champion
                   name=championName
                   number=(Array.length(players))

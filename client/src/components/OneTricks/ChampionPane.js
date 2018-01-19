@@ -21,7 +21,10 @@ function make(champions, getPlayers, handleImageLoad) {
                                     className: "champ-open-links fade-in",
                                     href: "#",
                                     onClick: (function () {
-                                        return Curry._2(getPlayers, champions, championName);
+                                        return Curry._1(getPlayers, /* tuple */[
+                                                    champions,
+                                                    championName
+                                                  ]);
                                       })
                                   }, ReasonReact.element(/* Some */[championName], /* None */0, Champion.make(championName, param[1].length, handleImageLoad, /* array */[])));
                       }), champions));
