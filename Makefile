@@ -1,8 +1,13 @@
 run:
 	docker-compose up --build;
 
+run-prod:
+	docker-compose -f docker-compose.prod.yml pull;\
+	docker-compose -f docker-compose.prod.yml up --build;
+
 deploy-digital-ocean:
-	scp -r docker-compose.prod.yml root@104.131.26.226:/root;
+	scp -r docker-compose.prod.yml root@104.131.26.226:/root;\
+	scp -r Makefile root@104.131.26.226:/root;
 
 deploy-static:
 	cd client;\

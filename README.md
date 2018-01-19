@@ -18,6 +18,20 @@ Note that this codebase is also very old, and my main goal now that I finished b
 
 ```make run # docker-compose up --build```
 
+# Deployment
+
+## DigitalOcean
+
+```sh
+make deploy-digital-ocean
+```
+
+In DigitalOcean console:
+
+```sh
+make run-prod
+```
+
 # Overview
 
 This web application is now comprised of five components:
