@@ -15,11 +15,11 @@ const Player = mongoose.model('Player')
 if (process.env.NODE_ENV === 'development') {
     mongoose.connect('mongodb://mongo/one-tricks')
 } else {
-    mongoose.connect(
-        `mongodb://${process.env.MONGO_USER}:${
-            process.env.MONGO_PASS
-        }@ds161029.mlab.com:61029/${process.env.MONGO_USER}`,
-    )
+    try {
+        mongoose.connect(process.env.MONGO_URI)
+    } catch (ex) {
+        console.error("exception..:", ex)
+    }
 }
 
 import generator from './OneTricksGenerator'
