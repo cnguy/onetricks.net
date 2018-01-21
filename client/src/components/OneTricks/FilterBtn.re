@@ -1,6 +1,6 @@
 let component = ReasonReact.statelessComponent("FilterBtn");
 
-let make = (~onClick, ~active, ~children) => {
+let make = (~onClick, ~active, children) => {
   ...component,
   render: _self => {
     let cond = List.mem(String.lowercase(children), Array.to_list(active));
@@ -11,12 +11,3 @@ let make = (~onClick, ~active, ~children) => {
     </button>;
   }
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~onClick=jsProps##onClick,
-      ~active=jsProps##active,
-      ~children=jsProps##children
-    )
-  );

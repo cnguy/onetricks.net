@@ -15,5 +15,6 @@
       "module": "commonjs",
       "in-source": true
     },
+    "suffix": ".bs.js",
     "refmt": 3
   }

@@ -33,11 +33,11 @@ import {
     sortReverseSelector,
 } from '../../selectors'
 
-import ChampionPane from './ChampionPane'
-import Copyright from './Copyright'
-import FAQ from './FAQ'
-import FilterRegion from './FilterRegion'
-import Loader from './Loader'
+import ChampionPane from './ChampionPane.bs'
+import Copyright from './Copyright.bs'
+import FAQ from './FAQ.bs'
+import FilterRegion from './FilterRegion.bs'
+import Loader from './Loader.bs'
 import PlayersView from './PlayersView'
 
 import FILTERS from '../../helpers/filters'

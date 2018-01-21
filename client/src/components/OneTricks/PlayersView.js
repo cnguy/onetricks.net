@@ -2,17 +2,17 @@
 
 import React from 'react'
 
-import ChampIcon from './ChampIcon'
-import PlayersSortBtn from './PlayersSortBtn'
+import ChampIcon from './ChampIcon.bs'
+import PlayersSortBtn from './PlayersSortBtn.bs'
 import Sorts from '../../helpers/sorts'
-import WinRate from './WinRate'
+import WinRate from './WinRate.bs'
 import PlayerRow from './PlayerRow'
 //import PlayerRowNew from './PlayerRowReSave' // why can I not import this simple file?
 
 import type {
     player as playerType,
-        sortKey as sortKeyType,
-        winRateStats as winRateStatsType,
+    sortKey as sortKeyType,
+    winRateStats as winRateStatsType,
 } from '../../constants/flowTypes'
 
 const getOverallWinRate = (players: Array<playerType>): winRateStatsType =>
@@ -28,8 +28,8 @@ const renderOverallWinrate = ({
     wins,
     losses,
 }: winRateStatsType): React$Element<any> => (
-        <WinRate wins={wins} losses={losses} />
-    )
+    <WinRate wins={wins} losses={losses} />
+)
 
 type PropTypes = {
     players: Array<playerType>,

@@ -24,3 +24,4 @@ client/lib/bs/**/.ninja*
 r
 client/build
 docker-compose.prod.yml
+*bs.js
