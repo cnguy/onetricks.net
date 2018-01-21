@@ -55,19 +55,19 @@ import REGIONS_TEXT from '../../constants/regionsText'
 
 import type {
     advFilter as advFilterType,
-        merged as mergedType,
-        players as playersType,
-        region as regionType,
-        resetSearchKey as resetSearchKeyType,
-        searchKey as searchKeyType,
-        setSearchKey as setSearchKeyType,
-        setSortKey as setSortKeyType,
-        setSortReverse as setSortReverseType,
-        sortKey as sortKeyType,
-        sortReverse as sortReverseType,
-        state as stateType,
-        toggleAdvancedFilter as toggleAdvancedFilterType,
-        toggleMerge as toggleMergeType,
+    merged as mergedType,
+    players as playersType,
+    region as regionType,
+    resetSearchKey as resetSearchKeyType,
+    searchKey as searchKeyType,
+    setSearchKey as setSearchKeyType,
+    setSortKey as setSortKeyType,
+    setSortReverse as setSortReverseType,
+    sortKey as sortKeyType,
+    sortReverse as sortReverseType,
+    state as stateType,
+    toggleAdvancedFilter as toggleAdvancedFilterType,
+    toggleMerge as toggleMergeType,
 } from '../../constants/flowTypes'
 
 let numOfImagesLeft = 0 // Performance :)
@@ -172,12 +172,12 @@ const togglePane = ({
     setSortKey,
     setSortReverse,
 }: PropTypes) => () =>
-        executeCollection(
-            () => setShowChamps(!showChamps),
-            () => resetSearchKey(),
-            () => setSortKey('NONE'),
-            () => setSortReverse(false),
-        )
+    executeCollection(
+        () => setShowChamps(!showChamps),
+        () => resetSearchKey(),
+        () => setSortKey('NONE'),
+        () => setSortReverse(false),
+    )
 
 const handleToggleAdvancedFilter = ({
     advFilter,
@@ -185,18 +185,18 @@ const handleToggleAdvancedFilter = ({
     region,
     setRegions,
 }: PropTypes) => () =>
-        executeConditionalCollection(
-            {
-                cond: advFilter,
-                onTrue: () => setRegions([]),
-            },
-            {
-                cond: region === 'all',
-                onTrue: () => setRegions(DEFAULT_REGIONS.slice()),
-                onFalse: () => setRegions([region]),
-            },
-            toggleAdvancedFilter(),
-        )
+    executeConditionalCollection(
+        {
+            cond: advFilter,
+            onTrue: () => setRegions([]),
+        },
+        {
+            cond: region === 'all',
+            onTrue: () => setRegions(DEFAULT_REGIONS.slice()),
+            onFalse: () => setRegions([region]),
+        },
+        toggleAdvancedFilter(),
+    )
 
 const onSort = ({
     sortKey,
@@ -204,10 +204,10 @@ const onSort = ({
     setSortKey,
     setSortReverse,
 }: PropTypes) => (key: sortKeyType) =>
-        executeCollection(
-            () => setSortKey(key),
-            () => setSortReverse(key === sortKey && !sortReverse),
-        )
+    executeCollection(
+        () => setSortKey(key),
+        () => setSortReverse(key === sortKey && !sortReverse),
+    )
 
 const handleImageLoad = ({ setImagesLoaded }: PropTypes) => () => {
     if (--numOfImagesLeft === 0) {
@@ -221,7 +221,7 @@ const renderSpinner = ({ imagesLoaded }: PropTypes) => () =>
 
 const renderEmptyResults = ({ searchKey }: PropTypes) => (): React$Element<
     any,
-    > | null =>
+> | null =>
     renderOnCondition(
         searchKey,
         <div className="empty-results">No champions found.</div>,
@@ -238,18 +238,18 @@ const generateSelectMenu = ({
     region,
     setRegionFilter,
 }: PropTypes) => (): React$Element<any> | null =>
-        // This select menu shouldn't be created if multiple regions is enabled.
-        renderOnCondition(
-            !advFilter,
-            <select id="region" onChange={setRegionFilter} value={region}>
-                <option value="all">All</option>
-                {DEFAULT_REGIONS.map((item, index) => (
-                    <option value={item} key={index}>
-                        {item.toUpperCase()}
-                    </option>
-                ))}
-            </select>,
-        )
+    // This select menu shouldn't be created if multiple regions is enabled.
+    renderOnCondition(
+        !advFilter,
+        <select id="region" onChange={setRegionFilter} value={region}>
+            <option value="all">All</option>
+            {DEFAULT_REGIONS.map((item, index) => (
+                <option value={item} key={index}>
+                    {item.toUpperCase()}
+                </option>
+            ))}
+        </select>,
+    )
 
 const fetchPlayers = ({ makeCompact }: PropTypes) => (
     args: regionType | Array<regionType>,
@@ -284,61 +284,61 @@ const generateChampPaneUtility = ({
     handleToggleAdvancedFilter,
     generateSelectMenu,
 }: PropTypes) => () =>
-        renderOnCondition(
-            showChamps,
-            <div className="champs-pane-utility">
-                <div className="instructions flash">
-                    Click a Champ's Icon to Get Links to the One Trick Ponies'
+    renderOnCondition(
+        showChamps,
+        <div className="champs-pane-utility">
+            <div className="instructions flash">
+                Click a Champ's Icon to Get Links to the One Trick Ponies'
                 Profiles
             </div>
-                <div className="merged-input">
-                    <button className="merge-sep-button" onClick={toggleMerge}>
-                        <span className="merge-sep-text">
-                            <span className="merge-sep-action">
-                                {merged ? 'Separate' : 'Combine'}
-                            </span>
+            <div className="merged-input">
+                <button className="merge-sep-button" onClick={toggleMerge}>
+                    <span className="merge-sep-text">
+                        <span className="merge-sep-action">
+                            {merged ? 'Separate' : 'Combine'}
                         </span>
-                    </button>
-                    {generateSelectMenu()}
-                    <input
-                        className="filter-champs"
-                        type="text"
-                        onChange={onChange}
-                        value={searchKey}
-                        placeholder="champ name filter"
-                    />
-                    <span className="clear-input" onClick={resetSearchKey}>
-                        &#10007;
+                    </span>
+                </button>
+                {generateSelectMenu()}
+                <input
+                    className="filter-champs"
+                    type="text"
+                    onChange={onChange}
+                    value={searchKey}
+                    placeholder="champ name filter"
+                />
+                <span className="clear-input" onClick={resetSearchKey}>
+                    &#10007;
                 </span>
-                </div>
-                <div className="multiple-filter">
-                    {!advFilter ? (
-                        <div
-                            className="adv-filtering-open"
-                            onClick={handleToggleAdvancedFilter}
-                        >
-                            Multiple Regions
+            </div>
+            <div className="multiple-filter">
+                {!advFilter ? (
+                    <div
+                        className="adv-filtering-open"
+                        onClick={handleToggleAdvancedFilter}
+                    >
+                        Multiple Regions
                     </div>
-                    ) : (
-                            <FilterRegion
-                                toggleRegion={addRegion}
-                                toggleAdvFilter={handleToggleAdvancedFilter}
-                                regions={regions}
-                            />
-                        )}
-                </div>
-            </div>,
-        )
+                ) : (
+                    <FilterRegion
+                        toggleRegion={addRegion}
+                        toggleAdvFilter={handleToggleAdvancedFilter}
+                        regions={regions}
+                    />
+                )}
+            </div>
+        </div>,
+    )
 
 const createChampPane = ({ getPlayers, handleImageLoad }: PropTypes) => (
     arr: Array<Array<any>>,
 ): React$Element<any> => (
-        <ChampionPane
-            champions={arr}
-            getPlayers={getPlayers}
-            handleImageLoad={handleImageLoad}
-        />
-    )
+    <ChampionPane
+        champions={arr}
+        getPlayers={getPlayers}
+        handleImageLoad={handleImageLoad}
+    />
+)
 
 const forcePlayersUpdate = ({ fetchPlayers }: PropTypes) => (
     args: regionType | Array<regionType>,
@@ -354,79 +354,79 @@ const createChampPanesHolder = ({
     renderEmptyResults,
     createChampPane,
 }: PropTypes) => (
-        challengers: playersType,
-        masters: playersType,
-        all: playersType,
-    ) => {
-        const regionDisplayText = REGIONS_TEXT[region]
-        const mulRegionsDisplayText =
-            regions.length === DEFAULT_REGIONS.length
-                ? 'All Regions'
-                : `${regions.join(', ').toUpperCase()} Server(s)`
+    challengers: playersType,
+    masters: playersType,
+    all: playersType,
+) => {
+    const regionDisplayText = REGIONS_TEXT[region]
+    const mulRegionsDisplayText =
+        regions.length === DEFAULT_REGIONS.length
+            ? 'All Regions'
+            : `${regions.join(', ').toUpperCase()} Server(s)`
 
-        return (
-            <div style={{ display: setDisplayValue() }}>
-                {renderOnCondition(
-                    advFilter && regions.length === 0,
-                    <div className="empty-results">No region is selected.</div>,
-                )}
-                {showChamps ? ( // eslint-disable-line no-nested-ternary
-                    !merged ? (
-                        <div className="content-pane merged-pane">
-                            <div className="rank-pane challengers-pane">
-                                {renderOnCondition(
-                                    challengers.length === 0 &&
+    return (
+        <div style={{ display: setDisplayValue() }}>
+            {renderOnCondition(
+                advFilter && regions.length === 0,
+                <div className="empty-results">No region is selected.</div>,
+            )}
+            {showChamps ? ( // eslint-disable-line no-nested-ternary
+                !merged ? (
+                    <div className="content-pane merged-pane">
+                        <div className="rank-pane challengers-pane">
+                            {renderOnCondition(
+                                challengers.length === 0 &&
                                     masters.length === 0,
-                                    renderEmptyResults(),
-                                )}
-                                {renderOnCondition(
-                                    challengers.length > 0,
-                                    <h5 className="rank-header">
-                                        Challenger One Trick Ponies in{' '}
-                                        {advFilter
-                                            ? mulRegionsDisplayText
-                                            : regionDisplayText}
-                                    </h5>,
-                                )}
-                                {createChampPane(challengers)}
-                            </div>
-                            <div className="rank-pane masters-pane">
-                                {masters.length > 0 ? (
-                                    <h5 className="rank-header">
-                                        Masters One Trick Ponies in{' '}
-                                        {advFilter
-                                            ? mulRegionsDisplayText
-                                            : regionDisplayText}
-                                    </h5>
-                                ) : (
-                                        ''
-                                    )}
-                                {createChampPane(masters)}
-                            </div>
+                                renderEmptyResults(),
+                            )}
+                            {renderOnCondition(
+                                challengers.length > 0,
+                                <h5 className="rank-header">
+                                    Challenger One Trick Ponies in{' '}
+                                    {advFilter
+                                        ? mulRegionsDisplayText
+                                        : regionDisplayText}
+                                </h5>,
+                            )}
+                            {createChampPane(challengers)}
                         </div>
-                    ) : (
-                            <div className="content-pane all-pane">
-                                <div className="rank-pane">
-                                    {all.length > 0 ? (
-                                        <h5 className="rank-header">
-                                            Challenger/Master One Trick Ponies in{' '}
-                                            {advFilter
-                                                ? mulRegionsDisplayText
-                                                : regionDisplayText}
-                                        </h5>
-                                    ) : (
-                                            renderEmptyResults()
-                                        )}
-                                    {createChampPane(all)}
-                                </div>
-                            </div>
-                        )
+                        <div className="rank-pane masters-pane">
+                            {masters.length > 0 ? (
+                                <h5 className="rank-header">
+                                    Masters One Trick Ponies in{' '}
+                                    {advFilter
+                                        ? mulRegionsDisplayText
+                                        : regionDisplayText}
+                                </h5>
+                            ) : (
+                                ''
+                            )}
+                            {createChampPane(masters)}
+                        </div>
+                    </div>
                 ) : (
-                        ''
-                    )}
-            </div>
-        )
-    }
+                    <div className="content-pane all-pane">
+                        <div className="rank-pane">
+                            {all.length > 0 ? (
+                                <h5 className="rank-header">
+                                    Challenger/Master One Trick Ponies in{' '}
+                                    {advFilter
+                                        ? mulRegionsDisplayText
+                                        : regionDisplayText}
+                                </h5>
+                            ) : (
+                                renderEmptyResults()
+                            )}
+                            {createChampPane(all)}
+                        </div>
+                    </div>
+                )
+            ) : (
+                ''
+            )}
+        </div>
+    )
+}
 
 const enhance = compose(
     connect(

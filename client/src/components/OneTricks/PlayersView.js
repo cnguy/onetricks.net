@@ -3,10 +3,11 @@
 import React from 'react'
 
 import ChampIcon from './ChampIcon'
-import PlayerRow from './PlayerRow'
 import PlayersSortBtn from './PlayersSortBtn'
 import Sorts from '../../helpers/sorts'
-import WinRate from './formatters/WinRate'
+import WinRate from './WinRate'
+import PlayerRow from './PlayerRow'
+// import PlayerRowNew from './PlayerRowReSave' // why can I not import this simple file?
 
 import type {
     player as playerType,

@@ -8,9 +8,8 @@
       "reason-js"
     ],
     "sources": [
-      {
-        "dir": "src/components/OneTricks"
-      }
+      "src/components/OneTricks",
+      "src/helpers"
     ],
     "package-specs": {
       "module": "commonjs",

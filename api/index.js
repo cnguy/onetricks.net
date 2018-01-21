@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
     try {
         mongoose.connect(process.env.MONGO_URI)
     } catch (ex) {
-        console.error("exception..:", ex)
+        console.error('exception..:', ex)
     }
 }
 

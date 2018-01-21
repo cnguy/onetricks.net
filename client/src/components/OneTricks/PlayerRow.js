@@ -2,7 +2,7 @@
 
 import React from 'react'
 
-import WinRate from './formatters/WinRate'
+import WinRate from './WinRate'
 
 import RANKS from '../../constants/ranks'
 
