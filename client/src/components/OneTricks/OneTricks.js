@@ -490,10 +490,7 @@ const enhance = compose(
             }: PropTypes = this.props
 
             const equal =
-                prevProps.advFilter === advFilter &&
-                prevProps.regions === regions &&
-                prevProps.region === region &&
-                prevProps.showChamps === showChamps
+                prevProps.regions === regions && prevProps.region === region
 
             if (!equal) {
                 forcePlayersUpdate(advFilter ? regions : region)
