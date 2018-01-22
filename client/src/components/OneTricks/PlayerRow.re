@@ -22,7 +22,7 @@ let generateOpGGLink = (region, name) =>
   if (region == "kr") {
     "http://www.op.gg/summoner/userName=" ++ name;
   } else {
-    "https://" ++ region ++ "op.gg/summoner/userName=" ++ name;
+    "https://" ++ region ++ ".op.gg/summoner/userName=" ++ name;
   };
 
 let generateLink = (name, region, opgg, id) =>
@@ -39,9 +39,8 @@ let make = (~player: Types.player, _children) => {
       <td className="players-table-td">
         (ReasonReact.stringToElement(String.uppercase(player##region)))
       </td>
+      <td className="players-table-td"> (getRankImage(player##rank)) </td>
       <td className="players-table-td">
-        (getRankImage(player##rank))
-        (ReasonReact.stringToElement(" "))
         <a
           className="table-player-link"
           href=(
@@ -54,13 +53,8 @@ let make = (~player: Types.player, _children) => {
           )
           target="_blank"
           rel="noopener noreferrer">
-          (ReasonReact.stringToElement(player##region))
+          (ReasonReact.stringToElement(player##name))
         </a>
-      </td>
-      <td
-        className="players-table-td"
-        style=(ReactDOMRe.Style.make(~color="#98fb98", ()))>
-        (ReasonReact.stringToElement(player##name))
       </td>
       <td
         className="players-table-td"

@@ -21,7 +21,7 @@ let make = (~onSort, ~sortKey, ~sortReverse, ~renderableList, _children) => {
               sortKey="RANK"
               activeSortKey=sortKey
               isReversed=sortReverse>
-              ..."Rank"
+              ..."R"
             </PlayersSortBtn>
           </th>
           <th className="players-table-th">
