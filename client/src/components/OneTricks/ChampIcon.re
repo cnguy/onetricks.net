@@ -11,7 +11,8 @@ let getIcon: string => string = [%bs.raw
 |}
 ];
 
-let make = (~name, ~mini, ~handleImageLoad, _children) => {
+let make =
+    (~name, ~mini, ~handleImageLoad: ReactEventRe.Image.t => unit, _children) => {
   ...component,
   render: _self => {
     let miniCN = if (mini) {"mini-"} else {""};

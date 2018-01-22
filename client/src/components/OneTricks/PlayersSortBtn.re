@@ -7,7 +7,7 @@ let grabTriString = (~sortKey, ~activeSortKey, ~isReversed) =>
     "";
   };
 
-let make = (~onSort, ~sortKey, ~activeSortKey, ~isReversed, ~children) => {
+let make = (~onSort, ~sortKey, ~activeSortKey, ~isReversed, children) => {
   ...component,
   render: _self => {
     let triString = grabTriString(~sortKey, ~activeSortKey, ~isReversed);
@@ -29,20 +29,9 @@ let make = (~onSort, ~sortKey, ~activeSortKey, ~isReversed, ~children) => {
         }
       );
     <a className=cn href="#" onClick=(_event => onSort(sortKey))>
-      children
+      (ReasonReact.stringToElement(children))
       (ReasonReact.stringToElement(" "))
       triangle
     </a>;
   }
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~onSort=jsProps##onSort,
-      ~sortKey=jsProps##sortKey,
-      ~activeSortKey=jsProps##activeSortKey,
-      ~isReversed=jsProps##reverse,
-      ~children=jsProps##children
-    )
-  );

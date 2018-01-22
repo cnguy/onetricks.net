@@ -3,22 +3,24 @@ let component = ReasonReact.statelessComponent("WinRate");
 let colorizeWinRate = (wr: float) => {
   let temp = wr;
   if (temp < 50.0) {
-    "#ff0000"
+    "#ff0000";
   } else if (temp < 55.0) {
-    "#ffffff"
+    "#ffffff";
   } else if (temp < 60.0) {
-    "#00ff00"
+    "#00ff00";
   } else if (temp < 65.0) {
-    "#00ccff"
+    "#00ccff";
   } else {
     "#ffa500";
-  }
+  };
 };
 
-let make = (~wins: float, ~losses: float, _children) => {
+let make = (~wins: int, ~losses: int, _children) => {
   ...component,
   render: _self => {
-    let winRate = wins /. (wins +. losses) *. 100.0;
+    let winsAsFloat = Pervasives.float_of_int(wins);
+    let lossesAsFloat = Pervasives.float_of_int(losses);
+    let winRate = winsAsFloat /. (winsAsFloat +. lossesAsFloat) *. 100.0;
     let coloredWinRate = colorizeWinRate(winRate);
     let style = ReactDOMRe.Style.make(~color=coloredWinRate, ());
     <span style>

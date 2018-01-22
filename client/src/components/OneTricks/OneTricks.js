@@ -38,7 +38,7 @@ import Copyright from './Copyright.bs'
 import FAQ from './FAQ.bs'
 import FilterRegion from './FilterRegion.bs'
 import Loader from './Loader.bs'
-import PlayersView from './PlayersView'
+import PlayersView from './PlayersView.bs'
 
 import FILTERS from '../../helpers/filters'
 import SORTS from '../../helpers/sorts'

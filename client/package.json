@@ -5,10 +5,10 @@
   "proxy": "http://one-tricks-api:3001/",
   "devDependencies": {
     "bs-platform": "^2.1.0",
+    "concurrently": "3.5.1",
     "enzyme": "^2.4.1",
     "react-addons-test-utils": "^15.4.0",
-    "react-scripts": "0.7.0",
-    "concurrently": "3.5.1"
+    "react-scripts": "1.0.8"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
