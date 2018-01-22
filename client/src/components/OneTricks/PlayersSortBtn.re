@@ -2,7 +2,7 @@ let component = ReasonReact.statelessComponent("PlayersSortBtn");
 
 let grabTriString = (~sortKey, ~activeSortKey, ~isReversed) =>
   if (sortKey === activeSortKey) {
-    if (isReversed) {"&#9650"} else {"&#9660"};
+    if (isReversed) {{js|&#9650;|js}} else {{js|&#9660;|js}};
   } else {
     "";
   };

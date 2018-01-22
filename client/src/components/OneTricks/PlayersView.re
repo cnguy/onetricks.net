@@ -27,8 +27,25 @@ let make =
     ) => {
   ...component,
   render: _self => {
-    let sortedList = Array.to_list(players);
-    let renderableList = List.map(player => <PlayerRow player />, sortedList);
+    let simpleList = Array.to_list(players);
+    let sortedList =
+      switch sortKey {
+      | "REGION" => Sorts.region(simpleList)
+      | "RANK" => Sorts.rank(simpleList)
+      | "NAME" => Sorts.name(simpleList)
+      | "WINS" => Sorts.wins(simpleList)
+      | "LOSSES" => Sorts.losses(simpleList)
+      | "WINRATE" => Sorts.winRate(simpleList)
+      | _ => simpleList
+      };
+    Js.log(sortReverse);
+    let finalList =
+      if (sortReverse) {
+        List.rev(sortedList);
+      } else {
+        sortedList;
+      };
+    let renderableList = List.map(player => <PlayerRow player />, finalList);
     let scores = getOverallWinRate(Array.to_list(players));
     let wins = scores.wins;
     let losses = scores.losses;
@@ -38,11 +55,7 @@ let make =
           (ReasonReact.stringToElement("<< Back to Champions"))
         </a>
         <div className="players-table-header flash">
-          (
-            ReasonReact.stringToElement(
-              string_of_int(List.length(Array.to_list(players)))
-            )
-          )
+          (ReasonReact.stringToElement(string_of_int(List.length(finalList))))
           (ReasonReact.stringToElement(" "))
           <ChampIcon
             name=champ
