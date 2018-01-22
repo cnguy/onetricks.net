@@ -1,48 +1,52 @@
 let component = ReasonReact.statelessComponent("FilterRegion");
 
+let allRegions: array(string) = [|
+  "na",
+  "kr",
+  "euw",
+  "eune",
+  "lan",
+  "las",
+  "br",
+  "jp",
+  "tr",
+  "ru",
+  "oce"
+|];
+
+let regionsSplitPoint = 6;
+
+let firstSetOfRegions = Array.sub(allRegions, 0, regionsSplitPoint);
+
+let secondSetOfRegions = Array.sub(allRegions, regionsSplitPoint, Array.length(allRegions) - regionsSplitPoint);
+
 let make = (~toggleRegion, ~toggleAdvFilter, ~regions) => {
   ...component,
-  render: _self =>
+  render: _self => {
+    let makeRow = (rs, extra) => {
+      let buttons =
+        Array.map(
+          r =>
+            <FilterBtn key=r onClick=(_event => toggleRegion(r)) active=regions>
+              ...(String.uppercase(r))
+            </FilterBtn>,
+          rs
+        );
+      <div className="filter-row">
+        (ReasonReact.arrayToElement(buttons))
+        extra
+      </div>;
+    };
+    let closeButton =
+      <button
+        className="close-adv-filter" onClick=(_event => toggleAdvFilter())>
+        (ReasonReact.stringToElement("Close"))
+      </button>;
     <div className="filter-bar">
-      <div className="filter-row">
-        <FilterBtn onClick=(_event => toggleRegion("na")) active=regions>
-          ..."NA"
-        </FilterBtn>
-        <FilterBtn onClick=(_event => toggleRegion("kr")) active=regions>
-          ..."KR"
-        </FilterBtn>
-        <FilterBtn onClick=(_event => toggleRegion("euw")) active=regions>
-          ..."EUW"
-        </FilterBtn>
-        <FilterBtn onClick=(_event => toggleRegion("eune")) active=regions>
-          ..."EUNE"
-        </FilterBtn>
-        <FilterBtn onClick=(_event => toggleRegion("lan")) active=regions>
-          ..."LAN"
-        </FilterBtn>
-        <FilterBtn onClick=(_event => toggleRegion("las")) active=regions>
-          ..."LAS"
-        </FilterBtn>
-      </div>
-      <div className="filter-row">
-        <FilterBtn onClick=(_event => toggleRegion("br")) active=regions>
-          ..."BR"
-        </FilterBtn>
-        <FilterBtn onClick=(_event => toggleRegion("jp")) active=regions>
-          ..."JP"
-        </FilterBtn>
-        <FilterBtn onClick=(_event => toggleRegion("ru")) active=regions>
-          ..."RU"
-        </FilterBtn>
-        <FilterBtn onClick=(_event => toggleRegion("oce")) active=regions>
-          ..."OCE"
-        </FilterBtn>
-        <button
-          className="close-adv-filter" onClick=(_event => toggleAdvFilter())>
-          (ReasonReact.stringToElement("Close"))
-        </button>
-      </div>
-    </div>
+      (makeRow(firstSetOfRegions, ReasonReact.nullElement))
+      (makeRow(secondSetOfRegions, closeButton))
+    </div>;
+  }
 };
 
 let default =
