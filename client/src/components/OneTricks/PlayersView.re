@@ -38,7 +38,6 @@ let make =
       | "WINRATE" => Sorts.winRate(simpleList)
       | _ => simpleList
       };
-    Js.log(sortReverse);
     let finalList =
       if (sortReverse) {
         List.rev(sortedList);

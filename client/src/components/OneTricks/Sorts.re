@@ -57,7 +57,7 @@ let winRatePredicate = (a: Types.player, b) => {
   let lossesBF = Pervasives.float_of_int(b##losses);
   let winRateA = winsAF /. (winsAF +. lossesAF);
   let winRateB = winsBF /. (winsBF +. lossesBF);
-  let res = winRateA -. winRateB;
+  let res = winRateB -. winRateA;
   if (res < 0.0) {
     (-1);
   } else if (res == 0.0) {

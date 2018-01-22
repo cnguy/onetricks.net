@@ -9,11 +9,12 @@ let mastersIcon: string = [%bs.raw
 ];
 
 let getRankIcon = (~rank) =>
-  if (rank == 'c') {
+  if (rank == "c") {
     challengerIcon;
-  } else {
-    mastersIcon;
-  }; /* Obviously not good if we have multiple ranks. */
+  } else
+    {
+      mastersIcon;
+    } /* Obviously not good if we have multiple ranks. */;
 
 let getRankImage = rank =>
   <img className="player-rank-icon" src=(getRankIcon(~rank)) alt="rank" />;

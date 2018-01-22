@@ -4,7 +4,7 @@ type player = {
   "id": int,
   "losses": int,
   "name": string,
-  "rank": char,
+  "rank": string,
   "region": string,
   "wins": int,
   "_id": int
