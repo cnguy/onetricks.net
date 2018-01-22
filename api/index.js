@@ -27,10 +27,8 @@ import { setInterval } from 'timers'
 
 app.set('port', process.env.PORT || 3001)
 
-app.get('/all', (req, res, next) => {
-    const multiple = req.query.multiple || false
-
-    if (multiple) {
+app.get('all', (req, res, next) => {
+    if (req.query.multiple) {
         const _regions = req.query.region.split(',') || null
 
         if (_regions) {
@@ -43,72 +41,19 @@ app.get('/all', (req, res, next) => {
         const region = req.query.region || null
 
         if (region && region !== 'all') {
-            Player.find({ region }, (err, players) => {
-                if (err) return next(err)
-                res.json(players)
-            })
+            Player.find(
+                {
+                    region,
+                },
+                (err, players) => {
+                    if (err) return next(err)
+                    res.json(players)
+                },
+            )
         } else {
             Player.find((err, players) => {
                 if (err) return next(err)
                 res.json(players)
-            })
-        }
-    }
-})
-
-app.get('/masters', (req, res) => {
-    const multiple = req.query.multiple || false
-
-    if (multiple) {
-        const _regions = req.query.region.split(',') || null
-
-        if (_regions) {
-            Player.find({ region: { $in: _regions } }, (err, players) => {
-                if (err) return next(err)
-                res.json(players)
-            })
-        }
-    } else {
-        const region = req.query.region || null
-
-        if (region && region !== 'all') {
-            Player.find({ rank: 'm', region }, (err, masters, next) => {
-                if (err) return next(err)
-                res.json(masters)
-            })
-        } else {
-            Player.find({ rank: 'm' }, (err, masters, next) => {
-                if (err) return next(err)
-                res.json(masters)
-            })
-        }
-    }
-})
-
-app.get('/challengers', (req, res) => {
-    const multiple = req.query.multiple || false
-
-    if (multiple) {
-        const _regions = req.query.region.split(',') || null
-
-        if (_regions) {
-            Player.find({ region: { $in: _regions } }, (err, players) => {
-                if (err) return next(err)
-                res.json(players)
-            })
-        }
-    } else {
-        const region = req.query.region || null
-
-        if (region && region !== 'all') {
-            Player.find({ rank: 'c', region }, (err, challengers, next) => {
-                if (err) return next(err)
-                res.json(challengers)
-            })
-        } else {
-            Player.find({ rank: 'c' }, (err, challengers, next) => {
-                if (err) return next(err)
-                res.json(challengers)
             })
         }
     }
