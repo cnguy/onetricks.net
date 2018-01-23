@@ -53,24 +53,28 @@ let make =
     let wins = scores.wins;
     let losses = scores.losses;
     if (show) {
-      <div className="players-list-view fade-in">
-        <a className="go-back flash" href="#" onClick=goBack>
-          (ReasonReact.stringToElement("<< Back to Champions"))
-        </a>
-        <div className="players-table-header flash">
-          (ReasonReact.stringToElement(string_of_int(List.length(finalList))))
-          (ReasonReact.stringToElement(" "))
-          <ChampIcon
-            name=champ
-            mini=true
-            handleImageLoad=((_e: ReactEventRe.Image.t) => ())
-          />
-          (ReasonReact.stringToElement(" "))
-          (ReasonReact.stringToElement("One Trick Ponies"))
-          (ReasonReact.stringToElement(" "))
-          <WinRate wins losses />
+      <div className="table-view">
+        <div className="players-list-view fade-in">
+          <a className="go-back flash" href="#" onClick=goBack>
+            (ReasonReact.stringToElement("<< Back to Champions"))
+          </a>
+          <div className="players-table-header flash">
+            (
+              ReasonReact.stringToElement(string_of_int(List.length(finalList)))
+            )
+            (ReasonReact.stringToElement(" "))
+            <ChampIcon
+              name=champ
+              mini=true
+              handleImageLoad=((_e: ReactEventRe.Image.t) => ())
+            />
+            (ReasonReact.stringToElement(" "))
+            (ReasonReact.stringToElement("One Trick Ponies"))
+            (ReasonReact.stringToElement(" "))
+            <WinRate wins losses />
+          </div>
+          <PlayersTable renderableList onSort sortKey sortReverse />
         </div>
-        <PlayersTable renderableList onSort sortKey sortReverse />
       </div>;
     } else {
       ReasonReact.nullElement;

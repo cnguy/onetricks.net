@@ -37,6 +37,7 @@ import ChampionPane from './ChampionPane.bs'
 import Copyright from './Copyright.bs'
 import FAQ from './FAQ.bs'
 import FilterRegion from './FilterRegion.bs'
+import Header from './Header.bs'
 import Loader from './Loader.bs'
 import PlayersView from './PlayersView.bs'
 
@@ -579,44 +580,29 @@ const OneTricks = enhance(
             }
         }
 
-        if (sortedPlayers) {
-            return (
-                <div className="container">
-                    <div className="OneTricks">
-                        <h1 className="main-header">
-                            League of Legends One Trick Ponies
-                        </h1>
-                        <h2 className="caption">
-                            Jack of No Trades, Master of One
-                        </h2>
-                        <div className="table-view">
-                            <PlayersView
-                                players={players}
-                                goBack={togglePane}
-                                champ={champ}
-                                show={!showChamps}
-                                onSort={onSort}
-                                sortKey={sortKey}
-                                sortReverse={sortReverse}
-                            />
-                        </div>
-                        <div className="champs-pane fade-in">
-                            {generateChampPaneUtility()}
-                            {renderSpinner()}
-                            {createChampPanesHolder(
-                                _challengers,
-                                _masters,
-                                _all,
-                            )}
-                        </div>
+        return (
+            <div className="container">
+                <div className="OneTricks">
+                    <Header />
+                    <PlayersView
+                        players={players}
+                        goBack={togglePane}
+                        champ={champ}
+                        show={!showChamps}
+                        onSort={onSort}
+                        sortKey={sortKey}
+                        sortReverse={sortReverse}
+                    />
+                    <div className="champs-pane fade-in">
+                        {generateChampPaneUtility()}
+                        {renderSpinner()}
+                        {createChampPanesHolder(_challengers, _masters, _all)}
                     </div>
-                    <FAQ />
-                    <Copyright />
                 </div>
-            )
-        }
-
-        return <div>something went horribly wrong</div>
+                <FAQ />
+                <Copyright />
+            </div>
+        )
     },
 )
 
