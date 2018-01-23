@@ -176,7 +176,7 @@ const togglePane = ({
     executeCollection(
         () => setShowChamps(!showChamps),
         () => resetSearchKey(),
-        () => setSortKey('NONE'),
+        () => setSortKey('WINRATE'),
         () => setSortReverse(false),
     )
 
@@ -289,8 +289,8 @@ const generateChampPaneUtility = ({
         showChamps,
         <div className="champs-pane-utility">
             <div className="instructions flash">
-                Click a Champ's Icon to Get Links to the One Trick Ponies'
-                Profiles
+                Find the best champions to one trick to high ELO in Season 8
+                here. Click a champion icon to find the best one trick ponies!
             </div>
             <div className="merged-input">
                 <button className="merge-sep-button" onClick={toggleMerge}>
@@ -306,7 +306,7 @@ const generateChampPaneUtility = ({
                     type="text"
                     onChange={onChange}
                     value={searchKey}
-                    placeholder="champ name filter"
+                    placeholder=">> FILTER <<"
                 />
                 <span className="clear-input" onClick={resetSearchKey}>
                     &#10007;

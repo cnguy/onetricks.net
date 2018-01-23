@@ -3,7 +3,7 @@ const SET_SORT_REVERSE = 'one-tricks/playersView/SET_SORT_REVERSE'
 
 export default function reducer(
     state = {
-        sortKey: 'NONE',
+        sortKey: 'WINRATE',
         sortReverse: false,
     },
     action = {},
