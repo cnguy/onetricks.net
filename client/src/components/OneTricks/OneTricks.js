@@ -34,6 +34,7 @@ import {
 } from '../../selectors'
 
 import ChampionPane from './ChampionPane.bs'
+import ChampionSearch from './ChampionSearch.bs'
 import Copyright from './Copyright.bs'
 import FAQ from './FAQ.bs'
 import Header from './Header.bs'
@@ -301,16 +302,11 @@ const generateChampPaneUtility = ({
                     </span>
                 </button>
                 {generateSelectMenu()}
-                <input
-                    className="filter-champs"
-                    type="text"
+                <ChampionSearch
                     onChange={onChange}
                     value={searchKey}
-                    placeholder=">> FILTER <<"
+                    resetSearchKey={resetSearchKey}
                 />
-                <span className="clear-input" onClick={resetSearchKey}>
-                    &#10007;
-                </span>
             </div>
             <MultipleRegionFilter
                 isMultipleRegionFilterOn={advFilter}
