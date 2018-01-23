@@ -26,7 +26,7 @@
   "scripts": {
     "start": "react-scripts start",
     "dev": "concurrently \"yarn buckle:up\" \"yarn start\"",
-    "build": "react-scripts build",
+    "build": "mv -v ./node_modules/reason-react/lib/js/src/* ./node_modules/reason-react/src/;react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "buckle:up": "bsb -make-world -w",
