@@ -1,65 +1,39 @@
 let component = ReasonReact.statelessComponent("PlayersTable");
 
+let sortButtonsInfo = [
+  ("REGION", "Region"),
+  ("RANK", "R"),
+  ("NAME", "Name"),
+  ("WINS", "W"),
+  ("LOSSES", "L"),
+  ("WINRATE", "WR")
+];
+
 let make = (~onSort, ~sortKey, ~sortReverse, ~renderableList, _children) => {
   ...component,
   render: _self =>
     <table className="players-table">
       <thead className="players-table-thead">
         <tr className="players-table-tr">
-          <th className="players-table-th">
-            <PlayersSortBtn
-              onSort
-              sortKey="REGION"
-              activeSortKey=sortKey
-              isReversed=sortReverse>
-              ..."Region"
-            </PlayersSortBtn>
-          </th>
-          <th className="players-table-th">
-            <PlayersSortBtn
-              onSort
-              sortKey="RANK"
-              activeSortKey=sortKey
-              isReversed=sortReverse>
-              ..."R"
-            </PlayersSortBtn>
-          </th>
-          <th className="players-table-th">
-            <PlayersSortBtn
-              onSort
-              sortKey="NAME"
-              activeSortKey=sortKey
-              isReversed=sortReverse>
-              ..."Name"
-            </PlayersSortBtn>
-          </th>
-          <th className="players-table-th">
-            <PlayersSortBtn
-              onSort
-              sortKey="WINS"
-              activeSortKey=sortKey
-              isReversed=sortReverse>
-              ..."W"
-            </PlayersSortBtn>
-          </th>
-          <th className="players-table-th">
-            <PlayersSortBtn
-              onSort
-              sortKey="LOSSES"
-              activeSortKey=sortKey
-              isReversed=sortReverse>
-              ..."L"
-            </PlayersSortBtn>
-          </th>
-          <th className="players-table-th">
-            <PlayersSortBtn
-              onSort
-              sortKey="WINRATE"
-              activeSortKey=sortKey
-              isReversed=sortReverse>
-              ..."WR"
-            </PlayersSortBtn>
-          </th>
+          (
+            ReasonReact.arrayToElement(
+              Array.of_list(
+                List.map(
+                  ((key, displayText)) =>
+                    <th className="players-table-th">
+                      <PlayersSortBtn
+                        onSort
+                        sortKey=key
+                        activeSortKey=sortKey
+                        isReversed=sortReverse>
+                        ...displayText
+                      </PlayersSortBtn>
+                    </th>,
+                  sortButtonsInfo
+                )
+              )
+            )
+          )
           <th className="players-table-th">
             (ReasonReact.stringToElement("op.gg"))
           </th>
