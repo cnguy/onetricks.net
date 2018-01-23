@@ -36,9 +36,9 @@ import {
 import ChampionPane from './ChampionPane.bs'
 import Copyright from './Copyright.bs'
 import FAQ from './FAQ.bs'
-import FilterRegion from './FilterRegion.bs'
 import Header from './Header.bs'
 import Loader from './Loader.bs'
+import MultipleRegionFilter from './MultipleRegionsFilter.bs'
 import PlayersView from './PlayersView.bs'
 
 import FILTERS from '../../helpers/filters'
@@ -312,22 +312,12 @@ const generateChampPaneUtility = ({
                     &#10007;
                 </span>
             </div>
-            <div className="multiple-filter">
-                {!advFilter ? (
-                    <div
-                        className="adv-filtering-open"
-                        onClick={handleToggleAdvancedFilter}
-                    >
-                        Multiple Regions
-                    </div>
-                ) : (
-                    <FilterRegion
-                        toggleRegion={addRegion}
-                        toggleAdvFilter={handleToggleAdvancedFilter}
-                        regions={regions}
-                    />
-                )}
-            </div>
+            <MultipleRegionFilter
+                isMultipleRegionFilterOn={advFilter}
+                regions={regions}
+                toggleMultipleRegionFilter={handleToggleAdvancedFilter}
+                toggleRegion={addRegion}
+            />
         </div>,
     )
 

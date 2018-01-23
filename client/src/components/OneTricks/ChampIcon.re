@@ -26,14 +26,3 @@ let make =
     />;
   }
 };
-
-/* TODO: PlayersView is still in JS */
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~name=jsProps##name,
-      ~mini=jsProps##mini,
-      ~handleImageLoad=jsProps##handleImageLoad,
-      jsProps##children
-    )
-  );

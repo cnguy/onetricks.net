@@ -18,16 +18,22 @@ let regionsSplitPoint = 6;
 
 let firstSetOfRegions = Array.sub(allRegions, 0, regionsSplitPoint);
 
-let secondSetOfRegions = Array.sub(allRegions, regionsSplitPoint, Array.length(allRegions) - regionsSplitPoint);
+let secondSetOfRegions =
+  Array.sub(
+    allRegions,
+    regionsSplitPoint,
+    Array.length(allRegions) - regionsSplitPoint
+  );
 
-let make = (~toggleRegion, ~toggleAdvFilter, ~regions) => {
+let make = (~toggleRegion, ~toggleAdvFilter, ~regions, _children) => {
   ...component,
   render: _self => {
     let makeRow = (rs, extra) => {
       let buttons =
         Array.map(
           r =>
-            <FilterBtn key=r onClick=(_event => toggleRegion(r)) active=regions>
+            <FilterBtn
+              key=r onClick=(_event => toggleRegion(r)) active=regions>
               ...(String.uppercase(r))
             </FilterBtn>,
           rs
@@ -48,12 +54,3 @@ let make = (~toggleRegion, ~toggleAdvFilter, ~regions) => {
     </div>;
   }
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~toggleRegion=jsProps##toggleRegion,
-      ~toggleAdvFilter=jsProps##toggleAdvFilter,
-      ~regions=jsProps##regions
-    )
-  );

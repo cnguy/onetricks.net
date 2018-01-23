@@ -24,13 +24,11 @@ let make = (~wins: int, ~losses: int, _children) => {
     let coloredWinRate = colorizeWinRate(winRate);
     let style = ReactDOMRe.Style.make(~color=coloredWinRate, ());
     <span style>
-      (ReasonReact.stringToElement(String.sub(string_of_float(Pervasives.ceil(winRate)), 0, 2) ++ "%"))
+      (
+        ReasonReact.stringToElement(
+          String.sub(string_of_float(Pervasives.ceil(winRate)), 0, 2) ++ "%"
+        )
+      )
     </span>;
   }
 };
-
-/* For PlayersView.js */
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(~wins=jsProps##wins, ~losses=jsProps##losses, jsProps##children)
-  );
