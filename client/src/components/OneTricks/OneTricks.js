@@ -480,34 +480,18 @@ const enhance = compose(
             }: PropTypes = this.props
             forcePlayersUpdate(advFilter ? regions : region)
         },
-        componentDidUpdate(prevProps: PropTypes) {
-            const {
-                advFilter,
-                forcePlayersUpdate,
-                region,
-                regions,
-                showChamps,
-            }: PropTypes = this.props
-
-            const equal =
-                prevProps.regions === regions && prevProps.region === region
-
-            if (!equal) {
-                forcePlayersUpdate(advFilter ? regions : region)
-            }
-            // Perf.stop();
-            // Perf.printInclusive();
-            // Perf.printWasted();
-        },
     }),
 )
 
 const OneTricks = enhance(
     ({
         all,
+        advFilter,
         merged,
         players,
         champ,
+        region,
+        regions,
         searchKey,
         showChamps,
         sortKey,
@@ -518,13 +502,35 @@ const OneTricks = enhance(
         createChampPanesHolder,
         onSort,
     }: PropTypes) => {
+        let tmp = { ...all }
+        const keys = Object.keys(tmp)
+        if (advFilter) {
+            // regions
+            keys.forEach(key => {
+                tmp[key] = tmp[key].filter(
+                    el => regions.indexOf(el.region) !== -1,
+                )
+            })
+        } else {
+            // region
+            keys.forEach(key => {
+                if (region !== 'all')
+                    tmp[key] = tmp[key].filter(el => el.region === region)
+            })
+        }
+        keys.forEach(key => {
+            if (tmp[key].length === 0) {
+                delete tmp[key]
+            }
+        })
+
         let sortedPlayers = new Map()
 
-        for (const key of Object.keys(all)) {
-            sortedPlayers.set(key, all[key])
+        for (const key of Object.keys(tmp)) {
+            sortedPlayers.set(key, tmp[key])
         }
 
-        Object.keys(all).map(key => sortedPlayers.set(key, all[key]))
+        Object.keys(tmp).map(key => sortedPlayers.set(key, tmp[key]))
         sortedPlayers = new Map(SORTS.ONETRICKS([...sortedPlayers.entries()]))
 
         let _all = []

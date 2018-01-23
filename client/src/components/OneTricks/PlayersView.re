@@ -44,7 +44,11 @@ let make =
       } else {
         sortedList;
       };
-    let renderableList = List.map(player => <PlayerRow player />, finalList);
+    let renderableList =
+      List.map(
+        player => <PlayerRow key=(string_of_int(player##id)) player />,
+        finalList
+      );
     let scores = getOverallWinRate(Array.to_list(players));
     let wins = scores.wins;
     let losses = scores.losses;
