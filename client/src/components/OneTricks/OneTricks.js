@@ -25,7 +25,7 @@ import {
     sortReverseSelector,
 } from '../../selectors'
 
-import ChampionPane from './ChampionPane.bs'
+import ContentPane from './ContentPane.bs'
 import ChampionPaneUtilities from './ChampionPaneUtilities.bs'
 import Copyright from './Copyright.bs'
 import FAQ from './FAQ.bs'
@@ -63,8 +63,6 @@ const makeCompact = ({ imagesLoaded, showChamps, setAll }) => list => {
                 .getElementsByClassName('content-pane')[0]
                 .querySelectorAll('img').length
         })
-    } else if (showChamps && imagesLoaded) {
-        setAll(compList)
     }
 }
 
@@ -183,14 +181,6 @@ const generateChampPaneUtility = ({
     />
 )
 
-const createChampPane = ({ getPlayers, handleImageLoad }) => arr => (
-    <ChampionPane
-        champions={arr}
-        getPlayers={getPlayers}
-        handleImageLoad={handleImageLoad}
-    />
-)
-
 const forcePlayersUpdate = ({ fetchPlayers }) => args => fetchPlayers(args)
 
 const createChampPanesHolder = ({
@@ -201,75 +191,31 @@ const createChampPanesHolder = ({
     showChamps,
     setDisplayValue,
     renderEmptyResults,
-    createChampPane,
+    handleImageLoad,
+    getPlayers,
 }) => (challengers, masters, all) => {
     const regionDisplayText = REGIONS_TEXT[region]
     const mulRegionsDisplayText =
         regions.length === DEFAULT_REGIONS.length
             ? 'All Regions'
             : `${regions.join(', ').toUpperCase()} Server(s)`
+    const regionInfoText = advFilter ? mulRegionsDisplayText : regionDisplayText
 
     return (
-        <div style={{ display: setDisplayValue() }}>
-            {renderOnCondition(
-                advFilter && regions.length === 0,
-                <div className="empty-results">No region is selected.</div>,
-            )}
-            {showChamps ? ( // eslint-disable-line no-nested-ternary
-                !merged ? (
-                    <div className="content-pane merged-pane">
-                        <div className="rank-pane challengers-pane">
-                            {renderOnCondition(
-                                challengers.length === 0 &&
-                                    masters.length === 0,
-                                renderEmptyResults(),
-                            )}
-                            {renderOnCondition(
-                                challengers.length > 0,
-                                <h5 className="rank-header">
-                                    Challenger One Trick Ponies in{' '}
-                                    {advFilter
-                                        ? mulRegionsDisplayText
-                                        : regionDisplayText}
-                                </h5>,
-                            )}
-                            {createChampPane(challengers)}
-                        </div>
-                        <div className="rank-pane masters-pane">
-                            {masters.length > 0 ? (
-                                <h5 className="rank-header">
-                                    Masters One Trick Ponies in{' '}
-                                    {advFilter
-                                        ? mulRegionsDisplayText
-                                        : regionDisplayText}
-                                </h5>
-                            ) : (
-                                ''
-                            )}
-                            {createChampPane(masters)}
-                        </div>
-                    </div>
-                ) : (
-                    <div className="content-pane all-pane">
-                        <div className="rank-pane">
-                            {all.length > 0 ? (
-                                <h5 className="rank-header">
-                                    Challenger/Master One Trick Ponies in{' '}
-                                    {advFilter
-                                        ? mulRegionsDisplayText
-                                        : regionDisplayText}
-                                </h5>
-                            ) : (
-                                renderEmptyResults()
-                            )}
-                            {createChampPane(all)}
-                        </div>
-                    </div>
-                )
-            ) : (
-                ''
-            )}
-        </div>
+        <ContentPane
+            isMultipleRegionsFilterOn={advFilter}
+            regions={regions}
+            all={all}
+            challengers={challengers || []}
+            masters={masters || []}
+            regionInfoText={regionInfoText}
+            showChamps={showChamps}
+            merged={merged}
+            handleImageLoad={handleImageLoad}
+            getPlayers={getPlayers}
+            renderEmptyResults={renderEmptyResults} // TODO: temp
+            setDisplayValue={setDisplayValue}
+        />
     )
 }
 
@@ -312,7 +258,6 @@ const enhance = compose(
         onChange,
     }),
     withHandlers({ fetchPlayers, getPlayers, generateChampPaneUtility }),
-    withHandlers({ createChampPane }),
     withHandlers({ forcePlayersUpdate, createChampPanesHolder }),
     lifecycle({
         componentDidMount() {

@@ -1,6 +1,6 @@
 let component = ReasonReact.statelessComponent("ChampionPane");
 
-let make = (~champions, ~getPlayers, ~handleImageLoad) => {
+let make = (~champions, ~getPlayers, ~handleImageLoad, _children) => {
   ...component,
   render: _self =>
     <div className="champs">
@@ -26,12 +26,3 @@ let make = (~champions, ~getPlayers, ~handleImageLoad) => {
       )
     </div>
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~champions=jsProps##champions,
-      ~getPlayers=jsProps##getPlayers,
-      ~handleImageLoad=jsProps##handleImageLoad
-    )
-  );
