@@ -1,7 +1,6 @@
 {
   "presets": ["es2015", "stage-2"],
   "plugins": [
-    "babel-plugin-transform-flow-strip-types",
     "babel-plugin-transform-object-rest-spread"
   ]
 }

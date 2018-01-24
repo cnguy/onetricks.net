@@ -1,8 +1,4 @@
-// @flow
-
-import type { region as regionType } from '../constants/flowTypes.js'
-
-const createFetchPlayersUrl = (args: regionType | Array<regionType>): string =>
+const createFetchPlayersUrl = args =>
     `${(function() {
         if (process.env.NODE_ENV === 'production') {
             return 'https://cors-anywhere.herokuapp.com/http://104.131.26.226:3001/'

@@ -1,20 +1,12 @@
-// @flow
 /* eslint-env browser */
 
 import React from 'react'
-/* FlowFixMe */
 import { connect } from 'react-redux'
-/* FlowFixMe */
 import compose from 'recompose/compose'
-/* FlowFixMe */
 import withState from 'recompose/withState'
-/* FlowFixMe */
 import withHandlers from 'recompose/withHandlers'
-/* FlowFixMe */
 import lifecycle from 'recompose/lifecycle'
-/* FlowFixMe */
 import Perf from 'react-addons-perf' // eslint-disable-line no-unused-vars
-/* FlowFixMe */
 import { cloneDeep } from 'lodash'
 
 import {
@@ -54,87 +46,10 @@ import DEFAULT_REGIONS from '../../constants/regions'
 import RANKS from '../../constants/ranks'
 import REGIONS_TEXT from '../../constants/regionsText'
 
-import type {
-    advFilter as advFilterType,
-    merged as mergedType,
-    players as playersType,
-    region as regionType,
-    resetSearchKey as resetSearchKeyType,
-    searchKey as searchKeyType,
-    setSearchKey as setSearchKeyType,
-    setSortKey as setSortKeyType,
-    setSortReverse as setSortReverseType,
-    sortKey as sortKeyType,
-    sortReverse as sortReverseType,
-    state as stateType,
-    toggleAdvancedFilter as toggleAdvancedFilterType,
-    toggleMerge as toggleMergeType,
-} from '../../constants/flowTypes'
-
 let numOfImagesLeft = 0 // Performance :)
 
-type AAAnyAlias = ?Array<Array<any>>
-type PropTypes = {
-    // state
-    all: {
-        [championName: string]: playersType,
-    },
-    region: regionType,
-    regions: Array<regionType>,
-    champ: string,
-    players: playersType,
-    searchKey: string,
-    showChamps: boolean,
-    // sortReverse: boolean,
-    imagesLoaded: boolean,
-    // state setters
-    setAll: (A: Object, CB?: Function) => void,
-    setRegion: (R: regionType) => void,
-    setRegions: (R: Array<regionType>) => void,
-    setChampionName: (S: string) => void,
-    setPlayers: (P: playersType) => void,
-    setShowChamps: (B: boolean) => void,
-    setImagesLoaded: (B: boolean) => void,
-    // handlers
-    makeCompact: (P: playersType) => void,
-    setRegionFilter: () => void,
-    addRegion: () => void,
-    togglePane: () => void,
-    handleToggleAdvancedFilter: () => void,
-    onSort: (S: sortKeyType) => void,
-    handleImageLoad: () => void,
-    renderSpinner: () => void,
-    renderEmptyResults: () => React$Element<any> | null,
-    setDisplayValue: () => void,
-    onChange: () => void,
-    fetchPlayers: (A: regionType | Array<regionType>) => void,
-    getPlayers: (A: Array<Array<any>>, C: string) => void,
-    generateChampPaneUtility: () => void,
-    createChampPane: (P: playersType) => void,
-    forcePlayersUpdate: (A: regionType | Array<regionType>) => void,
-    createChampPanesHolder: (
-        C: AAAnyAlias,
-        M: AAAnyAlias,
-        A: AAAnyAlias,
-    ) => void,
-    // redux
-    advFilter: advFilterType,
-    toggleAdvancedFilter: toggleAdvancedFilterType,
-    merged: mergedType,
-    toggleMerge: toggleMergeType,
-    searchKey: searchKeyType,
-    resetSearchKey: resetSearchKeyType,
-    setSearchKey: setSearchKeyType,
-    sortKey: sortKeyType,
-    setSortKey: setSortKeyType,
-    sortReverse: sortReverseType,
-    setSortReverse: setSortReverseType,
-}
-
-const makeCompact = ({ imagesLoaded, showChamps, setAll }: PropTypes) => (
-    list: playersType,
-) => {
-    const compList: { [championName: string]: playersType } = {}
+const makeCompact = ({ imagesLoaded, showChamps, setAll }) => list => {
+    const compList = {}
 
     for (const player of list) {
         compList[player.champ] = compList[player.champ]
@@ -153,12 +68,9 @@ const makeCompact = ({ imagesLoaded, showChamps, setAll }: PropTypes) => (
     }
 }
 
-const setRegionFilter = ({ setRegion }: PropTypes) => e =>
-    setRegion(e.target.value)
+const setRegionFilter = ({ setRegion }) => e => setRegion(e.target.value)
 
-const addRegion = ({ regions, setRegions }: PropTypes) => (
-    region: regionType,
-) => {
+const addRegion = ({ regions, setRegions }) => region => {
     const index = regions.indexOf(region)
     return index !== -1
         ? setRegions([...regions.slice(0, index), ...regions.slice(index + 1)])
@@ -171,7 +83,7 @@ const togglePane = ({
     resetSearchKey,
     setSortKey,
     setSortReverse,
-}: PropTypes) => () =>
+}) => () =>
     executeCollection(
         () => setShowChamps(!showChamps),
         () => resetSearchKey(),
@@ -184,7 +96,7 @@ const handleToggleAdvancedFilter = ({
     toggleAdvancedFilter,
     region,
     setRegions,
-}: PropTypes) => () =>
+}) => () =>
     executeConditionalCollection(
         {
             cond: advFilter,
@@ -198,52 +110,41 @@ const handleToggleAdvancedFilter = ({
         toggleAdvancedFilter(),
     )
 
-const onSort = ({
-    sortKey,
-    sortReverse,
-    setSortKey,
-    setSortReverse,
-}: PropTypes) => (key: sortKeyType) =>
+const onSort = ({ sortKey, sortReverse, setSortKey, setSortReverse }) => key =>
     executeCollection(
         () => setSortKey(key),
         () => setSortReverse(key === sortKey && !sortReverse),
     )
 
-const handleImageLoad = ({ setImagesLoaded }: PropTypes) => () => {
+const handleImageLoad = ({ setImagesLoaded }) => () => {
     if (--numOfImagesLeft === 0) {
         // eslint-disable-line no-plusplus
         setImagesLoaded(true)
     }
 }
 
-const renderSpinner = ({ imagesLoaded }: PropTypes) => () =>
+const renderSpinner = ({ imagesLoaded }) => () =>
     renderOnCondition(!imagesLoaded, <Loader />)
 
-const renderEmptyResults = ({ searchKey }: PropTypes) => (): React$Element<
-    any,
-> | null =>
+const renderEmptyResults = ({ searchKey }) => () =>
     renderOnCondition(
         searchKey,
         <div className="empty-results">No champions found.</div>,
     )
 
-const setDisplayValue = ({ imagesLoaded }: PropTypes) => () =>
+const setDisplayValue = ({ imagesLoaded }) => () =>
     imagesLoaded ? 'inline' : 'none'
 
-const onChange = ({ setSearchKey }: PropTypes) => e =>
+const onChange = ({ setSearchKey }) => e =>
     setSearchKey(e.target.value.toLowerCase())
 
-const fetchPlayers = ({ makeCompact }: PropTypes) => (
-    args: regionType | Array<regionType>,
-) =>
+const fetchPlayers = ({ makeCompact }) => args =>
     // Perf.start();
     fetch(createFetchPlayersUrl(args))
         .then(r => r.json())
         .then(r => makeCompact(r))
 
-const getPlayers = ({ setPlayers, setChampionName, togglePane }: PropTypes) => (
-    tuple: Array<Array<playersType, string>>,
-) => {
+const getPlayers = ({ setPlayers, setChampionName, togglePane }) => tuple => {
     togglePane()
     const [array, champion] = tuple
     const target = array.filter(l => l[0] === champion)
@@ -266,7 +167,7 @@ const generateChampPaneUtility = ({
     handleToggleAdvancedFilter,
     region,
     setRegionFilter,
-}: PropTypes) => () => (
+}) => () => (
     <ChampionPaneUtilities
         showChamps={showChamps}
         merged={merged}
@@ -282,9 +183,7 @@ const generateChampPaneUtility = ({
     />
 )
 
-const createChampPane = ({ getPlayers, handleImageLoad }: PropTypes) => (
-    arr: Array<Array<any>>,
-): React$Element<any> => (
+const createChampPane = ({ getPlayers, handleImageLoad }) => arr => (
     <ChampionPane
         champions={arr}
         getPlayers={getPlayers}
@@ -292,9 +191,7 @@ const createChampPane = ({ getPlayers, handleImageLoad }: PropTypes) => (
     />
 )
 
-const forcePlayersUpdate = ({ fetchPlayers }: PropTypes) => (
-    args: regionType | Array<regionType>,
-) => fetchPlayers(args)
+const forcePlayersUpdate = ({ fetchPlayers }) => args => fetchPlayers(args)
 
 const createChampPanesHolder = ({
     advFilter,
@@ -305,11 +202,7 @@ const createChampPanesHolder = ({
     setDisplayValue,
     renderEmptyResults,
     createChampPane,
-}: PropTypes) => (
-    challengers: playersType,
-    masters: playersType,
-    all: playersType,
-) => {
+}) => (challengers, masters, all) => {
     const regionDisplayText = REGIONS_TEXT[region]
     const mulRegionsDisplayText =
         regions.length === DEFAULT_REGIONS.length
@@ -382,7 +275,7 @@ const createChampPanesHolder = ({
 
 const enhance = compose(
     connect(
-        (state: stateType) => ({
+        state => ({
             advFilter: advancedFilterSelector(state),
             merged: mergedSelector(state),
             searchKey: searchKeySelector(state),
@@ -428,7 +321,7 @@ const enhance = compose(
                 forcePlayersUpdate,
                 regions,
                 region,
-            }: PropTypes = this.props
+            } = this.props
             forcePlayersUpdate(advFilter ? regions : region)
         },
     }),
@@ -452,7 +345,7 @@ const OneTricks = enhance(
         renderSpinner,
         createChampPanesHolder,
         onSort,
-    }: PropTypes) => {
+    }) => {
         let tmp = { ...all }
         const keys = Object.keys(tmp)
         if (advFilter) {
