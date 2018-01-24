@@ -1,18 +1,6 @@
 let component = ReasonReact.statelessComponent("FilterRegion");
 
-let allRegions: array(string) = [|
-  "na",
-  "kr",
-  "euw",
-  "eune",
-  "lan",
-  "las",
-  "br",
-  "jp",
-  "tr",
-  "ru",
-  "oce"
-|];
+let allRegions = Constants.regions;
 
 let regionsSplitPoint = 6;
 

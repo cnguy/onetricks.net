@@ -34,12 +34,11 @@ import {
 } from '../../selectors'
 
 import ChampionPane from './ChampionPane.bs'
-import ChampionSearch from './ChampionSearch.bs'
+import ChampionPaneUtilities from './ChampionPaneUtilities.bs'
 import Copyright from './Copyright.bs'
 import FAQ from './FAQ.bs'
 import Header from './Header.bs'
 import Loader from './Loader.bs'
-import MultipleRegionFilter from './MultipleRegionsFilter.bs'
 import PlayersView from './PlayersView.bs'
 
 import FILTERS from '../../helpers/filters'
@@ -108,7 +107,6 @@ type PropTypes = {
     renderEmptyResults: () => React$Element<any> | null,
     setDisplayValue: () => void,
     onChange: () => void,
-    generateSelectMenu: () => void,
     fetchPlayers: (A: regionType | Array<regionType>) => void,
     getPlayers: (A: Array<Array<any>>, C: string) => void,
     generateChampPaneUtility: () => void,
@@ -235,24 +233,6 @@ const setDisplayValue = ({ imagesLoaded }: PropTypes) => () =>
 const onChange = ({ setSearchKey }: PropTypes) => e =>
     setSearchKey(e.target.value.toLowerCase())
 
-const generateSelectMenu = ({
-    advFilter,
-    region,
-    setRegionFilter,
-}: PropTypes) => (): React$Element<any> | null =>
-    // This select menu shouldn't be created if multiple regions is enabled.
-    renderOnCondition(
-        !advFilter,
-        <select id="region" onChange={setRegionFilter} value={region}>
-            <option value="all">All</option>
-            {DEFAULT_REGIONS.map((item, index) => (
-                <option value={item} key={index}>
-                    {item.toUpperCase()}
-                </option>
-            ))}
-        </select>,
-    )
-
 const fetchPlayers = ({ makeCompact }: PropTypes) => (
     args: regionType | Array<regionType>,
 ) =>
@@ -284,38 +264,23 @@ const generateChampPaneUtility = ({
     onChange,
     addRegion,
     handleToggleAdvancedFilter,
-    generateSelectMenu,
-}: PropTypes) => () =>
-    renderOnCondition(
-        showChamps,
-        <div className="champs-pane-utility">
-            <div className="instructions flash">
-                Find the best champions to one trick to high ELO in Season 8
-                here. Click a champion icon to find the best one trick ponies!
-            </div>
-            <div className="merged-input">
-                <button className="merge-sep-button" onClick={toggleMerge}>
-                    <span className="merge-sep-text">
-                        <span className="merge-sep-action">
-                            {merged ? 'Separate' : 'Combine'}
-                        </span>
-                    </span>
-                </button>
-                {generateSelectMenu()}
-                <ChampionSearch
-                    onChange={onChange}
-                    value={searchKey}
-                    resetSearchKey={resetSearchKey}
-                />
-            </div>
-            <MultipleRegionFilter
-                isMultipleRegionFilterOn={advFilter}
-                regions={regions}
-                toggleMultipleRegionFilter={handleToggleAdvancedFilter}
-                toggleRegion={addRegion}
-            />
-        </div>,
-    )
+    region,
+    setRegionFilter,
+}: PropTypes) => () => (
+    <ChampionPaneUtilities
+        showChamps={showChamps}
+        merged={merged}
+        advFilter={advFilter}
+        searchKey={searchKey}
+        regions={regions}
+        toggleMerge={toggleMerge}
+        onChange={onChange}
+        addRegion={addRegion}
+        handleToggleAdvancedFilter={handleToggleAdvancedFilter}
+        region={region}
+        setRegionFilter={setRegionFilter}
+    />
+)
 
 const createChampPane = ({ getPlayers, handleImageLoad }: PropTypes) => (
     arr: Array<Array<any>>,
@@ -453,7 +418,6 @@ const enhance = compose(
         setDisplayValue,
         onChange,
     }),
-    withHandlers({ generateSelectMenu }),
     withHandlers({ fetchPlayers, getPlayers, generateChampPaneUtility }),
     withHandlers({ createChampPane }),
     withHandlers({ forcePlayersUpdate, createChampPanesHolder }),

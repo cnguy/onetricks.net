@@ -15,13 +15,3 @@ let make = (~onChange, ~value, ~resetSearchKey, _children) => {
       </span>
     </span>
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~onChange=jsProps##onChange,
-      ~value=jsProps##value,
-      ~resetSearchKey=jsProps##resetSearchKey,
-      jsProps##children
-    )
-  );
