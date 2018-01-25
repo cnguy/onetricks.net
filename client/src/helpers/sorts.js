@@ -1,5 +1,3 @@
-import { sortBy } from 'lodash'
-
 const SORTS = {
     ONETRICKS: list =>
         list.sort((a, b) => {
