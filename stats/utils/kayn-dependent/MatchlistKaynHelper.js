@@ -32,7 +32,7 @@ const reducerGetRest = kayn => (accountID, region) => async promise => {
 
 class MatchlistKaynHelper {
     static rawMatchlistToMatches = kayn => async (matchlist, region) => {
-        const matchlistChunkSize = matchlist.length / 5
+        const matchlistChunkSize = matchlist.length / 3
 
         const matches = await asyncMapOverArrayInChunks(
             matchlist,

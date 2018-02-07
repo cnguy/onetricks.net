@@ -24,3 +24,5 @@ r
 client/build
 docker-compose.prod.yml
 *bs.js
+
+\.vscode/launch\.json

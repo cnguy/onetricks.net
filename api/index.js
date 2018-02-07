@@ -13,7 +13,7 @@ require('./models')
 const Player = mongoose.model('Player')
 
 if (process.env.NODE_ENV === 'development') {
-    mongoose.connect('mongodb://mongo/one-tricks')
+    mongoose.connect('mongodb://mongo:27017/one-tricks')
 } else {
     try {
         mongoose.connect(process.env.MONGO_URI)
@@ -27,7 +27,7 @@ import { setInterval } from 'timers'
 
 app.set('port', process.env.PORT || 3001)
 
-app.get('all', (req, res, next) => {
+app.get('/all', (req, res, next) => {
     if (req.query.multiple) {
         const _regions = req.query.region.split(',') || null
 
@@ -73,17 +73,17 @@ app.listen(app.get('port'), () => {
 })
 
 const main = async () => {
-    /*
-  try {
-    const done = await generator();
-    console.log('script done:', done);
-    setInterval(async () => {
-      // console.log('run script...');
-      // await generator();
-    }, 2147483647);
-  } catch (exception) {
-    console.log(exception);
-  }*/
+    try {
+        console.log('starting script')
+        const done = await generator()
+        console.log('script done:', done)
+        setInterval(async () => {
+            // console.log('run script...');
+            // await generator();
+        }, 2147483647)
+    } catch (exception) {
+        console.log(exception)
+    }
 }
 
 main()

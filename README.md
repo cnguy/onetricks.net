@@ -18,6 +18,8 @@ Note that this codebase is also very old, and my main goal now that I finished b
 
 ```make run # docker-compose up --build```
 
+Currently, the stats/api scripts have to be ran individually (yarn start for stats building, make run for api building).
+
 # Deployment
 
 ## DigitalOcean

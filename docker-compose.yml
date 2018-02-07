@@ -8,8 +8,6 @@ services:
       - redis
     ports:
       - "3002:3002"
-   # environment:
-    #  - DEBUG=kayn:*
   api:
     container_name: one-tricks-api
     restart: always
@@ -20,7 +18,7 @@ services:
     ports:
       - "3001:3001"
     environment:
-      - DEBUG=kayn:*
+      - NODE_ENV=development
   client:
     container_name: one-tricks-client
     command: yarn dev

@@ -1,6 +1,6 @@
 require('dotenv').config('./.env')
 
-import { Kayn, REGIONS, METHOD_NAMES, RedisCache } from 'kayn'
+import { Kayn, REGIONS, METHOD_NAMES, BasicJSCache, RedisCache } from 'kayn'
 import RegionHelper from 'kayn/dist/lib/Utils/RegionHelper'
 
 const { asPlatformID } = RegionHelper
@@ -23,10 +23,10 @@ import MatchlistKaynHelper from './utils/kayn-dependent/MatchlistKaynHelper'
 const LEAGUE_QUEUE = 'RANKED_SOLO_5x5'
 const MATCHLIST_CONFIG = {
     queue: 420,
-    season: 9,
+    season: 11,
 }
 
-const mockBaseStats = jsonfile.readFileSync('/usr/src/stats/stats.json')
+const mockBaseStats = jsonfile.readFileSync('./stats.json')
 console.log(mockBaseStats.players.length)
 
 // Local Helpers
@@ -62,7 +62,7 @@ const doesNotContainMatch = playerStats => ({ gameId: gameID }) =>
 
 const store = json => {
     console.log('writing to stats.json')
-    jsonfile.writeFileSync('/usr/src/stats/stats.json', json)
+    jsonfile.writeFileSync('./stats.json', json)
     console.log('>> FINISHED')
 }
 
@@ -73,9 +73,15 @@ const main = async () => {
             showKey: true,
         },
         requestOptions: {
-            numberOfRetriesBeforeAbort: 1,
+            numberOfRetriesBeforeAbort: 5,
+            delayBeforeRetry: 3000,
         },
         cacheOptions: {
+            cache: new BasicJSCache(),
+            ttls: {
+                [METHOD_NAMES.MATCH.GET_MATCH]: 1000 * 60 * 5,
+            },
+            /*
             cache: new RedisCache({
                 host: 'redis',
                 port: 6379,
@@ -88,7 +94,7 @@ const main = async () => {
                     1000 * 60 * 60 * 60 * 60 * 60 * 60 * 60 * 60,
                 [METHOD_NAMES.MATCH.GET_MATCHLIST]: 1000 * 60 * 60 * 24,
                 [METHOD_NAMES.MATCH.GET_RECENT_MATCHLIST]: 1000 * 60 * 60 * 25,
-            },
+            },*/
         },
     })
 
@@ -112,9 +118,7 @@ const main = async () => {
             ),
         )
 
-        console.log('summoners.length:', summoners.length)
-
-        const summonersChunkSize = summoners.length / 2
+        const summonersChunkSize = summoners.length / 3
 
         const allPlayerStats = await asyncMapOverArrayInChunks(
             summoners,
@@ -164,23 +168,26 @@ const main = async () => {
             players: allStats.concat(newStats).map(el => el.asObject()),
         }
 
-        console.log(json)
-
         store(json)
         return true
     }
 
     const keys = Object.keys(REGIONS)
-    const chunkSize = 1
+    const challengersChunkSize = 11
+    const mastersChunkSize = 11
+
     const processChunk = async (rank, chunk) =>
         Promise.all(chunk.map(r => fn(rank, REGIONS[r])))
-    for (let i = 0; i < keys.length; i += chunkSize) {
-        console.log('starting first chunk')
-        await processChunk('Challenger', keys.slice(i, i + chunkSize))
-        console.log('done with first chunk')
-    }
-    for (let i = 0; i < keys.length; i += chunkSize) {
-        await processChunk('Master', keys.slice(i, i + chunkSize))
+    /*
+for (let i = 0; i < keys.length; i += challengersChunkSize) {
+    console.log('starting', 'challenger', keys.slice(i, i + challengersChunkSize))
+    await processChunk('Challenger', keys.slice(i, i + challengersChunkSize))
+    console.log('done')
+}*/
+    for (let i = 0; i < keys.length; i += mastersChunkSize) {
+        console.log('starting', 'masters', keys.slice(i, i + mastersChunkSize))
+        await processChunk('Master', keys.slice(i, i + mastersChunkSize))
+        console.log('done')
     }
     return true
 }

@@ -45,4 +45,4 @@ const main = async () => {
     console.log('completely done')
 }
 
-main()
+// if (process.env.NODE_ENV === 'development') main()

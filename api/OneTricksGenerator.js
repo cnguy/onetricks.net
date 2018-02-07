@@ -13,13 +13,9 @@ const TARGET_QUEUE = 'RANKED_SOLO_5x5'
 const staticChampions = jsonfile.readFileSync('./static_champions.json')
 
 if (process.env.NODE_ENV === 'development') {
-    mongoose.connect(process.env.LOCAL_MONGO_URL)
+    mongoose.connect('mongodb://mongo/one-tricks')
 } else if (process.env.NODE_ENV === 'production') {
-    mongoose.connect(
-        `mongodb://${process.env.MONGO_USER}:${
-            process.env.MONGO_PASS
-        }@ds161029.mlab.com:61029/${process.env.MONGO_USER}`,
-    )
+    mongoose.connect(process.env.MONGO_URI)
 } else {
     throw new Error('.env file is missing NODE_ENV environment variable.')
 }
@@ -145,8 +141,11 @@ const clearPlayersInDB = async (rank, region) =>
                 region,
             },
             err => {
-                if (err) reject(err)
-                else resolve(true)
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(true)
+                }
             },
         )
     })
@@ -220,8 +219,15 @@ const getOneTrick = region => async ({ wins, losses, playerOrTeamId }) => {
         const champData = getStaticChampion(champId)
         const { summonerId } = playerStats
 
+        console.log(totalSessionsWon, totalSessionsLost, 'out of', totalGames)
+
         return {
-            ...createOneTrick(summonerId, wins, losses, champData),
+            ...createOneTrick(
+                summonerId,
+                totalSessionsWon,
+                totalSessionsLost,
+                champData,
+            ),
             name: (await kayn.Summoner.by.id(summonerId).region(region)).name,
         }
     }
@@ -232,13 +238,18 @@ const getOneTrick = region => async ({ wins, losses, playerOrTeamId }) => {
 /**
  * generate generates all the one tricks given a combination of rank and region.
  * @param {string} rank - This should work with getLeagueByRank. (Either 'challengers' or 'masters').
- * @param {string} region - An abbreviated region ('na1', 'euw', etc). Use `REGIONS` from `kayn`.
+ * @param {string} egion - An abbreviated region ('na1', 'euw', etc). Use `REGIONS` from `kayn`.
  */
 async function generate(rank, region) {
-    const { entries } = await getLeagueByRank(region, rank)
-    const oneTricks = await chunkGenerate(getOneTrick(region), entries)
-    await clearPlayersInDB(rank.charAt(0), region)
-    await insertPlayersIntoDB(oneTricks, region, rank)
+    try {
+        const { entries } = await getLeagueByRank(region, rank)
+        const oneTricks = await chunkGenerate(getOneTrick(region), entries)
+        await clearPlayersInDB(rank.charAt(0), region)
+        await insertPlayersIntoDB(oneTricks, region, rank)
+    } catch (exception) {
+        console.error(exception)
+    }
+
     return true
 }
 
@@ -253,8 +264,8 @@ const main = async () =>
                     await processChunk(rank, keys.slice(i, i + chunkSize))
                 }
             }
-            await start('challengers', 4)
-            await start('masters', 2)
+            await start('challengers', 11)
+            await start('masters', 11)
             resolve(true)
         }, 20000),
     )

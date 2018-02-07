@@ -9,7 +9,8 @@
     "kayn": "^0.8.0"
   },
   "scripts": {
-    "start": "babel-node index.js"
+    "start": "babel-node index.js",
+    "start-debug": "DEBUG=kayn:* yarn start"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
