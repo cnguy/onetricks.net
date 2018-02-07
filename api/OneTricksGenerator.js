@@ -238,7 +238,7 @@ const getOneTrick = region => async ({ wins, losses, playerOrTeamId }) => {
 /**
  * generate generates all the one tricks given a combination of rank and region.
  * @param {string} rank - This should work with getLeagueByRank. (Either 'challengers' or 'masters').
- * @param {string} egion - An abbreviated region ('na1', 'euw', etc). Use `REGIONS` from `kayn`.
+ * @param {string} region - An abbreviated region ('na1', 'euw', etc). Use `REGIONS` from `kayn`.
  */
 async function generate(rank, region) {
     try {
