@@ -5,6 +5,8 @@ const asyncMapOverArrayInChunks = async (array, chunkSize, mapFunction) => {
         total: [],
         index: 0,
     }
+    // TODO: Why can array.length and chunkSize both be 0 in the first place?
+    if (array.length == 0) return []
     const { total } = await range(array.length / chunkSize).reduce(
         async promise => {
             const { total, index } = await promise

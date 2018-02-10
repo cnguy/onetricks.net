@@ -144,7 +144,7 @@ const main = async () => {
                 const fullMatchlist = matchlist.matches
                     .concat(rest)
                     .filter(inPlatform(region))
-                    .filter(doesNotContainMatch(playerStats))
+                    .filter(playerStats.doesNotContainMatch)
 
                 const matches = await MatchlistKaynHelper.rawMatchlistToMatches(
                     kayn,
@@ -168,22 +168,29 @@ const main = async () => {
             players: allStats.concat(newStats).map(el => el.asObject()),
         }
 
+        console.log('storing', region, rank)
         store(json)
         return true
     }
 
     const keys = Object.keys(REGIONS)
-    const challengersChunkSize = 11
-    const mastersChunkSize = 11
+    const challengersChunkSize = 5
+    const mastersChunkSize = 3
 
     const processChunk = async (rank, chunk) =>
         Promise.all(chunk.map(r => fn(rank, REGIONS[r])))
-    /*
-for (let i = 0; i < keys.length; i += challengersChunkSize) {
-    console.log('starting', 'challenger', keys.slice(i, i + challengersChunkSize))
-    await processChunk('Challenger', keys.slice(i, i + challengersChunkSize))
-    console.log('done')
-}*/
+    for (let i = 0; i < keys.length; i += challengersChunkSize) {
+        console.log(
+            'starting',
+            'challenger',
+            keys.slice(i, i + challengersChunkSize),
+        )
+        await processChunk(
+            'Challenger',
+            keys.slice(i, i + challengersChunkSize),
+        )
+        console.log('done')
+    }
     for (let i = 0; i < keys.length; i += mastersChunkSize) {
         console.log('starting', 'masters', keys.slice(i, i + mastersChunkSize))
         await processChunk('Master', keys.slice(i, i + mastersChunkSize))

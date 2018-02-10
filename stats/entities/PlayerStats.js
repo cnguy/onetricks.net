@@ -46,6 +46,10 @@ class _PlayerStats {
         return matchesProcessed.some(id => id === matchID)
     }
 
+    doesNotContainMatch(matchID) {
+        return !this.containsMatch(matchID)
+    }
+
     asObject() {
         const { summonerID, ChampionStats, region } = this
 
