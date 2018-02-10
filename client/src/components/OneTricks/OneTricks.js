@@ -33,6 +33,8 @@ import Header from './Header.bs'
 import Loader from './Loader.bs'
 import PlayersView from './PlayersView.bs'
 
+import OneTricksRe from './OneTricksRe.bs'
+
 import FILTERS from '../../helpers/filters'
 import SORTS from '../../helpers/sorts'
 import {
@@ -290,6 +292,7 @@ const OneTricks = enhance(
         renderSpinner,
         createChampPanesHolder,
         onSort,
+        ...props
     }) => {
         let tmp = { ...all }
         const keys = Object.keys(tmp)
@@ -370,6 +373,7 @@ const OneTricks = enhance(
 
         return (
             <div className="container">
+                <OneTricksRe areImagesLoaded={props.imagesLoaded} />
                 <div className="OneTricks">
                     <Header />
                     <PlayersView

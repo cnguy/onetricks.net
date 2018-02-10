@@ -14,6 +14,10 @@ let qas = [
     "Over the next few weeks, I'll be making drastic changes to the backend as I have more time. I'm working with a few other people to create a more robust algorithm. Although there are slight twists to the phrase one trick pony today, I define it as someone who really excels on one champ, but does below average on other champs. These types of one tricks are much more prominent in higher elo, and I found that a majority of them are easily identifiable and thus are on this list."
   ),
   (
+    "Will there be more features?",
+    "Yes. I'm currently in the processing of refactoring the codebase. Features include runes, champion match-ups, finding the best champions instead of seeing the entire pane, etc. If you're a dev, find my repository and watch it for changes! I will be heavily working on this. :)"
+  ),
+  (
     "The na.op.gg link doesn't work.",
     "They changed their name. Try the lolking link instead (lolking will redirect you to their new name). The database will correct the names some time overnight."
   ),
