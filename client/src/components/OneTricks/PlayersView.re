@@ -23,7 +23,8 @@ let make =
       ~show: bool,
       ~onSort: string => unit,
       ~sortKey: string,
-      ~sortReverse: bool
+      ~sortReverse: bool,
+      _children
     ) => {
   ...component,
   render: _self => {
@@ -91,6 +92,7 @@ let default =
       ~show=jsProps##show,
       ~onSort=jsProps##onSort,
       ~sortKey=jsProps##sortKey,
-      ~sortReverse=jsProps##sortReverse
+      ~sortReverse=jsProps##sortReverse,
+      jsProps##children
     )
   );

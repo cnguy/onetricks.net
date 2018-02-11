@@ -376,6 +376,7 @@ const OneTricks = enhance(
                 <OneTricksRe
                     areImagesLoaded={props.imagesLoaded}
                     allOneTricks={_all}
+                    players={players}
                 />
                 <div className="OneTricks">
                     <Header />

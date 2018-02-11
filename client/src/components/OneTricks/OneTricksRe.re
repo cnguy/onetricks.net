@@ -50,7 +50,8 @@ type misc = {
 
 type playersView = {
   sortKey: sort,
-  shouldSortReverse: bool
+  shouldSortReverse: bool,
+  currentChampion: string
 };
 
 type router = {page};
@@ -61,9 +62,6 @@ type state = {
   playersView,
   router
 };
-
-let printState = (state: state) =>
-  print_string(string_of_bool(state.championPane.isMultipleRegionFilterOn));
 
 let component = ReasonReact.reducerComponent("OneTricksRe");
 
@@ -83,7 +81,7 @@ let urlToAction = (path, search) =>
   | _ => ShowHome
   };
 
-let make = (~allOneTricks, ~areImagesLoaded, _children) => {
+let make = (~allOneTricks, ~players, ~areImagesLoaded, _children) => {
   ...component,
   initialState: () => {
     championPane: {
@@ -94,12 +92,13 @@ let make = (~allOneTricks, ~areImagesLoaded, _children) => {
       areChampionPanesMerged: false,
       region: "all",
       regions: Array.copy(Constants.regions),
-      shouldShowChampionIcons: true,
+      shouldShowChampionIcons: false, /* temp: false */
       areImagesLoaded: false
     },
     playersView: {
       sortKey: WINRATE,
-      shouldSortReverse: false
+      shouldSortReverse: false,
+      currentChampion: ""
     },
     router: {
       page:
@@ -126,6 +125,10 @@ let make = (~allOneTricks, ~areImagesLoaded, _children) => {
         ...state,
         router: {
           page: PLAYERS_VIEW
+        },
+        playersView: {
+          ...state.playersView,
+          currentChampion: name
         }
       });
     | ShowPlayer(summonerID) =>
@@ -136,6 +139,20 @@ let make = (~allOneTricks, ~areImagesLoaded, _children) => {
           page: PLAYER
         }
       });
+    | SetSortKey(sortKey) =>
+      ReasonReact.Update({
+        ...state,
+        playersView: {
+          ...state.playersView,
+          sortKey,
+          shouldSortReverse:
+            if (sortKey == state.playersView.sortKey) {
+              ! state.playersView.shouldSortReverse;
+            } else {
+              false;
+            }
+        }
+      })
     | _ => ReasonReact.Update(state)
     },
   subscriptions: self => [
@@ -162,18 +179,54 @@ let make = (~allOneTricks, ~areImagesLoaded, _children) => {
   ],
   render: self => {
     Js.log(self.state);
-    Js.log(allOneTricks);
-    <button className="router-test">
-      (
-        ReasonReact.stringToElement(
-          switch self.state.router.page {
-          | HOME => "Home"
-          | PLAYERS_VIEW => "Players View"
-          | PLAYER => "Player!"
+    Js.log(players);
+    let tempOnSort = str =>
+      self.send(
+        SetSortKey(
+          switch str {
+          | "REGION" => REGION
+          | "RANK" => RANK
+          | "NAME" => NAME
+          | "WINS" => WINS
+          | "LOSSES" => LOSSES
+          | "WINRATE" => WINRATE
+          | "NONE" => NONE
+          | _ => NONE
           }
         )
-      )
-    </button>;
+      );
+    let sortKeyToStr = sortKey =>
+      switch sortKey {
+      | REGION => "REGION"
+      | RANK => "RANK"
+      | NAME => "NAME"
+      | WINS => "WINS"
+      | LOSSES => "LOSSES"
+      | WINRATE => "WINRATE"
+      | NONE => "NONE"
+      };
+    <div className="one-tricks-re">
+      <button className="router-test">
+        (
+          ReasonReact.stringToElement(
+            switch self.state.router.page {
+            | HOME => "Home"
+            | PLAYERS_VIEW => "Players View"
+            | PLAYER => "Player!"
+            }
+          )
+        )
+      </button>
+      <PlayersView
+        players
+        goBack=(_event => ReasonReact.Router.push(""))
+        champ=self.state.playersView.currentChampion
+        show=(! self.state.misc.shouldShowChampionIcons)
+        onSort=tempOnSort
+        sortKey=(sortKeyToStr(self.state.playersView.sortKey))
+        sortReverse=self.state.playersView.shouldSortReverse
+      />
+    </div>;
     /*
      if (areImagesLoaded) {
        <div className="OneTricksRe">
@@ -198,6 +251,7 @@ let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(
       ~allOneTricks=jsProps##allOneTricks,
+      ~players=jsProps##players,
       ~areImagesLoaded=jsProps##areImagesLoaded,
       jsProps##children
     )
