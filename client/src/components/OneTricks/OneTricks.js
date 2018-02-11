@@ -373,7 +373,10 @@ const OneTricks = enhance(
 
         return (
             <div className="container">
-                <OneTricksRe areImagesLoaded={props.imagesLoaded} />
+                <OneTricksRe
+                    areImagesLoaded={props.imagesLoaded}
+                    allOneTricks={_all}
+                />
                 <div className="OneTricks">
                     <Header />
                     <PlayersView
