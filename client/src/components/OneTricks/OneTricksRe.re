@@ -21,7 +21,6 @@ type action =
   | ResetSearchKey
   | SetSearchKey(string)
   | SetSortKey(sort)
-  | ShouldSortReverse
   | ToggleMerge
   | ToggleAdvancedFilter
   | Nothing;
@@ -44,7 +43,6 @@ type misc = {
   areChampionPanesMerged: bool,
   region: string,
   regions: array(string),
-  shouldShowChampionIcons: bool,
   areImagesLoaded: bool
 };
 
@@ -77,7 +75,9 @@ let urlToAction = (path, search) =>
   switch (path, search) {
   | ([""], "") => ShowHome
   | (["player", id], "") => ShowPlayer(int_of_string(id))
-  | (["champions", name], "") => ShowPlayersViewForChampion(name)
+  | (["champions", name], "") =>
+    Js.log("sending");
+    ShowPlayersViewForChampion(name);
   | _ => ShowHome
   };
 
@@ -92,13 +92,18 @@ let make = (~allOneTricks, ~players, ~areImagesLoaded, _children) => {
       areChampionPanesMerged: false,
       region: "all",
       regions: Array.copy(Constants.regions),
-      shouldShowChampionIcons: false, /* temp: false */
       areImagesLoaded: false
     },
     playersView: {
       sortKey: WINRATE,
       shouldSortReverse: false,
-      currentChampion: ""
+      currentChampion:
+        switch (
+          ReasonReact.Router.dangerouslyGetInitialUrl().path: list(string)
+        ) {
+        | ["champions", name] => name
+        | _ => ""
+        }
     },
     router: {
       page:
@@ -205,6 +210,20 @@ let make = (~allOneTricks, ~players, ~areImagesLoaded, _children) => {
       | WINRATE => "WINRATE"
       | NONE => "NONE"
       };
+    let mainComponent =
+      switch self.state.router.page {
+      | PLAYERS_VIEW =>
+        <PlayersView
+          players
+          goBack=(_event => ReasonReact.Router.push(""))
+          champ=self.state.playersView.currentChampion
+          show=true
+          onSort=tempOnSort
+          sortKey=(sortKeyToStr(self.state.playersView.sortKey))
+          sortReverse=self.state.playersView.shouldSortReverse
+        />
+      | _ => ReasonReact.nullElement
+      };
     <div className="one-tricks-re">
       <button className="router-test">
         (
@@ -217,15 +236,7 @@ let make = (~allOneTricks, ~players, ~areImagesLoaded, _children) => {
           )
         )
       </button>
-      <PlayersView
-        players
-        goBack=(_event => ReasonReact.Router.push(""))
-        champ=self.state.playersView.currentChampion
-        show=(! self.state.misc.shouldShowChampionIcons)
-        onSort=tempOnSort
-        sortKey=(sortKeyToStr(self.state.playersView.sortKey))
-        sortReverse=self.state.playersView.shouldSortReverse
-      />
+      mainComponent
     </div>;
     /*
      if (areImagesLoaded) {
