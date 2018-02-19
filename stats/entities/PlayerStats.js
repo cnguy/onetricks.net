@@ -47,7 +47,7 @@ class _PlayerStats {
     }
 
     doesNotContainMatch(matchID) {
-        return !this.containsMatch(matchID)
+        return this.containsMatch(matchID)
     }
 
     asObject() {

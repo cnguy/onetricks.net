@@ -57,8 +57,6 @@ const processMatch = playerStats => match => {
 }
 const inPlatform = region => ({ platformId: platformID }) =>
     platformID.toLowerCase() === asPlatformID(region)
-const doesNotContainMatch = playerStats => ({ gameId: gameID }) =>
-    !playerStats.containsMatch(gameID)
 
 const store = json => {
     console.log('writing to stats.json')
@@ -144,7 +142,7 @@ const main = async () => {
                 const fullMatchlist = matchlist.matches
                     .concat(rest)
                     .filter(inPlatform(region))
-                    .filter(playerStats.doesNotContainMatch)
+                    .filter(matchID => playerStats.doesNotContainMatch(matchID))
 
                 const matches = await MatchlistKaynHelper.rawMatchlistToMatches(
                     kayn,
