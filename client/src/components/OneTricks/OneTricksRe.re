@@ -81,7 +81,7 @@ let urlToAction = (path, search) =>
   | _ => ShowHome
   };
 
-let make = (~allOneTricks, ~players, ~areImagesLoaded, _children) => {
+let make = (~allOneTricks, ~getPlayers, ~areImagesLoaded, _children) => {
   ...component,
   initialState: () => {
     championPane: {
@@ -124,8 +124,7 @@ let make = (~allOneTricks, ~players, ~areImagesLoaded, _children) => {
                       page: HOME
                     }
                   })
-    | ShowPlayersViewForChampion(name) =>
-      Js.log("Show players view for " ++ name);
+    | ShowPlayersViewForChampion(name) => {
       ReasonReact.Update({
         ...state,
         router: {
@@ -136,6 +135,7 @@ let make = (~allOneTricks, ~players, ~areImagesLoaded, _children) => {
           currentChampion: name
         }
       });
+    }
     | ShowPlayer(summonerID) =>
       Js.log(summonerID);
       ReasonReact.Update({
@@ -184,7 +184,6 @@ let make = (~allOneTricks, ~players, ~areImagesLoaded, _children) => {
   ],
   render: self => {
     Js.log(self.state);
-    Js.log(players);
     let tempOnSort = str =>
       self.send(
         SetSortKey(
@@ -213,6 +212,15 @@ let make = (~allOneTricks, ~players, ~areImagesLoaded, _children) => {
     let mainComponent =
       switch self.state.router.page {
       | PLAYERS_VIEW =>
+        let currentChampion: string = self.state.playersView.currentChampion;
+        let target = List.filter(
+          (el: Types.oneTrick) => {
+            Utils.parseChampionNameFromRoute(el##champion) === currentChampion;
+          }
+        ,Array.to_list(allOneTricks));
+        let players: array(Types.player) = if (List.length(target) === 1) {
+          Array.of_list(target)[0]##players;
+        } else { [||]; };
         <PlayersView
           players
           goBack=(_event => ReasonReact.Router.push(""))
@@ -262,7 +270,7 @@ let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(
       ~allOneTricks=jsProps##allOneTricks,
-      ~players=jsProps##players,
+      ~getPlayers=jsProps##getPlayers,
       ~areImagesLoaded=jsProps##areImagesLoaded,
       jsProps##children
     )

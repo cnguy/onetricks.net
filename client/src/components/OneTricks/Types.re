@@ -9,3 +9,9 @@ type player = {
   "wins": int,
   "_id": int
 };
+
+type oneTrick = {
+  .
+  "champion": string,
+  "players": array(player)
+}

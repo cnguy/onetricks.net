@@ -292,6 +292,7 @@ const OneTricks = enhance(
         renderSpinner,
         createChampPanesHolder,
         onSort,
+        getPlayers,
         ...props
     }) => {
         let tmp = { ...all }
@@ -371,12 +372,21 @@ const OneTricks = enhance(
             }
         }
 
+        // ReasonML lists/arrays must have the same type, so _all breaks because it is of type [string, Types.player].
+        // Parse it for now. :)
+        const reasonableAll = _all.map(([championName, playersArray]) => {
+            return {
+                champion: championName,
+                players: playersArray,
+            };
+        });
+
         return (
             <div className="container">
                 <OneTricksRe
                     areImagesLoaded={props.imagesLoaded}
-                    allOneTricks={_all}
-                    players={players}
+                    allOneTricks={reasonableAll}
+                    getPlayers={getPlayers}
                 />
                 <div className="OneTricks">
                     <Header />
