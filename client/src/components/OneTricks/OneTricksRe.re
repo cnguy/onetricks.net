@@ -227,7 +227,7 @@ let make = (~allOneTricks, ~getPlayers, ~areImagesLoaded, _children) => {
           };
         <PlayersView
           players
-          goBack=(_event => ReasonReact.Router.push(""))
+          goBack=(_event => ReasonReact.Router.push("/"))
           champ=self.state.playersView.currentChampion
           show=true
           onSort=tempOnSort
