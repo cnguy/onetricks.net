@@ -124,7 +124,7 @@ let make = (~allOneTricks, ~getPlayers, ~areImagesLoaded, _children) => {
                       page: HOME
                     }
                   })
-    | ShowPlayersViewForChampion(name) => {
+    | ShowPlayersViewForChampion(name) =>
       ReasonReact.Update({
         ...state,
         router: {
@@ -134,8 +134,7 @@ let make = (~allOneTricks, ~getPlayers, ~areImagesLoaded, _children) => {
           ...state.playersView,
           currentChampion: name
         }
-      });
-    }
+      })
     | ShowPlayer(summonerID) =>
       Js.log(summonerID);
       ReasonReact.Update({
@@ -213,14 +212,19 @@ let make = (~allOneTricks, ~getPlayers, ~areImagesLoaded, _children) => {
       switch self.state.router.page {
       | PLAYERS_VIEW =>
         let currentChampion: string = self.state.playersView.currentChampion;
-        let target = List.filter(
-          (el: Types.oneTrick) => {
-            Utils.parseChampionNameFromRoute(el##champion) === currentChampion;
-          }
-        ,Array.to_list(allOneTricks));
-        let players: array(Types.player) = if (List.length(target) === 1) {
-          Array.of_list(target)[0]##players;
-        } else { [||]; };
+        let target =
+          List.filter(
+            (el: Types.oneTrick) =>
+              Utils.parseChampionNameFromRoute(el##champion)
+              === currentChampion,
+            Array.to_list(allOneTricks)
+          );
+        let players: array(Types.player) =
+          if (List.length(target) === 1) {
+            Array.of_list(target)[0]##players;
+          } else {
+            [||];
+          };
         <PlayersView
           players
           goBack=(_event => ReasonReact.Router.push(""))
@@ -229,7 +233,7 @@ let make = (~allOneTricks, ~getPlayers, ~areImagesLoaded, _children) => {
           onSort=tempOnSort
           sortKey=(sortKeyToStr(self.state.playersView.sortKey))
           sortReverse=self.state.playersView.shouldSortReverse
-        />
+        />;
       | _ => ReasonReact.nullElement
       };
     <div className="one-tricks-re">
