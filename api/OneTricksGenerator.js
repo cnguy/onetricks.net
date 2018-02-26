@@ -57,7 +57,7 @@ const regionsCompleted = {
 }
 
 // temp
-const isOneTrick = (otGames, total) => otGames / total >= 0.35
+const isOneTrick = (otGames, total) => otGames / total >= 0.6
 // 0.45 works for accurate stats + large number of games
 
 const getLeagueByRank = async (region, rank) => {

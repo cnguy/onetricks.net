@@ -81,7 +81,7 @@ let urlToAction = (path, search) =>
   | _ => ShowHome
   };
 
-let make = (~allOneTricks, ~getPlayers, ~areImagesLoaded, _children) => {
+let make = (~allOneTricks, ~areImagesLoaded, _children) => {
   ...component,
   initialState: () => {
     championPane: {
@@ -237,7 +237,9 @@ let make = (~allOneTricks, ~getPlayers, ~areImagesLoaded, _children) => {
       | _ => ReasonReact.nullElement
       };
     <div className="one-tricks-re">
-      <button className="router-test">
+      <button
+        className="router-test"
+        onClick=(_event => ReasonReact.Router.push("/champions/shaco"))>
         (
           ReasonReact.stringToElement(
             switch self.state.router.page {
@@ -274,7 +276,6 @@ let default =
   ReasonReact.wrapReasonForJs(~component, jsProps =>
     make(
       ~allOneTricks=jsProps##allOneTricks,
-      ~getPlayers=jsProps##getPlayers,
       ~areImagesLoaded=jsProps##areImagesLoaded,
       jsProps##children
     )

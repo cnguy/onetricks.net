@@ -378,8 +378,8 @@ const OneTricks = enhance(
             return {
                 champion: championName,
                 players: playersArray,
-            };
-        });
+            }
+        })
 
         return (
             <div className="container">
