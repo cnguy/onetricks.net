@@ -42,11 +42,11 @@ import {
     executeConditionalCollection,
 } from '../../helpers/dispatchHelpers'
 import renderOnCondition from '../../helpers/renderOnCondition'
-import createFetchPlayersUrl from '../../helpers/createFetchPlayersUrl'
 
 import DEFAULT_REGIONS from '../../constants/regions'
 import RANKS from '../../constants/ranks'
 import REGIONS_TEXT from '../../constants/regionsText'
+import FETCH_PLAYERS_URL from '../../helpers/fetchPlayersUrl'
 
 let numOfImagesLeft = 0 // Performance :)
 
@@ -138,12 +138,6 @@ const setDisplayValue = ({ imagesLoaded }) => () =>
 const onChange = ({ setSearchKey }) => e =>
     setSearchKey(e.target.value.toLowerCase())
 
-const fetchPlayers = ({ makeCompact }) => args =>
-    // Perf.start();
-    fetch(createFetchPlayersUrl(args))
-        .then(r => r.json())
-        .then(r => makeCompact(r))
-
 const getPlayers = ({ setPlayers, setChampionName, togglePane }) => tuple => {
     togglePane()
     const [array, champion] = tuple
@@ -182,8 +176,6 @@ const generateChampPaneUtility = ({
         setRegionFilter={setRegionFilter}
     />
 )
-
-const forcePlayersUpdate = ({ fetchPlayers }) => args => fetchPlayers(args)
 
 const createChampPanesHolder = ({
     advFilter,
@@ -259,17 +251,14 @@ const enhance = compose(
         setDisplayValue,
         onChange,
     }),
-    withHandlers({ fetchPlayers, getPlayers, generateChampPaneUtility }),
-    withHandlers({ forcePlayersUpdate, createChampPanesHolder }),
+    withHandlers({ getPlayers, generateChampPaneUtility }),
+    withHandlers({ createChampPanesHolder }),
     lifecycle({
-        componentDidMount() {
-            const {
-                advFilter,
-                forcePlayersUpdate,
-                regions,
-                region,
-            } = this.props
-            forcePlayersUpdate(advFilter ? regions : region)
+        async componentDidMount() {
+            const { makeCompact } = this.props
+            const res = await fetch(FETCH_PLAYERS_URL)
+            const json = await res.json()
+            makeCompact(json)
         },
     }),
 )
@@ -297,24 +286,16 @@ const OneTricks = enhance(
     }) => {
         let tmp = { ...all }
         const keys = Object.keys(tmp)
-        if (advFilter) {
-            // regions
-            keys.forEach(key => {
+        keys.forEach(key => {
+            if (advFilter) {
                 tmp[key] = tmp[key].filter(
                     el => regions.indexOf(el.region) !== -1,
                 )
-            })
-        } else {
-            // region
-            keys.forEach(key => {
-                if (region !== 'all')
+            } else {
+                if (region != 'all')
                     tmp[key] = tmp[key].filter(el => el.region === region)
-            })
-        }
-        keys.forEach(key => {
-            if (tmp[key].length === 0) {
-                delete tmp[key]
             }
+            if (tmp[key].length === 0) delete tmp[key]
         })
 
         let sortedPlayers = new Map()

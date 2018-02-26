@@ -91,7 +91,28 @@ let make = (~allOneTricks, ~areImagesLoaded, _children) => {
     misc: {
       areChampionPanesMerged: false,
       region: "all",
-      regions: Array.copy(Constants.regions),
+      regions:
+        switch (
+          ReasonReact.Router.dangerouslyGetInitialUrl().path,
+          ReasonReact.Router.dangerouslyGetInitialUrl().search
+        ) {
+        | (["champions", name], "") => Array.copy(Constants.regions)
+        | (["champions", name], csvRegions) =>
+          Js.log("search...");
+          Js.log(csvRegions);
+          Js.log("search...");
+          let splitPoint = 7; /* length of word `regions` */
+          let pre = String.sub(csvRegions, 0, splitPoint);
+          let post = Js.String.substr(splitPoint + 1, csvRegions);
+          if (pre === "regions") {
+            let splitted = Js.String.splitByRe(Js.Re.fromString(","), post);
+            Js.log(splitted);
+            splitted;
+          } else {
+            Array.copy(Constants.regions);
+          };
+        | _ => Array.copy(Constants.regions)
+        },
       areImagesLoaded: false
     },
     playersView: {
@@ -134,7 +155,7 @@ let make = (~allOneTricks, ~areImagesLoaded, _children) => {
           ...state.playersView,
           currentChampion: name
         }
-      })
+      });
     | ShowPlayer(summonerID) =>
       Js.log(summonerID);
       ReasonReact.Update({
@@ -182,7 +203,7 @@ let make = (~allOneTricks, ~areImagesLoaded, _children) => {
     )
   ],
   render: self => {
-    Js.log(self.state);
+    /* Js.log(self.state); */
     let tempOnSort = str =>
       self.send(
         SetSortKey(
