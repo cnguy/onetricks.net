@@ -79,20 +79,6 @@ const main = async () => {
             ttls: {
                 [METHOD_NAMES.MATCH.GET_MATCH]: 1000 * 60 * 5,
             },
-            /*
-            cache: new RedisCache({
-                host: 'redis',
-                port: 6379,
-                keyPrefix: 'kayn',
-            }),
-            ttls: {
-                [METHOD_NAMES.SUMMONER.GET_BY_SUMMONER_ID]: 1000 * 60 * 60 * 60,
-                [METHOD_NAMES.SUMMONER.GET_BY_ACCOUNT_ID]: 1000 * 60 * 60 * 60,
-                [METHOD_NAMES.MATCH.GET_MATCH]:
-                    1000 * 60 * 60 * 60 * 60 * 60 * 60 * 60 * 60,
-                [METHOD_NAMES.MATCH.GET_MATCHLIST]: 1000 * 60 * 60 * 24,
-                [METHOD_NAMES.MATCH.GET_RECENT_MATCHLIST]: 1000 * 60 * 60 * 25,
-            },*/
         },
     })
 

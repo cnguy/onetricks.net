@@ -29,22 +29,6 @@ const kayn = Kayn()({
         numberOfRetriesBeforeAbort: 3,
         delayBeforeRetry: 3000,
     },
-    cacheOptions: {
-        cache: new RedisCache({
-            host: 'redis',
-            port: 6379,
-            keyPrefix: 'kayn',
-        }),
-        ttls: {
-            [METHOD_NAMES.SUMMONER.GET_BY_SUMMONER_ID]: 1000 * 60 * 60 * 60,
-            [METHOD_NAMES.SUMMONER.GET_BY_ACCOUNT_ID]: 1000 * 60 * 60 * 60,
-            [METHOD_NAMES.MATCH.GET_RECENT_MATCHLIST]: 1000 * 60 * 60 * 60,
-            [METHOD_NAMES.MATCH.GET_MATCH]:
-                1000 * 60 * 60 * 60 * 60 * 60 * 60 * 60 * 60,
-            [METHOD_NAMES.STATIC.GET_CHAMPION_BY_ID]: 9999999999,
-            [METHOD_NAMES.CHAMPION.GET_CHAMPIONS]: 9999999999,
-        },
-    },
 })
 
 // regionsCompleted is simply used for debugging purposes.
