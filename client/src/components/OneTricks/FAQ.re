@@ -31,7 +31,7 @@ let qas = [
   )
 ];
 
-let make = () => {
+let make = _children => {
   ...component,
   render: _self =>
     <div className="faq">

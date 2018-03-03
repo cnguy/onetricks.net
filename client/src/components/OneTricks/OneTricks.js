@@ -342,52 +342,31 @@ const OneTricks = enhance(
             if (merged) {
                 _all = _all.filter(FILTERS.search(searchKey))
             } else {
-                if (_challengers) {
-                    _challengers = _challengers.filter(
-                        FILTERS.search(searchKey),
-                    )
-                }
-                if (_masters) {
-                    _masters = _masters.filter(FILTERS.search(searchKey))
-                }
+                _challengers = _challengers.filter(FILTERS.search(searchKey))
+                _masters = _masters.filter(FILTERS.search(searchKey))
             }
         }
 
         // ReasonML lists/arrays must have the same type, so _all breaks because it is of type [string, Types.player].
         // Parse it for now. :)
-        const reasonableAll = _all.map(([championName, playersArray]) => {
-            return {
-                champion: championName,
-                players: playersArray,
-            }
-        })
+        const reasonableAll = _all.map(([championName, playersArray]) => ({
+            champion: championName,
+            players: playersArray,
+        }))
 
         return (
             <div className="container">
                 <OneTricksRe
                     areImagesLoaded={props.imagesLoaded}
                     allOneTricks={reasonableAll}
-                    getPlayers={getPlayers}
                 />
                 <div className="OneTricks">
-                    <Header />
-                    <PlayersView
-                        players={players}
-                        goBack={togglePane}
-                        champ={champ}
-                        show={!showChamps}
-                        onSort={onSort}
-                        sortKey={sortKey}
-                        sortReverse={sortReverse}
-                    />
                     <div className="champs-pane fade-in">
                         {generateChampPaneUtility()}
                         {renderSpinner()}
                         {createChampPanesHolder(_challengers, _masters, _all)}
                     </div>
                 </div>
-                <FAQ />
-                <Copyright />
             </div>
         )
     },

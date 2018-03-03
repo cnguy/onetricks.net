@@ -277,6 +277,7 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
       | _ => ReasonReact.nullElement
       };
     <div className="one-tricks-re">
+      <Header />
       <button
         className="router-test"
         onClick=(_event => ReasonReact.Router.push("/champions/shaco"))>
@@ -291,6 +292,8 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
         )
       </button>
       mainComponent
+      <FAQ />
+      <Copyright />
     </div>;
     /*
      if (areImagesLoaded) {
