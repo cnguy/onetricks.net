@@ -19,6 +19,7 @@ type action =
   | ShowPlayer(int)
   /* misc actions */
   | ResetSearchKey
+  | SetRegion(string)
   | SetSearchKey(string)
   | SetSortKey(sort)
   | ToggleMerge
@@ -164,6 +165,22 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           page: PLAYER
         }
       });
+    | SetRegion(value) =>
+      ReasonReact.Update({
+        ...state,
+        misc: {
+          ...state.misc,
+          region: value
+        }
+      })
+    | SetSearchKey(value) =>
+      ReasonReact.Update({
+        ...state,
+        championPane: {
+          ...state.championPane,
+          searchKey: String.lowercase(value)
+        }
+      })
     | SetSortKey(sortKey) =>
       ReasonReact.Update({
         ...state,
@@ -291,27 +308,39 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           )
         )
       </button>
+      <ChampionPaneUtilities
+        shouldShowChampions=true
+        areChampionPanesMerged=self.state.misc.areChampionPanesMerged
+        isMultipleRegionFilterOn=self.state.championPane.
+                                   isMultipleRegionFilterOn
+        searchKey=self.state.championPane.searchKey
+        resetSearchKey=(_event => self.send(SetSearchKey("")))
+        regions=self.state.misc.regions
+        toggleMerge=(_event => ())
+        onSearchKeyChange=(
+          event =>
+            self.send(
+              SetSearchKey(
+                ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value
+              )
+            )
+        )
+        region=self.state.misc.region
+        addRegion=(_event => ())
+        handleToggleAdvancedFilter=(_event => ())
+        setRegionFilter=(
+          event =>
+            self.send(
+              SetRegion(
+                ReactDOMRe.domElementToObj(ReactEventRe.Form.target(event))##value
+              )
+            )
+        )
+      />
       mainComponent
       <FAQ />
       <Copyright />
     </div>;
-    /*
-     if (areImagesLoaded) {
-       <div className="OneTricksRe">
-         <button onClick=(_event => ReasonReact.Router.push(""))>
-           (ReasonReact.stringToElement("Simple Button"))
-         </button>
-         <button
-           onClick=(_event => ReasonReact.Router.push("/champions/shaco"))>
-           (ReasonReact.stringToElement("Test"))
-         </button>
-         <button onClick=(_event => ReasonReact.Router.push("/player/50"))>
-           (ReasonReact.stringToElement("Some Player Button"))
-         </button>
-       </div>;
-     } else {
-       ReasonReact.nullElement;
-     };*/
   }
 };
 
