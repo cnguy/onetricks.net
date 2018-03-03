@@ -77,42 +77,71 @@ let urlToAction = (path, search) =>
   switch (path, search) {
   | ([""], "") => ShowHome
   | (["player", id], "") => ShowPlayer(int_of_string(id))
-  | (["champions", name], "") =>
+  | (["champions", name], _) =>
     Js.log("sending");
     ShowPlayersViewForChampion(name);
   | _ => ShowHome
   };
 
+let splitRegionQuery = csvRegions => {
+  let splitPoint = 7; /* length of word `regions` */
+  let pre = String.sub(csvRegions, 0, splitPoint);
+  let post = Js.String.substr(splitPoint + 1, csvRegions);
+  if (pre === "regions") {
+    let splitted = Js.String.splitByRe(Js.Re.fromString(","), post);
+    Js.log(splitted);
+    splitted;
+  } else {
+    Array.copy(Constants.regions);
+  };
+};
+
 let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) => {
   ...component,
   initialState: () => {
     championPane: {
-      isMultipleRegionFilterOn: false,
+      isMultipleRegionFilterOn:
+        switch (
+          ReasonReact.Router.dangerouslyGetInitialUrl().path,
+          ReasonReact.Router.dangerouslyGetInitialUrl().search
+        ) {
+        | (["champions", name], csvRegions) =>
+          let regions = splitRegionQuery(csvRegions);
+          Array.length(regions) > 1;
+        | _ => false
+        },
       searchKey: ""
     },
     misc: {
       areChampionPanesMerged: false,
-      region: "all",
+      region:
+        switch (
+          ReasonReact.Router.dangerouslyGetInitialUrl().path,
+          ReasonReact.Router.dangerouslyGetInitialUrl().search
+        ) {
+        | (["champions", name], "") => "all"
+        | (["champions", name], csvRegions) =>
+          let splitted = splitRegionQuery(csvRegions);
+          let region = splitted[0];
+          if (Array.length(splitted) == 1
+              && Constants.regions
+              |> Array.to_list
+              |> List.mem(region)) {
+            region;
+          } else if (Constants.regions |> Array.to_list |> List.mem(region)) {
+            "all"; /* compiler */
+          } else {
+            ReasonReact.Router.push("/champions/" ++ name);
+            "all";
+          };
+        },
       regions:
         switch (
           ReasonReact.Router.dangerouslyGetInitialUrl().path,
           ReasonReact.Router.dangerouslyGetInitialUrl().search
         ) {
         | (["champions", name], "") => Array.copy(Constants.regions)
-        | (["champions", name], csvRegions) =>
-          Js.log("search...");
-          Js.log(csvRegions);
-          Js.log("search...");
-          let splitPoint = 7; /* length of word `regions` */
-          let pre = String.sub(csvRegions, 0, splitPoint);
-          let post = Js.String.substr(splitPoint + 1, csvRegions);
-          if (pre === "regions") {
-            let splitted = Js.String.splitByRe(Js.Re.fromString(","), post);
-            Js.log(splitted);
-            splitted;
-          } else {
-            Array.copy(Constants.regions);
-          };
+        | (["champions", name], csvRegions) => splitRegionQuery(csvRegions)
         | _ => Array.copy(Constants.regions)
         },
       areImagesLoaded: false
