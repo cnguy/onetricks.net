@@ -262,19 +262,26 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
       allOneTricks
       |> Array.to_list
       |> List.map(el => {
-           let newPlayers: list(Types.player) =
-             el##players
-             |> Array.to_list
-             |> List.filter((player: Types.player) =>
-                  self.state.misc.regions
-                  |> Array.to_list
-                  |> List.mem(player##region)
-                );
-           let result = {
-             "players": Array.of_list(newPlayers),
-             "champion": el##champion
-           };
-           result;
+           let tmp = el##players |> Array.to_list;
+           let newPlayers =
+             if (! self.state.championPane.isMultipleRegionFilterOn
+                 && self.state.misc.region == "all") {
+               /* optimization */
+               tmp;
+             } else {
+               List.filter(
+                 (player: Types.player) =>
+                   if (! self.state.championPane.isMultipleRegionFilterOn) {
+                     self.state.misc.region == player##region;
+                   } else {
+                     self.state.misc.regions
+                     |> Array.to_list
+                     |> List.mem(player##region);
+                   },
+                 tmp
+               );
+             };
+           {"players": Array.of_list(newPlayers), "champion": el##champion};
          })
       |> List.filter(el => Array.length(el##players) > 0)
       |> Array.of_list;
