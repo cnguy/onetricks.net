@@ -380,15 +380,21 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           } else {
             [||];
           };
-        <PlayersView
-          players
-          goBack=(_event => ReasonReact.Router.push("/"))
-          champ=self.state.playersView.currentChampion
-          show=true
-          onSort=tempOnSort
-          sortKey=(sortKeyToStr(self.state.playersView.sortKey))
-          sortReverse=self.state.playersView.shouldSortReverse
-        />;
+        if (Array.length(players) == 0) {
+          <div className="empty-results">
+            (Utils.ste("No champions found."))
+          </div>;
+        } else {
+          <PlayersView
+            players
+            goBack=(_event => ReasonReact.Router.push("/"))
+            champ=self.state.playersView.currentChampion
+            show=true
+            onSort=tempOnSort
+            sortKey=(sortKeyToStr(self.state.playersView.sortKey))
+            sortReverse=self.state.playersView.shouldSortReverse
+          />;
+        };
       | _ => ReasonReact.nullElement
       };
     <div className="one-tricks-re">
