@@ -199,6 +199,17 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
     | ToggleAdvancedFilter =>
       ReasonReact.Update({
         ...state,
+        misc: {
+          ...state.misc,
+          regions:
+            if (state.championPane.isMultipleRegionFilterOn) {
+              [||];
+            } else if (state.misc.region == "all") {
+              Array.copy(Constants.regions);
+            } else {
+              [|state.misc.region|];
+            }
+        },
         championPane: {
           ...state.championPane,
           isMultipleRegionFilterOn:
