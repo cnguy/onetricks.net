@@ -22,8 +22,9 @@ type action =
   | SetRegion(string)
   | SetSearchKey(string)
   | SetSortKey(sort)
-  | ToggleMerge
   | ToggleAdvancedFilter
+  | ToggleMerge
+  | ToggleRegion(string)
   | Nothing;
 
 /*
@@ -195,6 +196,32 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
             }
         }
       })
+    | ToggleAdvancedFilter =>
+      ReasonReact.Update({
+        ...state,
+        championPane: {
+          ...state.championPane,
+          isMultipleRegionFilterOn:
+            ! state.championPane.isMultipleRegionFilterOn
+        }
+      })
+    | ToggleRegion(region) =>
+      let newRegions =
+        if (state.misc.regions |> Array.to_list |> List.mem(region)) {
+          state.misc.regions
+          |> Array.to_list
+          |> List.filter(r => r !== region)
+          |> Array.of_list;
+        } else {
+          Array.append(state.misc.regions, [|region|]);
+        };
+      ReasonReact.Update({
+        ...state,
+        misc: {
+          ...state.misc,
+          regions: newRegions
+        }
+      });
     | _ => ReasonReact.Update(state)
     },
   subscriptions: self => [
@@ -326,8 +353,8 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
             )
         )
         region=self.state.misc.region
-        addRegion=(_event => ())
-        handleToggleAdvancedFilter=(_event => ())
+        toggleRegion=(regionValue => self.send(ToggleRegion(regionValue)))
+        handleToggleAdvancedFilter=(_event => self.send(ToggleAdvancedFilter))
         setRegionFilter=(
           event =>
             self.send(

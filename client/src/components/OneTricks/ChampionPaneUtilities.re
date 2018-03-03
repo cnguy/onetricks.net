@@ -10,7 +10,7 @@ let make =
       ~regions,
       ~toggleMerge,
       ~onSearchKeyChange,
-      ~addRegion,
+      ~toggleRegion,
       ~handleToggleAdvancedFilter,
       ~region,
       ~setRegionFilter,
@@ -34,7 +34,7 @@ let make =
           isMultipleRegionFilterOn
           regions
           toggleMultipleRegionFilter=handleToggleAdvancedFilter
-          toggleRegion=addRegion
+          toggleRegion
         />
       </div>;
     } else {
@@ -53,7 +53,7 @@ let default =
       ~regions=jsProps##regions,
       ~toggleMerge=jsProps##toggleMerge,
       ~onSearchKeyChange=jsProps##onChange,
-      ~addRegion=jsProps##addRegion,
+      ~toggleRegion=jsProps##toggleRegion,
       ~handleToggleAdvancedFilter=jsProps##handleToggleAdvancedFilter,
       ~region=jsProps##region,
       ~setRegionFilter=jsProps##setRegionFilter,
