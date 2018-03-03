@@ -28,10 +28,10 @@ let make = (~onSort, ~sortKey, ~activeSortKey, ~isReversed, children) => {
           "";
         }
       );
-    <a className=cn href="#" onClick=(_event => onSort(sortKey))>
+    <span className=cn onClick=(_event => onSort(sortKey))>
       (ReasonReact.stringToElement(children))
       (ReasonReact.stringToElement(" "))
       triangle
-    </a>;
+    </span>;
   }
 };

@@ -210,6 +210,10 @@ html {
   padding: 0.8em 0em;
 }
 
+.player-sort-link:hover {
+  cursor: pointer;
+}
+
 #src-code, .player-sort-link, .table-player-link {
   color: yellow;
   text-decoration: underline;
