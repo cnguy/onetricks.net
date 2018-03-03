@@ -105,6 +105,7 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           ReasonReact.Router.dangerouslyGetInitialUrl().path,
           ReasonReact.Router.dangerouslyGetInitialUrl().search
         ) {
+        | (["champions", name], "") => false
         | (["champions", name], csvRegions) =>
           let regions = splitRegionQuery(csvRegions);
           Array.length(regions) > 1;
@@ -246,6 +247,7 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
         }
       })
     | ToggleRegion(region) =>
+      Js.log("toggle query");
       let newRegions =
         if (state.misc.regions |> Array.to_list |> List.mem(region)) {
           state.misc.regions
@@ -255,6 +257,28 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
         } else {
           Array.append(state.misc.regions, [|region|]);
         };
+      let tmp: string =
+        newRegions
+        |> Array.fold_left((total, current) => total ++ "," ++ current, "");
+      let newRegionQuery =
+        if (String.length(tmp) > 0) {
+          String.sub(tmp, 1, String.length(tmp) - 1);
+        } else {
+          "";
+        };
+      Js.log("newRegionQuery");
+      Js.log(newRegionQuery);
+      ReasonReact.Router.push(
+        "/champions/"
+        ++ state.playersView.currentChampion
+        ++ (
+          if (String.length(newRegionQuery) > 0) {
+            "?regions=" ++ newRegionQuery;
+          } else {
+            "";
+          }
+        )
+      );
       ReasonReact.Update({
         ...state,
         misc: {
