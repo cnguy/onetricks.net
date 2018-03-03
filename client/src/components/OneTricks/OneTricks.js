@@ -45,7 +45,6 @@ import renderOnCondition from '../../helpers/renderOnCondition'
 
 import DEFAULT_REGIONS from '../../constants/regions'
 import RANKS from '../../constants/ranks'
-import REGIONS_TEXT from '../../constants/regionsText'
 import FETCH_PLAYERS_URL from '../../helpers/fetchPlayersUrl'
 
 let numOfImagesLeft = 0 // Performance :)
@@ -188,7 +187,8 @@ const createChampPanesHolder = ({
     handleImageLoad,
     getPlayers,
 }) => (challengers, masters, all) => {
-    const regionDisplayText = REGIONS_TEXT[region]
+    const regionDisplayText =
+        region === 'all' ? 'All Regions' : `the ${region} Server`
     const mulRegionsDisplayText =
         regions.length === DEFAULT_REGIONS.length
             ? 'All Regions'
