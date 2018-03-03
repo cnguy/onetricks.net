@@ -67,7 +67,7 @@ let urlToShownPage = (path, search) =>
   switch (path, search) {
   | ([""], "") => HOME
   | (["player", id], "") => PLAYER
-  | (["champions", name], "") => PLAYERS_VIEW
+  | (["champions", name], _) => PLAYERS_VIEW
   | _ => HOME
   };
 
@@ -81,7 +81,7 @@ let urlToAction = (path, search) =>
   | _ => ShowHome
   };
 
-let make = (~allOneTricks, ~areImagesLoaded, _children) => {
+let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) => {
   ...component,
   initialState: () => {
     championPane: {
@@ -155,7 +155,7 @@ let make = (~allOneTricks, ~areImagesLoaded, _children) => {
           ...state.playersView,
           currentChampion: name
         }
-      });
+      })
     | ShowPlayer(summonerID) =>
       Js.log(summonerID);
       ReasonReact.Update({
@@ -203,7 +203,26 @@ let make = (~allOneTricks, ~areImagesLoaded, _children) => {
     )
   ],
   render: self => {
-    /* Js.log(self.state); */
+    let regionatedOneTricks: array(Types.oneTrick) =
+      allOneTricks
+      |> Array.to_list
+      |> List.map(el => {
+           let newPlayers: list(Types.player) =
+             el##players
+             |> Array.to_list
+             |> List.filter((player: Types.player) =>
+                  self.state.misc.regions
+                  |> Array.to_list
+                  |> List.mem(player##region)
+                );
+           let result = {
+             "players": Array.of_list(newPlayers),
+             "champion": el##champion
+           };
+           result;
+         })
+      |> List.filter(el => Array.length(el##players) > 0)
+      |> Array.of_list;
     let tempOnSort = str =>
       self.send(
         SetSortKey(
@@ -238,7 +257,7 @@ let make = (~allOneTricks, ~areImagesLoaded, _children) => {
             (el: Types.oneTrick) =>
               Utils.parseChampionNameFromRoute(el##champion)
               === currentChampion,
-            Array.to_list(allOneTricks)
+            Array.to_list(regionatedOneTricks)
           );
         let players: array(Types.player) =
           if (List.length(target) === 1) {
