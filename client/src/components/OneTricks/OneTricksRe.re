@@ -9,6 +9,7 @@ type sort =
 
 type page =
   | HOME
+  | PLAYERS_VIEW_ALL_REGIONS_SINGLE_PICK
   | PLAYERS_VIEW
   | PLAYERS_VIEW_SINGLE_REGION
   | PLAYER;
@@ -16,6 +17,7 @@ type page =
 type action =
   /* router actions */
   | ShowHome
+  | ShowPlayersViewForChampionAllRegionsSinglePick(string)
   | ShowPlayersViewForChampion(string)
   | ShowPlayersViewForChampionSingleRegion(string, string)
   | ShowPlayer(int)
@@ -71,6 +73,7 @@ let urlToShownPage = (path, search) =>
   switch (path, search) {
   | ([""], _) => HOME
   | (["player", id], "") => PLAYER
+  | (["champions", name], "") => PLAYERS_VIEW_ALL_REGIONS_SINGLE_PICK
   | (["champions", name], _) => PLAYERS_VIEW
   | (["champions", name, region], "") => PLAYERS_VIEW_SINGLE_REGION
   | _ => HOME
@@ -80,6 +83,8 @@ let urlToAction = (path, search) =>
   switch (path, search) {
   | ([""], "") => ShowHome
   | (["player", id], "") => ShowPlayer(int_of_string(id))
+  | (["champions", name], "") =>
+    ShowPlayersViewForChampionAllRegionsSinglePick(name)
   | (["champions", name], _) =>
     Js.log("show just one players view");
     ShowPlayersViewForChampion(name);
@@ -217,6 +222,22 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
                       page: HOME
                     }
                   })
+    | ShowPlayersViewForChampionAllRegionsSinglePick(name) =>
+      ReasonReact.Update({
+        ...state,
+        router: {
+          ...state.router,
+          page: PLAYERS_VIEW_ALL_REGIONS_SINGLE_PICK
+        },
+        misc: {
+          ...state.misc,
+          region: "all"
+        },
+        playersView: {
+          ...state.playersView,
+          currentChampion: name
+        }
+      })
     | ShowPlayersViewForChampion(name) =>
       let csvRegions =
         splitRegionQuery(ReasonReact.Router.dangerouslyGetInitialUrl().search);
@@ -341,12 +362,13 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
     | ToggleAdvancedFilter =>
       if (state.championPane.isMultipleRegionFilterOn) {
         ReasonReact.Router.push(
-          "/champions"
+          "/champions/"
+          ++ state.playersView.currentChampion
           ++ (
             if (state.misc.region == "all") {
               "";
             } else {
-              "/" ++ state.playersView.currentChampion;
+              "/" ++ state.misc.region;
             }
           )
         );
@@ -524,6 +546,7 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
       };
     let mainComponent =
       switch self.state.router.page {
+      | PLAYERS_VIEW_ALL_REGIONS_SINGLE_PICK
       | PLAYERS_VIEW
       | PLAYERS_VIEW_SINGLE_REGION =>
         Js.log(self.state.misc.region);
