@@ -290,7 +290,13 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
         );
       } else {
         let tmp: string =
-          Array.copy(Constants.regions)
+          Array.copy(
+            if (state.misc.region == "all") {
+              Constants.regions;
+            } else {
+              [|state.misc.region|];
+            }
+          )
           |> Array.fold_left((total, current) => total ++ "," ++ current, "");
         let newRegionQuery =
           if (String.length(tmp) > 0) {
