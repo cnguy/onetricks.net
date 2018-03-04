@@ -27,11 +27,7 @@ import {
 
 import ContentPane from './ContentPane.bs'
 import ChampionPaneUtilities from './ChampionPaneUtilities.bs'
-import Copyright from './Copyright.bs'
-import FAQ from './FAQ.bs'
-import Header from './Header.bs'
 import Loader from './Loader.bs'
-import PlayersView from './PlayersView.bs'
 
 import OneTricksRe from './OneTricksRe.bs'
 
@@ -67,151 +63,17 @@ const makeCompact = ({ imagesLoaded, showChamps, setAll }) => list => {
     }
 }
 
-const setRegionFilter = ({ setRegion }) => e => setRegion(e.target.value)
-
-const addRegion = ({ regions, setRegions }) => region => {
-    const index = regions.indexOf(region)
-    return index !== -1
-        ? setRegions([...regions.slice(0, index), ...regions.slice(index + 1)])
-        : setRegions([...regions, region])
-}
-
-const togglePane = ({
-    showChamps,
-    setShowChamps,
-    resetSearchKey,
-    setSortKey,
-    setSortReverse,
-}) => () =>
-    executeCollection(
-        () => setShowChamps(!showChamps),
-        () => resetSearchKey(),
-        () => setSortKey('WINRATE'),
-        () => setSortReverse(false),
-    )
-
-const handleToggleAdvancedFilter = ({
-    advFilter,
-    toggleAdvancedFilter,
-    region,
-    setRegions,
-}) => () =>
-    executeConditionalCollection(
-        {
-            cond: advFilter,
-            onTrue: () => setRegions([]),
-        },
-        {
-            cond: region === 'all',
-            onTrue: () => setRegions(DEFAULT_REGIONS.slice()),
-            onFalse: () => setRegions([region]),
-        },
-        toggleAdvancedFilter(),
-    )
-
-const onSort = ({ sortKey, sortReverse, setSortKey, setSortReverse }) => key =>
-    executeCollection(
-        () => setSortKey(key),
-        () => setSortReverse(key === sortKey && !sortReverse),
-    )
-
 const handleImageLoad = ({ setImagesLoaded }) => () => {
     if (--numOfImagesLeft === 0) {
         // eslint-disable-line no-plusplus
         setImagesLoaded(true)
     }
 }
-
 const renderSpinner = ({ imagesLoaded }) => () =>
     renderOnCondition(!imagesLoaded, <Loader />)
 
-const renderEmptyResults = ({ searchKey }) => () =>
-    renderOnCondition(
-        searchKey,
-        <div className="empty-results">No champions found.</div>,
-    )
-
 const setDisplayValue = ({ imagesLoaded }) => () =>
     imagesLoaded ? 'inline' : 'none'
-
-const onChange = ({ setSearchKey }) => e =>
-    setSearchKey(e.target.value.toLowerCase())
-
-const getPlayers = ({ setPlayers, setChampionName, togglePane }) => tuple => {
-    togglePane()
-    const [array, champion] = tuple
-    const target = array.filter(l => l[0] === champion)
-    if (target.length === 1) {
-        setPlayers(target[0][1])
-        setChampionName(champion)
-    }
-}
-
-const generateChampPaneUtility = ({
-    showChamps,
-    merged,
-    advFilter,
-    searchKey,
-    resetSearchKey,
-    regions,
-    toggleMerge,
-    onChange,
-    addRegion,
-    handleToggleAdvancedFilter,
-    region,
-    setRegionFilter,
-}) => () => (
-    <ChampionPaneUtilities
-        showChamps={showChamps}
-        merged={merged}
-        advFilter={advFilter}
-        searchKey={searchKey}
-        regions={regions}
-        toggleMerge={toggleMerge}
-        onChange={onChange}
-        addRegion={addRegion}
-        handleToggleAdvancedFilter={handleToggleAdvancedFilter}
-        region={region}
-        setRegionFilter={setRegionFilter}
-    />
-)
-
-const createChampPanesHolder = ({
-    advFilter,
-    merged,
-    regions,
-    region,
-    showChamps,
-    setDisplayValue,
-    renderEmptyResults,
-    handleImageLoad,
-    getPlayers,
-}) => (challengers, masters, all) => {
-    const regionDisplayText =
-        region === 'all' ? 'All Regions' : `the ${region} Server`
-    const mulRegionsDisplayText =
-        regions.length === DEFAULT_REGIONS.length
-            ? 'All Regions'
-            : `${regions.join(', ').toUpperCase()} Server(s)`
-    const regionInfoText = advFilter ? mulRegionsDisplayText : regionDisplayText
-
-    return (
-        <ContentPane
-            isMultipleRegionsFilterOn={advFilter}
-            regions={regions}
-            all={all}
-            challengers={challengers || []}
-            masters={masters || []}
-            regionInfoText={regionInfoText}
-            showChamps={showChamps}
-            merged={merged}
-            handleImageLoad={handleImageLoad}
-            getPlayers={getPlayers}
-            renderEmptyResults={renderEmptyResults} // TODO: temp
-            setDisplayValue={setDisplayValue}
-        />
-    )
-}
 
 const enhance = compose(
     connect(
@@ -240,19 +102,10 @@ const enhance = compose(
     withState('imagesLoaded', 'setImagesLoaded', false),
     withHandlers({
         makeCompact,
-        setRegionFilter,
-        addRegion,
-        togglePane,
-        handleToggleAdvancedFilter,
-        onSort,
         handleImageLoad,
         renderSpinner,
-        renderEmptyResults,
         setDisplayValue,
-        onChange,
     }),
-    withHandlers({ getPlayers, generateChampPaneUtility }),
-    withHandlers({ createChampPanesHolder }),
     lifecycle({
         async componentDidMount() {
             const { makeCompact } = this.props
@@ -276,12 +129,7 @@ const OneTricks = enhance(
         showChamps,
         sortKey,
         sortReverse,
-        togglePane,
-        generateChampPaneUtility,
         renderSpinner,
-        createChampPanesHolder,
-        onSort,
-        getPlayers,
         ...props
     }) => {
         let tmp = { ...all }
@@ -292,7 +140,7 @@ const OneTricks = enhance(
                     el => regions.indexOf(el.region) !== -1,
                 )
             } else {
-                if (region != 'all')
+                if (region !== 'all')
                     tmp[key] = tmp[key].filter(el => el.region === region)
             }
             if (tmp[key].length === 0) delete tmp[key]
@@ -313,40 +161,6 @@ const OneTricks = enhance(
             _all.push([key, value])
         }
 
-        let _challengers
-        let _masters
-
-        if (!merged) {
-            // This can easily be refactored if we want to include Diamonds as well.
-            _challengers = cloneDeep(_all)
-            _masters = cloneDeep(_all)
-
-            for (let i = 0; i < _challengers.length; ++i) {
-                _challengers[i][1] = _challengers[i][1].filter(
-                    FILTERS.rank(RANKS.challenger),
-                )
-                if (_challengers[i][1].length === 0) _challengers.splice(i--, 1)
-            }
-            for (let i = 0; i < _masters.length; ++i) {
-                _masters[i][1] = _masters[i][1].filter(
-                    FILTERS.rank(RANKS.master),
-                )
-                if (_masters[i][1].length === 0) _masters.splice(i--, 1)
-            }
-
-            _challengers = SORTS.ONETRICKS(_challengers)
-            _masters = SORTS.ONETRICKS(_masters)
-        }
-
-        if (searchKey) {
-            if (merged) {
-                _all = _all.filter(FILTERS.search(searchKey))
-            } else {
-                _challengers = _challengers.filter(FILTERS.search(searchKey))
-                _masters = _masters.filter(FILTERS.search(searchKey))
-            }
-        }
-
         // ReasonML lists/arrays must have the same type, so _all breaks because it is of type [string, Types.player].
         // Parse it for now. :)
         const reasonableAll = _all.map(([championName, playersArray]) => ({
@@ -359,14 +173,7 @@ const OneTricks = enhance(
                 <OneTricksRe
                     areImagesLoaded={props.imagesLoaded}
                     allOneTricks={reasonableAll}
-                />
-                <div className="OneTricks">
-                    <div className="champs-pane fade-in">
-                        {generateChampPaneUtility()}
-                        {renderSpinner()}
-                        {createChampPanesHolder(_challengers, _masters, _all)}
-                    </div>
-                </div>
+                />>
             </div>
         )
     },

@@ -135,6 +135,7 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
             ReasonReact.Router.push("/champions/" ++ name);
             "all";
           };
+        | _ => "all"
         },
       regions:
         switch (
