@@ -236,6 +236,10 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
         playersView: {
           ...state.playersView,
           currentChampion: name
+        },
+        championPane: {
+          ...state.championPane,
+          isMultipleRegionFilterOn: false
         }
       })
     | ShowPlayersViewForChampion(name) =>
