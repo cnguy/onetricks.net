@@ -10,12 +10,14 @@ type sort =
 type page =
   | HOME
   | PLAYERS_VIEW
+  | PLAYERS_VIEW_SINGLE_REGION
   | PLAYER;
 
 type action =
   /* router actions */
   | ShowHome
   | ShowPlayersViewForChampion(string)
+  | ShowPlayersViewForChampionSingleRegion(string, string)
   | ShowPlayer(int)
   /* misc actions */
   | ResetSearchKey
@@ -70,6 +72,7 @@ let urlToShownPage = (path, search) =>
   | ([""], _) => HOME
   | (["player", id], "") => PLAYER
   | (["champions", name], _) => PLAYERS_VIEW
+  | (["champions", name, region], "") => PLAYERS_VIEW_SINGLE_REGION
   | _ => HOME
   };
 
@@ -78,8 +81,11 @@ let urlToAction = (path, search) =>
   | ([""], "") => ShowHome
   | (["player", id], "") => ShowPlayer(int_of_string(id))
   | (["champions", name], _) =>
-    Js.log("sending");
+    Js.log("show just one players view");
     ShowPlayersViewForChampion(name);
+  | (["champions", name, region], "") =>
+    Js.log("show players view for single");
+    ShowPlayersViewForChampionSingleRegion(name, region);
   | _ => ShowHome
   };
 
@@ -161,6 +167,12 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
             };
             "all";
           };
+        | (["champions", name, region], "") =>
+          if (Constants.regions |> Array.to_list |> List.mem(region)) {
+            region;
+          } else {
+            "all";
+          }
         | _ => "all"
         },
       regions:
@@ -182,6 +194,7 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           ReasonReact.Router.dangerouslyGetInitialUrl().path: list(string)
         ) {
         | ["champions", name] => name
+        | ["champions", name, region] => name
         | _ => ""
         }
     },
@@ -245,6 +258,25 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           isMultipleRegionFilterOn: ! (String.length(newRegionQuery) == 0)
         }
       });
+    | ShowPlayersViewForChampionSingleRegion(name, region) =>
+      ReasonReact.Update({
+        ...state,
+        router: {
+          page: PLAYERS_VIEW_SINGLE_REGION
+        },
+        playersView: {
+          ...state.playersView,
+          currentChampion: name
+        },
+        misc: {
+          ...state.misc,
+          region
+        },
+        championPane: {
+          ...state.championPane,
+          isMultipleRegionFilterOn: false
+        }
+      })
     | ShowPlayer(summonerID) =>
       Js.log(summonerID);
       ReasonReact.Update({
@@ -254,13 +286,36 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
         }
       });
     | SetRegion(value) =>
+      Js.log("setting region");
+      Js.log(value);
+      Js.log(state.playersView.currentChampion);
+      ReasonReact.Router.push(
+        "/champions/"
+        ++ state.playersView.currentChampion
+        ++ (
+          if (value == "all") {
+            "";
+          } else {
+            "/" ++ value;
+          }
+        )
+      );
       ReasonReact.Update({
         ...state,
+        router: {
+          ...state.router,
+          page:
+            if (value == "all") {
+              PLAYERS_VIEW;
+            } else {
+              PLAYERS_VIEW_SINGLE_REGION;
+            }
+        },
         misc: {
           ...state.misc,
           region: value
         }
-      })
+      });
     | SetSearchKey(value) =>
       ReasonReact.Update({
         ...state,
@@ -286,7 +341,14 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
     | ToggleAdvancedFilter =>
       if (state.championPane.isMultipleRegionFilterOn) {
         ReasonReact.Router.push(
-          "/champions/" ++ state.playersView.currentChampion
+          "/champions"
+          ++ (
+            if (state.misc.region == "all") {
+              "";
+            } else {
+              "/" ++ state.playersView.currentChampion;
+            }
+          )
         );
       } else {
         let tmp: string =
@@ -462,7 +524,9 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
       };
     let mainComponent =
       switch self.state.router.page {
-      | PLAYERS_VIEW =>
+      | PLAYERS_VIEW
+      | PLAYERS_VIEW_SINGLE_REGION =>
+        Js.log(self.state.misc.region);
         let players =
           extractPlayers(
             ~currentChampion=self.state.playersView.currentChampion,
@@ -502,6 +566,7 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
             | HOME => "Home"
             | PLAYERS_VIEW => "Players View"
             | PLAYER => "Player!"
+            | _ => ""
             }
           )
         )
