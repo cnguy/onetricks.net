@@ -7,7 +7,6 @@ import withState from 'recompose/withState'
 import withHandlers from 'recompose/withHandlers'
 import lifecycle from 'recompose/lifecycle'
 import Perf from 'react-addons-perf' // eslint-disable-line no-unused-vars
-import { cloneDeep } from 'lodash'
 
 import {
     resetSearchKey,

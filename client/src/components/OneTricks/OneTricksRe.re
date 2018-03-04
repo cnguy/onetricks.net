@@ -67,7 +67,7 @@ let component = ReasonReact.reducerComponent("OneTricksRe");
 
 let urlToShownPage = (path, search) =>
   switch (path, search) {
-  | ([""], "") => HOME
+  | ([""], _) => HOME
   | (["player", id], "") => PLAYER
   | (["champions", name], _) => PLAYERS_VIEW
   | _ => HOME
@@ -96,6 +96,20 @@ let splitRegionQuery = csvRegions => {
   };
 };
 
+let extractPlayers = (~currentChampion: string, ~listOfOneTricks) => {
+  let target =
+    List.filter(
+      (el: Types.oneTrick) =>
+        Utils.parseChampionNameFromRoute(el##champion) === currentChampion,
+      Array.to_list(listOfOneTricks)
+    );
+  if (List.length(target) === 1) {
+    Array.of_list(target)[0]##players;
+  } else {
+    [||];
+  };
+};
+
 let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) => {
   ...component,
   initialState: () => {
@@ -114,7 +128,7 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
       searchKey: ""
     },
     misc: {
-      areChampionPanesMerged: false,
+      areChampionPanesMerged: true,
       region:
         switch (
           ReasonReact.Router.dangerouslyGetInitialUrl().path,
@@ -247,6 +261,14 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
             ! state.championPane.isMultipleRegionFilterOn
         }
       })
+    | ToggleMerge =>
+      ReasonReact.Update({
+        ...state,
+        misc: {
+          ...state.misc,
+          areChampionPanesMerged: ! state.misc.areChampionPanesMerged
+        }
+      })
     | ToggleRegion(region) =>
       Js.log("toggle query");
       let newRegions =
@@ -367,20 +389,11 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
     let mainComponent =
       switch self.state.router.page {
       | PLAYERS_VIEW =>
-        let currentChampion: string = self.state.playersView.currentChampion;
-        let target =
-          List.filter(
-            (el: Types.oneTrick) =>
-              Utils.parseChampionNameFromRoute(el##champion)
-              === currentChampion,
-            Array.to_list(regionatedOneTricks)
+        let players =
+          extractPlayers(
+            ~currentChampion=self.state.playersView.currentChampion,
+            ~listOfOneTricks=regionatedOneTricks
           );
-        let players: array(Types.player) =
-          if (List.length(target) === 1) {
-            Array.of_list(target)[0]##players;
-          } else {
-            [||];
-          };
         if (Array.length(players) == 0) {
           <div className="empty-results">
             (Utils.ste("No champions found."))
@@ -421,7 +434,7 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
         searchKey=self.state.championPane.searchKey
         resetSearchKey=(_event => self.send(SetSearchKey("")))
         regions=self.state.misc.regions
-        toggleMerge=(_event => ())
+        toggleMerge=(_event => self.send(ToggleMerge))
         onSearchKeyChange=(
           event =>
             self.send(
