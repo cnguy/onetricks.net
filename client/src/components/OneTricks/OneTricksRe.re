@@ -83,20 +83,24 @@ let urlToAction = (path, search) =>
   | _ => ShowHome
   };
 
-let splitRegionQuery = csvRegions => {
-  let splitPoint = 7; /* length of word `regions` */
-  let pre = String.sub(csvRegions, 0, splitPoint);
-  let post = Js.String.substr(splitPoint + 1, csvRegions);
-  if (pre === "regions") {
-    let splitted = Js.String.splitByRe(Js.Re.fromString(","), post);
-    Js.log(splitted);
-    splitted;
+let splitRegionQuery = csvRegions =>
+  if (String.length(csvRegions) > 0) {
+    let splitPoint = 7; /* length of word `regions` */
+    let pre = String.sub(csvRegions, 0, splitPoint);
+    let post = Js.String.substr(splitPoint + 1, csvRegions);
+    if (pre === "regions") {
+      let splitted = Js.String.splitByRe(Js.Re.fromString(","), post);
+      Js.log(splitted);
+      splitted;
+    } else {
+      Array.copy(Constants.regions);
+    };
   } else {
-    Array.copy(Constants.regions);
+    [||];
   };
-};
 
-let extractPlayers = (~currentChampion: string, ~listOfOneTricks) => {
+let extractPlayers =
+    (~currentChampion: string, ~listOfOneTricks: array(Types.oneTrick)) => {
   let target =
     List.filter(
       (el: Types.oneTrick) =>
@@ -193,6 +197,28 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
                     }
                   })
     | ShowPlayersViewForChampion(name) =>
+      let csvRegions =
+        splitRegionQuery(ReasonReact.Router.dangerouslyGetInitialUrl().search);
+      Js.log("csvRegions");
+      Js.log(csvRegions);
+      let newRegions = csvRegions;
+      let tmp: string =
+        newRegions
+        |> Array.fold_left((total, current) => total ++ "," ++ current, "");
+      let newRegionQuery =
+        if (String.length(tmp) > 0) {
+          String.sub(tmp, 1, String.length(tmp) - 1);
+        } else {
+          "";
+        };
+      Js.log("newRegionQuery");
+      Js.log(newRegionQuery);
+      /*
+       if (String.length(newRegionQuery) == 0) {
+         ReasonReact.Router.push(
+           "/champions/" ++ state.playersView.currentChampion
+         );
+       };*/
       ReasonReact.Update({
         ...state,
         router: {
@@ -201,8 +227,12 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
         playersView: {
           ...state.playersView,
           currentChampion: name
+        },
+        misc: {
+          ...state.misc,
+          regions: newRegions
         }
-      })
+      });
     | ShowPlayer(summonerID) =>
       Js.log(summonerID);
       ReasonReact.Update({
@@ -316,6 +346,8 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
       () =>
         ReasonReact.Router.watchUrl(url => {
           Js.log("watching for URL");
+          Js.log(url.path);
+          Js.log(url.search);
           self.send(urlToAction(url.path, url.search));
         }),
       /*
@@ -396,7 +428,13 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           );
         if (Array.length(players) == 0) {
           <div className="empty-results">
-            (Utils.ste("No champions found."))
+            (
+              Utils.ste(
+                "No players found for the champion: "
+                ++ self.state.playersView.currentChampion
+                ++ "."
+              )
+            )
           </div>;
         } else {
           <PlayersView
