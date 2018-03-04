@@ -84,14 +84,18 @@ let urlToAction = (path, search) =>
   };
 
 let splitRegionQuery = csvRegions =>
-  if (String.length(csvRegions) > 0) {
+  if (String.length(csvRegions) > 7) {
     let splitPoint = 7; /* length of word `regions` */
     let pre = String.sub(csvRegions, 0, splitPoint);
     let post = Js.String.substr(splitPoint + 1, csvRegions);
     if (pre === "regions") {
       let splitted = Js.String.splitByRe(Js.Re.fromString(","), post);
       Js.log(splitted);
-      splitted;
+      if (Array.length(splitted) > 0) {
+        splitted;
+      } else {
+        [||];
+      };
     } else {
       Array.copy(Constants.regions);
     };
@@ -124,9 +128,11 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           ReasonReact.Router.dangerouslyGetInitialUrl().search
         ) {
         | (["champions", name], "") => false
-        | (["champions", name], csvRegions) =>
-          let regions = splitRegionQuery(csvRegions);
-          Array.length(regions) > 1;
+        | (["champions", name], csvRegions) => true
+        /*
+         let regions = splitRegionQuery(csvRegions);
+         Array.length(regions) > 0;
+         */
         | _ => false
         },
       searchKey: ""
@@ -150,7 +156,9 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           } else if (Constants.regions |> Array.to_list |> List.mem(region)) {
             "all"; /* compiler */
           } else {
-            ReasonReact.Router.push("/champions/" ++ name);
+            if (region != "none") {
+              ReasonReact.Router.push("/champions/" ++ name);
+            };
             "all";
           };
         | _ => "all"
@@ -231,6 +239,10 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
         misc: {
           ...state.misc,
           regions: newRegions
+        },
+        championPane: {
+          ...state.championPane,
+          isMultipleRegionFilterOn: ! (String.length(newRegionQuery) == 0)
         }
       });
     | ShowPlayer(summonerID) =>
@@ -272,6 +284,27 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
         }
       })
     | ToggleAdvancedFilter =>
+      if (state.championPane.isMultipleRegionFilterOn) {
+        ReasonReact.Router.push(
+          "/champions/" ++ state.playersView.currentChampion
+        );
+      } else {
+        let tmp: string =
+          Array.copy(Constants.regions)
+          |> Array.fold_left((total, current) => total ++ "," ++ current, "");
+        let newRegionQuery =
+          if (String.length(tmp) > 0) {
+            String.sub(tmp, 1, String.length(tmp) - 1);
+          } else {
+            "";
+          };
+        ReasonReact.Router.push(
+          "/champions/"
+          ++ state.playersView.currentChampion
+          ++ "?regions="
+          ++ newRegionQuery
+        );
+      };
       ReasonReact.Update({
         ...state,
         misc: {
@@ -290,7 +323,7 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           isMultipleRegionFilterOn:
             ! state.championPane.isMultipleRegionFilterOn
         }
-      })
+      });
     | ToggleMerge =>
       ReasonReact.Update({
         ...state,
@@ -307,6 +340,9 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           |> Array.to_list
           |> List.filter(r => r !== region)
           |> Array.of_list;
+        } else if (Array.length(state.misc.regions) == 1
+                   && state.misc.regions[0] == "none") {
+          [|region|];
         } else {
           Array.append(state.misc.regions, [|region|]);
         };
@@ -328,7 +364,7 @@ let make = (~allOneTricks: array(Types.oneTrick), ~areImagesLoaded, _children) =
           if (String.length(newRegionQuery) > 0) {
             "?regions=" ++ newRegionQuery;
           } else {
-            "";
+            "?regions=none";
           }
         )
       );
