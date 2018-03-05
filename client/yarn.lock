@@ -5840,6 +5840,10 @@ reason-react@^0.3.1:
     react ">=15.0.0 || >=16.0.0"
     react-dom ">=15.0.0 || >=16.0.0"
 
+reason-reroute@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/reason-reroute/-/reason-reroute-0.0.4.tgz#ea480951222da8059c739c645ee9b68860f27738"
+
 rechoir@^0.6.2:
   version "0.6.2"
   resolved "https://registry.yarnpkg.com/rechoir/-/rechoir-0.6.2.tgz#85204b54dba82d5742e28c96756ef43af50e3384"
