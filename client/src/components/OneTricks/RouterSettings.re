@@ -35,7 +35,11 @@ module RouterConfig = {
             |> List.map(Constants.regionFromString)
           | _ => []
           };
-        PLAYERS_VIEW_MULTIPLE_PICK(championName, regionsFromQuery);
+        if (regionsFromQuery |> List.mem(Constants.UNKNOWN)) {
+          NOT_FOUND;
+        } else {
+          PLAYERS_VIEW_MULTIPLE_PICK(championName, regionsFromQuery);
+        };
       } else {
         NOT_FOUND;
       }
