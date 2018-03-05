@@ -30,12 +30,9 @@ module RouterConfig = {
         let regionsFromQuery =
           switch pre {
           | "regions" =>
-            let splitted = Js.String.splitByRe(Js.Re.fromString(","), post);
-            if (Array.length(splitted) > 0) {
-              splitted |> Array.to_list |> List.map(Constants.regionFromString);
-            } else {
-              [];
-            };
+            Js.String.splitByRe(Js.Re.fromString(","), post)
+            |> Array.to_list
+            |> List.map(Constants.regionFromString)
           | _ => []
           };
         PLAYERS_VIEW_MULTIPLE_PICK(championName, regionsFromQuery);
