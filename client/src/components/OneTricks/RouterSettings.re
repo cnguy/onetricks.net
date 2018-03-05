@@ -45,5 +45,21 @@ module RouterConfig = {
       }
     | _ => NOT_FOUND
     };
-  /*    let routeToUrl = (route: route) =>();*/
+  let routeToUrl = (route: route) =>
+    switch route {
+    | HOME => "/"
+    | PLAYERS_VIEW_ALL_REGIONS_SINGLE_PICK(championName) =>
+      "/champions/" ++ championName
+    | PLAYERS_VIEW_SINGLE_REGION(championName, region) =>
+      "/champions/" ++ championName ++ "/" ++ Constants.regionToString(region)
+    | PLAYERS_VIEW_MULTIPLE_PICK_NO_REGION(championName) =>
+      "/champions/" ++ championName ++ "?region=none"
+    | PLAYERS_VIEW_MULTIPLE_PICK(championName, regions) =>
+      let regionsQuery =
+        regions
+        |> List.map(Constants.regionToString)
+        |> Constants.regionQueryToCsvList;
+      "/champions/" ++ championName ++ "?region=" ++ regionsQuery;
+    | NOT_FOUND => "/404"
+    };
 };

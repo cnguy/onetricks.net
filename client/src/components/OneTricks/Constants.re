@@ -64,3 +64,13 @@ let isValidRegion = (region: region) : bool => allRegions |> List.mem(region);
 
 let isValidRegionStr = (region: string) : bool =>
   allRegions |> List.mem(regionFromString(region));
+
+let regionQueryToCsvList = (regions: list(string)) : string => {
+  let tmp: string =
+    regions |> List.fold_left((total, current) => total ++ "," ++ current, "");
+  if (String.length(tmp) > 0) {
+    String.sub(tmp, 1, String.length(tmp) - 1);
+  } else {
+    "";
+  };
+};
