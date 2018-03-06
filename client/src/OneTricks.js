@@ -12,9 +12,9 @@ import {
     resetSearchKey,
     setSearchKey,
     toggleAdvancedFilter,
-} from '../../redux/championPane'
-import { toggleMerge } from '../../redux/misc'
-import { setSortKey, setSortReverse } from '../../redux/playersView'
+} from './redux/championPane'
+import { toggleMerge } from './redux/misc'
+import { setSortKey, setSortReverse } from './redux/playersView'
 
 import {
     advancedFilterSelector,
@@ -22,25 +22,23 @@ import {
     searchKeySelector,
     sortKeySelector,
     sortReverseSelector,
-} from '../../selectors'
+} from './selectors'
 
-import ContentPane from './ContentPane.bs'
-import ChampionPaneUtilities from './ChampionPaneUtilities.bs'
-import Loader from './Loader.bs'
+import Loader from './components/OneTricks/Loader.bs'
 
 import OneTricksRe from './OneTricksRe.bs'
 
-import FILTERS from '../../helpers/filters'
-import SORTS from '../../helpers/sorts'
+import FILTERS from './helpers/filters'
+import SORTS from './helpers/sorts'
 import {
     executeCollection,
     executeConditionalCollection,
-} from '../../helpers/dispatchHelpers'
-import renderOnCondition from '../../helpers/renderOnCondition'
+} from './helpers/dispatchHelpers'
+import renderOnCondition from './helpers/renderOnCondition'
 
-import DEFAULT_REGIONS from '../../constants/regions'
-import RANKS from '../../constants/ranks'
-import FETCH_PLAYERS_URL from '../../helpers/fetchPlayersUrl'
+import DEFAULT_REGIONS from './constants/regions'
+import RANKS from './constants/ranks'
+import FETCH_PLAYERS_URL from './helpers/fetchPlayersUrl'
 
 let numOfImagesLeft = 0 // Performance :)
 

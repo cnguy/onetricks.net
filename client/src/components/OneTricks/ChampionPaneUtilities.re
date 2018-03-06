@@ -2,7 +2,6 @@ let component = ReasonReact.statelessComponent("ChampionPaneUtilities");
 
 let make =
     (
-      ~shouldShowChampions,
       ~areChampionPanesMerged,
       ~isMultipleRegionFilterOn,
       ~searchKey,
@@ -18,45 +17,22 @@ let make =
     ) => {
   ...component,
   render: _self =>
-    if (shouldShowChampions) {
-      <div className="champs-pane-utility">
-        <Instructions />
-        <div className="merged-input">
-          <MergeSeparateBtn areChampionPanesMerged onClick=toggleMerge />
-          <RegionSelectMenu isMultipleRegionFilterOn region setRegionFilter />
-          <ChampionSearch
-            onChange=onSearchKeyChange
-            value=searchKey
-            resetSearchKey
-          />
-        </div>
-        <MultipleRegionsFilter
-          isMultipleRegionFilterOn
-          regions
-          toggleMultipleRegionFilter=handleToggleAdvancedFilter
-          toggleRegion
+    <div className="champs-pane-utility">
+      <Instructions />
+      <div className="merged-input">
+        <MergeSeparateBtn areChampionPanesMerged onClick=toggleMerge />
+        <RegionSelectMenu isMultipleRegionFilterOn region setRegionFilter />
+        <ChampionSearch
+          onChange=onSearchKeyChange
+          value=searchKey
+          resetSearchKey
         />
-      </div>;
-    } else {
-      ReasonReact.nullElement;
-    }
+      </div>
+      <MultipleRegionsFilter
+        isMultipleRegionFilterOn
+        regions
+        toggleMultipleRegionFilter=handleToggleAdvancedFilter
+        toggleRegion
+      />
+    </div>
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~shouldShowChampions=jsProps##showChamps,
-      ~areChampionPanesMerged=jsProps##merged,
-      ~isMultipleRegionFilterOn=jsProps##advFilter,
-      ~searchKey=jsProps##searchKey,
-      ~resetSearchKey=jsProps##resetSearchKey,
-      ~regions=jsProps##regions,
-      ~toggleMerge=jsProps##toggleMerge,
-      ~onSearchKeyChange=jsProps##onChange,
-      ~toggleRegion=jsProps##toggleRegion,
-      ~handleToggleAdvancedFilter=jsProps##handleToggleAdvancedFilter,
-      ~region=jsProps##region,
-      ~setRegionFilter=jsProps##setRegionFilter,
-      jsProps##children
-    )
-  );

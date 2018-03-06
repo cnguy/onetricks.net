@@ -2,7 +2,8 @@ let sanitize = a => String.trim(String.lowercase(a));
 
 let none = list => list;
 
-let namePredicate = (a: Types.player, b) => {
+let namePredicate = (a: JsTypes.player, b) => {
+
   let nameA = sanitize(a##name);
   let nameB = sanitize(b##name);
   if (nameA < nameB) {
@@ -14,7 +15,7 @@ let namePredicate = (a: Types.player, b) => {
   };
 };
 
-let rankPredicate = (a: Types.player, b) =>
+let rankPredicate = (a: JsTypes.player, b) =>
   if (a##rank < b##rank) {
     (-1);
   } else if (a##rank == b##rank) {
@@ -23,7 +24,7 @@ let rankPredicate = (a: Types.player, b) =>
     1;
   };
 
-let regionPredicate = (a: Types.player, b) =>
+let regionPredicate = (a: JsTypes.player, b) =>
   if (a##region < b##region) {
     (-1);
   } else if (a##region == b##region) {
@@ -32,7 +33,7 @@ let regionPredicate = (a: Types.player, b) =>
     1;
   };
 
-let winsPredicate = (a: Types.player, b) =>
+let winsPredicate = (a: JsTypes.player, b) =>
   if (a##wins < b##wins) {
     (-1);
   } else if (a##wins == b##wins) {
@@ -41,7 +42,7 @@ let winsPredicate = (a: Types.player, b) =>
     1;
   };
 
-let lossesPredicate = (a: Types.player, b) =>
+let lossesPredicate = (a: JsTypes.player, b) =>
   if (a##losses < b##losses) {
     (-1);
   } else if (a##losses == b##losses) {
@@ -50,7 +51,7 @@ let lossesPredicate = (a: Types.player, b) =>
     1;
   };
 
-let winRatePredicate = (a: Types.player, b) => {
+let winRatePredicate = (a: JsTypes.player, b) => {
   let winsAF = Pervasives.float_of_int(a##wins);
   let lossesAF = Pervasives.float_of_int(a##losses);
   let winsBF = Pervasives.float_of_int(b##wins);
@@ -67,17 +68,17 @@ let winRatePredicate = (a: Types.player, b) => {
   };
 };
 
-let name = (list: list(Types.player)) => List.sort(namePredicate, list);
+let name = (list: list(JsTypes.player)) => List.sort(namePredicate, list);
 
-let rank = (list: list(Types.player)) : list(Types.player) =>
+let rank = (list: list(JsTypes.player)) : list(JsTypes.player) =>
   List.sort(rankPredicate, list);
 
-let region = (list: list(Types.player)) : list(Types.player) =>
+let region = (list: list(JsTypes.player)) : list(JsTypes.player) =>
   List.sort(regionPredicate, list);
 
-let wins = (list: list(Types.player)) => List.sort(winsPredicate, list);
+let wins = (list: list(JsTypes.player)) => List.sort(winsPredicate, list);
 
-let losses = (list: list(Types.player)) => List.sort(lossesPredicate, list);
+let losses = (list: list(JsTypes.player)) => List.sort(lossesPredicate, list);
 
-let winRate = (list: list(Types.player)) : list(Types.player) =>
+let winRate = (list: list(JsTypes.player)) : list(JsTypes.player) =>
   List.sort(winRatePredicate, list);

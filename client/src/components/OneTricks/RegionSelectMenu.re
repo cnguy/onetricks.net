@@ -15,7 +15,7 @@ let make = (~isMultipleRegionFilterOn, ~region, ~setRegionFilter, _children) => 
                 <option value=region key=region>
                   (ReasonReact.stringToElement(String.uppercase(region)))
                 </option>,
-              Constants.regions
+              Region.list |> List.map(Region.toString) |> Array.of_list
             )
           )
         )

@@ -11,10 +11,9 @@ let mastersIcon: string = [%bs.raw
 let getRankIcon = (~rank) =>
   if (rank == "c") {
     challengerIcon;
-  } else
-    {
-      mastersIcon;
-    } /* Obviously not good if we have multiple ranks. */;
+  } else {
+    mastersIcon /* Obviously not good if we have multiple ranks. */;
+  };
 
 let getRankImage = rank =>
   <img className="player-rank-icon" src=(getRankIcon(~rank)) alt="rank" />;
@@ -33,7 +32,7 @@ let generateLink = (name, region, opgg, id) =>
     "http://www.lolking.net/summoner/" ++ region ++ "/" ++ id ++ "/" ++ name;
   };
 
-let make = (~player: Types.player, _children) => {
+let make = (~player: JsTypes.player, _children) => {
   ...component,
   render: _self =>
     <tr className="players-table-tr">

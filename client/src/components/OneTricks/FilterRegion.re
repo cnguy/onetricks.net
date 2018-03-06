@@ -1,6 +1,6 @@
 let component = ReasonReact.statelessComponent("FilterRegion");
 
-let allRegions = Constants.regions;
+let allRegions = Region.list |> Array.of_list |> Array.map(Region.toString);
 
 let regionsSplitPoint = 6;
 

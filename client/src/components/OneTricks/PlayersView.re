@@ -5,9 +5,9 @@ type winLosses = {
   losses: int
 };
 
-let getOverallWinRate = (players: list(Types.player)) =>
+let getOverallWinRate = (players: list(JsTypes.player)) =>
   List.fold_left(
-    (a, b: Types.player) => {
+    (a, b: JsTypes.player) => {
       wins: a.wins + b##wins,
       losses: a.losses + b##losses
     },
@@ -17,7 +17,7 @@ let getOverallWinRate = (players: list(Types.player)) =>
 
 let make =
     (
-      ~players: array(Types.player),
+      ~players: array(JsTypes.player),
       ~goBack,
       ~champ: string,
       ~show: bool,

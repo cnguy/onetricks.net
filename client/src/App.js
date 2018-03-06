@@ -1,6 +1,6 @@
 import React from 'react'
 
-import OneTricks from './components/OneTricks/OneTricks'
+import OneTricks from './OneTricks'
 
 const App = () => (
     <div className="App">
