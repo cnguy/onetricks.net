@@ -2,7 +2,7 @@ let component = ReasonReact.statelessComponent("Loader");
 
 let loaderPath: string = [%bs.raw
   {|
-  require("../../assets/misc/loading.svg")
+  require("../assets/misc/loading.svg")
 |}
 ];
 

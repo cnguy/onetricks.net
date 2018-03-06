@@ -24,7 +24,7 @@ import {
     sortReverseSelector,
 } from './selectors'
 
-import Loader from './components/OneTricks/Loader.bs'
+import Loader from './components/Loader.bs'
 
 import OneTricksRe from './OneTricksRe.bs'
 

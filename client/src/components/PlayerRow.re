@@ -1,11 +1,11 @@
 let component = ReasonReact.statelessComponent("PlayerRow");
 
 let challengerIcon: string = [%bs.raw
-  {| require('../../assets/rank-icons/challengers.png') |}
+  {| require('../assets/rank-icons/challengers.png') |}
 ];
 
 let mastersIcon: string = [%bs.raw
-  {| require('../../assets/rank-icons/masters.png') |}
+  {| require('../assets/rank-icons/masters.png') |}
 ];
 
 let getRankIcon = (~rank) =>

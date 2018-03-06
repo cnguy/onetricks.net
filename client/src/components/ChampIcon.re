@@ -3,9 +3,9 @@ let component = ReasonReact.statelessComponent("ChampIcon");
 let getIcon: string => string = [%bs.raw
   {| function (name) {
     try {
-      return require(`../../assets/champ-icons/min/${name.toLowerCase()}square-min.png`)
+      return require(`../assets/champ-icons/min/${name.toLowerCase()}square-min.png`)
     } catch (ex) {
-      return require('../../assets/champ-icons/min/questionmark.png')
+      return require('../assets/champ-icons/min/questionmark.png')
     }
 }
 |}
