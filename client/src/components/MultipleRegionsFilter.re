@@ -28,14 +28,3 @@ let make =
       )
     </div>
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~isMultipleRegionFilterOn=jsProps##isMultipleRegionFilterOn,
-      ~regions=jsProps##regions,
-      ~toggleMultipleRegionFilter=jsProps##toggleMultipleRegionFilter,
-      ~toggleRegion=jsProps##toggleRegion,
-      jsProps##children
-    )
-  );

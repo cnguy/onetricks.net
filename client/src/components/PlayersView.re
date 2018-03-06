@@ -82,17 +82,3 @@ let make =
     };
   }
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~players=jsProps##players,
-      ~goBack=jsProps##goBack,
-      ~champ=jsProps##champ,
-      ~show=jsProps##show,
-      ~onSort=jsProps##onSort,
-      ~sortKey=jsProps##sortKey,
-      ~sortReverse=jsProps##sortReverse,
-      jsProps##children
-    )
-  );

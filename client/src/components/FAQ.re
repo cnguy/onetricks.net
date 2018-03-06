@@ -50,5 +50,3 @@ let make = _children => {
       </div>
     </div>
 };
-
-let default = ReasonReact.wrapReasonForJs(~component, _jsProps => make());

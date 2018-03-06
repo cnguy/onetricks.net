@@ -105,22 +105,3 @@ let make =
       )
     </div>
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~isMultipleRegionsFilterOn=jsProps##advFilter,
-      ~regions=jsProps##regions,
-      ~allPlayers=jsProps##all,
-      ~challengers=jsProps##challengers,
-      ~masters=jsProps##masters,
-      ~regionInfoText=jsProps##regionInfoText,
-      ~shouldShowChampions=jsProps##showChamps,
-      ~areChampionPanesMerged=jsProps##merged,
-      ~handleImageLoad=jsProps##handleImageLoad,
-      ~getPlayers=jsProps##getPlayers,
-      ~renderEmptyResults=jsProps##renderEmptyResults,
-      ~setDisplayValue=jsProps##setDisplayValue,
-      jsProps##children
-    )
-  );

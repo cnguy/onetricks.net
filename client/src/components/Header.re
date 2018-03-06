@@ -14,6 +14,3 @@ let make = _children => {
       <h2 className="caption"> (ReasonReact.stringToElement(caption)) </h2>
     </div>
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps => make(jsProps##children));
