@@ -124,8 +124,7 @@ let make =
       let region = Region.fromString(r);
       let newRegions =
         if (state.misc.regions |> List.mem(region)) {
-          state.misc.regions
-          |> List.filter(r => r !== region) /*else if (List.length(state.misc.regions) == 1             && state.misc.regions |> List.nth(0) |> Constants.regionToString == "none") {    [region];  } */;
+          state.misc.regions |> List.filter(r => r !== region);
         } else {
           List.append(state.misc.regions, [region]);
         };

@@ -17,12 +17,10 @@
     "react": "^15.4.0",
     "react-addons-perf": "^15.4.2",
     "react-dom": "^15.4.0",
-    "react-redux": "^5.0.5",
     "reason-js": "^0.3.0",
     "reason-react": "^0.3.1",
     "reason-reroute": "^0.0.4",
-    "recompose": "^0.24.0",
-    "redux": "^3.7.1"
+    "recompose": "^0.24.0"
   },
   "scripts": {
     "start": "react-scripts start",
