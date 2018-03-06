@@ -27,7 +27,7 @@ let list = [
   Oceania
 ];
 
-let toString = (region: region) =>
+let toString = region =>
   switch region {
   | All => "all"
   | NorthAmerica => "na"
@@ -44,7 +44,7 @@ let toString = (region: region) =>
   | _ => "???"
   };
 
-let fromString = (regionStr: string) =>
+let fromString = regionStr =>
   switch regionStr {
   | "na" => NorthAmerica
   | "kr" => Korea

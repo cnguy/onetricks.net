@@ -79,7 +79,6 @@ let make =
       ReasonReact.Update({
         ...state,
         championPane: {
-          ...state.championPane,
           searchKey: String.lowercase(value)
         }
       })
@@ -167,31 +166,6 @@ let make =
          })
       |> List.filter(el => Array.length(el##players) > 0)
       |> Array.of_list;
-    let tempOnSort = str =>
-      self.send(
-        SetSortKey(
-          switch str {
-          | "REGION" => Sort.Region
-          | "RANK" => Sort.Rank
-          | "NAME" => Sort.Name
-          | "WINS" => Sort.Wins
-          | "LOSSES" => Sort.Losses
-          | "WINRATE" => Sort.WinRate
-          | "NONE" => Sort.None
-          | _ => Sort.None
-          }
-        )
-      );
-    let sortKeyToStr = sortKey =>
-      switch sortKey {
-      | Sort.Region => "REGION"
-      | Sort.Rank => "RANK"
-      | Sort.Name => "NAME"
-      | Sort.Wins => "WINS"
-      | Sort.Losses => "LOSSES"
-      | Sort.WinRate => "WINRATE"
-      | Sort.None => "NONE"
-      };
     <Router.Container>
       ...(
            (~currentRoute) =>
@@ -248,8 +222,8 @@ let make =
                        goBack=(_event => ReasonReact.Router.push("/"))
                        champ=self.state.playersView.currentChampion
                        show=true
-                       onSort=tempOnSort
-                       sortKey=(sortKeyToStr(self.state.playersView.sortKey))
+                       onSort=(sortKey => self.send(SetSortKey(sortKey)))
+                       sortKey=self.state.playersView.sortKey
                        sortReverse=self.state.playersView.shouldSortReverse
                      />;
                    };

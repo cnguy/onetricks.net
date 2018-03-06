@@ -21,8 +21,8 @@ let make =
       ~goBack,
       ~champ: string,
       ~show: bool,
-      ~onSort: string => unit,
-      ~sortKey: string,
+      ~onSort: Sort.sort => unit,
+      ~sortKey: Sort.sort,
       ~sortReverse: bool,
       _children
     ) => {
@@ -31,12 +31,12 @@ let make =
     let simpleList = Array.to_list(players);
     let sortedList =
       switch sortKey {
-      | "REGION" => Sorts.region(simpleList)
-      | "RANK" => Sorts.rank(simpleList)
-      | "NAME" => Sorts.name(simpleList)
-      | "WINS" => Sorts.wins(simpleList)
-      | "LOSSES" => Sorts.losses(simpleList)
-      | "WINRATE" => Sorts.winRate(simpleList)
+      | Sort.Region => Sorts.region(simpleList)
+      | Sort.Rank => Sorts.rank(simpleList)
+      | Sort.Name => Sorts.name(simpleList)
+      | Sort.Wins => Sorts.wins(simpleList)
+      | Sort.Losses => Sorts.losses(simpleList)
+      | Sort.WinRate => Sorts.winRate(simpleList)
       | _ => simpleList
       };
     let finalList =

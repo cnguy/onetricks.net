@@ -7,7 +7,14 @@ let grabTriString = (~sortKey, ~activeSortKey, ~isReversed) =>
     "";
   };
 
-let make = (~onSort, ~sortKey, ~activeSortKey, ~isReversed, children) => {
+let make =
+    (
+      ~onSort: Sort.sort => unit,
+      ~sortKey: Sort.sort,
+      ~activeSortKey: Sort.sort,
+      ~isReversed,
+      children
+    ) => {
   ...component,
   render: _self => {
     let triString = grabTriString(~sortKey, ~activeSortKey, ~isReversed);
