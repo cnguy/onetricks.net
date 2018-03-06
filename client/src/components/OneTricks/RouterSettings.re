@@ -1,27 +1,27 @@
 module RouterConfig = {
   type route =
-    | HOME
-    | PLAYERS_VIEW_ALL_REGIONS_SINGLE_PICK(string)
-    | PLAYERS_VIEW_SINGLE_REGION(string, Constants.region)
-    | PLAYERS_VIEW_MULTIPLE_PICK_NO_REGION(string)
-    | PLAYERS_VIEW_MULTIPLE_PICK(string, list(Constants.region))
-    | NOT_FOUND;
+    | Home
+    | PlayersViewAllRegionsSinglePick(string)
+    | PlayersViewSingleRegion(string, Constants.region)
+    | PlayersViewMultipleRegionNoneSelected(string)
+    | PlayersViewOneOrMoreSelected(string, list(Constants.region))
+    | NotFound;
   let routeFromUrl = (url: ReasonReact.Router.url) =>
     switch (url.path, url.search) {
-    | ([""], _) => HOME
+    | ([""], _) => Home
     | (["champions", championName], "") =>
-      PLAYERS_VIEW_ALL_REGIONS_SINGLE_PICK(championName)
+      PlayersViewAllRegionsSinglePick(championName)
     | (["champions", championName, region], "") =>
       if (Constants.isValidRegionStr(region)) {
-        PLAYERS_VIEW_SINGLE_REGION(
+        PlayersViewSingleRegion(
           championName,
           Constants.regionFromString(region)
         );
       } else {
-        NOT_FOUND;
+        NotFound;
       }
     | (["champions", championName], "?regions=none") =>
-      PLAYERS_VIEW_MULTIPLE_PICK_NO_REGION(championName)
+      PlayersViewMultipleRegionNoneSelected(championName)
     | (["champions", championName], regions) =>
       if (String.length(regions) > 7) {
         let splitPoint = String.length("regions"); /* clarity */
@@ -36,30 +36,30 @@ module RouterConfig = {
           | _ => []
           };
         if (regionsFromQuery |> List.mem(Constants.UNKNOWN)) {
-          NOT_FOUND;
+          NotFound;
         } else {
-          PLAYERS_VIEW_MULTIPLE_PICK(championName, regionsFromQuery);
+          PlayersViewOneOrMoreSelected(championName, regionsFromQuery);
         };
       } else {
-        NOT_FOUND;
+        NotFound;
       }
-    | _ => NOT_FOUND
+    | _ => NotFound
     };
   let routeToUrl = (route: route) =>
     switch route {
-    | HOME => "/"
-    | PLAYERS_VIEW_ALL_REGIONS_SINGLE_PICK(championName) =>
+    | Home => "/"
+    | PlayersViewAllRegionsSinglePick(championName) =>
       "/champions/" ++ championName
-    | PLAYERS_VIEW_SINGLE_REGION(championName, region) =>
+    | PlayersViewSingleRegion(championName, region) =>
       "/champions/" ++ championName ++ "/" ++ Constants.regionToString(region)
-    | PLAYERS_VIEW_MULTIPLE_PICK_NO_REGION(championName) =>
+    | PlayersViewMultipleRegionNoneSelected(championName) =>
       "/champions/" ++ championName ++ "?region=none"
-    | PLAYERS_VIEW_MULTIPLE_PICK(championName, regions) =>
+    | PlayersViewOneOrMoreSelected(championName, regions) =>
       let regionsQuery =
         regions
         |> List.map(Constants.regionToString)
         |> Constants.regionQueryToCsvList;
       "/champions/" ++ championName ++ "?region=" ++ regionsQuery;
-    | NOT_FOUND => "/404"
+    | NotFound => "/404"
     };
 };
