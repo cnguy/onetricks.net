@@ -1,37 +1,26 @@
-type sort =
-  | REGION
-  | RANK
-  | NAME
-  | WINS
-  | LOSSES
-  | WINRATE
-  | NONE;
-
 type action =
   /* misc actions */
   | ResetSearchKey
   | SetRegion(string)
   | SetSearchKey(string)
-  | SetSortKey(sort)
+  | SetSortKey(Sort.sort)
   | ToggleAdvancedFilter
   | ToggleMerge
   | ToggleRegion(string)
   | Nothing;
 
-type championPane = {
-  isMultipleRegionFilterOn: bool,
-  searchKey: string
-};
+type championPane = {searchKey: string};
 
 type misc = {
   areChampionPanesMerged: bool,
   region: Region.region,
   regions: list(Region.region),
+  isMultipleRegionFilterOn: bool,
   areImagesLoaded: bool
 };
 
 type playersView = {
-  sortKey: sort,
+  sortKey: Sort.sort,
   shouldSortReverse: bool,
   currentChampion: string
 };
@@ -51,17 +40,17 @@ let make =
   ...component,
   initialState: () => {
     championPane: {
-      isMultipleRegionFilterOn: false,
       searchKey: ""
     },
     misc: {
       areChampionPanesMerged: true,
+      areImagesLoaded: false,
+      isMultipleRegionFilterOn: false,
       region: Region.All,
-      regions: Region.list,
-      areImagesLoaded: false
+      regions: Region.list
     },
     playersView: {
-      sortKey: WINRATE,
+      sortKey: Sort.WinRate,
       shouldSortReverse: false,
       currentChampion:
         switch (
@@ -114,18 +103,14 @@ let make =
         misc: {
           ...state.misc,
           regions:
-            if (state.championPane.isMultipleRegionFilterOn) {
+            if (state.misc.isMultipleRegionFilterOn) {
               [];
             } else if (Region.toString(state.misc.region) == "all") {
               Region.list;
             } else {
               [state.misc.region];
-            }
-        },
-        championPane: {
-          ...state.championPane,
-          isMultipleRegionFilterOn:
-            ! state.championPane.isMultipleRegionFilterOn
+            },
+          isMultipleRegionFilterOn: ! state.misc.isMultipleRegionFilterOn
         }
       })
     | ToggleMerge =>
@@ -161,14 +146,14 @@ let make =
       |> List.map(el => {
            let tmp = el##players |> Array.to_list;
            let newPlayers =
-             if (! self.state.championPane.isMultipleRegionFilterOn
+             if (! self.state.misc.isMultipleRegionFilterOn
                  && Region.toString(self.state.misc.region) == "all") {
                /* optimization */
                tmp;
              } else {
                List.filter(
                  (player: JsTypes.player) =>
-                   if (! self.state.championPane.isMultipleRegionFilterOn) {
+                   if (! self.state.misc.isMultipleRegionFilterOn) {
                      self.state.misc.region
                      == Region.fromString(player##region);
                    } else {
@@ -186,26 +171,26 @@ let make =
       self.send(
         SetSortKey(
           switch str {
-          | "REGION" => REGION
-          | "RANK" => RANK
-          | "NAME" => NAME
-          | "WINS" => WINS
-          | "LOSSES" => LOSSES
-          | "WINRATE" => WINRATE
-          | "NONE" => NONE
-          | _ => NONE
+          | "REGION" => Sort.Region
+          | "RANK" => Sort.Rank
+          | "NAME" => Sort.Name
+          | "WINS" => Sort.Wins
+          | "LOSSES" => Sort.Losses
+          | "WINRATE" => Sort.WinRate
+          | "NONE" => Sort.None
+          | _ => Sort.None
           }
         )
       );
     let sortKeyToStr = sortKey =>
       switch sortKey {
-      | REGION => "REGION"
-      | RANK => "RANK"
-      | NAME => "NAME"
-      | WINS => "WINS"
-      | LOSSES => "LOSSES"
-      | WINRATE => "WINRATE"
-      | NONE => "NONE"
+      | Sort.Region => "REGION"
+      | Sort.Rank => "RANK"
+      | Sort.Name => "NAME"
+      | Sort.Wins => "WINS"
+      | Sort.Losses => "LOSSES"
+      | Sort.WinRate => "WINRATE"
+      | Sort.None => "NONE"
       };
     <Router.Container>
       ...(
@@ -214,7 +199,7 @@ let make =
                <Header />
                <ChampionPaneUtilities
                  areChampionPanesMerged=self.state.misc.areChampionPanesMerged
-                 isMultipleRegionFilterOn=self.state.championPane.
+                 isMultipleRegionFilterOn=self.state.misc.
                                             isMultipleRegionFilterOn
                  searchKey=self.state.championPane.searchKey
                  resetSearchKey=(_event => self.send(SetSearchKey("")))
