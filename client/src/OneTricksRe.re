@@ -191,18 +191,41 @@ let make =
                (
                  switch (currentRoute) {
                  | RouterConfig.Home =>
+                   let regionInfoText =
+                     if (self.state.misc.isMultiRegionFilterOn) {
+                       if (self.state.misc.regions == Region.list) {
+                         "All Regions.";
+                       } else {
+                         (
+                           self.state.misc.regions
+                           |> Region.toStringList
+                           |> Region.toReadableList
+                         )
+                         ++ " Regions.";
+                       };
+                     } else if (self.state.misc.region == Region.All) {
+                       "All Regions.";
+                     } else {
+                       "the "
+                       ++ (
+                         self.state.misc.region
+                         |> Region.toString
+                         |> String.uppercase
+                       )
+                       ++ " Region.";
+                     };
                    <ContentPane
                      isMultiRegionFilterOn=self.state.misc.
                                              isMultiRegionFilterOn
                      regions=self.state.misc.regions
                      allPlayers=regionatedOneTricks
-                     regionInfoText=""
+                     regionInfoText
                      areChampionPanesMerged=self.state.misc.
                                               areChampionPanesMerged
                      setDisplayValue=(() => "inline")
                      renderEmptyResults=(() => ReasonReact.nullElement)
                      handleImageLoad=(_event => ())
-                   />
+                   />;
                  | RouterConfig.PlayersView(currentChampion, rank) =>
                    let players =
                      regionatedOneTricks

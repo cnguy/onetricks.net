@@ -11,7 +11,6 @@ import Loader from './components/Loader.bs'
 
 import OneTricksRe from './OneTricksRe.bs'
 
-import FILTERS from './helpers/filters'
 import SORTS from './helpers/sorts'
 
 import FETCH_PLAYERS_URL from './helpers/fetchPlayersUrl'

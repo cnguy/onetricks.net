@@ -130,7 +130,7 @@ const main = async () => {
                     .filter(inPlatform(region))
                     .filter(({ gameId: matchID }) =>
                         playerStats.doesNotContainMatch(matchID),
-                )
+                    )
 
                 const matches = await MatchlistKaynHelper.rawMatchlistToMatches(
                     kayn,

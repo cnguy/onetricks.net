@@ -62,3 +62,17 @@ let fromString = regionStr =>
   };
 
 let toStringList = (regions: list(region)) => regions |> List.map(toString);
+
+let toReadableList = (regions: list(string)) : string => {
+  let tmp: string =
+    regions
+    |> List.fold_left(
+         (total, current) => total ++ ", " ++ String.uppercase(current),
+         "",
+       );
+  if (String.length(tmp) > 0) {
+    String.sub(tmp, 1, String.length(tmp) - 1);
+  } else {
+    "";
+  };
+};
