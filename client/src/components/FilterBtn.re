@@ -9,5 +9,5 @@ let make = (~onClick, ~active, children) => {
     <button className onClick>
       (ReasonReact.stringToElement(children))
     </button>;
-  }
+  },
 };

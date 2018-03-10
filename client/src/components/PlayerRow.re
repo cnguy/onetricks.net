@@ -48,7 +48,7 @@ let make = (~player: JsTypes.player, _children) => {
               player##name,
               player##region,
               true,
-              string_of_int(player##id)
+              string_of_int(player##id),
             )
           )
           target="_blank"
@@ -77,7 +77,7 @@ let make = (~player: JsTypes.player, _children) => {
               player##name,
               player##region,
               true,
-              string_of_int(player##id)
+              string_of_int(player##id),
             )
           )
           target="_blank"
@@ -93,7 +93,7 @@ let make = (~player: JsTypes.player, _children) => {
               player##name,
               player##region,
               false,
-              string_of_int(player##id)
+              string_of_int(player##id),
             )
           )
           target="_blank"
@@ -101,5 +101,5 @@ let make = (~player: JsTypes.player, _children) => {
           (ReasonReact.stringToElement("go"))
         </a>
       </td>
-    </tr>
+    </tr>,
 };

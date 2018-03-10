@@ -13,7 +13,7 @@ let make =
       ~sortKey: Sort.sort,
       ~activeSortKey: Sort.sort,
       ~isReversed,
-      children
+      children,
     ) => {
   ...component,
   render: _self => {
@@ -40,5 +40,5 @@ let make =
       (ReasonReact.stringToElement(" "))
       triangle
     </span>;
-  }
+  },
 };

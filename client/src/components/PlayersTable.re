@@ -6,7 +6,7 @@ let sortButtonsInfo = [
   (Sort.Name, "Name"),
   (Sort.Wins, "W"),
   (Sort.Losses, "L"),
-  (Sort.WinRate, "WR")
+  (Sort.WinRate, "WR"),
 ];
 
 let make = (~onSort, ~sortKey, ~sortReverse, ~renderableList, _children) => {
@@ -29,9 +29,9 @@ let make = (~onSort, ~sortKey, ~sortReverse, ~renderableList, _children) => {
                         ...displayText
                       </PlayersSortBtn>
                     </th>,
-                  sortButtonsInfo
-                )
-              )
+                  sortButtonsInfo,
+                ),
+              ),
             )
           )
           <th className="players-table-th">
@@ -45,5 +45,5 @@ let make = (~onSort, ~sortKey, ~sortReverse, ~renderableList, _children) => {
       <tbody className="players-table-tbody">
         (ReasonReact.arrayToElement(Array.of_list(renderableList)))
       </tbody>
-    </table>
+    </table>,
 };

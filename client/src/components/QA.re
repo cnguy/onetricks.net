@@ -10,5 +10,5 @@ let make = (~question, ~answer, _children) => {
     <div className="qa-item">
       <h4 className="question"> (qStr(question)) </h4>
       <div className="answer"> (aStr(answer)) </div>
-    </div>
+    </div>,
 };

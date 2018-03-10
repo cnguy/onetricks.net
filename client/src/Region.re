@@ -24,11 +24,11 @@ let list = [
   Japan,
   Turkey,
   Russia,
-  Oceania
+  Oceania,
 ];
 
 let toString = region =>
-  switch region {
+  switch (region) {
   | All => "all"
   | NorthAmerica => "na"
   | Korea => "kr"
@@ -45,7 +45,7 @@ let toString = region =>
   };
 
 let fromString = regionStr =>
-  switch regionStr {
+  switch (regionStr) {
   | "na" => NorthAmerica
   | "kr" => Korea
   | "euw" => EuropeWest

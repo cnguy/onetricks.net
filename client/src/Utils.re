@@ -6,5 +6,5 @@ let ite = (int: int) => ReasonReact.stringToElement(string_of_int(int));
 let parseChampionNameFromRoute = (str: string) => String.lowercase(str);
 
 let getEventValue = event => ReactDOMRe.domElementToObj(
-                               ReactEventRe.Form.target(event)
+                               ReactEventRe.Form.target(event),
                              )##value;

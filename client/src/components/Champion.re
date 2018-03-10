@@ -22,5 +22,5 @@ let make = (~name, ~number, ~handleImageLoad, _children) => {
       </div>
       <ChampIcon name mini=false handleImageLoad />
     </div>;
-  }
+  },
 };

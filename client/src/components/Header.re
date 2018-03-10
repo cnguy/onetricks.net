@@ -12,5 +12,5 @@ let make = _children => {
       onClick=(_event => ReasonReact.Router.push("/"))>
       <h1 className="main-header"> (ReasonReact.stringToElement(title)) </h1>
       <h2 className="caption"> (ReasonReact.stringToElement(caption)) </h2>
-    </div>
+    </div>,
 };

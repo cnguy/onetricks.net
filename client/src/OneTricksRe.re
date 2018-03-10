@@ -196,22 +196,17 @@ let make =
                      regions=self.state.misc.regions
                      allPlayers=regionatedOneTricks
                      regionInfoText=""
-                     shouldShowChampions=true
                      areChampionPanesMerged=self.state.misc.
                                               areChampionPanesMerged
                      setDisplayValue=(() => "inline")
                      renderEmptyResults=(() => ReasonReact.nullElement)
-                     getPlayers=JsHelpers.extractPlayers
                      handleImageLoad=(_event => ())
                    />
-                 | RouterConfig.PlayersView(currentChampion) =>
-                   Js.log("extract players");
-                   Js.log(currentChampion);
+                 | RouterConfig.PlayersView(currentChampion, rank) =>
                    let players =
-                     JsHelpers.extractPlayers(
-                       ~currentChampion,
-                       ~listOfOneTricks=regionatedOneTricks,
-                     );
+                     regionatedOneTricks
+                     |> JsHelpers.filterPlayersByRank(_, ~rank)
+                     |> JsHelpers.extractPlayers(~currentChampion, _);
                    if (Array.length(players) == 0) {
                      <div className="empty-results">
                        (

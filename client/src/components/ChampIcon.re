@@ -24,5 +24,5 @@ let make =
       onLoad=handleImageLoad
       alt=(name ++ " " ++ "One Trick Pony/Ponies")
     />;
-  }
+  },
 };

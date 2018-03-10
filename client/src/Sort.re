@@ -8,7 +8,7 @@ type sort =
   | None;
 
 let toString = sortStr =>
-  switch sortStr {
+  switch (sortStr) {
   | Region => "REGION"
   | Rank => "RANK"
   | Name => "NAME"
@@ -19,7 +19,7 @@ let toString = sortStr =>
   };
 
 let fromString = sort =>
-  switch sort {
+  switch (sort) {
   | "REGION" => Region
   | "RANK" => Rank
   | "NAME" => Name

@@ -7,11 +7,11 @@ type player = {
   "rank": string,
   "region": string,
   "wins": int,
-  "_id": int
+  "_id": int,
 };
 
 type oneTrick = {
   .
   "champion": string,
-  "players": array(player)
-}
+  "players": array(player),
+};

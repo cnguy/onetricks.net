@@ -2,17 +2,17 @@ let component = ReasonReact.statelessComponent("PlayersViewRe");
 
 type winLosses = {
   wins: int,
-  losses: int
+  losses: int,
 };
 
 let getOverallWinRate = (players: list(JsTypes.player)) =>
   List.fold_left(
     (a, b: JsTypes.player) => {
       wins: a.wins + b##wins,
-      losses: a.losses + b##losses
+      losses: a.losses + b##losses,
     },
     {wins: 0, losses: 0},
-    players
+    players,
   );
 
 let make =
@@ -24,13 +24,13 @@ let make =
       ~onSort: Sort.sort => unit,
       ~sortKey: Sort.sort,
       ~sortReverse: bool,
-      _children
+      _children,
     ) => {
   ...component,
   render: _self => {
     let simpleList = Array.to_list(players);
     let sortedList =
-      switch sortKey {
+      switch (sortKey) {
       | Sort.Region => Sorts.region(simpleList)
       | Sort.Rank => Sorts.rank(simpleList)
       | Sort.Name => Sorts.name(simpleList)
@@ -48,7 +48,7 @@ let make =
     let renderableList =
       List.map(
         player => <PlayerRow key=(string_of_int(player##id)) player />,
-        finalList
+        finalList,
       );
     let scores = getOverallWinRate(Array.to_list(players));
     let wins = scores.wins;
@@ -61,7 +61,9 @@ let make =
           </span>
           <div className="players-table-header flash">
             (
-              ReasonReact.stringToElement(string_of_int(List.length(finalList)))
+              ReasonReact.stringToElement(
+                string_of_int(List.length(finalList)),
+              )
             )
             (ReasonReact.stringToElement(" "))
             <ChampIcon
@@ -80,5 +82,5 @@ let make =
     } else {
       ReasonReact.nullElement;
     };
-  }
+  },
 };

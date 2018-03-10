@@ -1,6 +1,7 @@
 let component = ReasonReact.statelessComponent("ChampionPane");
 
-let make = (~champions, ~getPlayers, ~handleImageLoad, _children) => {
+let make =
+    (~champions, ~handleImageLoad, ~leagueType: Rank.rank=Rank.All, _children) => {
   ...component,
   render: _self =>
     <div className="champs">
@@ -16,7 +17,8 @@ let make = (~champions, ~getPlayers, ~handleImageLoad, _children) => {
                   _event =>
                     ReasonReact.Router.push(
                       "/champions/"
-                      ++ Utils.parseChampionNameFromRoute(pair##champion),
+                      ++ Utils.parseChampionNameFromRoute(pair##champion)
+                      ++ Rank.toRoute(leagueType),
                     )
                 )>
                 <Champion

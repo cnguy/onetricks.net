@@ -3,7 +3,6 @@ let sanitize = a => String.trim(String.lowercase(a));
 let none = list => list;
 
 let namePredicate = (a: JsTypes.player, b) => {
-
   let nameA = sanitize(a##name);
   let nameB = sanitize(b##name);
   if (nameA < nameB) {
@@ -78,7 +77,8 @@ let region = (list: list(JsTypes.player)) : list(JsTypes.player) =>
 
 let wins = (list: list(JsTypes.player)) => List.sort(winsPredicate, list);
 
-let losses = (list: list(JsTypes.player)) => List.sort(lossesPredicate, list);
+let losses = (list: list(JsTypes.player)) =>
+  List.sort(lossesPredicate, list);
 
 let winRate = (list: list(JsTypes.player)) : list(JsTypes.player) =>
   List.sort(winRatePredicate, list);

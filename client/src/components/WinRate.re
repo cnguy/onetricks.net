@@ -26,9 +26,9 @@ let make = (~wins: int, ~losses: int, _children) => {
     <span style>
       (
         ReasonReact.stringToElement(
-          String.sub(string_of_float(Pervasives.ceil(winRate)), 0, 2) ++ "%"
+          String.sub(string_of_float(Pervasives.ceil(winRate)), 0, 2) ++ "%",
         )
       )
     </span>;
-  }
+  },
 };

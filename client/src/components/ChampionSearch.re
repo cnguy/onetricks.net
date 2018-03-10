@@ -8,5 +8,5 @@ let make = (~onChange, ~value, ~resetSearchKey, _children) => {
       <span className="clear-input" onClick=resetSearchKey>
         (ReasonReact.stringToElement({js|✗|js}))
       </span>
-    </span>
+    </span>,
 };
