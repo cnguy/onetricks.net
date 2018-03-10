@@ -71,13 +71,14 @@ const main = async () => {
             showKey: true,
         },
         requestOptions: {
-            numberOfRetriesBeforeAbort: 5,
+            numberOfRetriesBeforeAbort: 10,
             delayBeforeRetry: 10000,
+            burst: false,
         },
         cacheOptions: {
             cache: new BasicJSCache(),
             ttls: {
-                [METHOD_NAMES.MATCH.GET_MATCH]: 1000 * 60 * 5,
+                [METHOD_NAMES.MATCH.GET_MATCH]: 1000 * 60 * 1,
             },
         },
     })
@@ -102,7 +103,7 @@ const main = async () => {
             ),
         )
 
-        const summonersChunkSize = summoners.length / 3
+        const summonersChunkSize = summoners.length / 5
 
         const allPlayerStats = await asyncMapOverArrayInChunks(
             summoners,
@@ -160,11 +161,16 @@ const main = async () => {
     }
 
     const keys = Object.keys(REGIONS)
-    const challengersChunkSize = 4
-    const mastersChunkSize = 3
+    const challengersChunkSize = 5
+    const mastersChunkSize = 4
 
     const processChunk = async (rank, chunk) =>
         Promise.all(chunk.map(r => fn(rank, REGIONS[r])))
+    for (let i = 0; i < keys.length; i += mastersChunkSize) {
+        console.log('starting', 'masters', keys.slice(i, i + mastersChunkSize))
+        await processChunk('Master', keys.slice(i, i + mastersChunkSize))
+        console.log('done')
+    }
     for (let i = 0; i < keys.length; i += challengersChunkSize) {
         console.log(
             'starting',
@@ -175,11 +181,6 @@ const main = async () => {
             'Challenger',
             keys.slice(i, i + challengersChunkSize),
         )
-        console.log('done')
-    }
-    for (let i = 0; i < keys.length; i += mastersChunkSize) {
-        console.log('starting', 'masters', keys.slice(i, i + mastersChunkSize))
-        await processChunk('Master', keys.slice(i, i + mastersChunkSize))
         console.log('done')
     }
     return true

@@ -6,7 +6,7 @@
     "compression": "^1.6.2",
     "express": "4.13.3",
     "jsonfile": "^4.0.0",
-    "kayn": "^0.8.0"
+    "kayn": "^0.8.9"
   },
   "scripts": {
     "start": "babel-node index.js",
