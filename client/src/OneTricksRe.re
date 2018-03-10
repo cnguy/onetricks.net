@@ -192,28 +192,12 @@ let make =
                  switch (currentRoute) {
                  | RouterConfig.Home =>
                    let regionInfoText =
-                     if (self.state.misc.isMultiRegionFilterOn) {
-                       if (self.state.misc.regions == Region.list) {
-                         "All Regions.";
-                       } else {
-                         (
-                           self.state.misc.regions
-                           |> Region.toStringList
-                           |> Region.toReadableList
-                         )
-                         ++ " Regions.";
-                       };
-                     } else if (self.state.misc.region == Region.All) {
-                       "All Regions.";
-                     } else {
-                       "the "
-                       ++ (
-                         self.state.misc.region
-                         |> Region.toString
-                         |> String.uppercase
-                       )
-                       ++ " Region.";
-                     };
+                     Region.toDisplayText(
+                       ~isMultiRegionFilterOn=
+                         self.state.misc.isMultiRegionFilterOn,
+                       ~region=self.state.misc.region,
+                       ~regions=self.state.misc.regions,
+                     );
                    <ContentPane
                      isMultiRegionFilterOn=self.state.misc.
                                              isMultiRegionFilterOn

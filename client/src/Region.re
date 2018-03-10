@@ -63,7 +63,7 @@ let fromString = regionStr =>
 
 let toStringList = (regions: list(region)) => regions |> List.map(toString);
 
-let toReadableList = (regions: list(string)) : string => {
+let toReadableStringList = (regions: list(string)) : string => {
   let tmp: string =
     regions
     |> List.fold_left(
@@ -76,3 +76,17 @@ let toReadableList = (regions: list(string)) : string => {
     "";
   };
 };
+
+let toDisplayText =
+    (~isMultiRegionFilterOn: bool, ~region: region, ~regions: list(region)) =>
+  if (isMultiRegionFilterOn) {
+    if (regions == list) {
+      "All Regions.";
+    } else {
+      (regions |> toStringList |> toReadableStringList) ++ " Regions.";
+    };
+  } else if (region == All) {
+    "All Regions.";
+  } else {
+    "the " ++ (region |> toString |> String.uppercase) ++ " Region.";
+  };
