@@ -128,7 +128,9 @@ const main = async () => {
                 const fullMatchlist = matchlist.matches
                     .concat(rest)
                     .filter(inPlatform(region))
-                    .filter(matchID => playerStats.doesNotContainMatch(matchID))
+                    .filter(({ gameId: matchID }) =>
+                        playerStats.doesNotContainMatch(matchID),
+                    )
 
                 const matches = await MatchlistKaynHelper.rawMatchlistToMatches(
                     kayn,
