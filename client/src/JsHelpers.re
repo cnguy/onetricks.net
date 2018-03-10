@@ -37,3 +37,23 @@ let filterPlayersByRank =
     |> Array.of_list;
   };
 };
+
+let filterBySearchKey =
+    (searchKey: string, oneTricks: list(JsTypes.oneTrick)) =>
+  if (String.length(searchKey) > 0) {
+    oneTricks
+    |> List.filter(oneTrick => {
+         let string = String.lowercase(oneTrick##champion);
+         let substring = String.lowercase(searchKey);
+         let jsIndexOf: (string, string) => int = [%bs.raw
+           {|
+          function indexOf(string, substring) {
+            return string.indexOf(substring);
+          }
+        |}
+         ];
+         jsIndexOf(string, substring) !== (-1);
+       });
+  } else {
+    oneTricks;
+  };

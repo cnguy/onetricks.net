@@ -72,7 +72,7 @@ const main = async () => {
         },
         requestOptions: {
             numberOfRetriesBeforeAbort: 5,
-            delayBeforeRetry: 3000,
+            delayBeforeRetry: 10000,
         },
         cacheOptions: {
             cache: new BasicJSCache(),
@@ -130,7 +130,7 @@ const main = async () => {
                     .filter(inPlatform(region))
                     .filter(({ gameId: matchID }) =>
                         playerStats.doesNotContainMatch(matchID),
-                    )
+                )
 
                 const matches = await MatchlistKaynHelper.rawMatchlistToMatches(
                     kayn,
@@ -160,7 +160,7 @@ const main = async () => {
     }
 
     const keys = Object.keys(REGIONS)
-    const challengersChunkSize = 3
+    const challengersChunkSize = 4
     const mastersChunkSize = 3
 
     const processChunk = async (rank, chunk) =>

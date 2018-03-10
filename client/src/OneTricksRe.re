@@ -155,6 +155,7 @@ let make =
            {"players": Array.of_list(newPlayers), "champion": el##champion};
          })
       |> List.filter(el => Array.length(el##players) > 0)
+      |> JsHelpers.filterBySearchKey(self.state.championPane.searchKey)
       |> Array.of_list;
     <Router.Container>
       ...(
