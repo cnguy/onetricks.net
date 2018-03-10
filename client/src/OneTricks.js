@@ -93,8 +93,6 @@ const OneTricks = enhance(({ all, renderSpinner, ...props }) => {
         players: playersArray,
     }))
 
-    console.log('reasonableAll:', reasonableAll)
-
     return (
         <div className="container">
             <OneTricksRe

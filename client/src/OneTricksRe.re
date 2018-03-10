@@ -128,6 +128,18 @@ let make =
       });
     | _ => ReasonReact.Update(state)
     },
+  subscriptions: _self => [
+    Sub(
+      () =>
+        ReasonReact.Router.watchUrl(url =>
+          GoogleAnalytics.send(
+            [%bs.raw {| window.location.pathname |}],
+            url.search,
+          )
+        ),
+      ReasonReact.Router.unwatchUrl,
+    ),
+  ],
   render: self => {
     let regionatedOneTricks: array(JsTypes.oneTrick) =
       allOneTricks
