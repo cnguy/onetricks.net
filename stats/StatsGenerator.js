@@ -158,7 +158,7 @@ const main = async () => {
     }
 
     const keys = Object.keys(REGIONS)
-    const challengersChunkSize = 5
+    const challengersChunkSize = 3
     const mastersChunkSize = 3
 
     const processChunk = async (rank, chunk) =>

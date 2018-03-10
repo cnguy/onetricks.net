@@ -4,7 +4,7 @@ type action =
   | SetRegion(string)
   | SetSearchKey(string)
   | SetSortKey(Sort.sort)
-  | ToggleAdvancedFilter
+  | ToggleMultiRegionFilter
   | ToggleMerge
   | ToggleRegion(string)
   | Nothing;
@@ -15,20 +15,19 @@ type misc = {
   areChampionPanesMerged: bool,
   region: Region.region,
   regions: list(Region.region),
-  isMultipleRegionFilterOn: bool,
-  areImagesLoaded: bool
+  isMultiRegionFilterOn: bool,
+  areImagesLoaded: bool,
 };
 
 type playersView = {
   sortKey: Sort.sort,
   shouldSortReverse: bool,
-  currentChampion: string
 };
 
 type state = {
   championPane,
   misc,
-  playersView
+  playersView,
 };
 
 module Router = ReRoute.CreateRouter(RouterConfig);
@@ -40,30 +39,22 @@ let make =
   ...component,
   initialState: () => {
     championPane: {
-      searchKey: ""
+      searchKey: "",
     },
     misc: {
       areChampionPanesMerged: true,
       areImagesLoaded: false,
-      isMultipleRegionFilterOn: false,
+      isMultiRegionFilterOn: false,
       region: Region.All,
-      regions: Region.list
+      regions: Region.list,
     },
     playersView: {
       sortKey: Sort.WinRate,
       shouldSortReverse: false,
-      currentChampion:
-        switch (
-          ReasonReact.Router.dangerouslyGetInitialUrl().path: list(string)
-        ) {
-        | ["champions", name] => name
-        | ["champions", name, _] => name
-        | _ => ""
-        }
-    }
+    },
   },
   reducer: (action, state) =>
-    switch action {
+    switch (action) {
     | Nothing =>
       Js.log("Nothing will happen");
       ReasonReact.Update(state);
@@ -72,15 +63,15 @@ let make =
         ...state,
         misc: {
           ...state.misc,
-          region: Region.fromString(value)
-        }
+          region: Region.fromString(value),
+        },
       })
     | SetSearchKey(value) =>
       ReasonReact.Update({
         ...state,
         championPane: {
-          searchKey: String.lowercase(value)
-        }
+          searchKey: String.lowercase(value),
+        },
       })
     | SetSortKey(sortKey) =>
       ReasonReact.Update({
@@ -93,32 +84,32 @@ let make =
               ! state.playersView.shouldSortReverse;
             } else {
               false;
-            }
-        }
+            },
+        },
       })
-    | ToggleAdvancedFilter =>
+    | ToggleMultiRegionFilter =>
       ReasonReact.Update({
         ...state,
         misc: {
           ...state.misc,
           regions:
-            if (state.misc.isMultipleRegionFilterOn) {
+            if (state.misc.isMultiRegionFilterOn) {
               [];
             } else if (Region.toString(state.misc.region) == "all") {
               Region.list;
             } else {
               [state.misc.region];
             },
-          isMultipleRegionFilterOn: ! state.misc.isMultipleRegionFilterOn
-        }
+          isMultiRegionFilterOn: ! state.misc.isMultiRegionFilterOn,
+        },
       })
     | ToggleMerge =>
       ReasonReact.Update({
         ...state,
         misc: {
           ...state.misc,
-          areChampionPanesMerged: ! state.misc.areChampionPanesMerged
-        }
+          areChampionPanesMerged: ! state.misc.areChampionPanesMerged,
+        },
       })
     | ToggleRegion(r) =>
       let region = Region.fromString(r);
@@ -132,8 +123,8 @@ let make =
         ...state,
         misc: {
           ...state.misc,
-          regions: newRegions
-        }
+          regions: newRegions,
+        },
       });
     | _ => ReasonReact.Update(state)
     },
@@ -144,21 +135,21 @@ let make =
       |> List.map(el => {
            let tmp = el##players |> Array.to_list;
            let newPlayers =
-             if (! self.state.misc.isMultipleRegionFilterOn
+             if (! self.state.misc.isMultiRegionFilterOn
                  && Region.toString(self.state.misc.region) == "all") {
                /* optimization */
                tmp;
              } else {
                List.filter(
                  (player: JsTypes.player) =>
-                   if (! self.state.misc.isMultipleRegionFilterOn) {
+                   if (! self.state.misc.isMultiRegionFilterOn) {
                      self.state.misc.region
                      == Region.fromString(player##region);
                    } else {
                      self.state.misc.regions
                      |> List.mem(Region.fromString(player##region));
                    },
-                 tmp
+                 tmp,
                );
              };
            {"players": Array.of_list(newPlayers), "champion": el##champion};
@@ -172,8 +163,7 @@ let make =
                <Header />
                <ChampionPaneUtilities
                  areChampionPanesMerged=self.state.misc.areChampionPanesMerged
-                 isMultipleRegionFilterOn=self.state.misc.
-                                            isMultipleRegionFilterOn
+                 isMultiRegionFilterOn=self.state.misc.isMultiRegionFilterOn
                  searchKey=self.state.championPane.searchKey
                  resetSearchKey=(_event => self.send(SetSearchKey("")))
                  regions=(
@@ -183,35 +173,52 @@ let make =
                  )
                  toggleMerge=(_event => self.send(ToggleMerge))
                  onSearchKeyChange=(
-                   event => self.send(SetSearchKey(Utils.getEventValue(event)))
+                   event =>
+                     self.send(SetSearchKey(Utils.getEventValue(event)))
                  )
                  region=(Region.toString(self.state.misc.region))
                  toggleRegion=(
                    regionValue => self.send(ToggleRegion(regionValue))
                  )
-                 handleToggleAdvancedFilter=(
-                   _event => self.send(ToggleAdvancedFilter)
+                 toggleMultiRegionFilter=(
+                   _event => self.send(ToggleMultiRegionFilter)
                  )
                  setRegionFilter=(
                    event => self.send(SetRegion(Utils.getEventValue(event)))
                  )
                />
                (
-                 switch currentRoute {
-                 | RouterConfig.Home => ReasonReact.nullElement
+                 switch (currentRoute) {
+                 | RouterConfig.Home =>
+                   <ContentPane
+                     isMultiRegionFilterOn=self.state.misc.
+                                             isMultiRegionFilterOn
+                     regions=self.state.misc.regions
+                     allPlayers=regionatedOneTricks
+                     regionInfoText=""
+                     shouldShowChampions=true
+                     areChampionPanesMerged=self.state.misc.
+                                              areChampionPanesMerged
+                     setDisplayValue=(() => "inline")
+                     renderEmptyResults=(() => ReasonReact.nullElement)
+                     getPlayers=JsHelpers.extractPlayers
+                     handleImageLoad=(_event => ())
+                   />
                  | RouterConfig.PlayersView(currentChampion) =>
+                   Js.log("extract players");
+                   Js.log(currentChampion);
                    let players =
                      JsHelpers.extractPlayers(
-                       ~currentChampion=self.state.playersView.currentChampion,
-                       ~listOfOneTricks=regionatedOneTricks
+                       ~currentChampion,
+                       ~listOfOneTricks=regionatedOneTricks,
                      );
                    if (Array.length(players) == 0) {
                      <div className="empty-results">
                        (
                          Utils.ste(
                            "No players found for the champion: "
-                           ++ self.state.playersView.currentChampion
-                           ++ "."
+                           ++ currentChampion
+                           ++ ".",
                          )
                        )
                      </div>;
@@ -219,7 +226,7 @@ let make =
                      <PlayersView
                        players
                        goBack=(_event => ReasonReact.Router.push("/"))
-                       champ=self.state.playersView.currentChampion
+                       champ=currentChampion
                        show=true
                        onSort=(sortKey => self.send(SetSortKey(sortKey)))
                        sortKey=self.state.playersView.sortKey
@@ -234,7 +241,7 @@ let make =
              </div>
          )
     </Router.Container>;
-  }
+  },
 };
 
 let default =
@@ -242,6 +249,6 @@ let default =
     make(
       ~allOneTricks=jsProps##allOneTricks,
       ~areImagesLoaded=jsProps##areImagesLoaded,
-      jsProps##children
+      jsProps##children,
     )
   );

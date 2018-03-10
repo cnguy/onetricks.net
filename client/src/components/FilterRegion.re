@@ -10,10 +10,10 @@ let secondSetOfRegions =
   Array.sub(
     allRegions,
     regionsSplitPoint,
-    Array.length(allRegions) - regionsSplitPoint
+    Array.length(allRegions) - regionsSplitPoint,
   );
 
-let make = (~toggleRegion, ~toggleAdvFilter, ~regions, _children) => {
+let make = (~toggleRegion, ~toggleMultiRegionFilter, ~regions, _children) => {
   ...component,
   render: _self => {
     let makeRow = (rs, extra) => {
@@ -24,7 +24,7 @@ let make = (~toggleRegion, ~toggleAdvFilter, ~regions, _children) => {
               key=r onClick=(_event => toggleRegion(r)) active=regions>
               ...(String.uppercase(r))
             </FilterBtn>,
-          rs
+          rs,
         );
       <div className="filter-row">
         (ReasonReact.arrayToElement(buttons))
@@ -33,12 +33,13 @@ let make = (~toggleRegion, ~toggleAdvFilter, ~regions, _children) => {
     };
     let closeButton =
       <button
-        className="close-adv-filter" onClick=(_event => toggleAdvFilter())>
+        className="close-adv-filter"
+        onClick=(_event => toggleMultiRegionFilter())>
         (ReasonReact.stringToElement("Close"))
       </button>;
     <div className="filter-bar">
       (makeRow(firstSetOfRegions, ReasonReact.nullElement))
       (makeRow(secondSetOfRegions, closeButton))
     </div>;
-  }
+  },
 };

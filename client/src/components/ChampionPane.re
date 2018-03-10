@@ -7,22 +7,28 @@ let make = (~champions, ~getPlayers, ~handleImageLoad, _children) => {
       (
         ReasonReact.arrayToElement(
           Array.map(
-            ((championName, players)) =>
-              <a
+            pair =>
+              <span
                 className="champ-open-links fade-in"
-                key=championName
+                key=pair##champion
                 href="#"
-                onClick=(_event => getPlayers((champions, championName)))>
+                onClick=(
+                  _event =>
+                    ReasonReact.Router.push(
+                      "/champions/"
+                      ++ Utils.parseChampionNameFromRoute(pair##champion),
+                    )
+                )>
                 <Champion
-                  name=championName
-                  number=(Array.length(players))
+                  name=pair##champion
+                  number=(Array.length(pair##players))
                   handleImageLoad
-                  key=championName
+                  key=pair##champion
                 />
-              </a>,
-            champions
-          )
+              </span>,
+            champions,
+          ),
         )
       )
-    </div>
+    </div>,
 };

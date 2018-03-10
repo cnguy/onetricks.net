@@ -3,17 +3,17 @@ let component = ReasonReact.statelessComponent("ChampionPaneUtilities");
 let make =
     (
       ~areChampionPanesMerged,
-      ~isMultipleRegionFilterOn,
+      ~isMultiRegionFilterOn,
       ~searchKey,
       ~resetSearchKey,
       ~regions,
       ~toggleMerge,
       ~onSearchKeyChange,
       ~toggleRegion,
-      ~handleToggleAdvancedFilter,
+      ~toggleMultiRegionFilter,
       ~region,
       ~setRegionFilter,
-      _children
+      _children,
     ) => {
   ...component,
   render: _self =>
@@ -21,18 +21,18 @@ let make =
       <Instructions />
       <div className="merged-input">
         <MergeSeparateBtn areChampionPanesMerged onClick=toggleMerge />
-        <RegionSelectMenu isMultipleRegionFilterOn region setRegionFilter />
+        <RegionSelectMenu isMultiRegionFilterOn region setRegionFilter />
         <ChampionSearch
           onChange=onSearchKeyChange
           value=searchKey
           resetSearchKey
         />
       </div>
-      <MultipleRegionsFilter
-        isMultipleRegionFilterOn
+      <MultiRegionFilter
+        isMultiRegionFilterOn
         regions
-        toggleMultipleRegionFilter=handleToggleAdvancedFilter
+        toggleMultiRegionFilter
         toggleRegion
       />
-    </div>
+    </div>,
 };

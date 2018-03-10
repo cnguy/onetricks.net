@@ -1,9 +1,9 @@
 let component = ReasonReact.statelessComponent("RegionSelectMenu");
 
-let make = (~isMultipleRegionFilterOn, ~region, ~setRegionFilter, _children) => {
+let make = (~isMultiRegionFilterOn, ~region, ~setRegionFilter, _children) => {
   ...component,
   render: _self =>
-    if (isMultipleRegionFilterOn) {
+    if (isMultiRegionFilterOn) {
       ReasonReact.nullElement;
     } else {
       <select id="region" onChange=setRegionFilter value=region>
@@ -15,10 +15,10 @@ let make = (~isMultipleRegionFilterOn, ~region, ~setRegionFilter, _children) => 
                 <option value=region key=region>
                   (ReasonReact.stringToElement(String.uppercase(region)))
                 </option>,
-              Region.list |> Region.toStringList |> Array.of_list
-            )
+              Region.list |> Region.toStringList |> Array.of_list,
+            ),
           )
         )
       </select>;
-    }
+    },
 };

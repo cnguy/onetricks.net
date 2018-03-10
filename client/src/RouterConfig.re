@@ -5,13 +5,13 @@ type route =
 
 let routeFromUrl = (url: ReasonReact.Router.url) =>
   switch (url.path, url.search) {
-  | ([""], _) => Home
+  | ([], _) => Home
   | (["champions", championName], "") => PlayersView(championName)
   | _ => NotFound
   };
 
 let routeToUrl = (route: route) =>
-  switch route {
+  switch (route) {
   | Home => "/"
   | PlayersView(championName) => "/champions/" ++ championName
   | NotFound => "/404"

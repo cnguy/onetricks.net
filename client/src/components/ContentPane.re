@@ -2,25 +2,28 @@ let component = ReasonReact.statelessComponent("ContentPane");
 
 let make =
     (
-      ~isMultipleRegionsFilterOn,
+      ~isMultiRegionFilterOn: bool,
       ~regions,
       ~allPlayers,
-      ~challengers,
-      ~masters,
-      ~regionInfoText,
+      ~regionInfoText: string,
       ~shouldShowChampions,
       ~areChampionPanesMerged,
       ~setDisplayValue,
       ~renderEmptyResults,
       ~getPlayers,
       ~handleImageLoad,
-      _children
+      _children,
     ) => {
   ...component,
-  render: _self =>
+  render: _self => {
+    Js.log("ContentPane");
+    let challengers = [||];
+    let masters = [||];
+    Js.log(challengers);
+    Js.log(masters);
     <div style=(ReactDOMRe.Style.make(~display=setDisplayValue(), ()))>
       (
-        if (isMultipleRegionsFilterOn && Array.length(regions) == 0) {
+        if (isMultiRegionFilterOn && List.length(regions) == 0) {
           <div className="empty-results">
             (ReasonReact.stringToElement("No region is selected."))
           </div>;
@@ -38,7 +41,7 @@ let make =
                     (
                       ReasonReact.stringToElement(
                         "Challenger/Master One Trick Ponies in "
-                        ++ regionInfoText
+                        ++ regionInfoText,
                       )
                     )
                   </h5>
@@ -63,7 +66,7 @@ let make =
                     <h5 className="rank-header">
                       (
                         ReasonReact.stringToElement(
-                          "Challenger One Trick Ponies in " ++ regionInfoText
+                          "Challenger One Trick Ponies in " ++ regionInfoText,
                         )
                       )
                     </h5>
@@ -83,7 +86,7 @@ let make =
                     <h5 className="rank-header">
                       (
                         ReasonReact.stringToElement(
-                          "Masters One Trick Ponies in " ++ regionInfoText
+                          "Masters One Trick Ponies in " ++ regionInfoText,
                         )
                       )
                     </h5>
@@ -103,5 +106,6 @@ let make =
           ReasonReact.nullElement;
         }
       )
-    </div>
+    </div>;
+  },
 };
