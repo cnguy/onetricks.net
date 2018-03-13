@@ -60,7 +60,7 @@ const main = async () => {
         cacheOptions: {
             cache: new BasicJSCache(),
             ttls: {
-                [METHOD_NAMES.MATCH.GET_MATCH]: 1000 * 60 * 20,
+                [METHOD_NAMES.MATCH.GET_MATCH]: 1000 * 60 * 2,
             },
         },
     })

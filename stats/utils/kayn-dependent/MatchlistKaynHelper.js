@@ -8,7 +8,7 @@ const MATCHLIST_CONFIG = {
 
 class MatchlistKaynHelper {
     static rawMatchlistToMatches = kayn => async (matchlist, region) => {
-        const matchlistChunkSize = matchlist.length / 5
+        const matchlistChunkSize = 100
 
         const matches = await asyncMapOverArrayInChunks(
             matchlist,
