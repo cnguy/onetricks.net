@@ -248,7 +248,7 @@ let make =
                        sortReverse=self.state.playersView.shouldSortReverse
                      />;
                    };
-                 | RouterConfig.NotFound => <div className="not-found" />
+                 | RouterConfig.NotFound => <NotFound />
                  }
                )
                <FAQ />

@@ -418,3 +418,7 @@ html {
   padding-top: 100px;
   padding-bottom: 250px;
 }
+
+.not-found {
+  color: white;
+}
