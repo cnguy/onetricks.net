@@ -2,11 +2,9 @@ let component = ReasonReact.statelessComponent("ChampIcon");
 
 let getIcon: string => string = [%bs.raw
   {| function (name) {
-    try {
-      return require(`../assets/champ-icons/min/${name.toLowerCase()}square-min.png`)
-    } catch (ex) {
-      return require('../assets/champ-icons/min/questionmark.png')
-    }
+      // Still have to handle default case somehow... Ideally
+      // pure CSS solution?
+      return 'http://media.onetricks.net/' + name.toLowerCase() + 'square-min.png'
 }
 |}
 ];
