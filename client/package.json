@@ -8,7 +8,9 @@
     "concurrently": "3.5.1",
     "enzyme": "^2.4.1",
     "react-addons-test-utils": "^15.4.0",
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.1",
+    "webpack-bundle-analyzer": "^2.11.1",
+    "webpack-bundle-size-analyzer": "^2.7.0"
   },
   "dependencies": {
     "babel-polyfill": "^6.23.0",
@@ -26,6 +28,7 @@
     "build": "mv -v ./node_modules/reason-react/lib/js/src/* ./node_modules/reason-react/src/; react-scripts build; mv build/index.html build/200.html",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "analyze-bundle": "node ./build.js",
     "buckle:up": "bsb -make-world -w",
     "buckle:clean": "bsb -clean-world"
   }
