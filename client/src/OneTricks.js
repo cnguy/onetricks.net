@@ -60,9 +60,9 @@ const enhance = compose(
     lifecycle({
         async componentDidMount() {
             const { makeCompact } = this.props
-            let res, json
+            let json
             try {
-                res = await fetch(FETCH_PLAYERS_URL)
+                const res = await fetch(FETCH_PLAYERS_URL)
                 json = await res.json()
             } catch (exception) {
                 json = require('./data_fallbacks/fallback-3-14-2018.json')
