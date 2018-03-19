@@ -77,7 +77,6 @@ let make =
       ReasonReact.Update({
         ...state,
         playersView: {
-          ...state.playersView,
           sortKey,
           shouldSortReverse:
             if (sortKey == state.playersView.sortKey) {
@@ -201,6 +200,50 @@ let make =
                  )
                />
                (
+                 switch (
+                   ReasonReact.Router.dangerouslyGetInitialUrl().path,
+                   ReasonReact.Router.dangerouslyGetInitialUrl().search,
+                 ) {
+                 | (["champions", championName, ..._rest], search) =>
+                   let baseURL = "/champions/" ++ championName;
+                   let newSearch =
+                     (String.length(search) > 0 ? "?" : "") ++ search;
+                   <ul>
+                     <li>
+                       <span
+                         className="link"
+                         onClick=(
+                           _event =>
+                             ReasonReact.Router.push(baseURL ++ newSearch)
+                         )>
+                         (Utils.ste("Players"))
+                       </span>
+                     </li>
+                     <li>
+                       <span
+                         className="link"
+                         onClick=(
+                           _event =>
+                             ReasonReact.Router.push(baseURL ++ "/matchups")
+                         )>
+                         (Utils.ste("Champion Matchups"))
+                       </span>
+                     </li>
+                     <li>
+                       <span
+                         className="link"
+                         onClick=(
+                           _event =>
+                             ReasonReact.Router.push(baseURL ++ "/history")
+                         )>
+                         (Utils.ste("Match History"))
+                       </span>
+                     </li>
+                   </ul>;
+                 | _ => ReasonReact.nullElement
+                 }
+               )
+               (
                  switch (currentRoute) {
                  | RouterConfig.Home =>
                    let regionInfoText =
@@ -248,6 +291,22 @@ let make =
                        sortReverse=self.state.playersView.shouldSortReverse
                      />;
                    };
+                 | RouterConfig.Matchups(currentChampion) =>
+                   <div>
+                     (
+                       Utils.ste(
+                         "Matchups will be implemented in the near future!",
+                       )
+                     )
+                   </div>
+                 | RouterConfig.MatchHistory(currentChampion) =>
+                   <div>
+                     (
+                       Utils.ste(
+                         "Match history will be implemented in the near future!",
+                       )
+                     )
+                   </div>
                  | RouterConfig.NotFound => <NotFound />
                  }
                )

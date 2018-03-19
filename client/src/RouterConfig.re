@@ -1,6 +1,8 @@
 type route =
   | Home
   | PlayersView(string, Rank.rank)
+  | Matchups(string)
+  | MatchHistory(string)
   | NotFound;
 
 let routeFromUrl = (url: ReasonReact.Router.url) =>
@@ -11,6 +13,9 @@ let routeFromUrl = (url: ReasonReact.Router.url) =>
     PlayersView(championName, Rank.Challenger)
   | (["champions", championName], "rank=masters") =>
     PlayersView(championName, Rank.Masters)
+  | (["champions", championName, "matchups"], "") => Matchups(championName)
+  | (["champions", championName, "history"], "") =>
+    MatchHistory(championName)
   | _ => NotFound
   };
 
@@ -19,5 +24,7 @@ let routeToUrl = (route: route) =>
   | Home => "/"
   | PlayersView(championName, rank) =>
     "/champions/" ++ championName ++ Rank.toRoute(rank)
+  | Matchups(championName) => "/champions/" ++ championName ++ "/matchups"
+  | MatchHistory(championName) => "/champions/" ++ championName ++ "/history"
   | NotFound => "/404"
   };

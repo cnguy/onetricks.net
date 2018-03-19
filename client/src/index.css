@@ -5,6 +5,17 @@ html {
   line-height: 1.6;
   box-sizing: border;
   font-size: 16px;
+  color: white;
+}
+
+.link {
+  color: yellow;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: white;
+  cursor: pointer;
 }
 
 @keyframes fadeIn {
