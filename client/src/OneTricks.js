@@ -65,7 +65,12 @@ const enhance = compose(
                 const res = await fetch(FETCH_PLAYERS_URL)
                 json = await res.json()
             } catch (exception) {
-                json = require('./data_fallbacks/fallback-3-14-2018.json')
+                try {
+                    const res = await fetch('http://media.onetricks.net/api/fallback-3-14-2018.json')
+                    json = await res.json()
+                } catch (fallbackFailed) {
+                    console.log('fallback failed :/', fallbackFailed)
+                }
             }
             makeCompact(json)
         },
