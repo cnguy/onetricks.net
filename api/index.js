@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'development') {
 import generator from './OneTricksGenerator'
 import { setInterval } from 'timers'
 
-app.set('port', process.env.PORT || 3001)
+app.set('port', process.env.PORT || 80)
 
 app.get('/all', (req, res, next) => {
     if (req.query.multiple) {

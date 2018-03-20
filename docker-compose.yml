@@ -16,7 +16,7 @@ services:
       - mongo
       - redis
     ports:
-      - "3001:3001"
+      - "80:80"
     environment:
       - NODE_ENV=development
   client:
