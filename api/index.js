@@ -1,9 +1,11 @@
 /* eslint-disable no-restricted-syntax */
-const express = require('express')
+import express from 'express'
+import compression from 'compression'
+import cors from 'cors'
 
 const app = express()
-const compression = require('compression')
 app.use(compression())
+app.use(cors())
 
 require('dotenv').config()
 
@@ -86,4 +88,4 @@ const main = async () => {
     }
 }
 
-//main()
+// main()

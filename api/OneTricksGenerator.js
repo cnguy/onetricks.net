@@ -1,6 +1,6 @@
 require('dotenv').config('./.env')
 
-import { Kayn, REGIONS, RedisCache, METHOD_NAMES } from 'kayn'
+import { Kayn, REGIONS, BasicJSCache, RedisCache, METHOD_NAMES } from 'kayn'
 import request from 'superagent'
 import jsonfile from 'jsonfile'
 const mongoose = require('mongoose')
@@ -28,6 +28,12 @@ const kayn = Kayn()({
     requestOptions: {
         numberOfRetriesBeforeAbort: 3,
         delayBeforeRetry: 3000,
+    },
+    cacheOptions: {
+        cache: new BasicJSCache(),
+        timeToLives: {
+            useDefault: true,
+        },
     },
 })
 
@@ -202,8 +208,6 @@ const getOneTrick = region => async ({ wins, losses, playerOrTeamId }) => {
         // Some ID's funnily equaled 0 (in the past).
         const champData = getStaticChampion(champId)
         const { summonerId } = playerStats
-
-        console.log(totalSessionsWon, totalSessionsLost, 'out of', totalGames)
 
         return {
             ...createOneTrick(
