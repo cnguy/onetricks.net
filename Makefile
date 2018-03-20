@@ -1,6 +1,14 @@
 run:
 	docker-compose up --build;
 
+build-api:
+	cd api;\
+	sudo docker build . -t cnguy/one-tricks-api
+
+build-stats:
+	cd stats;\
+	sudo docker build . -t cnguy/one-tricks-stats
+
 run-prod:
 	docker-compose -f docker-compose.prod.yml pull;\
 	docker-compose -f docker-compose.prod.yml up --build;
