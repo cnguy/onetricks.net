@@ -67,7 +67,7 @@ const enhance = compose(
             } catch (exception) {
                 try {
                     const res = await fetch(
-                        'http://media.onetricks.net/api/fallback-3-14-2018.json',
+                        'https://media.onetricks.net/api/fallback-3-14-2018.json',
                     )
                     json = await res.json()
                 } catch (fallbackFailed) {
