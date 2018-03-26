@@ -41,9 +41,9 @@ const inPlatform = region => ({ platformId: platformID }) =>
     platformID.toLowerCase() === asPlatformID(region)
 
 const store = json => {
-    console.log('writing to stats.json')
+    console.time('stats.json')
     jsonfile.writeFileSync('./stats.json', json)
-    console.log('>> FINISHED')
+    console.timeEnd('stats.json')
 }
 
 const main = async () => {
@@ -54,14 +54,8 @@ const main = async () => {
         },
         requestOptions: {
             numberOfRetriesBeforeAbort: 10,
-            delayBeforeRetry: 10000,
+            delayBeforeRetry: 50000,
             burst: false,
-        },
-        cacheOptions: {
-            cache: new BasicJSCache(),
-            ttls: {
-                [METHOD_NAMES.MATCH.GET_MATCH]: 1000 * 60 * 2,
-            },
         },
     })
 
@@ -78,7 +72,7 @@ const main = async () => {
     const getPlayer = id => allStats.find(el => el.summonerID === id)
 
     const makeStats = async (rank, region, summoners) => {
-        const summonersChunkSize = summoners.length / 3
+        const summonersChunkSize = summoners.length / 4
 
         const allPlayerStats = await asyncMapOverArrayInChunks(
             summoners,
@@ -133,12 +127,16 @@ const main = async () => {
             ),
         )
         const len = summoners.length
-        const chunkSize = len / 4
+        const chunkSize = 50
         for (let i = 0; i < len; i += chunkSize) {
             console.log('======')
             console.log('starting:', rank, region, i, i + chunkSize)
             console.log('======')
-            await makeStats(rank, region, summoners.slice(i, i + chunkSize))
+            try {
+                await makeStats(rank, region, summoners.slice(i, i + chunkSize))
+            } catch (exception) {
+                console.log('makeStats failed...')
+            }
             console.log('======')
             console.log('ending:', rank, region, i, i + chunkSize)
             console.log('======')
