@@ -143,6 +143,7 @@ let make =
     let regionatedOneTricks: array(JsTypes.oneTrick) =
       allOneTricks
       |> Array.to_list
+      |> Sorts.numberOfOneTricks
       |> List.map(el => {
            let tmp = el##players |> Array.to_list;
            let newPlayers =

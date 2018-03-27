@@ -11,8 +11,6 @@ import Loader from './components/Loader.bs'
 
 import OneTricksRe from './OneTricksRe.bs'
 
-import SORTS from './helpers/sorts'
-
 import FETCH_PLAYERS_URL from './helpers/fetchPlayersUrl'
 
 let numOfImagesLeft = 0 // Performance :)
@@ -80,29 +78,10 @@ const enhance = compose(
 )
 
 const OneTricks = enhance(({ all, renderSpinner, ...props }) => {
-    // Sort by number of one tricks per icon. TODO: Clean this up later.
-
-    let tmp = { ...all }
-    const keys = Object.keys(tmp)
-
-    let sortedPlayers = new Map()
-
-    for (const key of keys) sortedPlayers.set(key, tmp[key])
-
-    Object.keys(tmp).map(key => sortedPlayers.set(key, tmp[key]))
-    sortedPlayers = new Map(SORTS.ONETRICKS([...sortedPlayers.entries()]))
-
-    let _all = []
-
-    for (const [key, value] of sortedPlayers) {
-        _all.push([key, value])
-    }
-
-    // ReasonML lists/arrays must have the same type, so _all breaks because it is of type [string, Types.player].
-    // Parse it for now. :)
-    const reasonableAll = _all.map(([championName, playersArray]) => ({
-        champion: championName,
-        players: playersArray,
+    const keys = Object.keys(all)
+    const reasonableAll = keys.map(key => ({
+        champion: key,
+        players: all[key],
     }))
 
     return (

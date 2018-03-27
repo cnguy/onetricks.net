@@ -82,3 +82,21 @@ let losses = (list: list(JsTypes.player)) =>
 
 let winRate = (list: list(JsTypes.player)) : list(JsTypes.player) =>
   List.sort(winRatePredicate, list);
+
+let numberOfOneTricks =
+    (list: list(JsTypes.oneTrick))
+    : list(JsTypes.oneTrick) =>
+  list
+  |> List.sort((a, b) =>
+       if (Array.length(a##players) > Array.length(b##players)) {
+         (-1);
+       } else if (Array.length(a##players) < Array.length(b##players)) {
+         1;
+       } else if (a##champion > b##champion) {
+         1;
+       } else if (a##champion < b##champion) {
+         (-1);
+       } else {
+         0;
+       }
+     );
