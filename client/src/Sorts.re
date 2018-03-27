@@ -2,17 +2,16 @@ let sanitize = a => String.trim(String.lowercase(a));
 
 let none = list => list;
 
-let namePredicate = (a: JsTypes.player, b) => {
-  let nameA = sanitize(a##name);
-  let nameB = sanitize(b##name);
-  if (nameA < nameB) {
+let lexiSort = (a: string, b: string) : int =>
+  if (a < b) {
     (-1);
-  } else if (nameA == nameB) {
-    0;
-  } else {
+  } else if (a > b) {
     1;
+  } else {
+    0;
   };
-};
+
+let namePredicate = (a: JsTypes.player, b) => lexiSort(a##name, b##name);
 
 let rankPredicate = (a: JsTypes.player, b) =>
   if (a##rank < b##rank) {
@@ -92,11 +91,40 @@ let numberOfOneTricks =
          (-1);
        } else if (Array.length(a##players) < Array.length(b##players)) {
          1;
-       } else if (a##champion > b##champion) {
-         1;
-       } else if (a##champion < b##champion) {
-         (-1);
        } else {
-         0;
+         lexiSort(a##champion, b##champion);
        }
      );
+
+type winsLosses = {
+  wins: int,
+  losses: int,
+};
+
+let oneTricksWinRate = (list: list(JsTypes.player)) : float => {
+  let wl =
+    list
+    |> List.fold_left(
+         (total, curr) => {
+           wins: total.wins + curr##wins,
+           losses: total.losses + curr##losses,
+         },
+         {wins: 0, losses: 0},
+       );
+  let wins = float_of_int(wl.wins);
+  wins /. (wins +. float_of_int(wl.losses));
+};
+
+let oneTricksByWinRate = (list: list(JsTypes.oneTrick)) =>
+  list
+  |> List.sort((a, b) => {
+       let winRateA = oneTricksWinRate(a##players |> Array.to_list);
+       let winRateB = oneTricksWinRate(b##players |> Array.to_list);
+       if (winRateA > winRateB) {
+         (-1);
+       } else if (winRateA < winRateB) {
+         1;
+       } else {
+         lexiSort(a##champion, b##champion);
+       };
+     });
