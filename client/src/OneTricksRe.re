@@ -9,7 +9,10 @@ type action =
   | ToggleRegion(string)
   | Nothing;
 
-type championPane = {searchKey: string};
+type championPane = {
+  searchKey: string,
+  sortBy: Sorts.oneTricksListSort,
+};
 
 type misc = {
   areChampionPanesMerged: bool,
@@ -40,6 +43,7 @@ let make =
   initialState: () => {
     championPane: {
       searchKey: "",
+      sortBy: Sorts.Number,
     },
     misc: {
       areChampionPanesMerged: true,
@@ -70,6 +74,7 @@ let make =
       ReasonReact.Update({
         ...state,
         championPane: {
+          ...state.championPane,
           searchKey: String.lowercase(value),
         },
       })
@@ -143,7 +148,12 @@ let make =
     let regionatedOneTricks: array(JsTypes.oneTrick) =
       allOneTricks
       |> Array.to_list
-      |> Sorts.numberOfOneTricks
+      |> (
+        switch (self.state.championPane.sortBy) {
+        | Sorts.WinRate => Sorts.oneTricksByWinRate
+        | _ => Sorts.numberOfOneTricks
+        }
+      )
       |> List.map(el => {
            let tmp = el##players |> Array.to_list;
            let newPlayers =

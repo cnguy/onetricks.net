@@ -82,6 +82,10 @@ let losses = (list: list(JsTypes.player)) =>
 let winRate = (list: list(JsTypes.player)) : list(JsTypes.player) =>
   List.sort(winRatePredicate, list);
 
+type oneTricksListSort =
+  | Number
+  | WinRate;
+
 let numberOfOneTricks =
     (list: list(JsTypes.oneTrick))
     : list(JsTypes.oneTrick) =>
