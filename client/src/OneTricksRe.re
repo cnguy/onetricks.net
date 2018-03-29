@@ -4,6 +4,7 @@ type action =
   | SetRegion(string)
   | SetSearchKey(string)
   | SetSortKey(Sort.sort)
+  | SetChampionIconsSortKey(Sorts.oneTricksListSort)
   | ToggleMultiRegionFilter
   | ToggleMerge
   | ToggleRegion(string)
@@ -12,6 +13,7 @@ type action =
 type championPane = {
   searchKey: string,
   sortBy: Sorts.oneTricksListSort,
+  threshholdCountToShow: int,
 };
 
 type misc = {
@@ -44,6 +46,7 @@ let make =
     championPane: {
       searchKey: "",
       sortBy: Sorts.Number,
+      threshholdCountToShow: 0,
     },
     misc: {
       areChampionPanesMerged: true,
@@ -89,6 +92,14 @@ let make =
             } else {
               false;
             },
+        },
+      })
+    | SetChampionIconsSortKey(sortKey) =>
+      ReasonReact.Update({
+        ...state,
+        championPane: {
+          ...state.championPane,
+          sortBy: sortKey,
         },
       })
     | ToggleMultiRegionFilter =>
@@ -208,6 +219,9 @@ let make =
                  )
                  setRegionFilter=(
                    event => self.send(SetRegion(Utils.getEventValue(event)))
+                 )
+                 setChampionIconsSortKey=(
+                   value => self.send(SetChampionIconsSortKey(value))
                  )
                />
                (

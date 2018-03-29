@@ -13,6 +13,7 @@ let make =
       ~toggleMultiRegionFilter,
       ~region,
       ~setRegionFilter,
+      ~setChampionIconsSortKey,
       _children,
     ) => {
   ...component,
@@ -34,5 +35,15 @@ let make =
         toggleMultiRegionFilter
         toggleRegion
       />
+      <div
+        className="link"
+        onClick=(_event => setChampionIconsSortKey(Sorts.Number))>
+        (Utils.ste("Sort by Length"))
+      </div>
+      <div
+        className="link"
+        onClick=(_event => setChampionIconsSortKey(Sorts.WinRate))>
+        (Utils.ste("Sort by WinRate"))
+      </div>
     </div>,
 };
