@@ -41,18 +41,6 @@ type state = {
   playersView,
 };
 
-type environment =
-  | None
-  | Development
-  | Production;
-
-let envStrToType = (string: string) =>
-  switch (string) {
-  | "development" => Development
-  | "production" => Production
-  | _ => None
-  };
-
 /*
  let parseOneTricksApiResponse = json : array(player) =>
    json
@@ -190,15 +178,14 @@ let make = _children => {
     ),
   ],
   didMount: self => {
-    let env = envStrToType([%bs.raw {| process.env.NODE_ENV |}]);
+    /* let env = Environment.nodeEnv() */
     let url =
       (
-        switch (Production /* env */) {
-        | Production => "http://104.131.26.226"
-        | Development =>
-          "https://cors-anywhere.herokuapp.com/"
-          ++ [%bs.raw {| process.env.NGROK_SERVER |}]
-        | None => ""
+        switch (Environment.Production /* env */) {
+        | Environment.Production => "http://104.131.26.226"
+        | Environment.Development =>
+          "https://cors-anywhere.herokuapp.com/" ++ Environment.getNgrokURL()
+        | Environment.None => ""
         }
       )
       ++ "/all?region=all";

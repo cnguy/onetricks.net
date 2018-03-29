@@ -12,8 +12,7 @@
     ],
     "sources": [
       "src",
-      "src/components",
-      "src/helpers"
+      "src/components"
     ],
     "package-specs": {
       "module": "commonjs",
