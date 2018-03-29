@@ -5,11 +5,11 @@ type winLosses = {
   losses: int,
 };
 
-let getOverallWinRate = (players: list(JsTypes.player)) =>
+let getOverallWinRate = (players: Decoder.players) =>
   List.fold_left(
-    (a, b: JsTypes.player) => {
-      wins: a.wins + b##wins,
-      losses: a.losses + b##losses,
+    (a, b: Decoder.player) => {
+      wins: a.wins + b.wins,
+      losses: a.losses + b.losses,
     },
     {wins: 0, losses: 0},
     players,
@@ -17,7 +17,7 @@ let getOverallWinRate = (players: list(JsTypes.player)) =>
 
 let make =
     (
-      ~players: array(JsTypes.player),
+      ~players: Decoder.players,
       ~goBack,
       ~champ: string,
       ~show: bool,
@@ -28,7 +28,7 @@ let make =
     ) => {
   ...component,
   render: _self => {
-    let simpleList = Array.to_list(players);
+    let simpleList = players;
     let sortedList =
       switch (sortKey) {
       | Sort.Region => Sorts.region(simpleList)
@@ -47,10 +47,11 @@ let make =
       };
     let renderableList =
       List.map(
-        player => <PlayerRow key=(string_of_int(player##id)) player />,
+        (player: Decoder.player) =>
+          <PlayerRow key=(string_of_int(player.id)) player />,
         finalList,
       );
-    let scores = getOverallWinRate(Array.to_list(players));
+    let scores = players |> getOverallWinRate;
     let wins = scores.wins;
     let losses = scores.losses;
     if (show) {

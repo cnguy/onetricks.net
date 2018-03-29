@@ -11,49 +11,50 @@ let lexiSort = (a: string, b: string) : int =>
     0;
   };
 
-let namePredicate = (a: JsTypes.player, b) => lexiSort(a##name, b##name);
+let namePredicate = (a: Decoder.player, b: Decoder.player) =>
+  lexiSort(a.name, b.name);
 
-let rankPredicate = (a: JsTypes.player, b) =>
-  if (a##rank < b##rank) {
+let rankPredicate = (a: Decoder.player, b: Decoder.player) =>
+  if (a.rank < b.rank) {
     (-1);
-  } else if (a##rank == b##rank) {
+  } else if (a.rank == b.rank) {
     namePredicate(a, b);
   } else {
     1;
   };
 
-let regionPredicate = (a: JsTypes.player, b) =>
-  if (a##region < b##region) {
+let regionPredicate = (a: Decoder.player, b: Decoder.player) =>
+  if (a.region < b.region) {
     (-1);
-  } else if (a##region == b##region) {
+  } else if (a.region == b.region) {
     rankPredicate(a, b);
   } else {
     1;
   };
 
-let winsPredicate = (a: JsTypes.player, b) =>
-  if (a##wins < b##wins) {
+let winsPredicate = (a: Decoder.player, b: Decoder.player) =>
+  if (a.wins < b.wins) {
     (-1);
-  } else if (a##wins == b##wins) {
+  } else if (a.wins == b.wins) {
     rankPredicate(a, b);
   } else {
     1;
   };
 
-let lossesPredicate = (a: JsTypes.player, b) =>
-  if (a##losses < b##losses) {
+let lossesPredicate = (a: Decoder.player, b: Decoder.player) =>
+  if (a.losses < b.losses) {
     (-1);
-  } else if (a##losses == b##losses) {
+  } else if (a.losses == b.losses) {
     rankPredicate(a, b);
   } else {
     1;
   };
 
-let winRatePredicate = (a: JsTypes.player, b) => {
-  let winsAF = Pervasives.float_of_int(a##wins);
-  let lossesAF = Pervasives.float_of_int(a##losses);
-  let winsBF = Pervasives.float_of_int(b##wins);
-  let lossesBF = Pervasives.float_of_int(b##losses);
+let winRatePredicate = (a: Decoder.player, b: Decoder.player) => {
+  let winsAF = Pervasives.float_of_int(a.wins);
+  let lossesAF = Pervasives.float_of_int(a.losses);
+  let winsBF = Pervasives.float_of_int(b.wins);
+  let lossesBF = Pervasives.float_of_int(b.losses);
   let winRateA = winsAF /. (winsAF +. lossesAF);
   let winRateB = winsBF /. (winsBF +. lossesBF);
   let res = winRateB -. winRateA;
@@ -66,37 +67,31 @@ let winRatePredicate = (a: JsTypes.player, b) => {
   };
 };
 
-let name = (list: list(JsTypes.player)) => List.sort(namePredicate, list);
+let name = (list: Decoder.players) => List.sort(namePredicate, list);
 
-let rank = (list: list(JsTypes.player)) : list(JsTypes.player) =>
-  List.sort(rankPredicate, list);
+let rank = (list: Decoder.players) => List.sort(rankPredicate, list);
 
-let region = (list: list(JsTypes.player)) : list(JsTypes.player) =>
-  List.sort(regionPredicate, list);
+let region = (list: Decoder.players) => List.sort(regionPredicate, list);
 
-let wins = (list: list(JsTypes.player)) => List.sort(winsPredicate, list);
+let wins = (list: Decoder.players) => List.sort(winsPredicate, list);
 
-let losses = (list: list(JsTypes.player)) =>
-  List.sort(lossesPredicate, list);
+let losses = (list: Decoder.players) => List.sort(lossesPredicate, list);
 
-let winRate = (list: list(JsTypes.player)) : list(JsTypes.player) =>
-  List.sort(winRatePredicate, list);
+let winRate = (list: Decoder.players) => List.sort(winRatePredicate, list);
 
 type oneTricksListSort =
   | Number
   | WinRate;
 
-let numberOfOneTricks =
-    (list: list(JsTypes.oneTrick))
-    : list(JsTypes.oneTrick) =>
+let numberOfOneTricks = (list: Decoder.oneTricks) : Decoder.oneTricks =>
   list
-  |> List.sort((a, b) =>
-       if (Array.length(a##players) > Array.length(b##players)) {
+  |> List.sort((a: Decoder.oneTrick, b: Decoder.oneTrick) =>
+       if (List.length(a.players) > List.length(b.players)) {
          (-1);
-       } else if (Array.length(a##players) < Array.length(b##players)) {
+       } else if (List.length(a.players) < List.length(b.players)) {
          1;
        } else {
-         lexiSort(a##champion, b##champion);
+         lexiSort(a.champion, b.champion);
        }
      );
 
@@ -105,13 +100,13 @@ type winsLosses = {
   losses: int,
 };
 
-let oneTricksWinRate = (list: list(JsTypes.player)) : float => {
+let oneTricksWinRate = (list: Decoder.players) : float => {
   let wl =
     list
     |> List.fold_left(
-         (total, curr) => {
-           wins: total.wins + curr##wins,
-           losses: total.losses + curr##losses,
+         (total, curr: Decoder.player) => {
+           wins: total.wins + curr.wins,
+           losses: total.losses + curr.losses,
          },
          {wins: 0, losses: 0},
        );
@@ -119,16 +114,16 @@ let oneTricksWinRate = (list: list(JsTypes.player)) : float => {
   wins /. (wins +. float_of_int(wl.losses));
 };
 
-let oneTricksByWinRate = (list: list(JsTypes.oneTrick)) =>
+let oneTricksByWinRate = (list: Decoder.oneTricks) =>
   list
-  |> List.sort((a, b) => {
-       let winRateA = oneTricksWinRate(a##players |> Array.to_list);
-       let winRateB = oneTricksWinRate(b##players |> Array.to_list);
+  |> List.sort((a: Decoder.oneTrick, b: Decoder.oneTrick) => {
+       let winRateA = oneTricksWinRate(a.players);
+       let winRateB = oneTricksWinRate(b.players);
        if (winRateA > winRateB) {
          (-1);
        } else if (winRateA < winRateB) {
          1;
        } else {
-         lexiSort(a##champion, b##champion);
+         lexiSort(a.champion, b.champion);
        };
      });

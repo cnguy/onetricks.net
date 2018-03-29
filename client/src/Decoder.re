@@ -10,6 +10,13 @@ type player = {
 
 type players = list(player);
 
+type oneTrick = {
+  champion: string,
+  players,
+};
+
+type oneTricks = list(oneTrick);
+
 module Decode = {
   let player = json =>
     Json.Decode.{

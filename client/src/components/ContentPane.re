@@ -27,7 +27,7 @@ let make =
       )
       (
         if (areChampionPanesMerged) {
-          if (Array.length(allPlayers) > 0) {
+          if (List.length(allPlayers) > 0) {
             <div className="content-pane merged-pane">
               <div className="rank-pane">
                 <h5 className="rank-header">
@@ -45,16 +45,16 @@ let make =
             renderEmptyResults();
           };
         } else {
-          let challengers: array(JsTypes.oneTrick) =
+          let challengers =
             JsHelpers.filterPlayersByRank(allPlayers, ~rank=Rank.Challenger);
-          let masters: array(JsTypes.oneTrick) =
+          let masters =
             JsHelpers.filterPlayersByRank(allPlayers, ~rank=Rank.Masters);
-          if (Array.length(challengers) === 0 && Array.length(masters) === 0) {
+          if (List.length(challengers) === 0 && List.length(masters) === 0) {
             renderEmptyResults();
           } else {
             <div className="content-pane separated-pane">
               (
-                if (Array.length(challengers) > 0) {
+                if (List.length(challengers) > 0) {
                   <div className="rank-pane challengers-pane">
                     <h5 className="rank-header">
                       (
@@ -74,7 +74,7 @@ let make =
                 }
               )
               (
-                if (Array.length(masters) > 0) {
+                if (List.length(masters) > 0) {
                   <div className="rank-pane masters-pane">
                     <h5 className="rank-header">
                       (

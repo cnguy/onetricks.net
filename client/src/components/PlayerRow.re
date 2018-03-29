@@ -32,57 +32,64 @@ let generateLink = (name, region, opgg, id) =>
     "http://www.lolking.net/summoner/" ++ region ++ "/" ++ id ++ "/" ++ name;
   };
 
-let make = (~player: JsTypes.player, _children) => {
+let make = (~player: Decoder.player, _children) => {
   ...component,
   render: _self =>
     <tr className="players-table-tr">
       <td className="players-table-td">
-        (ReasonReact.stringToElement(String.uppercase(player##region)))
+        (
+          player.region
+          |> Region.toString
+          |> String.uppercase
+          |> ReasonReact.stringToElement
+        )
       </td>
-      <td className="players-table-td"> (getRankImage(player##rank)) </td>
+      <td className="players-table-td">
+        (player.rank |> Rank.toString |> getRankImage)
+      </td>
       <td className="players-table-td">
         <a
           className="table-player-link"
           href=(
             generateLink(
-              player##name,
-              player##region,
+              player.name,
+              player.region |> Region.toString,
               true,
-              string_of_int(player##id),
+              string_of_int(player.id),
             )
           )
           target="_blank"
           rel="noopener noreferrer">
-          (ReasonReact.stringToElement(player##name))
+          (ReasonReact.stringToElement(player.name))
         </a>
       </td>
       <td
         className="players-table-td"
         style=(ReactDOMRe.Style.make(~color="#98fb98", ()))>
-        (ReasonReact.stringToElement(string_of_int(player##wins)))
+        (ReasonReact.stringToElement(string_of_int(player.wins)))
       </td>
       <td
         className="players-table-td"
         style=(ReactDOMRe.Style.make(~color="#ff6961", ()))>
-        (ReasonReact.stringToElement(string_of_int(player##losses)))
+        (ReasonReact.stringToElement(string_of_int(player.losses)))
       </td>
       <td className="players-table-td">
-        <WinRate wins=player##wins losses=player##losses />
+        <WinRate wins=player.wins losses=player.losses />
       </td>
       <td className="players-tabel-td">
         <a
           className="table-player-link"
           href=(
             generateLink(
-              player##name,
-              player##region,
+              player.name,
+              player.region |> Region.toString,
               true,
-              string_of_int(player##id),
+              string_of_int(player.id),
             )
           )
           target="_blank"
           rel="noopener noreferrer">
-          (ReasonReact.stringToElement(player##region))
+          (player.region |> Region.toString |> ReasonReact.stringToElement)
         </a>
       </td>
       <td className="players-table-td">
@@ -90,10 +97,10 @@ let make = (~player: JsTypes.player, _children) => {
           className="table-player-link"
           href=(
             generateLink(
-              player##name,
-              player##region,
+              player.name,
+              player.region |> Region.toString,
               false,
-              string_of_int(player##id),
+              string_of_int(player.id),
             )
           )
           target="_blank"

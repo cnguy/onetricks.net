@@ -5,21 +5,17 @@ type action =
   | SetSearchKey(string)
   | SetSortKey(Sort.sort)
   | SetChampionIconsSortKey(Sorts.oneTricksListSort)
+  | SetOneTricks(Decoder.oneTricks)
   | ToggleMultiRegionFilter
   | ToggleMerge
   | ToggleRegion(string)
   | Nothing;
 
-type oneTrick = {
-  champion: string,
-  players: Decoder.players,
-};
-
 type championPane = {
   searchKey: string,
   sortBy: Sorts.oneTricksListSort,
   threshholdCountToShow: int,
-  oneTricks: list(oneTrick),
+  oneTricks: list(Decoder.oneTrick),
 };
 
 type misc = {
@@ -41,22 +37,6 @@ type state = {
   playersView,
 };
 
-/*
- let parseOneTricksApiResponse = json : array(player) =>
-   json
-   |> Array.map(el => {
-        let player = {
-          championName: el##champ,
-          id: el##id,
-          name: el##name,
-          rank: Rank.fromString(el##rank),
-          region: Region.fromString(el##region),
-          wins: el##wins,
-          losses: el##losses,
-        };
-        Js.log(player);
-        player;
-      });*/
 module Router = ReRoute.CreateRouter(RouterConfig);
 
 let component = ReasonReact.reducerComponent("OneTricksRe");
@@ -122,6 +102,14 @@ let make = _children => {
         championPane: {
           ...state.championPane,
           sortBy: sortKey,
+        },
+      })
+    | SetOneTricks(oneTricks) =>
+      ReasonReact.Update({
+        ...state,
+        championPane: {
+          ...state.championPane,
+          oneTricks,
         },
       })
     | ToggleMultiRegionFilter =>
@@ -190,28 +178,67 @@ let make = _children => {
       )
       ++ "/all?region=all";
     /* TODO: Add API call handling before fallback. Use repromise let-bindings? */
+    let parseOneTricks = (decoded: Decoder.players) : Decoder.oneTricks => {
+      let oneTricks: Decoder.oneTricks =
+        decoded
+        |> List.fold_left(
+             (total, curr: Decoder.player) => {
+               let oneTrick: Decoder.oneTrick = {
+                 champion: curr.championName,
+                 players: [curr],
+               };
+               if (total
+                   |> List.exists((el: Decoder.oneTrick) =>
+                        el.champion == curr.championName
+                      )) {
+                 let target =
+                   total
+                   |> List.find((el: Decoder.oneTrick) =>
+                        el.champion == curr.championName
+                      );
+                 let merged: Decoder.oneTrick = {
+                   champion: curr.championName,
+                   players: target.players |> List.append(oneTrick.players),
+                 };
+                 total
+                 |> List.filter((el: Decoder.oneTrick) =>
+                      el.champion != curr.championName
+                    )
+                 |> List.append([merged]);
+               } else {
+                 total |> List.append([oneTrick]);
+               };
+             },
+             [],
+           );
+      oneTricks;
+    };
     Js.Promise.(
       Fetch.fetch("https://media.onetricks.net/api/fallback-3-26-2018.json")
       |> then_(Fetch.Response.json)
       |> then_(payload =>
-           Decoder.Decode.players(payload) |> Js.log |> resolve
+           self.send(
+             SetOneTricks(parseOneTricks(Decoder.Decode.players(payload))),
+           )
+           |> resolve
          )
       |> catch(error => Js.log(error) |> resolve)
-    );
+    )
+    |> ignore;
     NoUpdate;
   },
   render: self => {
-    let allOneTricks = [];
-    let regionatedOneTricks: array(JsTypes.oneTrick) =
-      allOneTricks
+    Js.log(self.state);
+    let regionatedOneTricks: Decoder.oneTricks =
+      self.state.championPane.oneTricks
       |> (
         switch (self.state.championPane.sortBy) {
         | Sorts.WinRate => Sorts.oneTricksByWinRate
         | _ => Sorts.numberOfOneTricks
         }
       )
-      |> List.map(el => {
-           let tmp = el##players |> Array.to_list;
+      |> List.map((el: Decoder.oneTrick) => {
+           let tmp = el.players;
            let newPlayers =
              if (! self.state.misc.isMultiRegionFilterOn
                  && Region.toString(self.state.misc.region) == "all") {
@@ -219,22 +246,23 @@ let make = _children => {
                tmp;
              } else {
                List.filter(
-                 (player: JsTypes.player) =>
+                 (player: Decoder.player) =>
                    if (! self.state.misc.isMultiRegionFilterOn) {
-                     self.state.misc.region
-                     == Region.fromString(player##region);
+                     self.state.misc.region == player.region;
                    } else {
-                     self.state.misc.regions
-                     |> List.mem(Region.fromString(player##region));
+                     self.state.misc.regions |> List.mem(player.region);
                    },
                  tmp,
                );
              };
-           {"players": Array.of_list(newPlayers), "champion": el##champion};
+           let ot: Decoder.oneTrick = {
+             champion: el.champion,
+             players: newPlayers,
+           };
+           ot;
          })
-      |> List.filter(el => Array.length(el##players) > 0)
-      |> JsHelpers.filterBySearchKey(self.state.championPane.searchKey)
-      |> Array.of_list;
+      |> List.filter((el: Decoder.oneTrick) => List.length(el.players) > 0)
+      |> JsHelpers.filterBySearchKey(self.state.championPane.searchKey);
     <Router.Container>
       ...(
            (~currentRoute) =>
@@ -340,7 +368,7 @@ let make = _children => {
                      regionatedOneTricks
                      |> JsHelpers.filterPlayersByRank(_, ~rank)
                      |> JsHelpers.extractPlayers(~currentChampion, _);
-                   if (Array.length(players) == 0) {
+                   if (List.length(players) == 0) {
                      <div className="empty-results">
                        (
                          Utils.ste(

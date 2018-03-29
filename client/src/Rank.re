@@ -23,4 +23,5 @@ let toString = (rank: rank) =>
   | None => ""
   | Challenger => "c"
   | Masters => "m"
+  | _ => ""
   };

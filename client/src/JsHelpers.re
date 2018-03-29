@@ -1,44 +1,41 @@
 let extractPlayers =
-    (~currentChampion: string, listOfOneTricks: array(JsTypes.oneTrick)) => {
-  let target =
+    (~currentChampion: string, listOfOneTricks: Decoder.oneTricks) => {
+  let target: Decoder.oneTricks =
     List.filter(
-      (el: JsTypes.oneTrick) =>
-        Utils.parseChampionNameFromRoute(el##champion) === currentChampion,
-      Array.to_list(listOfOneTricks),
+      (el: Decoder.oneTrick) =>
+        Utils.parseChampionNameFromRoute(el.champion) === currentChampion,
+      listOfOneTricks,
     );
   if (List.length(target) === 1) {
-    Array.of_list(target)[0]##players;
+    (target |> List.hd).players;
   } else {
-    [||];
+    [];
   };
 };
 
-let filterPlayersByRank =
-    (oneTricks: array(JsTypes.oneTrick), ~rank: Rank.rank) => {
-  let char = Rank.toString(rank);
-  if (char == "") {
+let filterPlayersByRank = (oneTricks: Decoder.oneTricks, ~rank: Rank.rank) =>
+  if (Rank.toString(rank) == "") {
     oneTricks;
   } else {
     oneTricks
-    |> Array.to_list
-    |> List.map(el => {
+    |> List.map((el: Decoder.oneTrick) => {
          let newPlayers =
-           el##players
-           |> Array.to_list
-           |> List.filter((player: JsTypes.player) => player##rank === char);
-         {"players": Array.of_list(newPlayers), "champion": el##champion};
+           el.players
+           |> List.filter((player: Decoder.player) => player.rank === rank);
+         let ot: Decoder.oneTrick = {
+           champion: el.champion,
+           players: newPlayers,
+         };
+         ot;
        })
-    |> List.filter(el => Array.length(el##players) > 0)
-    |> Array.of_list;
+    |> List.filter((el: Decoder.oneTrick) => List.length(el.players) > 0);
   };
-};
 
-let filterBySearchKey =
-    (searchKey: string, oneTricks: list(JsTypes.oneTrick)) =>
+let filterBySearchKey = (searchKey: string, oneTricks: Decoder.oneTricks) =>
   if (String.length(searchKey) > 0) {
     oneTricks
-    |> List.filter(oneTrick => {
-         let string = String.lowercase(oneTrick##champion);
+    |> List.filter((oneTrick: Decoder.oneTrick) => {
+         let string = String.lowercase(oneTrick.champion);
          let substring = String.lowercase(searchKey);
          let jsIndexOf: (string, string) => int = [%bs.raw
            {|

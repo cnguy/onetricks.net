@@ -6,26 +6,26 @@ let make =
   render: _self =>
     <div className="champs">
       (
-        ReasonReact.arrayToElement(
-          Array.map(
-            pair =>
+        Utils.lte(
+          List.map(
+            (pair: Decoder.oneTrick) =>
               <span
                 className="champ-open-links fade-in"
-                key=pair##champion
+                key=pair.champion
                 href="#"
                 onClick=(
                   _event =>
                     ReasonReact.Router.push(
                       "/champions/"
-                      ++ Utils.parseChampionNameFromRoute(pair##champion)
+                      ++ Utils.parseChampionNameFromRoute(pair.champion)
                       ++ Rank.toRoute(leagueType),
                     )
                 )>
                 <Champion
-                  name=pair##champion
-                  number=(Array.length(pair##players))
+                  name=pair.champion
+                  number=(List.length(pair.players))
                   handleImageLoad
-                  key=pair##champion
+                  key=pair.champion
                 />
               </span>,
             champions,
