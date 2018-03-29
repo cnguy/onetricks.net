@@ -9,9 +9,10 @@
     "prettier": "^1.10.2"
   },
   "scripts": {
-      "lint-client": "prettier --no-semi --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./client/src/**/*.js\"",
-      "lint-api": "prettier --no-semi --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./api/{,!(node_modules)/**/}*.js\"",
-      "lint-stats": "prettier --no-semi --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./stats/{,!(node_modules)/**/}*.js\"",
-      "lint": "yarn lint-client; yarn lint-api; yarn lint-stats"
-  }
+    "lint-client": "prettier --no-semi --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./client/src/**/*.js\"",
+    "lint-api": "prettier --no-semi --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./api/{,!(node_modules)/**/}*.js\"",
+    "lint-stats": "prettier --no-semi --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./stats/{,!(node_modules)/**/}*.js\"",
+    "lint": "yarn lint-client; yarn lint-api; yarn lint-stats"
+  },
+  "dependencies": {}
 }

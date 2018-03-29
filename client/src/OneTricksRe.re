@@ -10,10 +10,16 @@ type action =
   | ToggleRegion(string)
   | Nothing;
 
+type oneTrick = {
+  champion: string,
+  players: Decoder.players,
+};
+
 type championPane = {
   searchKey: string,
   sortBy: Sorts.oneTricksListSort,
   threshholdCountToShow: int,
+  oneTricks: list(oneTrick),
 };
 
 type misc = {
@@ -35,18 +41,46 @@ type state = {
   playersView,
 };
 
+type environment =
+  | None
+  | Development
+  | Production;
+
+let envStrToType = (string: string) =>
+  switch (string) {
+  | "development" => Development
+  | "production" => Production
+  | _ => None
+  };
+
+/*
+ let parseOneTricksApiResponse = json : array(player) =>
+   json
+   |> Array.map(el => {
+        let player = {
+          championName: el##champ,
+          id: el##id,
+          name: el##name,
+          rank: Rank.fromString(el##rank),
+          region: Region.fromString(el##region),
+          wins: el##wins,
+          losses: el##losses,
+        };
+        Js.log(player);
+        player;
+      });*/
 module Router = ReRoute.CreateRouter(RouterConfig);
 
 let component = ReasonReact.reducerComponent("OneTricksRe");
 
-let make =
-    (~allOneTricks: array(JsTypes.oneTrick), ~areImagesLoaded, _children) => {
+let make = _children => {
   ...component,
   initialState: () => {
     championPane: {
       searchKey: "",
       sortBy: Sorts.Number,
       threshholdCountToShow: 0,
+      oneTricks: [],
     },
     misc: {
       areChampionPanesMerged: true,
@@ -155,10 +189,34 @@ let make =
       ReasonReact.Router.unwatchUrl,
     ),
   ],
+  didMount: self => {
+    let env = envStrToType([%bs.raw {| process.env.NODE_ENV |}]);
+    let url =
+      (
+        switch (Production /* env */) {
+        | Production => "http://104.131.26.226"
+        | Development =>
+          "https://cors-anywhere.herokuapp.com/"
+          ++ [%bs.raw {| process.env.NGROK_SERVER |}]
+        | None => ""
+        }
+      )
+      ++ "/all?region=all";
+    /* TODO: Add API call handling before fallback. Use repromise let-bindings? */
+    Js.Promise.(
+      Fetch.fetch("https://media.onetricks.net/api/fallback-3-26-2018.json")
+      |> then_(Fetch.Response.json)
+      |> then_(payload =>
+           Decoder.Decode.players(payload) |> Js.log |> resolve
+         )
+      |> catch(error => Js.log(error) |> resolve)
+    );
+    NoUpdate;
+  },
   render: self => {
+    let allOneTricks = [];
     let regionatedOneTricks: array(JsTypes.oneTrick) =
       allOneTricks
-      |> Array.to_list
       |> (
         switch (self.state.championPane.sortBy) {
         | Sorts.WinRate => Sorts.oneTricksByWinRate
@@ -344,10 +402,4 @@ let make =
 };
 
 let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps =>
-    make(
-      ~allOneTricks=jsProps##allOneTricks,
-      ~areImagesLoaded=jsProps##areImagesLoaded,
-      jsProps##children,
-    )
-  );
+  ReasonReact.wrapReasonForJs(~component, jsProps => make(jsProps##children));

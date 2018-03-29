@@ -15,12 +15,7 @@ let extractPlayers =
 
 let filterPlayersByRank =
     (oneTricks: array(JsTypes.oneTrick), ~rank: Rank.rank) => {
-  let char =
-    switch (rank) {
-    | Rank.Challenger => "c"
-    | Rank.Masters => "m"
-    | _ => "" /* eh */
-    };
+  let char = Rank.toString(rank);
   if (char == "") {
     oneTricks;
   } else {
