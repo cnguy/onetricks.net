@@ -262,7 +262,7 @@ let make = _children => {
            ot;
          })
       |> List.filter((el: Decoder.oneTrick) => List.length(el.players) > 0)
-      |> JsHelpers.filterBySearchKey(self.state.championPane.searchKey);
+      |> OneTricksHelpers.filterBySearchKey(self.state.championPane.searchKey);
     <Router.Container>
       ...(
            (~currentRoute) =>
@@ -366,8 +366,8 @@ let make = _children => {
                  | RouterConfig.PlayersView(currentChampion, rank) =>
                    let players =
                      regionatedOneTricks
-                     |> JsHelpers.filterPlayersByRank(_, ~rank)
-                     |> JsHelpers.extractPlayers(~currentChampion, _);
+                     |> OneTricksHelpers.filterPlayersByRank(_, ~rank)
+                     |> OneTricksHelpers.extractPlayers(~currentChampion, _);
                    if (List.length(players) == 0) {
                      <div className="empty-results">
                        (

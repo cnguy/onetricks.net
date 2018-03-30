@@ -46,9 +46,15 @@ let make =
           };
         } else {
           let challengers =
-            JsHelpers.filterPlayersByRank(allPlayers, ~rank=Rank.Challenger);
+            OneTricksHelpers.filterPlayersByRank(
+              allPlayers,
+              ~rank=Rank.Challenger,
+            );
           let masters =
-            JsHelpers.filterPlayersByRank(allPlayers, ~rank=Rank.Masters);
+            OneTricksHelpers.filterPlayersByRank(
+              allPlayers,
+              ~rank=Rank.Masters,
+            );
           if (List.length(challengers) === 0 && List.length(masters) === 0) {
             renderEmptyResults();
           } else {
