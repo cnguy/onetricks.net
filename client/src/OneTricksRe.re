@@ -216,7 +216,9 @@ let make = _children => {
                  toggleMerge=(_event => self.send(ToggleMerge))
                  onSearchKeyChange=(
                    event =>
-                     self.send(SetSearchKey(Utils.getEventValue(event)))
+                     self.send(
+                       SetSearchKey(ReactUtils.getEventValue(event)),
+                     )
                  )
                  region=(Region.toString(self.state.misc.region))
                  toggleRegion=(
@@ -226,7 +228,8 @@ let make = _children => {
                    _event => self.send(ToggleMultiRegionFilter)
                  )
                  setRegionFilter=(
-                   event => self.send(SetRegion(Utils.getEventValue(event)))
+                   event =>
+                     self.send(SetRegion(ReactUtils.getEventValue(event)))
                  )
                  setChampionIconsSortKey=(
                    value => self.send(SetChampionIconsSortKey(value))
@@ -249,7 +252,7 @@ let make = _children => {
                            _event =>
                              ReasonReact.Router.push(baseURL ++ newSearch)
                          )>
-                         (Utils.ste("Players"))
+                         (ReactUtils.ste("Players"))
                        </span>
                      </li>
                      <li>
@@ -259,7 +262,7 @@ let make = _children => {
                            _event =>
                              ReasonReact.Router.push(baseURL ++ "/matchups")
                          )>
-                         (Utils.ste("Champion Matchups"))
+                         (ReactUtils.ste("Champion Matchups"))
                        </span>
                      </li>
                      <li>
@@ -269,7 +272,7 @@ let make = _children => {
                            _event =>
                              ReasonReact.Router.push(baseURL ++ "/history")
                          )>
-                         (Utils.ste("Match History"))
+                         (ReactUtils.ste("Match History"))
                        </span>
                      </li>
                    </ul>;
@@ -306,7 +309,7 @@ let make = _children => {
                    if (List.length(players) == 0) {
                      <div className="empty-results">
                        (
-                         Utils.ste(
+                         ReactUtils.ste(
                            "No players found for the champion: "
                            ++ currentChampion
                            ++ ".",
@@ -327,7 +330,7 @@ let make = _children => {
                  | RouterConfig.Matchups(currentChampion) =>
                    <div>
                      (
-                       Utils.ste(
+                       ReactUtils.ste(
                          "Matchups will be implemented in the near future!",
                        )
                      )
@@ -335,7 +338,7 @@ let make = _children => {
                  | RouterConfig.MatchHistory(currentChampion) =>
                    <div>
                      (
-                       Utils.ste(
+                       ReactUtils.ste(
                          "Match history will be implemented in the near future!",
                        )
                      )
@@ -350,6 +353,3 @@ let make = _children => {
     </Router.Container>;
   },
 };
-
-let default =
-  ReasonReact.wrapReasonForJs(~component, jsProps => make(jsProps##children));

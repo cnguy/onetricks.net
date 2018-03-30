@@ -29,7 +29,7 @@ let make = _children => {
     <div className="not-found">
       <h2>
         (
-          Utils.ste(
+          ReactUtils.ste(
             "Hi. There is nothing to be displayed at the route: \""
             ++ url
             ++ "\".",
@@ -38,7 +38,7 @@ let make = _children => {
       </h2>
       <p className="not-found__steps">
         (
-          Utils.ste(
+          ReactUtils.ste(
             "You will automatically be redirected to the home page in 5 seconds.",
           )
         )
@@ -46,11 +46,11 @@ let make = _children => {
         <span
           className="go-back"
           onClick=(_event => ReasonReact.Router.push("/"))>
-          (Utils.ste("Click me to go to the home page."))
+          (ReactUtils.ste("Click me to go to the home page."))
         </span>
         <br />
         (
-          Utils.ste(
+          ReactUtils.ste(
             "If you instead believe there is an error, please email chautnguyen96@gmail.com!",
           )
         )

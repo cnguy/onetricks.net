@@ -1,8 +1,8 @@
 let component = ReasonReact.statelessComponent("QA");
 
-let qStr = q => Utils.ste("Q: " ++ q);
+let qStr = q => ReactUtils.ste("Q: " ++ q);
 
-let aStr = a => Utils.ste("A: " ++ a);
+let aStr = a => ReactUtils.ste("A: " ++ a);
 
 let make = (~question, ~answer, _children) => {
   ...component,

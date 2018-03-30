@@ -38,12 +38,12 @@ let make =
       <div
         className="link"
         onClick=(_event => setChampionIconsSortKey(Sorts.Number))>
-        (Utils.ste("Sort by Length"))
+        (ReactUtils.ste("Sort by Length"))
       </div>
       <div
         className="link"
         onClick=(_event => setChampionIconsSortKey(Sorts.WinRate))>
-        (Utils.ste("Sort by WinRate"))
+        (ReactUtils.ste("Sort by WinRate"))
       </div>
     </div>,
 };

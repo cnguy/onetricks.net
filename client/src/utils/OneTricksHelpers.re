@@ -3,7 +3,7 @@ open Types;
 let extractPlayers = (~currentChampion: string, listOfOneTricks) => {
   let target =
     List.filter(
-      el => Utils.parseChampionNameFromRoute(el.champion) === currentChampion,
+      el => String.lowercase(el.champion) === currentChampion,
       listOfOneTricks,
     );
   if (List.length(target) === 1) {

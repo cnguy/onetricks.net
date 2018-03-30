@@ -6,7 +6,7 @@ let make =
   render: _self =>
     <div className="champs">
       (
-        Utils.lte(
+        ReactUtils.lte(
           List.map(
             (pair: Types.oneTrick) =>
               <span
@@ -17,7 +17,7 @@ let make =
                   _event =>
                     ReasonReact.Router.push(
                       "/champions/"
-                      ++ Utils.parseChampionNameFromRoute(pair.champion)
+                      ++ String.lowercase(pair.champion)
                       ++ Rank.toRoute(leagueType),
                     )
                 )>

@@ -11,7 +11,7 @@ let make = _children => {
       )
       <br />
       (
-        Utils.ste(
+        ReactUtils.ste(
           "Stats are currently under construction. Playerbase will be rebuilt overnight.",
         )
       )
