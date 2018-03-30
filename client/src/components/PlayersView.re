@@ -1,3 +1,5 @@
+open Types;
+
 let component = ReasonReact.statelessComponent("PlayersViewRe");
 
 type winLosses = {
@@ -5,19 +7,19 @@ type winLosses = {
   losses: int,
 };
 
-let getOverallWinRate = (players: Decoder.players) =>
-  List.fold_left(
-    (a, b: Decoder.player) => {
-      wins: a.wins + b.wins,
-      losses: a.losses + b.losses,
-    },
-    {wins: 0, losses: 0},
-    players,
-  );
+let getOverallWinRate = (players: players) =>
+  players
+  |> List.fold_left(
+       (a: winLosses, b: player) => {
+         wins: a.wins + b.wins,
+         losses: a.losses + b.losses,
+       },
+       {wins: 0, losses: 0},
+     );
 
 let make =
     (
-      ~players: Decoder.players,
+      ~players: players,
       ~goBack,
       ~champ: string,
       ~show: bool,
@@ -46,11 +48,10 @@ let make =
         sortedList;
       };
     let renderableList =
-      List.map(
-        (player: Decoder.player) =>
-          <PlayerRow key=(string_of_int(player.id)) player />,
-        finalList,
-      );
+      finalList
+      |> List.map(player =>
+           <PlayerRow key=(string_of_int(player.id)) player />
+         );
     let scores = players |> getOverallWinRate;
     let wins = scores.wins;
     let losses = scores.losses;

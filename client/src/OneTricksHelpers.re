@@ -1,9 +1,9 @@
-let extractPlayers =
-    (~currentChampion: string, listOfOneTricks: Decoder.oneTricks) => {
-  let target: Decoder.oneTricks =
+open Types;
+
+let extractPlayers = (~currentChampion: string, listOfOneTricks) => {
+  let target =
     List.filter(
-      (el: Decoder.oneTrick) =>
-        Utils.parseChampionNameFromRoute(el.champion) === currentChampion,
+      el => Utils.parseChampionNameFromRoute(el.champion) === currentChampion,
       listOfOneTricks,
     );
   if (List.length(target) === 1) {
@@ -13,28 +13,23 @@ let extractPlayers =
   };
 };
 
-let filterPlayersByRank = (oneTricks: Decoder.oneTricks, ~rank: Rank.rank) =>
+let filterPlayersByRank = (oneTricks, ~rank: Rank.rank) =>
   if (Rank.toString(rank) == "") {
     oneTricks;
   } else {
     oneTricks
-    |> List.map((el: Decoder.oneTrick) => {
+    |> List.map(el => {
          let newPlayers =
-           el.players
-           |> List.filter((player: Decoder.player) => player.rank === rank);
-         let ot: Decoder.oneTrick = {
-           champion: el.champion,
-           players: newPlayers,
-         };
-         ot;
+           el.players |> List.filter(player => player.rank === rank);
+         {champion: el.champion, players: newPlayers};
        })
-    |> List.filter((el: Decoder.oneTrick) => List.length(el.players) > 0);
+    |> List.filter(el => List.length(el.players) > 0);
   };
 
-let filterBySearchKey = (searchKey: string, oneTricks: Decoder.oneTricks) =>
+let filterBySearchKey = (searchKey: string, oneTricks) =>
   if (String.length(searchKey) > 0) {
     oneTricks
-    |> List.filter((oneTrick: Decoder.oneTrick) => {
+    |> List.filter(oneTrick => {
          let string = String.lowercase(oneTrick.champion);
          let substring = String.lowercase(searchKey);
          let jsIndexOf: (string, string) => int = [%bs.raw

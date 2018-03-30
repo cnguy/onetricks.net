@@ -8,7 +8,7 @@ let make =
       (
         Utils.lte(
           List.map(
-            (pair: Decoder.oneTrick) =>
+            (pair: Types.oneTrick) =>
               <span
                 className="champ-open-links fade-in"
                 key=pair.champion
