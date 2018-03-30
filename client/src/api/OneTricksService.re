@@ -39,11 +39,7 @@ let get = (cb: oneTricks => unit) =>
     Fetch.fetch("https://media.onetricks.net/api/fallback-3-26-2018.json")
     |> then_(Fetch.Response.json)
     |> then_(payload =>
-         payload
-         |> Decoder.Decode.players
-         |> parseIntoOneTricks
-         |> cb
-         |> resolve
+         payload |> Decoder.players |> parseIntoOneTricks |> cb |> resolve
        )
     |> catch(error => Js.log(error) |> resolve)
   )
