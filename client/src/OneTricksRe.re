@@ -203,6 +203,11 @@ let make = _children => {
            (~currentRoute) =>
              <div className="one-tricks-re">
                <Header />
+               <span
+                 className="link"
+                 onClick=(_event => ReasonReact.Router.push("/faq"))>
+                 (ReactUtils.ste("FAQ"))
+               </span>
                <ChampionPaneUtilities
                  areChampionPanesMerged=self.state.misc.areChampionPanesMerged
                  isMultiRegionFilterOn=self.state.misc.isMultiRegionFilterOn
@@ -343,10 +348,10 @@ let make = _children => {
                        )
                      )
                    </div>
+                 | RouterConfig.FAQ => <FAQ />
                  | RouterConfig.NotFound => <NotFound />
                  }
                )
-               <FAQ />
                <Copyright />
              </div>
          )
