@@ -10,7 +10,6 @@ let make =
       ~setDisplayValue,
       ~renderEmptyResults,
       ~handleImageLoad,
-      ~leagueType: Rank.rank=Rank.All,
       _children,
     ) => {
   ...component,

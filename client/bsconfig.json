@@ -13,8 +13,13 @@
     "sources": [
       "src",
       "src/components",
+      "src/components/ChampionPaneUtilities",
+      "src/components/misc",
       "src/types",
-      "src/pages",
+      "src/pages/NotFound",
+      "src/pages/ChampionPane",
+      "src/pages/FAQ",
+      "src/pages/PlayersView",
       "src/api",
       "src/utils"
     ],
