@@ -357,6 +357,7 @@ html {
   background-color: #212121;
   border: 0;
   -webkit-border-radius: 0px;
+  border-radius: 0px;
 }
 
 #region:focus {

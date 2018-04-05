@@ -332,7 +332,7 @@ let make = _children => {
                        sortReverse=self.state.playersView.shouldSortReverse
                      />;
                    };
-                 | RouterConfig.Matchups(currentChampion) =>
+                 | RouterConfig.Matchups(_currentChampion) =>
                    <div>
                      (
                        ReactUtils.ste(
@@ -340,7 +340,7 @@ let make = _children => {
                        )
                      )
                    </div>
-                 | RouterConfig.MatchHistory(currentChampion) =>
+                 | RouterConfig.MatchHistory(_currentChampion) =>
                    <div>
                      (
                        ReactUtils.ste(

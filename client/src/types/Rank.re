@@ -9,6 +9,7 @@ let toRoute = (rank: rank) =>
   | All => ""
   | Challenger => "?rank=challenger"
   | Masters => "?rank=masters"
+  | _ => ""
   };
 
 let fromString = (rankStr: string) =>
