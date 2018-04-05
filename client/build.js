@@ -2,13 +2,13 @@ process.env.NODE_ENV = "production"
 var BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin
 
-  const webpackConfigProd = require("react-scripts/config/webpack.config.prod")
+const webpackConfigProd = require("reason-scripts/config/webpack.config.prod")
 
-  webpackConfigProd.plugins.push(
-    new BundleAnalyzerPlugin({
-            analyzerMode: "static",
-                reportFilename: "report.html",
-                  })
-    )
+webpackConfigProd.plugins.push(
+  new BundleAnalyzerPlugin({
+    analyzerMode: "static",
+    reportFilename: "report.html",
+  })
+)
 
-  require("react-scripts/scripts/build")
+require("reason-scripts/scripts/build")

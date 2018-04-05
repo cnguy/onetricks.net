@@ -5,12 +5,11 @@
   "proxy": "http://one-tricks-api:3001/",
   "devDependencies": {
     "bs-platform": "^2.1.0",
-    "concurrently": "3.5.1",
-    "enzyme": "^2.4.1",
-    "react-addons-test-utils": "^15.4.0",
-    "react-scripts": "1.1.1",
+    "concurrently": "^3.5.1",
+    "webpack": "^4.5.0",
     "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-bundle-size-analyzer": "^2.7.0"
+    "webpack-bundle-size-analyzer": "^2.7.0",
+    "webpack-cli": "^2.0.14"
   },
   "dependencies": {
     "@glennsl/bs-json": "^1.2.0",
@@ -19,17 +18,19 @@
     "react-addons-perf": "^15.4.2",
     "react-dom": "^15.4.0",
     "reason-js": "^0.3.0",
-    "reason-react": "^0.3.1",
-    "reason-reroute": "^0.0.4"
+    "reason-react": "^0.3.4",
+    "reason-reroute": "^0.0.4",
+    "reason-scripts": "^0.8.0"
   },
   "scripts": {
     "start": "react-scripts start",
-    "dev": "concurrently \"yarn buckle:up\" \"yarn start\"",
-    "build": "mv -v ./node_modules/reason-react/lib/js/src/* ./node_modules/reason-react/src/; react-scripts build; mv build/index.html build/200.html",
+    "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "prepare": "npm link bs-platform",
     "analyze-bundle": "node ./build.js",
-    "buckle:up": "bsb -make-world -w",
-    "buckle:clean": "bsb -clean-world"
+    "buckle:up": "bsb make-world -w",
+    "buckle:down": "bsb -clean-world",
+    "buckle:reset": "bsb -clean-world && bsb -make-world"
   }
 }

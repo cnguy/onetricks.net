@@ -10,25 +10,19 @@
       "bs-fetch",
       "@glennsl/bs-json"
     ],
-    "sources": [
-      "src",
-      "src/components",
-      "src/components/ChampionPaneUtilities",
-      "src/components/misc",
-      "src/types",
-      "src/pages/NotFound",
-      "src/pages/ChampionPane",
-      "src/pages/FAQ",
-      "src/pages/PlayersView",
-      "src/api",
-      "src/utils"
-    ],
-    "package-specs": {
-      "module": "commonjs",
-      "in-source": true
+    "sources": {
+      "dir": "src",
+      "subdirs": true
     },
-    "suffix": ".bs.js",
+    "package-specs": [
+      {
+        "module": "commonjs",
+        "in-source": true
+      }
+    ],
+    "namespace": true,
     "refmt": 3,
+    "suffix": ".js", /* use this instead of .bs.js, reason-scripts relies on .js */
     "bsc-flags": [
       "-bs-no-version-header",
       "-bs-super-errors"

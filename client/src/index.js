@@ -1,12 +1,13 @@
-/* eslint-env browser */
+'use strict';
 
-import React from 'react'
-import ReactDOM from 'react-dom'
+var ReactDOMRe = require("reason-react/src/ReactDOMRe.js");
+var ReasonReact = require("reason-react/src/ReasonReact.js");
+var App$IntroduceReason = require("./App.js");
 
-import 'babel-polyfill'
+(( require('babel-polyfill') ));
 
-import './index.css'
+(( require('./index.css') ));
 
-import App from './App.bs'
+ReactDOMRe.renderToElementWithId(ReasonReact.element(/* None */0, /* None */0, App$IntroduceReason.make(/* array */[])), "root");
 
-ReactDOM.render(<App />, document.getElementById('root'))
+/*  Not a pure module */
