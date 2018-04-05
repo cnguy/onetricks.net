@@ -5,11 +5,7 @@
   "proxy": "http://one-tricks-api:3001/",
   "devDependencies": {
     "bs-platform": "^2.1.0",
-    "concurrently": "^3.5.1",
-    "webpack": "^4.5.0",
-    "webpack-bundle-analyzer": "^2.11.1",
-    "webpack-bundle-size-analyzer": "^2.7.0",
-    "webpack-cli": "^2.0.14"
+    "webpack-bundle-analyzer": "^2.11.1"
   },
   "dependencies": {
     "@glennsl/bs-json": "^1.2.0",
