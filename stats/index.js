@@ -24,10 +24,10 @@ app.get('/api/stats/:summonerID', (req, res, next) => {
     return res.json(getStats(req.params.summonerID))
 })
 
-app.use((req, res, next) => res.render('404', { status: 404, url: req.url }))
+app.use((req, res, next) => res.json({ status: 404, url: req.url }))
 
 app.use((err, req, res, next) => {
-    res.render('500', {
+    res.json({
         status: err.status || 500,
         error: err,
     })

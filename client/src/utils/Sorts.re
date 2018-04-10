@@ -1,6 +1,6 @@
 open Types;
 
-let sanitize = a => String.trim(String.lowercase(a));
+let sanitize = a => a |> String.lowercase |> String.trim;
 
 let none = list => list;
 
@@ -13,9 +13,9 @@ let lexiSort = (a: string, b: string) : int =>
     0;
   };
 
-let namePredicate = (a: player, b) => lexiSort(a.name, b.name);
+let namePredicate = (a: player, b: player) => lexiSort(a.name, b.name);
 
-let rankPredicate = (a: player, b) =>
+let rankPredicate = (a: player, b: player) =>
   if (a.rank < b.rank) {
     (-1);
   } else if (a.rank == b.rank) {
@@ -24,7 +24,7 @@ let rankPredicate = (a: player, b) =>
     1;
   };
 
-let regionPredicate = (a: player, b) =>
+let regionPredicate = (a: player, b: player) =>
   if (a.region < b.region) {
     (-1);
   } else if (a.region == b.region) {

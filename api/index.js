@@ -25,6 +25,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 import generator from './OneTricksGenerator'
+import MHGenerator from './MatchHistoryGenerator'
 import { setInterval } from 'timers'
 
 app.set('port', process.env.PORT || 80)
@@ -61,10 +62,28 @@ app.get('/all', (req, res, next) => {
     }
 })
 
-app.use((req, res, next) => res.render('404', { status: 404, url: req.url }))
+const oneParamParseInt = n => parseInt(n, 10)
+
+app.get('/match-history', async (req, res, next) => {
+    const { championId } = req.query
+    const ranks = req.query.ranks.split(',')
+    const regions = req.query.regions.split(',')
+    const roleNumbers = req.query.roleNumbers.split(',').map(oneParamParseInt)
+    const data = await MHGenerator(ranks, regions, championId, roleNumbers)
+    res.json(data)
+})
+
+import { getStaticChampionByName } from './getStaticChampion'
+
+app.get('/static-champion-by-name/:name/id', (req, res, next) => {
+    const { name } = req.params
+    res.json(getStaticChampionByName(name).id)
+})
+
+app.use((req, res, next) => res.json({ status: 404, url: req.url }))
 
 app.use((err, req, res, next) => {
-    res.render('500', {
+    res.json({
         status: err.status || 500,
         error: err,
     })

@@ -44,3 +44,13 @@ let filterBySearchKey = (searchKey: string, oneTricks) =>
   } else {
     oneTricks;
   };
+
+let capitalize: string => string = [%bs.raw
+  {|
+  function capitalize(string) {
+    return string.charAt(0).toUpperCase() + string.substring(1, string.length)
+  }
+  |}
+];
+
+let capitalizeChampion = (name: string) => capitalize(name);

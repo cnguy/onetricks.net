@@ -1,16 +1,16 @@
 require('dotenv').config('./.env')
 
-import { Kayn, REGIONS, BasicJSCache, RedisCache, METHOD_NAMES } from 'kayn'
-import request from 'superagent'
-import jsonfile from 'jsonfile'
-const mongoose = require('mongoose')
+import kayn from './kayn'
+import { REGIONS } from 'kayn'
+import mongoose from 'mongoose'
+import getStats from './getStats'
+import getStaticChampion from './getStaticChampion'
+
 require('./models')
 const PLAYER_SCHEMA_NAME = 'Player'
 const Player = mongoose.model(PLAYER_SCHEMA_NAME)
 
 const TARGET_QUEUE = 'RANKED_SOLO_5x5'
-
-const staticChampions = jsonfile.readFileSync('./static_champions.json')
 
 if (process.env.NODE_ENV === 'development') {
     mongoose.connect('mongodb://mongo/one-tricks')
@@ -20,34 +20,9 @@ if (process.env.NODE_ENV === 'development') {
     throw new Error('.env file is missing NODE_ENV environment variable.')
 }
 
-const kayn = Kayn()({
-    debugOptions: {
-        isEnabled: true,
-        showKey: true,
-    },
-    requestOptions: {
-        numberOfRetriesBeforeAbort: 3,
-        delayBeforeRetry: 3000,
-    },
-    cacheOptions: {
-        cache: new BasicJSCache(),
-        timeToLives: {
-            useDefault: true,
-        },
-    },
-})
-
-// regionsCompleted is simply used for debugging purposes.
-// ex: Challengers regionsCompleted: ['na', 'euw', 'kr']
-// Once there are 11 regions in both Challengers/Masters,
-// we're effectively done.
-const regionsCompleted = {
-    challengers: [],
-    masters: [],
-}
-
 // temp
-const isOneTrick = (otGames, total) => otGames / total >= 0.6
+const isOneTrick = (otGames, total) =>
+    otGames / total >= 0.6
 // 0.45 works for accurate stats + large number of games
 
 const getLeagueByRank = async (region, rank) => {
@@ -58,33 +33,6 @@ const getLeagueByRank = async (region, rank) => {
         return kayn.Master.list(TARGET_QUEUE).region(region)
     }
     throw new Error('Parameter `rank` is not correct.')
-}
-
-/**
- * getStats closes over stats, providing a way for us to find a particular summoner
- * within the stats.json file as if we're making a call to the old stats endpoint.
- * @param {number} summonerID - The summoner id to look for.
- * @returns {object} a stats object or `undefined` if not found.
- */
-const getStats = async summonerID =>
-    (await request.get(`http://one-tricks-stats:3002/api/stats/${summonerID}`))
-        .body
-
-// Cached Static Champion keys for getStaticChampion.
-const staticChampionKeys = Object.keys(staticChampions.data)
-
-/**
- * getStaticChampion replaces the need for kayn.Static.Champion.get which gets
- * rate limited very easily.
- * @param {number} id - The ID of the champion in `https://ddragon.leagueoflegends.com/cdn/7.24.2/data/en_US/champion.json`.
- * @returns {object} the static champion object (pretty much always.
- */
-const getStaticChampion = id => {
-    const targetKey = staticChampionKeys.find(
-        key => parseInt(staticChampions.data[key].key) === id,
-    )
-    return staticChampions.data[targetKey]
-    // It should always return.
 }
 
 /**
@@ -144,7 +92,7 @@ const clearPlayersInDB = async (rank, region) =>
  * insertPlayersIntoDB inserts a set of one tricks into the database.
  * @param {[]object} payload - An object of one trick DTO's.
  * @param {string} region
- * @param {string} regionsCompleted - Helper array to show what regions have been processed.
+ * @param {string} rank
  */
 const insertPlayersIntoDB = async (oneTricks, region, rank) => {
     const payload = oneTricks.map(el => ({
@@ -162,8 +110,6 @@ const insertPlayersIntoDB = async (oneTricks, region, rank) => {
             if (err) {
                 throw new Error(err)
             }
-            regionsCompleted[rank].push(region)
-            regionsCompleted[rank].sort()
             resolve(true)
         })
     })
@@ -232,6 +178,7 @@ async function generate(rank, region) {
     try {
         const { entries } = await getLeagueByRank(region, rank)
         const oneTricks = await chunkGenerate(getOneTrick(region), entries)
+        console.log('oneTricks:', oneTricks.length)
         await clearPlayersInDB(rank.charAt(0), region)
         await insertPlayersIntoDB(oneTricks, region, rank)
     } catch (exception) {

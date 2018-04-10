@@ -10,4 +10,4 @@ let nodeEnv = () =>
   | _ => None
   };
 
-let getNgrokURL = () : string => [%bs.raw {| process.env.NGROK_SERVER |}];
+let ngrokURL = () : string => [%bs.raw {| process.env.REACT_APP_NGROK_URL |}];

@@ -13,6 +13,8 @@ type region =
   | Oceania
   | None;
 
+type regions = list(region);
+
 let list = [
   NorthAmerica,
   Korea,
@@ -61,7 +63,7 @@ let fromString = regionStr =>
   | _ => None
   };
 
-let toStringList = (regions: list(region)) => regions |> List.map(toString);
+let toStringList = (regions: regions) => regions |> List.map(toString);
 
 let toReadableStringList = (regions: list(string)) : string => {
   let tmp: string =
@@ -78,7 +80,7 @@ let toReadableStringList = (regions: list(string)) : string => {
 };
 
 let toDisplayText =
-    (~isMultiRegionFilterOn: bool, ~region: region, ~regions: list(region)) =>
+    (~isMultiRegionFilterOn: bool, ~region: region, ~regions: regions) =>
   if (isMultiRegionFilterOn) {
     if (regions == list) {
       "All Regions.";
@@ -90,3 +92,25 @@ let toDisplayText =
   } else {
     "the " ++ (region |> toString |> String.uppercase) ++ " Region.";
   };
+
+let toCsvString = (regions: regions) => {
+  let rs =
+    switch (regions) {
+    | [All] => list
+    | _ => regions
+    };
+  let tmp: string =
+    rs
+    |> List.fold_left(
+         (total, current) =>
+           total
+           ++ ","
+           ++ (String.uppercase(current |> toString) |> String.lowercase),
+         "",
+       );
+  if (String.length(tmp) > 0) {
+    String.sub(tmp, 1, String.length(tmp) - 1);
+  } else {
+    "";
+  };
+};

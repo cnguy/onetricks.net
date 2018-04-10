@@ -1,7 +1,6 @@
 open Types;
 
 type action =
-  /* misc actions */
   | ResetSearchKey
   | SetRegion(string)
   | SetSearchKey(string)
@@ -340,14 +339,18 @@ let make = _children => {
                        )
                      )
                    </div>
-                 | RouterConfig.MatchHistory(_currentChampion) =>
-                   <div>
-                     (
-                       ReactUtils.ste(
-                         "Match history will be implemented in the near future!",
-                       )
-                     )
-                   </div>
+                 | RouterConfig.MatchHistory(currentChampion, rank) =>
+                   <MatchHistory
+                     championName=currentChampion
+                     ranks=[rank]
+                     regions=(
+                               if (self.state.misc.isMultiRegionFilterOn) {
+                                 self.state.misc.regions;
+                               } else {
+                                 [self.state.misc.region];
+                               }
+                             )
+                   />
                  | RouterConfig.FAQ => <FAQ />
                  | RouterConfig.NotFound => <NotFound />
                  }

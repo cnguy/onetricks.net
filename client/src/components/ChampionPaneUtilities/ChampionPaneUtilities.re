@@ -38,7 +38,7 @@ let make =
       <div
         className="link"
         onClick=(_event => setChampionIconsSortKey(Sorts.Number))>
-        (ReactUtils.ste("Sort by Length"))
+        (ReactUtils.ste("Sort by Number of Players"))
       </div>
       <div
         className="link"

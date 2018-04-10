@@ -19,21 +19,21 @@ services:
       - "80:80"
     environment:
       - NODE_ENV=development
-  client:
-    container_name: one-tricks-client
-    command: yarn dev
-    restart: always
-    build: ./client
-    ports:
-      - "3000:3000"
-      - "35729:35729"
-    volumes:
-      - ./client/src:/usr/src/app/src
-      - ./client/public:/usr/src/app/public
-    links:
-      - api
-    environment:
-      - NODE_ENV=development
+      - DEBUG=kayn:*
+#  client:
+ #   container_name: one-tricks-client
+  #  command: yarn start 
+   # restart: always
+    #build: ./client
+#    ports:
+ ##    - "35729:35729"
+   # volumes:
+    #  - ./client/src:/usr/src/app/src
+#      - ./client/public:/usr/src/app/public
+ #   links:
+  #    - api
+   # environment:
+    #  - NODE_ENV=development
   mongo:
     container_name: mongo
     image: mongo

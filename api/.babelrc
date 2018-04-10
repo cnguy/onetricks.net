@@ -1,6 +1,16 @@
 {
-  "presets": ["env", "stage-2"],
+  "presets": [
+    "env",
+    "stage-2"
+  ],
   "plugins": [
-    "babel-plugin-transform-object-rest-spread"
+    "babel-plugin-transform-object-rest-spread",
+    [
+      "transform-runtime",
+      {
+        "polyfill": false,
+        "regenerator": true
+      }
+    ]
   ]
 }

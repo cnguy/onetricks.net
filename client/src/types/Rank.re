@@ -4,6 +4,8 @@ type rank =
   | Challenger
   | Masters;
 
+type ranks = list(rank);
+
 let toRoute = (rank: rank) =>
   switch (rank) {
   | All => ""
@@ -26,3 +28,18 @@ let toString = (rank: rank) =>
   | Masters => "m"
   | _ => ""
   };
+
+let toCsvString = (ranks: ranks) => {
+  let tmp: string =
+    ranks
+    |> List.fold_left(
+         (total, current) =>
+           total ++ "," ++ String.uppercase(current |> toString),
+         "",
+       );
+  if (String.length(tmp) > 0) {
+    String.sub(tmp, 1, String.length(tmp) - 1);
+  } else {
+    "";
+  };
+};
