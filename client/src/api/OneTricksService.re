@@ -25,7 +25,7 @@ let parseIntoOneTricks = (decoded: players) : oneTricks =>
 /* TODO: Add API call handling before fallback. Use repromise let-bindings? */
 let url =
   switch (Environment.nodeEnv()) {
-  | Environment.Production => "http://104.131.26.226"
+  | Environment.Production => "http://api.onetricks.net"
   | Environment.Development =>
     "https://cors-anywhere.herokuapp.com/" ++ Environment.ngrokURL()
   | Environment.None => ""
@@ -38,23 +38,16 @@ let get = (cb: oneTricks => unit) =>
     |> then_(payload =>
          payload |> Decoder.players |> parseIntoOneTricks |> cb |> resolve
        )
-    |> catch(error =>
-         Js.log(
-           error,
-           /*
-            Fetch.fetch(
-              "https://media.onetricks.net/api/fallback-3-26-2018.json",
-            )
-            |> then_(Fetch.Response.json)
-            |> then_(payload =>
-                 payload
-                 |> Decoder.players
-                 |> parseIntoOneTricks
-                 |> cb
-                 |> resolve
-               )
-            |> catch(error => Js.log(error) |> resolve);*/
+    |> catch(_error => Js.log("Falling back. :)") |> resolve)
+    |> then_(_it =>
+         Fetch.fetch(
+           "https://media.onetricks.net/api/fallback-3-26-2018.json",
          )
+         |> then_(Fetch.Response.json)
+         |> then_(payload =>
+              payload |> Decoder.players |> parseIntoOneTricks |> cb |> resolve
+            )
+         |> catch(error => Js.log(error) |> resolve)
          |> resolve
        )
   )

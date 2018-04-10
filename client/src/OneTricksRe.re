@@ -204,6 +204,12 @@ let make = _children => {
                <Header />
                <span
                  className="link"
+                 onClick=(_event => ReasonReact.Router.push("/"))>
+                 (ReactUtils.ste("Home"))
+               </span>
+               (ReactUtils.ste(" "))
+               <span
+                 className="link"
                  onClick=(_event => ReasonReact.Router.push("/faq"))>
                  (ReactUtils.ste("FAQ"))
                </span>
