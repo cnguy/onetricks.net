@@ -19,7 +19,7 @@ services:
       - "80:80"
     environment:
       - NODE_ENV=development
-      - DEBUG=kayn:*
+      - DEBUG=kayn:request:*:error
 #  client:
  #   container_name: one-tricks-client
   #  command: yarn start 

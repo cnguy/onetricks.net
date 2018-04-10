@@ -1,6 +1,6 @@
 require('dotenv').config('./.env')
 
-import { Kayn, BasicJSCache, RedisCache, METHOD_NAMES } from 'kayn'
+import { Kayn, BasicJSCache, LRUCache, RedisCache, METHOD_NAMES } from 'kayn'
 
 const kayn = Kayn()({
     debugOptions: {
@@ -12,7 +12,7 @@ const kayn = Kayn()({
         delayBeforeRetry: 3000,
     },
     cacheOptions: {
-        cache: new BasicJSCache(),
+        cache: new LRUCache({ max: 200 }),
         timeToLives: {
             useDefault: true,
         },

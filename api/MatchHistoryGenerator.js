@@ -20,7 +20,6 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const findPlayers = async (ranks, regions) => {
-    console.log(regions)
     return new Promise((resolve, reject) => {
         Player.find(
             {
@@ -48,8 +47,6 @@ const processPlayers = async (players, championId, roleNumbers) => {
         }))
         .filter(el => el.championId === parseInt(championId))
 
-    console.log('got all players', playersWithChampIds)
-
     const payload = (await Promise.all(
         playersWithChampIds.map(async ({ id, championId, region }) => {
             const { accountId, name } = await kayn.Summoner.by
@@ -57,7 +54,7 @@ const processPlayers = async (players, championId, roleNumbers) => {
                 .region(region)
             const { matches } = await kayn.Matchlist.by
                 .accountID(accountId)
-                .query({ champion: championId, queue: 420 })
+                .query({ champion: championId, queue: 420, beginIndex: 0, endIndex: 20 })
                 .region(region)
             return matches
                 .map(({ gameId, champion, timestamp, role, lane }) => ({
@@ -72,7 +69,6 @@ const processPlayers = async (players, championId, roleNumbers) => {
                     region,
                 }))
                 .filter(({ role, lane }) => {
-                    console.log(role, lane, roleNumbers)
                     if (role === 'SOLO' && lane === 'TOP') {
                         return roleNumbers.includes(1)
                     } else if (role === 'NONE' && lane === 'JUNGLE') {
@@ -84,7 +80,7 @@ const processPlayers = async (players, championId, roleNumbers) => {
                     } else if (role === 'DUO_SUPPORT' && lane === 'BOTTOM') {
                         return roleNumbers.includes(5)
                     } else {
-                        console.log('My code is wrong:', role, lane)
+                        // console.log('My code is wrong:', role, lane)
                         return false
                     }
                 })

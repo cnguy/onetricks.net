@@ -2196,14 +2196,15 @@ kareem@2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.0.1.tgz#f17f77e9032f64aa402b334f91fb4407fe4c042c"
 
-kayn@^0.8.0:
-  version "0.8.10"
-  resolved "https://registry.yarnpkg.com/kayn/-/kayn-0.8.10.tgz#e4d5a8ad33ecdfb60c0ab0c5a90871f86679a539"
+kayn@^0.8.11:
+  version "0.8.11"
+  resolved "https://registry.yarnpkg.com/kayn/-/kayn-0.8.11.tgz#48d8f46a16eadcc5ecb01df97934b244e2e4c123"
   dependencies:
     debug "^3.1.0"
     dotenv "^4.0.0"
     lodash.assign "^4.2.0"
     lodash.merge "^4.6.0"
+    lru-cache "^4.1.2"
     redis "^2.8.0"
     request "^2.83.0"
     riot-ratelimiter-temp "0.0.1"
@@ -2282,6 +2283,13 @@ loose-envify@^1.0.0:
   resolved "https://registry.yarnpkg.com/loose-envify/-/loose-envify-1.3.1.tgz#d1a8ad33fa9ce0e713d65fdd0ac8b748d478c848"
   dependencies:
     js-tokens "^3.0.0"
+
+lru-cache@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/lru-cache/-/lru-cache-4.1.2.tgz#45234b2e6e2f2b33da125624c4664929a0224c3f"
+  dependencies:
+    pseudomap "^1.0.2"
+    yallist "^2.1.2"
 
 media-typer@0.3.0:
   version "0.3.0"
@@ -2723,6 +2731,10 @@ proxy-addr@~1.0.8:
   dependencies:
     forwarded "~0.1.0"
     ipaddr.js "1.0.5"
+
+pseudomap@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/pseudomap/-/pseudomap-1.0.2.tgz#f052a28da70e618917ef0a8ac34c1ae5a68286b3"
 
 punycode@^1.4.1:
   version "1.4.1"
@@ -3460,3 +3472,7 @@ write@^0.2.1:
 xtend@^4.0.0:
   version "4.0.1"
   resolved "https://registry.yarnpkg.com/xtend/-/xtend-4.0.1.tgz#a5c6d532be656e23db820efb943a1f04998d63af"
+
+yallist@^2.1.2:
+  version "2.1.2"
+  resolved "https://registry.yarnpkg.com/yallist/-/yallist-2.1.2.tgz#1c11f9218f076089a47dd512f93c6699a6a81d52"

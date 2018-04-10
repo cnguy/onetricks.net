@@ -7,7 +7,7 @@
     "cors": "^2.8.4",
     "express": "4.13.3",
     "jsonfile": "^4.0.0",
-    "kayn": "^0.8.0",
+    "kayn": "^0.8.11",
     "mongoose": "^5.0.0",
     "superagent": "^3.8.2"
   },
