@@ -12,7 +12,7 @@ const kayn = Kayn()({
         delayBeforeRetry: 3000,
     },
     cacheOptions: {
-        cache: new LRUCache({ max: 200 }),
+        cache: new LRUCache({ max: 1000 }),
         timeToLives: {
             useDefault: true,
         },
