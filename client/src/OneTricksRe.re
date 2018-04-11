@@ -285,14 +285,14 @@ let make = _children => {
                      </li>
                      <li>
                        <span
-                         className="link"
+                         className="link flash"
                          onClick=(
                            _event =>
                              ReasonReact.Router.push(
                                baseURL ++ "/history" ++ newSearch,
                              )
                          )>
-                         (ReactUtils.ste("Match History"))
+                         (ReactUtils.ste("Match History (New! Try it out)"))
                        </span>
                      </li>
                    </ul>;

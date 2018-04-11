@@ -25,7 +25,7 @@ let parseIntoOneTricks = (decoded: players) : oneTricks =>
 /* TODO: Add API call handling before fallback. Use repromise let-bindings? */
 let url =
   switch (Environment.nodeEnv()) {
-  | Environment.Production => "http://api.onetricks.net"
+  | Environment.Production => "https://cors-anywhere.herokuapp.com/http://api.onetricks.net"
   | Environment.Development =>
     "https://cors-anywhere.herokuapp.com/" ++ Environment.ngrokURL()
   | Environment.None => ""
