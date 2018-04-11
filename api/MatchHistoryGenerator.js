@@ -57,7 +57,7 @@ const processPlayers = async (players, championId, roleNumbers) => {
                 .query({ champion: championId, queue: 420, beginIndex: 0, endIndex: 20 })
                 .region(region)
             return matches
-                .map(({ gameId, champion, timestamp, role, lane }) => ({
+                .map(({ gameId, champion, timestamp, role, lane, platformId }) => ({
                     accountId,
                     name,
                     summonerId: id,
@@ -66,9 +66,14 @@ const processPlayers = async (players, championId, roleNumbers) => {
                     timestamp,
                     role,
                     lane,
+                    platformId,
                     region,
                 }))
-                .filter(({ role, lane }) => {
+                .filter(({ role, lane, platformId, region }) => {
+                    // Ignore matches not in user's current region.
+                    if (platformId.toLowerCase() !== asPlatformID(region)) {
+                        return false
+                    }
                     if (role === 'SOLO' && lane === 'TOP') {
                         return roleNumbers.includes(1)
                     } else if (role === 'NONE' && lane === 'JUNGLE') {
