@@ -213,6 +213,14 @@ let make = _children => {
                  onClick=(_event => ReasonReact.Router.push("/faq"))>
                  (ReactUtils.ste("FAQ"))
                </span>
+               (ReactUtils.ste(" "))
+               <span
+                 className="link"
+                 onClick=(
+                   _event => ReasonReact.Router.push("/riot-endorsement")
+                 )>
+                 (ReactUtils.ste("Not Endorsed by Riot Games"))
+               </span>
                <ChampionPaneUtilities
                  areChampionPanesMerged=self.state.misc.areChampionPanesMerged
                  isMultiRegionFilterOn=self.state.misc.isMultiRegionFilterOn

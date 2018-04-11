@@ -23,7 +23,7 @@ let routeFromUrl = (url: ReasonReact.Router.url) =>
   | (["champions", championName, "history"], "rank=masters") =>
     MatchHistory(championName, Rank.Masters)
   | (["faq"], "") => FAQ
-  | (["riot-endorsement"], "")
+  | (["riot-endorsement"], "") => RiotEndorsement
   | _ => NotFound
   };
 
@@ -36,6 +36,6 @@ let routeToUrl = (route: route) =>
   | MatchHistory(championName, rank) =>
     "/champions/" ++ championName ++ "/history" ++ Rank.toRoute(rank)
   | FAQ => "/faq"
-  | RiotEndorsement => "riot-endorsement"
+  | RiotEndorsement => "/riot-endorsement"
   | NotFound => "/404"
   };
