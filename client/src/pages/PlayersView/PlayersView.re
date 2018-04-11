@@ -20,7 +20,6 @@ let getOverallWinRate = (players: players) =>
 let make =
     (
       ~players: players,
-      ~goBack,
       ~champ: string,
       ~show: bool,
       ~onSort: Sort.sort => unit,
@@ -58,9 +57,6 @@ let make =
     if (show) {
       <div className="table-view">
         <div className="players-list-view fade-in">
-          <span className="go-back flash" href="#" onClick=goBack>
-            (ReasonReact.stringToElement("<< Back to Champions"))
-          </span>
           <div className="players-table-header flash">
             (
               ReasonReact.stringToElement(

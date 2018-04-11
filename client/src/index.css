@@ -432,11 +432,31 @@ html {
 }
 
 .match-history__table {
-  width: 100%;
   text-align: left;
+  table-layout: auto;
+  width: 100%;
 }
 
 .match-history__icon {
-  width: 50px;
-  height: 50px;
+  width: 25px;
+  height: 25px;
+}
+
+@media only screen and (min-width: 768px) {
+  .match-history__table {
+    text-align: left;
+    width: 100%;
+  }
+  .match-history__icon {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+.match-history__table--green-win {
+  border: 1px solid green;
+}
+
+.match-history__table--red-lose {
+  border: 1px solid red;
 }

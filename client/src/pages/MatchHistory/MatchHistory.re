@@ -15,29 +15,25 @@ let make =
       _children,
     ) => {
   let update = cb =>
-    OneTricksService.getChampionIdFromName(
-      championName,
-      championId => {
-        Js.log(championId);
-        OneTricksService.getMatchHistoryForChampionAndRegions(
-          ~ranks=
-            switch (ranks) {
-            | [Rank.All] => [Rank.Challenger, Rank.Masters]
-            | _ => ranks /* singular */
-            },
-          ~regions,
-          ~championId,
-          ~roles=[
-            Role.Top,
-            Role.Middle,
-            Role.Jungle,
-            Role.DuoCarry,
-            Role.Support,
-          ],
-          payload =>
-          cb(payload)
-        );
-      },
+    OneTricksService.getChampionIdFromName(championName, championId =>
+      OneTricksService.getMatchHistoryForChampionAndRegions(
+        ~ranks=
+          switch (ranks) {
+          | [Rank.All] => [Rank.Challenger, Rank.Masters]
+          | _ => ranks /* singular */
+          },
+        ~regions,
+        ~championId,
+        ~roles=[
+          Role.Top,
+          Role.Middle,
+          Role.Jungle,
+          Role.DuoCarry,
+          Role.Support,
+        ],
+        payload =>
+        cb(payload)
+      )
     )
     |> ignore;
   {
@@ -59,7 +55,6 @@ let make =
       <table className="match-history__table">
         <thead>
           <tr>
-            <th />
             <th> (ReactUtils.ste("Region")) </th>
             <th> (ReactUtils.ste("Name")) </th>
             <th> (ReactUtils.ste("KDA")) </th>
@@ -74,21 +69,25 @@ let make =
             ReactUtils.lte(
               self.state.matches
               |> List.map(el =>
-                   <tr key=(string_of_int(el.gameId))>
+                   <tr
+                     key=(string_of_int(el.gameId))
+                     className=(
+                       "match-history__table--"
+                       ++ (
+                         if (el.didWin) {
+                           "green-win";
+                         } else {
+                           "red-lose";
+                         }
+                       )
+                     )>
                      <td>
-                       <a
-                         href=(
-                           "https://matchhistory.na.leagueoflegends.com/en/#match-details/NA1/"
-                           ++ string_of_int(el.gameId)
-                           ++ "/"
-                           ++ string_of_int(el.accountId)
-                           ++ "?tab=overview"
+                       (
+                         ReactUtils.ste(
+                           el.region |> Region.toString |> String.uppercase,
                          )
-                         target="_blank">
-                         (ReactUtils.ste("Go!"))
-                       </a>
+                       )
                      </td>
-                     <td> (ReactUtils.ste(el.region |> Region.toString)) </td>
                      <td> (ReactUtils.ste(el.name)) </td>
                      <td>
                        (
@@ -123,7 +122,7 @@ let make =
                        (
                          ReactUtils.lte(
                            el.items
-                           |> List.map(item =>
+                           |> List.mapi((index, item) =>
                                 if (item != 0) {
                                   <img
                                     className="match-history__icon"
@@ -131,6 +130,13 @@ let make =
                                       "https://s3-us-west-1.amazonaws.com/media.onetricks.net/images/items/"
                                       ++ string_of_int(item)
                                       ++ ".png"
+                                    )
+                                    key=(
+                                      string_of_int(el.gameId)
+                                      ++ "-"
+                                      ++ string_of_int(item)
+                                      ++ "-"
+                                      ++ string_of_int(index)
                                     )
                                   />;
                                 } else {

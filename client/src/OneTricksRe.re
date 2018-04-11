@@ -280,7 +280,9 @@ let make = _children => {
                          className="link"
                          onClick=(
                            _event =>
-                             ReasonReact.Router.push(baseURL ++ "/history")
+                             ReasonReact.Router.push(
+                               baseURL ++ "/history" ++ newSearch,
+                             )
                          )>
                          (ReactUtils.ste("Match History"))
                        </span>
@@ -329,7 +331,6 @@ let make = _children => {
                    } else {
                      <PlayersView
                        players
-                       goBack=(_event => ReasonReact.Router.push("/"))
                        champ=currentChampion
                        show=true
                        onSort=(sortKey => self.send(SetSortKey(sortKey)))
@@ -358,10 +359,10 @@ let make = _children => {
                              )
                    />
                  | RouterConfig.FAQ => <FAQ />
+                 | RouterConfig.RiotEndorsement => <Copyright />
                  | RouterConfig.NotFound => <NotFound />
                  }
                )
-               <Copyright />
              </div>
          )
     </Router.Container>;
