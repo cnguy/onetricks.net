@@ -56,7 +56,7 @@ const createOneTrick = (id, wins, losses, champData) => {
         }
     } else if (champData) {
         return {
-            champ: champData.id,
+            champ: champData.key,
             id,
             wins,
             losses,

@@ -25,7 +25,7 @@
     "eject": "react-scripts eject",
     "prepare": "npm link bs-platform",
     "analyze-bundle": "node ./build.js",
-    "buckle:up": "bsb make-world -w",
+    "buckle:up": "bsb -make-world -w",
     "buckle:down": "bsb -clean-world",
     "buckle:reset": "bsb -clean-world && bsb -make-world"
   }

@@ -25,7 +25,7 @@ export const getStaticChampionByName = name => {
             if (staticChampions.data[key].key === 'MonkeyKing' && name === 'Wukong') {
                 return true
             }
-            return staticChampions.data[key].key === name
+            return staticChampions.data[key].key.toLowerCase() === name.toLowerCase()
         },
     )
     return staticChampions.data[targetKey]
