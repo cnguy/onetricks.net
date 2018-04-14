@@ -31,6 +31,20 @@ let url =
   | Environment.None => ""
   };
 
+let fallbackGet = (cb: oneTricks => unit) : unit => {
+  Js.Promise.(
+    Fetch.fetch("https://media.onetricks.net/api/fallback-3-26-2018.json")
+    |> then_(Fetch.Response.json)
+    |> then_(payload =>
+         payload |> Decoder.players |> parseIntoOneTricks |> cb |> resolve
+       )
+    |> catch(error => Js.log(error) |> resolve)
+    |> resolve
+  )
+  |> ignore;
+  ();
+};
+
 let get = (cb: oneTricks => unit) =>
   Js.Promise.(
     Fetch.fetch(url ++ "/all?region=all")
@@ -38,18 +52,7 @@ let get = (cb: oneTricks => unit) =>
     |> then_(payload =>
          payload |> Decoder.players |> parseIntoOneTricks |> cb |> resolve
        )
-    |> catch(_error => Js.log("Falling back. :)") |> resolve)
-    |> then_(_it =>
-         Fetch.fetch(
-           "https://media.onetricks.net/api/fallback-3-26-2018.json",
-         )
-         |> then_(Fetch.Response.json)
-         |> then_(payload =>
-              payload |> Decoder.players |> parseIntoOneTricks |> cb |> resolve
-            )
-         |> catch(error => Js.log(error) |> resolve)
-         |> resolve
-       )
+    |> catch(_error => cb |> fallbackGet |> resolve)
   )
   |> ignore;
 
