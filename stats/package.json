@@ -5,8 +5,8 @@
   "dependencies": {
     "compression": "^1.6.2",
     "express": "4.13.3",
-    "jsonfile": "^4.0.0",
-    "kayn": "^0.8.9"
+    "kayn": "^0.8.9",
+    "mongoose": "^5.0.14"
   },
   "scripts": {
     "start": "babel-node index.js",

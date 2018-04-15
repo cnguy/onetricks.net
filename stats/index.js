@@ -7,21 +7,24 @@ app.use(compression())
 
 require('dotenv').config()
 
-import jsonfile from 'jsonfile'
-const stats = jsonfile.readFileSync('./stats.json').players
-/**
- * getStats closes over stats, providing a way for us to find a particular summoner
- * within the stats.json file as if we're making a call to the old stats endpoint.
- * @param {number} summonerID - The summoner id to look for.
- * @returns {object} a stats object or `undefined` if not found.
- */
-const getStats = summonerID =>
-    stats.find(p => parseInt(p.summonerId) === parseInt(summonerID))
+import { Stats, parseStats } from './mongodb'
 
 app.set('port', process.env.PORT || 3002)
 
-app.get('/api/stats/:summonerID', (req, res, next) => {
-    return res.json(getStats(req.params.summonerID))
+app.get('/api/stats/:summonerID', async (req, res, next) => {
+    const { summonerID } = req.params
+    try {
+        const stats = await Stats.findOne({
+            summonerId: parseInt(summonerID),
+        })
+        if (stats) {
+            res.json(parseStats(stats))
+        } else {
+            res.json({ status: 404 })
+        }
+    } catch (ex) {
+        res.json({ status: 500 })
+    }
 })
 
 app.use((req, res, next) => res.json({ status: 404, url: req.url }))
@@ -41,8 +44,8 @@ import generator from './StatsGenerator'
 
 const main = async () => {
     console.log('begin')
-    await generator();
+    await generator()
     console.log('done')
 }
 
-// main()
+main()

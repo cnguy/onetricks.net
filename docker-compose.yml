@@ -5,6 +5,7 @@ services:
     restart: always
     build: ./stats
     links:
+      - mongo
       - redis
     ports:
       - "3002:3002"

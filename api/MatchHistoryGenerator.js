@@ -54,21 +54,35 @@ const processPlayers = async (players, championId, roleNumbers) => {
                 .region(region)
             const { matches } = await kayn.Matchlist.by
                 .accountID(accountId)
-                .query({ champion: championId, queue: 420, beginIndex: 0, endIndex: 20 })
+                .query({
+                    champion: championId,
+                    queue: 420,
+                    beginIndex: 0,
+                    endIndex: 20,
+                })
                 .region(region)
             return matches
-                .map(({ gameId, champion, timestamp, role, lane, platformId }) => ({
-                    accountId,
-                    name,
-                    summonerId: id,
-                    gameId,
-                    championId: champion,
-                    timestamp,
-                    role,
-                    lane,
-                    platformId,
-                    region,
-                }))
+                .map(
+                    ({
+                        gameId,
+                        champion,
+                        timestamp,
+                        role,
+                        lane,
+                        platformId,
+                    }) => ({
+                        accountId,
+                        name,
+                        summonerId: id,
+                        gameId,
+                        championId: champion,
+                        timestamp,
+                        role,
+                        lane,
+                        platformId,
+                        region,
+                    }),
+                )
                 .filter(({ role, lane, platformId, region }) => {
                     // Ignore matches not in user's current region.
                     if (platformId.toLowerCase() !== asPlatformID(region)) {

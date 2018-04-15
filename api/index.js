@@ -9,7 +9,7 @@ app.use(cors())
 
 require('dotenv').config()
 
-const mongoose = require('mongoose')
+import mongoose from 'mongoose'
 require('./models')
 
 const Player = mongoose.model('Player')
@@ -99,11 +99,11 @@ const main = async () => {
         const done = await generator()
         console.log('script done:', done)
         setInterval(async () => {
-            await generator();
+            await generator()
         }, 86400000)
     } catch (exception) {
         console.log(exception)
     }
 }
 
-main()
+// main()

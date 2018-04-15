@@ -1,11 +1,18 @@
 require('dotenv').config('./.env')
 
-import { Kayn, REGIONS, METHOD_NAMES, BasicJSCache, RedisCache } from 'kayn'
+import {
+    Kayn,
+    REGIONS,
+    METHOD_NAMES,
+    BasicJSCache,
+    LRUCache,
+    RedisCache,
+} from 'kayn'
 import RegionHelper from 'kayn/dist/lib/Utils/RegionHelper'
 
 const { asPlatformID } = RegionHelper
 
-import jsonfile from 'jsonfile'
+import { Stats } from './mongodb'
 
 import ChampionStats from './entities/ChampionStats'
 import OneTrick from './entities/OneTrick'
@@ -22,9 +29,6 @@ import MatchlistKaynHelper from './utils/kayn-dependent/MatchlistKaynHelper'
 
 const LEAGUE_QUEUE = 'RANKED_SOLO_5x5'
 
-const mockBaseStats = jsonfile.readFileSync('./stats.json')
-console.log(mockBaseStats.players.length)
-
 // Local Helpers
 const processMatch = playerStats => match => {
     const summonerID = playerStats.summonerID
@@ -40,11 +44,15 @@ const processMatch = playerStats => match => {
 const inPlatform = region => ({ platformId: platformID }) =>
     platformID.toLowerCase() === asPlatformID(region)
 
-const store = json => {
-    console.time('stats.json')
-    jsonfile.writeFileSync('./stats.json', json)
-    console.timeEnd('stats.json')
-}
+const storePlayerStats = (summonerId, json) =>
+    Stats.create({
+        summonerId,
+        champions: json.champions,
+        region: json.region,
+        matchesProcessed: json.matchesProcessed,
+    })
+
+const getPlayer = summonerId => Stats.findOne({ summonerId })
 
 const main = async () => {
     const kayn = Kayn()({
@@ -57,65 +65,71 @@ const main = async () => {
             delayBeforeRetry: 50000,
             burst: false,
         },
+        cacheOptions: {
+            cache: new LRUCache({ max: 1000 }),
+            timeToLives: {
+                useDefault: true,
+            },
+        },
     })
 
-    const allStats = []
-    mockBaseStats.players.forEach(player => {
-        const p = PlayerStats()
-        p.load(player)
-        allStats.push(p)
-    })
-    const playerExists = id => allStats.some(el => el.summonerID === id)
+    const tryCatchGetPlayerStats = async (summonerId, region) => {
+        try {
+            const p = PlayerStats()
+            p.load(await getPlayer(summonerId))
+            return p
+        } catch (ex) {
+            return PlayerStats(summonerId, region)
+        }
+    }
 
-    // TODO: Is this unique?
-    // Removed `region` property because players can transfer regions.
-    const getPlayer = id => allStats.find(el => el.summonerID === id)
+    const makeOne = async (summonerID, accountID, region) => {
+        console.log('Processing:', summonerID, accountID, region)
+        const playerStats = await tryCatchGetPlayerStats(summonerID, region) // This is named `fullListOfMatches` because it's a list of the match
+        // objects, not matchlist objects.
+        const fullListOfMatches = (await MatchlistKaynHelper.getEntireMatchlist(
+            kayn,
+        )(accountID, region)).filter(
+            el =>
+                inPlatform(region)(el) &&
+                playerStats.doesNotContainMatch(el.gameId),
+        )
+
+        const matches = await MatchlistKaynHelper.rawMatchlistToMatches(kayn)(
+            fullListOfMatches,
+            region,
+        )
+
+        // Mutation: Process matches in matchlist.
+        matches.forEach(processMatch(playerStats))
+
+        try {
+            if (matches.length > 0) {
+                const res = await storePlayerStats(
+                    summonerID,
+                    playerStats.asObject(),
+                )
+            }
+        } catch (storeException) {
+            console.log('Was unable to store:', storeException, summonerID)
+        }
+    }
 
     const makeStats = async (rank, region, summoners) => {
         const summonersChunkSize = summoners.length / 4
 
-        const allPlayerStats = await asyncMapOverArrayInChunks(
+        await asyncMapOverArrayInChunks(
             summoners,
             summonersChunkSize,
             async ({ id: summonerID, accountID }) => {
-                const playerStats = playerExists(summonerID)
-                    ? getPlayer(summonerID)
-                    : PlayerStats(summonerID, region)
-
-                // This is named `fullListOfMatches` because it's a list of the match
-                // objects, not matchlist objects.
-                const fullListOfMatches = (await MatchlistKaynHelper.getEntireMatchlist(
-                    kayn,
-                )(accountID, region))
-                    .filter(inPlatform(region))
-                    .filter(({ gameId: matchID }) =>
-                        playerStats.doesNotContainMatch(matchID),
-                )
-
-                const matches = await MatchlistKaynHelper.rawMatchlistToMatches(
-                    kayn,
-                )(fullListOfMatches, region)
-
-                // Mutation: Process matches in matchlist.
-                matches.forEach(processMatch(playerStats))
-                return playerStats
+                try {
+                    await makeOne(summonerID, accountID, region)
+                } catch (exception) {
+                    console.error(exception)
+                }
             },
         )
 
-        const newStats = allPlayerStats.reduce(
-            (total, playerStats) =>
-                !playerExists(playerStats.summonerID)
-                    ? total.concat(playerStats)
-                    : total,
-            [],
-        )
-
-        const json = {
-            players: allStats.concat(newStats).map(el => el.asObject()),
-        }
-
-        console.log('storing', region, rank)
-        store(json)
         return true
     }
 
@@ -135,7 +149,7 @@ const main = async () => {
             try {
                 await makeStats(rank, region, summoners.slice(i, i + chunkSize))
             } catch (exception) {
-                console.log('makeStats failed...')
+                console.log('makeStats failed...', exception)
             }
             console.log('======')
             console.log('ending:', rank, region, i, i + chunkSize)

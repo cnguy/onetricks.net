@@ -8,14 +8,16 @@ import request from 'request'
  */
 const getStats = async summonerID =>
     new Promise((resolve, reject) => {
-        request({
-            url: `http://one-tricks-stats:3002/api/stats/${summonerID}`,
-            json: true,
-        }, function (error, response, body) {
-            if (body) return resolve(body)
-            else return resolve(undefined)
-
-        })
+        request(
+            {
+                url: `http://one-tricks-stats:3002/api/stats/${summonerID}`,
+                json: true,
+            },
+            function(error, response, body) {
+                if (body) return resolve(body)
+                else return resolve(undefined)
+            },
+        )
     })
 
 export default getStats

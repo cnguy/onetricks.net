@@ -20,14 +20,17 @@ const getStaticChampion = id => {
 }
 
 export const getStaticChampionByName = name => {
-    const targetKey = staticChampionKeys.find(
-        key => {
-            if (staticChampions.data[key].key === 'MonkeyKing' && name === 'Wukong') {
-                return true
-            }
-            return staticChampions.data[key].key.toLowerCase() === name.toLowerCase()
-        },
-    )
+    const targetKey = staticChampionKeys.find(key => {
+        if (
+            staticChampions.data[key].key === 'MonkeyKing' &&
+            name === 'Wukong'
+        ) {
+            return true
+        }
+        return (
+            staticChampions.data[key].key.toLowerCase() === name.toLowerCase()
+        )
+    })
     return staticChampions.data[targetKey]
 }
 
