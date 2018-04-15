@@ -99,12 +99,11 @@ const main = async () => {
         const done = await generator()
         console.log('script done:', done)
         setInterval(async () => {
-            // console.log('run script...');
-            // await generator();
-        }, 2147483647)
+            await generator();
+        }, 86400000)
     } catch (exception) {
         console.log(exception)
     }
 }
 
-// main()
+main()

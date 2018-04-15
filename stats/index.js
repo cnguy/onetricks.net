@@ -40,10 +40,9 @@ app.listen(app.get('port'), () => {
 import generator from './StatsGenerator'
 
 const main = async () => {
-    console.log('start generator')
-    await generator()
-    console.log('completely done')
+    console.log('begin')
+    await generator();
+    console.log('done')
 }
 
 // main()
-// if (process.env.NODE_ENV === 'development') main()

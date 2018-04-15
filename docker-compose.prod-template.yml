@@ -11,8 +11,8 @@ services:
     restart: always
     image: user/one-tricks-api
     ports:
-      - "3001:3001"
+      - "80:80"
     environment:
-      - DEBUG=kayn:*
+      - DEBUG=kayn:*:request:error
       - NODE_ENV=production
       - MONGO_URI=mongodb://db_username:db_password@ds######.mlab.com:#####/one-tricks
