@@ -9,6 +9,8 @@ services:
       - redis
     ports:
       - "3002:3002"
+    environment:
+      - NODE_ENV=development
   api:
     container_name: one-tricks-api
     restart: always

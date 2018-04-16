@@ -65,4 +65,9 @@ class _PlayerStats {
 const PlayerStats = (summonerID, ChampionStats) =>
     new _PlayerStats(summonerID, ChampionStats)
 
+export const loadPlayerStats = playerStats => {
+    const p = new PlayerStats()
+    p.load(playerStats)
+    return p
+}
 export default PlayerStats

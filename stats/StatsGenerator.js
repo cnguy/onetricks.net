@@ -16,7 +16,7 @@ import { Stats } from './mongodb'
 
 import ChampionStats from './entities/ChampionStats'
 import OneTrick from './entities/OneTrick'
-import PlayerStats from './entities/PlayerStats'
+import PlayerStats, { loadPlayerStats } from './entities/PlayerStats'
 import Summoner from './entities/Summoner'
 
 import asyncMapOverArrayInChunks from './utils/generic/asyncMapOverArrayInChunks'
@@ -30,6 +30,8 @@ import MatchlistKaynHelper from './utils/kayn-dependent/MatchlistKaynHelper'
 const LEAGUE_QUEUE = 'RANKED_SOLO_5x5'
 
 // Local Helpers
+
+// processMatch is a mutating function dependent on the PlayerStats class.
 const processMatch = playerStats => match => {
     const summonerID = playerStats.summonerID
     const data = MatchResponseHelper.getMatchInfoForSummoner(match, summonerID)
@@ -75,9 +77,7 @@ const main = async () => {
 
     const tryCatchGetPlayerStats = async (summonerId, region) => {
         try {
-            const p = PlayerStats()
-            p.load(await getPlayer(summonerId))
-            return p
+            return loadPlayerStats(await getPlayer(summonerId))
         } catch (ex) {
             return PlayerStats(summonerId, region)
         }
