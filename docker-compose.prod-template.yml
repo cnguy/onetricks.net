@@ -6,6 +6,9 @@ services:
     image: user/one-tricks-stats
     ports:
       - "3002:3002"
+    environment:
+      - DEBUG=kayn:*:request:error
+      - DEBUG_COLORS=true
   api:
     container_name: one-tricks-api
     restart: always
@@ -14,5 +17,6 @@ services:
       - "80:80"
     environment:
       - DEBUG=kayn:*:request:error
+      - DEBUG_COLORS=true
       - NODE_ENV=production
       - MONGO_URI=mongodb://db_username:db_password@ds######.mlab.com:#####/one-tricks

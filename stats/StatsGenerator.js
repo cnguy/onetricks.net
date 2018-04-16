@@ -141,7 +141,7 @@ const main = async () => {
             ),
         )
         const len = summoners.length
-        const chunkSize = 50
+        const chunkSize = 25
         for (let i = 0; i < len; i += chunkSize) {
             console.log('======')
             console.log('starting:', rank, region, i, i + chunkSize)
