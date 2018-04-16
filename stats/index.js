@@ -20,18 +20,18 @@ app.get('/api/stats/:summonerID', async (req, res, next) => {
         if (stats) {
             res.json(parseStats(stats))
         } else {
-            res.json({ status: 404 })
+            res.json({ statusCode: 404 })
         }
     } catch (ex) {
-        res.json({ status: 500 })
+        res.json({ statusCode: 500 })
     }
 })
 
-app.use((req, res, next) => res.json({ status: 404, url: req.url }))
+app.use((req, res, next) => res.json({ statusCode: 404, url: req.url }))
 
 app.use((err, req, res, next) => {
     res.json({
-        status: err.status || 500,
+        statusCode: err.status || 500,
         error: err,
     })
 })

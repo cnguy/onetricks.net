@@ -14,10 +14,23 @@ const getStats = async summonerID =>
                 json: true,
             },
             function(error, response, body) {
-                if (body) return resolve(body)
-                else return resolve(undefined)
+                if (error) return reject(error)
+                else {
+                    if (body.statusCode >= 400) {
+                        return reject(error)
+                    }
+                    return resolve(body)
+                }
             },
         )
     })
 
-export default getStats
+const tryCatchGetStats = async summonerID => {
+    try {
+        return await getStats(summonerID)
+    } catch (exception) {
+        return null
+    }
+}
+
+export default tryCatchGetStats

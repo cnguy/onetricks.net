@@ -80,11 +80,11 @@ app.get('/static-champion-by-name/:name/id', (req, res, next) => {
     res.json(getStaticChampionByName(name).id)
 })
 
-app.use((req, res, next) => res.json({ status: 404, url: req.url }))
+app.use((req, res, next) => res.json({ statusCode: 404, url: req.url }))
 
 app.use((err, req, res, next) => {
     res.json({
-        status: err.status || 500,
+        statusCode: err.status || 500,
         error: err,
     })
 })
@@ -106,4 +106,4 @@ const main = async () => {
     }
 }
 
-// main()
+main()
