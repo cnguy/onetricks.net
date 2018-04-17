@@ -23,7 +23,7 @@ services:
       - "80:80"
     environment:
       - NODE_ENV=development
-      - DEBUG=kayn:request:*:error
+      - DEBUG=kayn:*
       - DEBUG_COLORS=true
 #  client:
  #   container_name: one-tricks-client

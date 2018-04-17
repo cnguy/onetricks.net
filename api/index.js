@@ -12,6 +12,8 @@ require('dotenv').config()
 import mongoose from 'mongoose'
 require('./models')
 
+import kayn from './kayn'
+
 const Player = mongoose.model('Player')
 
 if (process.env.NODE_ENV === 'development') {
@@ -64,13 +66,41 @@ app.get('/all', (req, res, next) => {
 
 const oneParamParseInt = n => parseInt(n, 10)
 
+const tryMatchHistoryFromCache = url => {
+    return new Promise((resolve, reject) => {
+        if (kayn.config.cacheOptions.cache) {
+            kayn.config.cacheOptions.cache.get({ key: url }, (err, data) => {
+                if (data) {
+                    return resolve(data)
+                } else {
+                    return reject(err)
+                }
+            })
+        } else {
+            return reject()
+        }
+    })
+}
+
 app.get('/match-history', async (req, res, next) => {
-    const { championId } = req.query
-    const ranks = req.query.ranks.split(',')
-    const regions = req.query.regions.split(',')
-    const roleNumbers = req.query.roleNumbers.split(',').map(oneParamParseInt)
-    const data = await MHGenerator(ranks, regions, championId, roleNumbers)
-    res.json(data)
+    try {
+        res.json(await tryMatchHistoryFromCache(req.url))
+    } catch (ex) {
+        const { championId } = req.query
+        const ranks = req.query.ranks.split(',')
+        const regions = req.query.regions.split(',')
+        const roleNumbers = req.query.roleNumbers
+            .split(',')
+            .map(oneParamParseInt)
+        const data = await MHGenerator(ranks, regions, championId, roleNumbers)
+        if (kayn.config.cacheOptions.cache) {
+            kayn.config.cacheOptions.cache.set(
+                { key: req.url, ttl: 100000 },
+                data,
+            )
+        }
+        res.json(data)
+    }
 })
 
 import { getStaticChampionByName } from './getStaticChampion'

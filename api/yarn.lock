@@ -171,9 +171,13 @@ aws-sign2@~0.7.0:
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/aws-sign2/-/aws-sign2-0.7.0.tgz#b46e890934a9591f2d2f6f86d7e6a9f1b3fe76a8"
 
-aws4@^1.2.1, aws4@^1.6.0:
+aws4@^1.2.1:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.6.0.tgz#83ef5ca860b2b32e4a0deedee8c771b9db57471e"
+
+aws4@^1.6.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/aws4/-/aws4-1.7.0.tgz#d4d0e9b9dbfca77bf08eeb0a8a471550fe39e289"
 
 babel-cli@^6.26.0:
   version "6.26.0"
@@ -2197,8 +2201,8 @@ kareem@2.0.1:
   resolved "https://registry.yarnpkg.com/kareem/-/kareem-2.0.1.tgz#f17f77e9032f64aa402b334f91fb4407fe4c042c"
 
 kayn@^0.8.11:
-  version "0.8.11"
-  resolved "https://registry.yarnpkg.com/kayn/-/kayn-0.8.11.tgz#48d8f46a16eadcc5ecb01df97934b244e2e4c123"
+  version "0.8.12"
+  resolved "https://registry.yarnpkg.com/kayn/-/kayn-0.8.12.tgz#43d496ceb681939b18e12551ff4bd228471df93e"
   dependencies:
     debug "^3.1.0"
     dotenv "^4.0.0"
@@ -3290,8 +3294,8 @@ supports-color@^2.0.0:
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
 supports-color@^5.1.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.3.0.tgz#5b24ac15db80fa927cf5227a4a33fd3c4c7676c0"
+  version "5.4.0"
+  resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-5.4.0.tgz#1c6b337402c2137605efe19f10fec390f6faab54"
   dependencies:
     has-flag "^3.0.0"
 
