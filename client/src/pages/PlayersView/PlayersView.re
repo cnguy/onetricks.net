@@ -31,7 +31,8 @@ let make =
   render: _self => {
     let simpleList = players;
     let sortedList =
-      (
+      simpleList
+      |> (
         switch (sortKey) {
         | Sort.Region => Sorts.region
         | Sort.Rank => Sorts.rank
@@ -41,8 +42,6 @@ let make =
         | Sort.WinRate => Sorts.winRate
         | _ => Sorts.id
         }
-      )(
-        simpleList,
       );
     let finalList =
       if (sortReverse) {
