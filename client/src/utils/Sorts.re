@@ -68,6 +68,8 @@ let winRatePredicate = (a: player, b: player) => {
   };
 };
 
+let id = (list: 'a) => list;
+
 let name = (list: players) => List.sort(namePredicate, list);
 
 let rank = (list: players) => List.sort(rankPredicate, list);

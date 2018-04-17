@@ -31,15 +31,19 @@ let make =
   render: _self => {
     let simpleList = players;
     let sortedList =
-      switch (sortKey) {
-      | Sort.Region => Sorts.region(simpleList)
-      | Sort.Rank => Sorts.rank(simpleList)
-      | Sort.Name => Sorts.name(simpleList)
-      | Sort.Wins => Sorts.wins(simpleList)
-      | Sort.Losses => Sorts.losses(simpleList)
-      | Sort.WinRate => Sorts.winRate(simpleList)
-      | _ => simpleList
-      };
+      (
+        switch (sortKey) {
+        | Sort.Region => Sorts.region
+        | Sort.Rank => Sorts.rank
+        | Sort.Name => Sorts.name
+        | Sort.Wins => Sorts.wins
+        | Sort.Losses => Sorts.losses
+        | Sort.WinRate => Sorts.winRate
+        | _ => Sorts.id
+        }
+      )(
+        simpleList,
+      );
     let finalList =
       if (sortReverse) {
         List.rev(sortedList);
