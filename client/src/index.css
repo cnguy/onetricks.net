@@ -454,9 +454,9 @@ html {
 }
 
 .match-history__table--green-win {
-  border: 1px solid green;
+  background-color: green;
 }
 
 .match-history__table--red-lose {
-  border: 1px solid red;
+  background-color: red;
 }

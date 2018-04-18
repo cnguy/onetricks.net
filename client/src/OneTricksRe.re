@@ -344,6 +344,14 @@ let make = _children => {
                        onSort=(sortKey => self.send(SetSortKey(sortKey)))
                        sortKey=self.state.playersView.sortKey
                        sortReverse=self.state.playersView.shouldSortReverse
+                       ranks=[rank]
+                       regions=(
+                                 if (self.state.misc.isMultiRegionFilterOn) {
+                                   self.state.misc.regions;
+                                 } else {
+                                   [self.state.misc.region];
+                                 }
+                               )
                      />;
                    };
                  | RouterConfig.Matchups(_currentChampion) =>
