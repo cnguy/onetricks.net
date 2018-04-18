@@ -56,7 +56,7 @@ let get = (cb: oneTricks => unit) =>
   )
   |> ignore;
 
-let getChampionIdFromName = (championName: string, cb: int => unit) => {
+let getChampionIdFromName = (championName: string, cb: option(int) => unit) => {
   let requestURL =
     url
     ++ "/static-champion-by-name/"
@@ -65,8 +65,8 @@ let getChampionIdFromName = (championName: string, cb: int => unit) => {
   Js.Promise.(
     Fetch.fetch(requestURL)
     |> then_(Fetch.Response.json)
-    |> then_(payload => payload |> Decoder.championId |> cb |> resolve)
-    |> catch(error => error |> Js.log |> resolve)
+    |> then_(payload => Some(Decoder.championId(payload)) |> cb |> resolve)
+    |> catch(_error => None |> cb |> resolve)
   );
 };
 
@@ -76,7 +76,7 @@ let getMatchHistoryForChampionAndRegions =
       ~regions: Region.regions,
       ~championId: int,
       ~roles: Role.roles,
-      cb: miniGameRecords => unit,
+      cb: option(miniGameRecords) => unit,
     ) => {
   let requestURL =
     url
@@ -92,8 +92,10 @@ let getMatchHistoryForChampionAndRegions =
   Js.Promise.(
     Fetch.fetch(requestURL)
     |> then_(Fetch.Response.json)
-    |> then_(payload => payload |> Decoder.miniGameRecords |> cb |> resolve)
-    |> catch(error => Js.log(error) |> resolve)
+    |> then_(payload =>
+         Some(Decoder.miniGameRecords(payload)) |> cb |> resolve
+       )
+    |> catch(error => None |> cb |> resolve)
   )
   |> ignore;
 };
