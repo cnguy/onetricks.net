@@ -1,6 +1,6 @@
 let component = ReasonReact.statelessComponent("Champion");
 
-let make = (~name, ~number, ~handleImageLoad, _children) => {
+let make = (~name, ~number, _children) => {
   ...component,
   render: _self => {
     let len = String.length(string_of_int(number));
@@ -20,7 +20,7 @@ let make = (~name, ~number, ~handleImageLoad, _children) => {
           (ReasonReact.stringToElement(string_of_int(number)))
         </span>
       </div>
-      <ChampIcon name mini=false handleImageLoad />
+      <ChampIcon name mini=false />
     </div>;
   },
 };

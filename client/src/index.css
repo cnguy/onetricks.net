@@ -468,5 +468,5 @@ html {
 }
 
 .advertisements-container iframe {
-  display: inline-block !important;
+  display: inline-block;
 }

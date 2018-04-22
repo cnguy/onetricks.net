@@ -9,8 +9,7 @@ let getIcon: string => string = [%bs.raw
 |}
 ];
 
-let make =
-    (~name, ~mini, ~handleImageLoad: ReactEventRe.Image.t => unit, _children) => {
+let make = (~name, ~mini, _children) => {
   ...component,
   render: _self => {
     let miniCN = if (mini) {"mini-"} else {""};
@@ -19,7 +18,6 @@ let make =
     <img
       className=imgCN
       src=championIconPath
-      onLoad=handleImageLoad
       alt=(name ++ " " ++ "One Trick Pony/Ponies")
     />;
   },

@@ -96,11 +96,7 @@ let make =
                 )
               )
               (ReasonReact.stringToElement(" "))
-              <ChampIcon
-                name=champ
-                mini=true
-                handleImageLoad=((_e: ReactEventRe.Image.t) => ())
-              />
+              <ChampIcon name=champ mini=true />
               (ReasonReact.stringToElement(" "))
               (ReasonReact.stringToElement("One Trick Ponies"))
               (ReasonReact.stringToElement(" "))

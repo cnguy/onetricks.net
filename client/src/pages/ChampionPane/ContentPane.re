@@ -7,14 +7,11 @@ let make =
       ~allPlayers,
       ~regionInfoText: string,
       ~areChampionPanesMerged,
-      ~setDisplayValue,
-      ~renderEmptyResults,
-      ~handleImageLoad,
       _children,
     ) => {
   ...component,
   render: _self =>
-    <div style=(ReactDOMRe.Style.make(~display=setDisplayValue(), ()))>
+    <div>
       (
         if (isMultiRegionFilterOn && List.length(regions) == 0) {
           <div className="empty-results">
@@ -37,11 +34,11 @@ let make =
                     )
                   )
                 </h5>
-                <ChampionPane champions=allPlayers handleImageLoad />
+                <ChampionPane champions=allPlayers />
               </div>
             </div>;
           } else {
-            renderEmptyResults();
+            ReasonReact.nullElement;
           };
         } else {
           let challengers =
@@ -55,7 +52,7 @@ let make =
               ~rank=Rank.Masters,
             );
           if (List.length(challengers) === 0 && List.length(masters) === 0) {
-            renderEmptyResults();
+            ReasonReact.nullElement;
           } else {
             <div className="content-pane separated-pane">
               (
@@ -71,7 +68,6 @@ let make =
                     <ChampionPane
                       champions=challengers
                       leagueType=Rank.Challenger
-                      handleImageLoad
                     />
                   </div>;
                 } else {
@@ -88,11 +84,7 @@ let make =
                         )
                       )
                     </h5>
-                    <ChampionPane
-                      champions=masters
-                      leagueType=Rank.Masters
-                      handleImageLoad
-                    />
+                    <ChampionPane champions=masters leagueType=Rank.Masters />
                   </div>;
                 } else {
                   ReasonReact.nullElement;

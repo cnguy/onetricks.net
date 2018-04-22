@@ -1,7 +1,6 @@
 let component = ReasonReact.statelessComponent("ChampionPane");
 
-let make =
-    (~champions, ~handleImageLoad, ~leagueType: Rank.rank=Rank.All, _children) => {
+let make = (~champions, ~leagueType: Rank.rank=Rank.All, _children) => {
   ...component,
   render: _self =>
     <div className="champs">
@@ -24,7 +23,6 @@ let make =
                 <Champion
                   name=pair.champion
                   number=(List.length(pair.players))
-                  handleImageLoad
                   key=pair.champion
                 />
               </span>,

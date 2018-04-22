@@ -317,9 +317,6 @@ let make = _children => {
                      regionInfoText
                      areChampionPanesMerged=self.state.misc.
                                               areChampionPanesMerged
-                     setDisplayValue=(() => "inline")
-                     renderEmptyResults=(() => ReasonReact.nullElement)
-                     handleImageLoad=(_event => ())
                    />;
                  | RouterConfig.PlayersView(currentChampion, rank) =>
                    let players =
