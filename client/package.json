@@ -20,11 +20,12 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && mv build/index.html build/200.html",
+    "build": "react-scripts build && mv build/index.html build/200.html && cp CNAME build/CNAME",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "prepare": "npm link bs-platform",
     "analyze-bundle": "node ./build.js",
+    "deploy": "cd build && surge && cd -",
     "buckle:up": "bsb -make-world -w",
     "buckle:down": "bsb -clean-world",
     "buckle:reset": "bsb -clean-world && bsb -make-world"
