@@ -460,3 +460,13 @@ html {
 .match-history__table--red-lose {
   background-color: red;
 }
+
+.advertisements-container {
+  padding-top: 25px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.advertisements-container iframe {
+  display: inline-block !important;
+}
