@@ -9,6 +9,9 @@ services:
     environment:
       - DEBUG=kayn:*:request:error
       - DEBUG_COLORS=true
+      - NODE_ENV=production
+      - MONGO_URI=mongodb://db_username:db_password@ds######.mlab.com:#####/one-tricks
+      - REDIS_PASSWORD=
   api:
     container_name: one-tricks-api
     restart: always
