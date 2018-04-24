@@ -11,6 +11,30 @@ type state = {
 
 let component = ReasonReact.reducerComponent("MatchHistory");
 
+module Styles = {
+  open Css;
+  let table =
+    style([
+      textAlign(`left),
+      tableLayout(`auto),
+      media(
+        "only screen and (min-width: 768px)",
+        [textAlign(`left), width(`percent(100.))],
+      ),
+    ]);
+  let icon =
+    style([
+      width(px(25)),
+      height(px(25)),
+      media(
+        "only screen and (min-width: 768px)",
+        [width(px(35)), height(px(35))],
+      ),
+    ]);
+  let rowWin = style([backgroundColor(green)]);
+  let rowLose = style([backgroundColor(red)]);
+};
+
 let make =
     (
       ~championName: string,
@@ -67,7 +91,7 @@ let make =
           "No games found. Either there are no one tricks playing this champion in this region or set of regions, or the current players probably do not play their one trick champions anymore.",
         )
       | (false, Some(matches)) =>
-        <table className="match-history__table">
+        <table className=Styles.table>
           <thead>
             <tr>
               <th> (ReactUtils.ste("Region")) </th>
@@ -86,16 +110,7 @@ let make =
                 |> List.map(el =>
                      <tr
                        key=(string_of_int(el.gameId))
-                       className=(
-                         "match-history__table--"
-                         ++ (
-                           if (el.didWin) {
-                             "green-win";
-                           } else {
-                             "red-lose";
-                           }
-                         )
-                       )>
+                       className=(el.didWin ? Styles.rowWin : Styles.rowLose)>
                        <td>
                          (
                            ReactUtils.ste(
@@ -116,21 +131,15 @@ let make =
                          )
                        </td>
                        <td>
-                         <img
-                           src=(
-                             "https://s3-us-west-1.amazonaws.com/media.onetricks.net/images/perks/actual/"
-                             ++ string_of_int(el.perks.perk0)
-                             ++ ".png"
-                           )
-                           className="match-history__icon"
+                         <S3Image
+                           kind=S3Image.ActualPerk
+                           itemId=el.perks.perk0
+                           className=Styles.icon
                          />
-                         <img
-                           src=(
-                             "https://s3-us-west-1.amazonaws.com/media.onetricks.net/images/perks/styles/"
-                             ++ string_of_int(el.perks.perkSubStyle)
-                             ++ ".png"
-                           )
-                           className="match-history__icon"
+                         <S3Image
+                           kind=S3Image.PerkStyle
+                           itemId=el.perks.perkSubStyle
+                           className=Styles.icon
                          />
                        </td>
                        <td>
@@ -139,13 +148,10 @@ let make =
                              el.items
                              |> List.mapi((index, item) =>
                                   if (item != 0) {
-                                    <img
-                                      className="match-history__icon"
-                                      src=(
-                                        "https://s3-us-west-1.amazonaws.com/media.onetricks.net/images/items/"
-                                        ++ string_of_int(item)
-                                        ++ ".png"
-                                      )
+                                    <S3Image
+                                      kind=S3Image.Item
+                                      itemId=item
+                                      className=Styles.icon
                                       key=(
                                         string_of_int(el.gameId)
                                         ++ "-"
@@ -162,31 +168,22 @@ let make =
                          )
                        </td>
                        <td>
-                         <img
-                           src=(
-                             "https://s3-us-west-1.amazonaws.com/media.onetricks.net/images/items/"
-                             ++ (el.trinket |> string_of_int)
-                             ++ ".png"
-                           )
-                           className="match-history__icon"
+                         <S3Image
+                           kind=S3Image.Item
+                           itemId=el.trinket
+                           className=Styles.icon
                          />
                        </td>
                        <td>
-                         <img
-                           src=(
-                             "https://s3-us-west-1.amazonaws.com/media.onetricks.net/images/summoner-spells/"
-                             ++ string_of_int(el.summonerSpells.d)
-                             ++ ".png"
-                           )
-                           className="match-history__icon"
+                         <S3Image
+                           kind=S3Image.SummonerSpell
+                           itemId=el.summonerSpells.d
+                           className=Styles.icon
                          />
-                         <img
-                           src=(
-                             "https://s3-us-west-1.amazonaws.com/media.onetricks.net/images/summoner-spells/"
-                             ++ string_of_int(el.summonerSpells.f)
-                             ++ ".png"
-                           )
-                           className="match-history__icon"
+                         <S3Image
+                           kind=S3Image.SummonerSpell
+                           itemId=el.summonerSpells.f
+                           className=Styles.icon
                          />
                        </td>
                      </tr>

@@ -194,11 +194,6 @@ html {
   outline: none;
 }
 
-/*.filter-rg-btn:hover {
-  background-color: darkslategray;
-  color: white;
-}*/
-
 .filter-btn-active {
   background-color: darkslategray;
   color: white;
@@ -340,36 +335,6 @@ html {
 .loader-img {
   padding-top: 100px;
   padding-bottom: 250px;
-}
-
-.match-history__table {
-  text-align: left;
-  table-layout: auto;
-  width: 100%;
-}
-
-.match-history__icon {
-  width: 25px;
-  height: 25px;
-}
-
-@media only screen and (min-width: 768px) {
-  .match-history__table {
-    text-align: left;
-    width: 100%;
-  }
-  .match-history__icon {
-    width: 35px;
-    height: 35px;
-  }
-}
-
-.match-history__table--green-win {
-  background-color: green;
-}
-
-.match-history__table--red-lose {
-  background-color: red;
 }
 
 .champions-page-nav {
