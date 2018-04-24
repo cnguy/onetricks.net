@@ -79,7 +79,7 @@ let make = (~number: int, ~player: Types.player, _children) => {
       <td className="players-table-td">
         <WinRate wins=player.wins losses=player.losses />
       </td>
-      <td className="players-tabel-td">
+      <td className="players-table-td">
         <a
           className="table-player-link"
           href=(

@@ -166,6 +166,9 @@ html {
   height: 100%;
   cursor: pointer;
   padding: 10px 0;
+}
+
+.players-table-th {
   text-align: center;
 }
 
