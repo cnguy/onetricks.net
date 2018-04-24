@@ -106,6 +106,10 @@ html {
   border-bottom: 1px solid #455A64;
 }
 
+.players-table {
+  background-color: #37474F;
+}
+
 .players-table-sort {
   display: block;
   width: 100%;
@@ -158,9 +162,14 @@ html {
 }
 
 .players-table {
-  width: 100%;
   transition: 1s;
   text-align: left;
+}
+
+@media only screen and (min-width: 480px) {
+  .players-table {
+    width: 100%;
+  }
 }
 
 .players-table-header {
