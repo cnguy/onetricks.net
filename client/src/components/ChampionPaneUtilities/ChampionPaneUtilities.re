@@ -79,7 +79,7 @@ let make =
       ReasonReact.Router.dangerouslyGetInitialUrl().search,
     ) {
     | ([], _rest) => comp
-    | (["champions", ..._rest], "") => comp
+    | (["champions", ..._rest], _) => comp
     | _ => ReasonReact.nullElement
     };
   },
