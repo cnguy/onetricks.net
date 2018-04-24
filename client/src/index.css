@@ -29,12 +29,6 @@ html {
   }
 }
 
-.new {
-  background-color: white;
-  font-size: 0.8em;
-  padding: 0.5em;
-}
-
 .fade-in {
   animation: fadeIn 0.75s;
 }
@@ -56,12 +50,6 @@ html {
   color: white;
   font-size: 1.3em;
   margin-bottom: 0;
-}
-
-.instructions {
-  color: yellow;
-  font-size: 0.69em;
-  margin: 1em 0;
 }
 
 @media only screen and (min-width: 500px) {
@@ -262,25 +250,6 @@ html {
 .faq-header {
   color: yellow;
   font-weight: normal;
-}
-
-.qa {
-  margin-top: 1em;
-  padding: 1em;
-  background-color: #333333;
-}
-
-.qa-item {
-  padding: 1em 0;
-}
-
-.question {
-  color: yellow;
-  margin: 0.5em 0;
-}
-
-.answer {
-  color: white;
 }
 
 .filter-rg-btn {

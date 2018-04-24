@@ -1,5 +1,15 @@
 let component = ReasonReact.statelessComponent("FAQ");
 
+module Styles = {
+  open Css;
+  let qa =
+    style([
+      marginTop(em(1.)),
+      padding(em(1.)),
+      backgroundColor(hex("333")),
+    ]);
+};
+
 let qas = [
   (
     "Where to contact for bug reports, feature requests, etc. I appreciate all tips and advice regarding any aspect of this site as well.",
@@ -36,7 +46,7 @@ let make = _children => {
   render: _self =>
     <div className="faq">
       <h3 className="faq-header"> (ReasonReact.stringToElement("faq")) </h3>
-      <div className="qa">
+      <div className=Styles.qa>
         (
           ReasonReact.arrayToElement(
             Array.of_list(
