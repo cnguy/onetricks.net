@@ -95,7 +95,7 @@ let getMatchHistoryForChampionAndRegions =
     |> then_(payload =>
          Some(Decoder.miniGameRecords(payload)) |> cb |> resolve
        )
-    |> catch(error => None |> cb |> resolve)
+    |> catch(_error => None |> cb |> resolve)
   )
   |> ignore;
 };

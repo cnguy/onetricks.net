@@ -8,20 +8,6 @@ html {
   color: white;
 }
 
-.link {
-  color: #AAA;
-  text-decoration: none;
-  cursor: pointer;
-  text-transform: uppercase;
-}
-
-.link:hover {
-  color: white;
-  cursor: pointer;
-  border-bottom: 1px solid white;
-  text-transform: uppercase;
-}
-
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -509,15 +495,4 @@ html {
 .champions-page-nav li {
   display: inline-block;
   padding: 0 10px 0 0;
-}
-
-.link {
-  transition: 0.5s;
-  font-weight: bold;
-}
-
-.link--active {
-  color: white;
-  border-bottom: 1px solid white;
-  font-weight: bold;
 }

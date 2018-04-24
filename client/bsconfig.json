@@ -8,7 +8,8 @@
       "reason-js",
       "reason-reroute",
       "bs-fetch",
-      "@glennsl/bs-json"
+      "@glennsl/bs-json",
+      "bs-css"
     ],
     "sources": {
       "dir": "src",
