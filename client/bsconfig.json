@@ -11,10 +11,19 @@
       "@glennsl/bs-json",
       "bs-css"
     ],
-    "sources": {
-      "dir": "src",
-      "subdirs": true
-    },
+    "bs-dev-dependencies": [
+      "@glennsl/bs-jest"
+    ],
+    "sources": [
+      {
+        "dir": "src",
+        "subdirs": true
+      },
+      {
+        "dir": "__tests__",
+        "type": "dev"
+      }
+    ],
     "package-specs": [
       {
         "module": "commonjs",

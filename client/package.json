@@ -4,6 +4,7 @@
   "private": true,
   "proxy": "http://one-tricks-api:3001/",
   "devDependencies": {
+    "@glennsl/bs-jest": "^0.4.2",
     "bs-platform": "^2.1.0",
     "webpack-bundle-analyzer": "^2.11.1"
   },
@@ -22,7 +23,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && mv build/index.html build/200.html && cp CNAME build/CNAME",
-    "test": "react-scripts test --env=jsdom",
+    "test": "yarn build && jest",
+    "watch:jest": "jest --coverage --watchAll",
     "eject": "react-scripts eject",
     "prepare": "npm link bs-platform",
     "analyze-bundle": "node ./build.js",
