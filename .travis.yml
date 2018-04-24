@@ -1,5 +1,8 @@
 language: node_js
 
+script: sh -c 'cd client && yarn && yarn build && yarn test'
+
+
 node_js:
    - 8
 

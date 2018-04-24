@@ -23,7 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && mv build/index.html build/200.html && cp CNAME build/CNAME",
-    "test": "yarn build && jest",
+    "test": "jest",
     "watch:jest": "jest --coverage --watchAll",
     "eject": "react-scripts eject",
     "prepare": "npm link bs-platform",
