@@ -32,10 +32,13 @@ let generateLink = (name, region, opgg, id) =>
     "http://www.lolking.net/summoner/" ++ region ++ "/" ++ id ++ "/" ++ name;
   };
 
-let make = (~player: Types.player, _children) => {
+let make = (~number: int, ~player: Types.player, _children) => {
   ...component,
   render: _self =>
     <tr className="players-table-tr">
+      <td className="players-table-td__row-number">
+        (ReactUtils.ite(number))
+      </td>
       <td className="players-table-td">
         (
           player.region

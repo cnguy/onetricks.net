@@ -203,23 +203,50 @@ let make = _children => {
              <div className="one-tricks-re">
                <Header />
                <span
-                 className="link"
+                 className=(
+                   "link"
+                   ++ (
+                     if (currentRoute == RouterConfig.Home) {
+                       " link--active";
+                     } else {
+                       "";
+                     }
+                   )
+                 )
                  onClick=(_event => ReasonReact.Router.push("/"))>
-                 (ReactUtils.ste("Home"))
+                 (ReactUtils.ste("home"))
                </span>
-               (ReactUtils.ste(" "))
+               (ReactUtils.ste(" | "))
                <span
-                 className="link"
+                 className=(
+                   "link"
+                   ++ (
+                     if (currentRoute == RouterConfig.FAQ) {
+                       " link--active";
+                     } else {
+                       "";
+                     }
+                   )
+                 )
                  onClick=(_event => ReasonReact.Router.push("/faq"))>
-                 (ReactUtils.ste("FAQ"))
+                 (ReactUtils.ste("faq"))
                </span>
-               (ReactUtils.ste(" "))
+               (ReactUtils.ste(" | "))
                <span
-                 className="link"
+                 className=(
+                   "link"
+                   ++ (
+                     if (currentRoute == RouterConfig.RiotEndorsement) {
+                       " link--active";
+                     } else {
+                       "";
+                     }
+                   )
+                 )
                  onClick=(
                    _event => ReasonReact.Router.push("/riot-endorsement")
                  )>
-                 (ReactUtils.ste("Not Endorsed by Riot Games"))
+                 (ReactUtils.ste("(lack of) Riot Games endorsement"))
                </span>
                <ChampionPaneUtilities
                  areChampionPanesMerged=self.state.misc.areChampionPanesMerged
@@ -252,47 +279,85 @@ let make = _children => {
                  setChampionIconsSortKey=(
                    value => self.send(SetChampionIconsSortKey(value))
                  )
+                 sortBy=self.state.championPane.sortBy
                />
                (
                  switch (
                    ReasonReact.Router.dangerouslyGetInitialUrl().path,
                    ReasonReact.Router.dangerouslyGetInitialUrl().search,
                  ) {
-                 | (["champions", championName, ..._rest], search) =>
+                 | (["champions", championName, ...rest], search) =>
                    let baseURL = "/champions/" ++ championName;
+                   let fullURL =
+                     baseURL
+                     ++ (
+                       rest
+                       |> List.fold_left(
+                            (total, curr) => total ++ "/" ++ curr,
+                            "",
+                          )
+                     );
                    let newSearch =
                      (String.length(search) > 0 ? "?" : "") ++ search;
-                   <ul>
+                   <ul className="champions-page-nav">
                      <li>
                        <span
-                         className="link"
+                         className=(
+                           "link"
+                           ++ (
+                             if (rest |> List.length == 0) {
+                               " link--active";
+                             } else {
+                               "";
+                             }
+                           )
+                         )
                          onClick=(
                            _event =>
                              ReasonReact.Router.push(baseURL ++ newSearch)
                          )>
-                         (ReactUtils.ste("Players"))
+                         (ReactUtils.ste("players"))
                        </span>
                      </li>
                      <li>
                        <span
-                         className="link"
+                         className=(
+                           "link"
+                           ++ (
+                             if (fullURL
+                                 |> JsUtils.String.contains("matchups")) {
+                               " link--active";
+                             } else {
+                               "";
+                             }
+                           )
+                         )
                          onClick=(
                            _event =>
                              ReasonReact.Router.push(baseURL ++ "/matchups")
                          )>
-                         (ReactUtils.ste("Champion Matchups"))
+                         (ReactUtils.ste("champion matchups"))
                        </span>
                      </li>
                      <li>
                        <span
-                         className="link flash"
+                         className=(
+                           "link"
+                           ++ (
+                             if (fullURL |> JsUtils.String.contains("history")) {
+                               " link--active";
+                             } else {
+                               "";
+                             }
+                           )
+                         )
                          onClick=(
                            _event =>
                              ReasonReact.Router.push(
                                baseURL ++ "/history" ++ newSearch,
                              )
                          )>
-                         (ReactUtils.ste("Match History (New! Try it out)"))
+                         (ReactUtils.ste("match history"))
                        </span>
                      </li>
                    </ul>;

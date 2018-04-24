@@ -27,7 +27,7 @@ let make =
         ReasonReact.nullElement;
       };
     let cn =
-      "player-sort-link flash"
+      "players-table-sort"
       ++ (
         if (sortKey == activeSortKey) {
           " active-sort";

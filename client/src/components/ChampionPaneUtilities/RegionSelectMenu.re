@@ -6,7 +6,11 @@ let make = (~isMultiRegionFilterOn, ~region, ~setRegionFilter, _children) => {
     if (isMultiRegionFilterOn) {
       ReasonReact.nullElement;
     } else {
-      <select id="region" onChange=setRegionFilter value=region>
+      <select
+        className="region-select"
+        id="region"
+        onChange=setRegionFilter
+        value=region>
         <option value="all"> (ReasonReact.stringToElement("All")) </option>
         (
           ReasonReact.arrayToElement(

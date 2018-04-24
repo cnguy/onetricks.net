@@ -1,7 +1,7 @@
 html {
-  background-color: black;
+  background-color: #263238;
   margin: 0.5em;
-  font-family: 'Raleway', Helvetica, sans-serif;
+  font-family: 'Montserrat', 'Raleway', Helvetica, sans-serif;
   line-height: 1.6;
   box-sizing: border;
   font-size: 16px;
@@ -9,13 +9,15 @@ html {
 }
 
 .link {
-  color: yellow;
-  text-decoration: underline;
+  color: grey;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .link:hover {
   color: white;
   cursor: pointer;
+  border-bottom: 1px solid white;
 }
 
 @keyframes fadeIn {
@@ -73,7 +75,6 @@ html {
   font-size: 0.69em;
   margin: 1em 0;
 }
-
 
 @media only screen and (min-width: 500px) {
   .main-header {
@@ -150,8 +151,49 @@ html {
   font-size: 20px;
 }
 
+.players-table-view {
+  background-color: #37474F;
+  padding: 10px;
+}
+
 .players-list-view {
   color: white;
+}
+
+.players-table-td__row-number {
+  font-size: 0.8em;
+}
+
+.players-table-td {
+  text-align: center;
+}
+
+.players-table-view th {
+  border-bottom: 1px solid #455A64;
+}
+
+.players-table-sort {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  padding: 10px 0;
+  text-align: center;
+}
+
+.players-table-sort:hover {
+  background-color: #455A64;
+  cursor: pointer;
+}
+
+.active-sort {
+  background-color: #455A64;
+}
+
+.champion-search__icon {
+  width: 10px;
+  height: 10px;
+  padding: 0 10px;
 }
 
 .mini-champ-icon {
@@ -190,10 +232,6 @@ html {
   background-color: white;
   margin: 0.5em;
   padding: 1em;
-}
-
-.active-sort {
-  color: red !important;
 }
 
 .sort-tri {
@@ -331,9 +369,12 @@ html {
   color: grey;
   border: 0;
   height: 28px;
-  margin: 0.5em 0.25em 0.5em 0.5em;
+  margin: 0.5em 0.5em 0.5em 0em;
   outline: none;
-  /*font-style: italic;*/
+}
+
+#sort-select {
+  margin-left: 0em !important;
 }
 
 .merge-sep-button:hover {
@@ -346,11 +387,11 @@ html {
   transition: 1s;
 }*/
 
-.merge-sep-button:hover, #region:hover {
+.merge-sep-button:hover, #region:hover, #sort-select:hover {
   cursor: pointer;
 }
 
-#region {
+#region, #sort-select {
   height: 28px;
   margin: 0.5em 0.5em 0.5em 0.25em;
   color: grey;
@@ -360,16 +401,15 @@ html {
   border-radius: 0px;
 }
 
-#region:focus {
+#region:focus, #sort-select:focus {
   outline: none;
 }
 
-#region, .merge-sep-button {
+#region, .merge-sep-button, .sort-select {
   vertical-align: middle;
 }
 
 #region {
-  /*padding-top: 5px;*/
   padding-left: 5px;
 }
 
@@ -413,9 +453,8 @@ html {
 }
 
 .copyright {
+  padding-top: 1em;
   color: white;
-  text-align: center;
-  padding: 1em;
 }
 
 .center-align {
@@ -461,12 +500,20 @@ html {
   background-color: red;
 }
 
-.advertisements-container {
-  padding-top: 25px;
-  margin: 0 auto;
-  text-align: center;
+.champions-page-nav {
+  padding: 0;
 }
 
-.advertisements-container iframe {
+.champions-page-nav li {
   display: inline-block;
+  padding: 0 10px 0 0;
+}
+
+.link {
+  transition: 0.5s;
+}
+
+.link--active {
+  color: white;
+  border-bottom: 1px solid white;
 }

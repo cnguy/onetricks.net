@@ -80,14 +80,18 @@ let make =
         };
       let renderableList =
         finalList
-        |> List.map(player =>
-             <PlayerRow key=(string_of_int(player.id)) player />
+        |> List.mapi((index, player) =>
+             <PlayerRow
+               key=(string_of_int(player.id))
+               number=(index + 1)
+               player
+             />
            );
       let scores = players |> getOverallWinRate;
       let wins = scores.wins;
       let losses = scores.losses;
       if (show) {
-        <div className="table-view">
+        <div className="players-table-view">
           <div className="players-list-view fade-in">
             <div className="players-table-header flash">
               (

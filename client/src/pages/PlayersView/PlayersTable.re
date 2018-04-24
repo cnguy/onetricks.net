@@ -1,12 +1,13 @@
 let component = ReasonReact.statelessComponent("PlayersTable");
 
 let sortButtonsInfo = [
-  (Sort.Region, "Region"),
-  (Sort.Rank, "R"),
-  (Sort.Name, "Name"),
-  (Sort.Wins, "W"),
-  (Sort.Losses, "L"),
-  (Sort.WinRate, "WR"),
+  (Sort.None, ""),
+  (Sort.Region, "region"),
+  (Sort.Rank, "rank"),
+  (Sort.Name, "name"),
+  (Sort.Wins, "wins"),
+  (Sort.Losses, "losses"),
+  (Sort.WinRate, "win %"),
 ];
 
 let make = (~onSort, ~sortKey, ~sortReverse, ~renderableList, _children) => {
