@@ -15,24 +15,38 @@ module Styles = {
   open Css;
   let table =
     style([
-      textAlign(`left),
+      textAlign(`center),
       tableLayout(`auto),
-      media(
-        "only screen and (min-width: 768px)",
-        [textAlign(`left), width(`percent(100.))],
-      ),
+      media("only screen and (min-width: 768px)", [width(`percent(100.))]),
     ]);
   let icon =
     style([
       width(px(25)),
       height(px(25)),
+      marginTop(px(10)),
       media(
         "only screen and (min-width: 768px)",
         [width(px(35)), height(px(35))],
       ),
     ]);
-  let rowWin = style([backgroundColor(green)]);
-  let rowLose = style([backgroundColor(red)]);
+  let rowWin =
+    style([
+      background(
+        linearGradient(
+          `deg(180),
+          [(0, hex("43A047")), (180, hex("1B5E20"))],
+        ),
+      ),
+    ]);
+  let rowLose =
+    style([
+      background(
+        linearGradient(
+          `deg(180),
+          [(0, hex("E53935")), (180, hex("B71C1C"))],
+        ),
+      ),
+    ]);
 };
 
 let make =
