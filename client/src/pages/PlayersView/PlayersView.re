@@ -93,7 +93,7 @@ let make =
       if (show) {
         <div className="players-table-view">
           <div className="players-list-view fade-in">
-            <div className="players-table-header flash">
+            <div className="players-table-header">
               (
                 ReasonReact.stringToElement(
                   string_of_int(List.length(finalList)),
