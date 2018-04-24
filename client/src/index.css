@@ -9,15 +9,17 @@ html {
 }
 
 .link {
-  color: grey;
+  color: #AAA;
   text-decoration: none;
   cursor: pointer;
+  text-transform: uppercase;
 }
 
 .link:hover {
   color: white;
   cursor: pointer;
   border-bottom: 1px solid white;
+  text-transform: uppercase;
 }
 
 @keyframes fadeIn {
@@ -511,9 +513,11 @@ html {
 
 .link {
   transition: 0.5s;
+  font-weight: bold;
 }
 
 .link--active {
   color: white;
   border-bottom: 1px solid white;
+  font-weight: bold;
 }
