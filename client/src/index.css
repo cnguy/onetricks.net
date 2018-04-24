@@ -147,20 +147,6 @@ html {
   margin: 1em 0;
 }
 
-.links {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  font-size: 0.75em;
-}
-
-.player-links {
-  flex: 1;
-  background-color: white;
-  margin: 0.5em;
-  padding: 1em;
-}
-
 .sort-tri {
   font-size: 0.5em;
 }
@@ -289,12 +275,6 @@ html {
   outline: none;
 }
 
-/*.merge-sep-button:hover .merge-sep-text {
-  color: white;
-  border-bottom: 1px solid white;
-  transition: 1s;
-}*/
-
 .merge-sep-button:hover, #region:hover, #sort-select:hover {
   cursor: pointer;
 }
@@ -341,19 +321,8 @@ html {
   opacity: 0.8;
 }
 
-.clear-input {
-  font-size: 0.8em;
-  display: inline-block;
-  color: red;
-  padding: 0 0.5em;
-}
-
 .advFiltering {
   color: white;
-}
-
-.clear-input:hover {
-  cursor: pointer;
 }
 
 .player-link:visited {
