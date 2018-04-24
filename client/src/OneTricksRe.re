@@ -38,7 +38,7 @@ type state = {
   playersView,
 };
 
-module Router = ReRoute.CreateRouter(RouterConfig);
+module Router = Router.Router;
 
 let component = ReasonReact.reducerComponent("OneTricksRe");
 
@@ -202,52 +202,23 @@ let make = _children => {
            (~currentRoute) =>
              <div className="one-tricks-re">
                <Header />
-               <span
-                 className=(
-                   "link"
-                   ++ (
-                     if (currentRoute == RouterConfig.Home) {
-                       " link--active";
-                     } else {
-                       "";
-                     }
-                   )
-                 )
-                 onClick=(_event => ReasonReact.Router.push("/"))>
+               <Link
+                 route=RouterConfig.Home
+                 isActive=(currentRoute == RouterConfig.Home)>
                  (ReactUtils.ste("home"))
-               </span>
+               </Link>
                (ReactUtils.ste(" | "))
-               <span
-                 className=(
-                   "link"
-                   ++ (
-                     if (currentRoute == RouterConfig.FAQ) {
-                       " link--active";
-                     } else {
-                       "";
-                     }
-                   )
-                 )
-                 onClick=(_event => ReasonReact.Router.push("/faq"))>
+               <Link
+                 route=RouterConfig.FAQ
+                 isActive=(currentRoute == RouterConfig.FAQ)>
                  (ReactUtils.ste("faq"))
-               </span>
+               </Link>
                (ReactUtils.ste(" | "))
-               <span
-                 className=(
-                   "link"
-                   ++ (
-                     if (currentRoute == RouterConfig.RiotEndorsement) {
-                       " link--active";
-                     } else {
-                       "";
-                     }
-                   )
-                 )
-                 onClick=(
-                   _event => ReasonReact.Router.push("/riot-endorsement")
-                 )>
-                 (ReactUtils.ste("(lack of) Riot Games endorsement"))
-               </span>
+               <Link
+                 route=RouterConfig.RiotEndorsement
+                 isActive=(currentRoute == RouterConfig.RiotEndorsement)>
+                 (ReactUtils.ste("(lack of) Riot Endorsement"))
+               </Link>
                <ChampionPaneUtilities
                  areChampionPanesMerged=self.state.misc.areChampionPanesMerged
                  isMultiRegionFilterOn=self.state.misc.isMultiRegionFilterOn
@@ -286,79 +257,54 @@ let make = _children => {
                    ReasonReact.Router.dangerouslyGetInitialUrl().path,
                    ReasonReact.Router.dangerouslyGetInitialUrl().search,
                  ) {
-                 | (["champions", championName, ...rest], search) =>
-                   let baseURL = "/champions/" ++ championName;
-                   let fullURL =
-                     baseURL
-                     ++ (
-                       rest
-                       |> List.fold_left(
-                            (total, curr) => total ++ "/" ++ curr,
-                            "",
-                          )
-                     );
-                   let newSearch =
-                     (String.length(search) > 0 ? "?" : "") ++ search;
+                 | (["champions", championName, ...rest], _search) =>
+                   let url = ReasonReact.Router.dangerouslyGetInitialUrl();
+                   let rank =
+                     switch (url.path, url.search) {
+                     | (["champions", _championName], "rank=challenger") => Rank.Challenger
+                     | (["champions", _championName], "rank=masters") => Rank.Masters
+                     | (["champions", _championName], "") => Rank.All
+                     | (["champions", _championName, _], "rank=challenger") => Rank.Challenger
+                     | (["champions", _championName, _], "rank=masters") => Rank.Masters
+                     | (["champions", _championName, _], "") => Rank.All
+                     | (_, _) => Rank.All
+                     };
                    <ul className="champions-page-nav">
                      <li>
-                       <span
-                         className=(
-                           "link"
-                           ++ (
-                             if (rest |> List.length == 0) {
-                               " link--active";
-                             } else {
-                               "";
-                             }
-                           )
-                         )
-                         onClick=(
-                           _event =>
-                             ReasonReact.Router.push(baseURL ++ newSearch)
-                         )>
+                       <Link
+                         route=(RouterConfig.PlayersView(championName, rank))
+                         isActive=(rest |> List.length == 0)>
                          (ReactUtils.ste("players"))
-                       </span>
+                       </Link>
                      </li>
                      <li>
-                       <span
-                         className=(
-                           "link"
-                           ++ (
-                             if (fullURL
-                                 |> JsUtils.String.contains("matchups")) {
-                               " link--active";
-                             } else {
-                               "";
-                             }
-                           )
-                         )
-                         onClick=(
-                           _event =>
-                             ReasonReact.Router.push(baseURL ++ "/matchups")
+                       <Link
+                         route=(RouterConfig.Matchups(championName, rank))
+                         isActive=(
+                           url
+                           |> RouterConfig.isRouteOrSubroute(
+                                ~ofRoute=
+                                  RouterConfig.Matchups(championName, rank),
+                              )
                          )>
                          (ReactUtils.ste("champion matchups"))
-                       </span>
+                       </Link>
                      </li>
                      <li>
-                       <span
-                         className=(
-                           "link"
-                           ++ (
-                             if (fullURL |> JsUtils.String.contains("history")) {
-                               " link--active";
-                             } else {
-                               "";
-                             }
-                           )
-                         )
-                         onClick=(
-                           _event =>
-                             ReasonReact.Router.push(
-                               baseURL ++ "/history" ++ newSearch,
-                             )
+                       <Link
+                         route=(RouterConfig.MatchHistory(championName, rank))
+                         isActive=(
+                           url
+                           |> RouterConfig.isRouteOrSubroute(
+                                ~ofRoute=
+                                  RouterConfig.MatchHistory(
+                                    championName,
+                                    rank,
+                                  ),
+                              )
                          )>
                          (ReactUtils.ste("match history"))
-                       </span>
+                       </Link>
                      </li>
                    </ul>;
                  | _ => ReasonReact.nullElement
@@ -416,7 +362,7 @@ let make = _children => {
                                )
                      />;
                    };
-                 | RouterConfig.Matchups(_currentChampion) =>
+                 | RouterConfig.Matchups(_currentChampion, _rank) =>
                    <div>
                      (
                        ReactUtils.ste(
