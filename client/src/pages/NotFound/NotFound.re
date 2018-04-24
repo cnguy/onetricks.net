@@ -43,12 +43,6 @@ let make = _children => {
           )
         )
         <br />
-        <span
-          className="go-back"
-          onClick=(_event => ReasonReact.Router.push("/"))>
-          (ReactUtils.ste("Click me to go to the home page."))
-        </span>
-        <br />
         (
           ReactUtils.ste(
             "If you instead believe there is an error, please email chautnguyen96@gmail.com!",

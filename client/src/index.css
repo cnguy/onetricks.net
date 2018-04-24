@@ -139,16 +139,6 @@ html {
   vertical-align: bottom;
 }
 
-.go-back {
-  color: yellow;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.go-back:visited {
-  color: yellow;
-}
-
 .rank-header {
   color: lightgrey;
 }
@@ -372,7 +362,6 @@ html {
 
 .copyright {
   padding-top: 1em;
-  color: white;
 }
 
 .center-align {
@@ -382,10 +371,6 @@ html {
 .loader-img {
   padding-top: 100px;
   padding-bottom: 250px;
-}
-
-.not-found {
-  color: white;
 }
 
 .match-history__table {
