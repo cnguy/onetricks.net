@@ -47,12 +47,20 @@ const inPlatform = region => ({ platformId: platformID }) =>
     platformID.toLowerCase() === asPlatformID(region)
 
 const storePlayerStats = (summonerId, json) =>
-    Stats.create({
-        summonerId,
-        champions: json.champions,
-        region: json.region,
-        matchesProcessed: json.matchesProcessed,
-    })
+    Stats.findOneAndUpdate(
+        {
+            summonerId,
+        },
+        {
+            summonerId,
+            champions: json.champions,
+            region: json.region,
+            matchesProcessed: json.matchesProcessed,
+        },
+        {
+            upsert: true,
+        },
+    )
 
 const getPlayer = summonerId => Stats.findOne({ summonerId })
 
