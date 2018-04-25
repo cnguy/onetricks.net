@@ -10,8 +10,7 @@ type region =
   | Japan
   | Turkey
   | Russia
-  | Oceania
-  | None;
+  | Oceania;
 
 type regions = list(region);
 
@@ -43,7 +42,6 @@ let toString = region =>
   | Turkey => "tr"
   | Russia => "ru"
   | Oceania => "oce"
-  | _ => "???"
   };
 
 let fromString = regionStr =>
@@ -59,8 +57,7 @@ let fromString = regionStr =>
   | "tr" => Turkey
   | "ru" => Russia
   | "oce" => Oceania
-  | "all" => All
-  | _ => None
+  | _ => All
   };
 
 let toStringList = (regions: regions) => regions |> List.map(toString);

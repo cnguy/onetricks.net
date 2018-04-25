@@ -28,7 +28,6 @@ let url =
   | Environment.Production => "https://cors-anywhere.herokuapp.com/http://api.onetricks.net"
   | Environment.Development =>
     "https://cors-anywhere.herokuapp.com/" ++ Environment.ngrokURL()
-  | Environment.None => ""
   };
 
 let fallbackGet = (cb: oneTricks => unit) : unit => {

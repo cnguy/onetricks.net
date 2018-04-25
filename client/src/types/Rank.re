@@ -1,5 +1,4 @@
 type rank =
-  | None
   | All
   | Challenger
   | Masters;
@@ -11,19 +10,17 @@ let toRoute = (rank: rank) =>
   | All => ""
   | Challenger => "?rank=challenger"
   | Masters => "?rank=masters"
-  | _ => ""
   };
 
 let fromString = (rankStr: string) =>
   switch (rankStr) {
   | "c" => Challenger
   | "m" => Masters
-  | _ => None
+  | _ => All
   };
 
 let toString = (rank: rank) =>
   switch (rank) {
-  | None => ""
   | Challenger => "c"
   | Masters => "m"
   | _ => ""
