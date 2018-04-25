@@ -32,6 +32,30 @@ let mock_Aatrox2 = {
   ],
 };
 
+let mock_Aatrox3 = {
+  champion: "Aatrox",
+  players: [
+    {
+      championName: "Aatrox",
+      id: 69234,
+      name: "Bob",
+      rank: Rank.Challenger,
+      region: Region.NorthAmerica,
+      wins: 1,
+      losses: 100,
+    },
+    {
+      championName: "Aatrox",
+      id: 69234,
+      name: "Bob",
+      rank: Rank.Challenger,
+      region: Region.NorthAmerica,
+      wins: 1,
+      losses: 100,
+    },
+  ],
+};
+
 let mock_Bard = {
   champion: "Bard",
   players: [
@@ -62,7 +86,50 @@ let mock_Kindred = {
   ],
 };
 
+let mock_Kindred2 = {
+  champion: "Kindred",
+  players: [
+    {
+      championName: "Kindred",
+      id: 69234,
+      name: "Chaser",
+      rank: Rank.Challenger,
+      region: Region.NorthAmerica,
+      wins: 50,
+      losses: 20,
+    },
+    {
+      championName: "Kindred",
+      id: 123213,
+      name: "Chaullenger",
+      rank: Rank.Masters,
+      region: Region.EuropeWest,
+      wins: 9999,
+      losses: 5000,
+    },
+  ],
+};
+
 describe("Sorts", () => {
+  Expect.(
+    test("by length", () =>
+      expect(Sorts.numberOfOneTricks([mock_Bard, mock_Aatrox, mock_Kindred]))
+      |> toEqual([mock_Aatrox, mock_Bard, mock_Kindred])
+    )
+  );
+  Expect.(
+    test("by length lexigraphically", () =>
+      expect(
+        Sorts.numberOfOneTricks([
+          mock_Bard,
+          mock_Aatrox,
+          mock_Kindred2,
+          mock_Aatrox3,
+        ]),
+      )
+      |> toEqual([mock_Aatrox3, mock_Kindred2, mock_Aatrox, mock_Bard])
+    )
+  );
   Expect.(
     test("by winrate", () =>
       expect(
