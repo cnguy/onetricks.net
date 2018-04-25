@@ -1,6 +1,6 @@
 open Jest;
 
-describe("Region", () =>
+describe("Region", () => {
   Expect.(
     test("toCsvString", () =>
       expect(
@@ -8,14 +8,11 @@ describe("Region", () =>
       )
       |> toBe("na,lan")
     )
-  )
-);
-
-describe("Region", () =>
+  );
   Expect.(
     test("toCsvString all", () =>
       expect(Region.list |> Region.toCsvString)
       |> toBe("na,kr,euw,eune,lan,las,br,jp,tr,ru,oce")
     )
-  )
-);
+  );
+});
