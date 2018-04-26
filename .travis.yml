@@ -1,6 +1,6 @@
 language: node_js
 
-script: sh -c 'cd client && yarn && yarn build && yarn test'
+script: sh -c 'cd client && yarn && yarn buckle:reset && yarn build && yarn test'
 
 
 node_js:
