@@ -21,14 +21,6 @@ html {
   animation: fadeIn 0.75s;
 }
 
-.container {
-  max-width: 1024px;
-  margin: 0 auto;
-}
-
-.OneTricks {
-  margin: 0 auto;
-}
 
 .champ-open-links {
   display: inline-block;
@@ -69,52 +61,6 @@ html {
   opacity: 0.8;
 }
 
-.players-table-view {
-  background-color: #37474F;
-  padding: 10px;
-}
-
-.players-list-view {
-  color: white;
-}
-
-.players-table-td__row-number {
-  font-size: 0.8em;
-}
-
-.players-table-td {
-  text-align: center;
-}
-
-.players-table-view th {
-  border-bottom: 1px solid #455A64;
-}
-
-.players-table {
-  background-color: #37474F;
-}
-
-.players-table-sort {
-  display: block;
-  width: 100%;
-  height: 100%;
-  cursor: pointer;
-  padding: 10px 0;
-}
-
-.players-table-th {
-  text-align: center;
-}
-
-.players-table-sort:hover {
-  background-color: #455A64;
-  cursor: pointer;
-}
-
-.active-sort {
-  background-color: #455A64;
-}
-
 .champion-search__icon {
   width: 10px;
   height: 10px;
@@ -145,21 +91,7 @@ html {
   vertical-align: bottom;
 }
 
-.players-table {
-  transition: 1s;
-  text-align: left;
-}
 
-@media only screen and (min-width: 480px) {
-  .players-table {
-    width: 100%;
-  }
-}
-
-.players-table-header {
-  font-size: 1.5em;
-  padding: 0.8em 0em;
-}
 
 .player-sort-link:hover, .go-back:hover, .header-container:hover, .champ-open-links:hover {
   cursor: pointer;

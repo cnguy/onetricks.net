@@ -2,6 +2,13 @@ open Types;
 
 let component = ReasonReact.statelessComponent("PlayersViewRe");
 
+module Styles = {
+  open Css;
+  let container =
+    style([backgroundColor(hex("37474F")), padding(px(10))]);
+  let header = style([fontSize(em(1.5)), padding2(~v=em(0.8), ~h=`zero)]);
+};
+
 type winLosses = {
   wins: int,
   losses: int,
@@ -91,23 +98,21 @@ let make =
       let wins = scores.wins;
       let losses = scores.losses;
       if (show) {
-        <div className="players-table-view">
-          <div className="players-list-view fade-in">
-            <div className="players-table-header">
-              (
-                ReasonReact.stringToElement(
-                  string_of_int(List.length(finalList)),
-                )
+        <div className=Styles.container>
+          <div className=Styles.header>
+            (
+              ReasonReact.stringToElement(
+                string_of_int(List.length(finalList)),
               )
-              (ReasonReact.stringToElement(" "))
-              <ChampIcon name=champ mini=true />
-              (ReasonReact.stringToElement(" "))
-              (ReasonReact.stringToElement("One Trick Ponies"))
-              (ReasonReact.stringToElement(" "))
-              <WinRate wins losses />
-            </div>
-            <PlayersTable renderableList onSort sortKey sortReverse />
+            )
+            (ReasonReact.stringToElement(" "))
+            <ChampIcon name=champ mini=true />
+            (ReasonReact.stringToElement(" "))
+            (ReasonReact.stringToElement("One Trick Ponies"))
+            (ReasonReact.stringToElement(" "))
+            <WinRate wins losses />
           </div>
+          <PlayersTable renderableList onSort sortKey sortReverse />
         </div>;
       } else {
         ReasonReact.nullElement;

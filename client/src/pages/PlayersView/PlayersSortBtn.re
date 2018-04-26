@@ -1,5 +1,19 @@
 let component = ReasonReact.statelessComponent("PlayersSortBtn");
 
+module Styles = {
+  open Css;
+  let sort =
+    style([
+      display(`block),
+      width(`percent(100.)),
+      height(`percent(100.)),
+      cursor(`pointer),
+      padding2(~v=px(10), ~h=`zero),
+      hover([backgroundColor(hex("455A64")), cursor(`pointer)]),
+    ]);
+  let activeSort = style([backgroundColor(hex("455A64"))]);
+};
+
 let grabTriString = (~sortKey, ~activeSortKey, ~isReversed) =>
   if (sortKey === activeSortKey) {
     if (isReversed) {{js|▲|js}} else {{js|▼|js}};
@@ -27,10 +41,10 @@ let make =
         ReasonReact.nullElement;
       };
     let cn =
-      "players-table-sort"
+      Styles.sort
       ++ (
         if (sortKey == activeSortKey) {
-          " active-sort";
+          " " ++ Styles.activeSort;
         } else {
           "";
         }

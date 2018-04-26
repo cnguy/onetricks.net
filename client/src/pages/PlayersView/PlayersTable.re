@@ -1,5 +1,17 @@
 let component = ReasonReact.statelessComponent("PlayersTable");
 
+module Styles = {
+  open Css;
+  let table =
+    style([
+      backgroundColor(hex("37474F")),
+      textAlign(`center),
+      media("only screen and (min-width: 480px)", [width(`percent(100.))]),
+    ]);
+  let th = style([borderBottom(px(1), `solid, hex("455A64"))]);
+  let rowNumber = style([fontSize(em(0.8))]);
+};
+
 let sortButtonsInfo = [
   (Sort.None, ""),
   (Sort.Region, "region"),
@@ -13,15 +25,15 @@ let sortButtonsInfo = [
 let make = (~onSort, ~sortKey, ~sortReverse, ~renderableList, _children) => {
   ...component,
   render: _self =>
-    <table className="players-table">
-      <thead className="players-table-thead">
-        <tr className="players-table-tr">
+    <table className=Styles.table>
+      <thead>
+        <tr>
           (
             ReasonReact.arrayToElement(
               Array.of_list(
                 List.map(
                   ((key, displayText)) =>
-                    <th className="players-table-th">
+                    <th className=Styles.th>
                       <PlayersSortBtn
                         onSort
                         sortKey=key
@@ -35,15 +47,15 @@ let make = (~onSort, ~sortKey, ~sortReverse, ~renderableList, _children) => {
               ),
             )
           )
-          <th className="players-table-th">
+          <th className=Styles.th>
             (ReasonReact.stringToElement("op.gg"))
           </th>
-          <th className="players-table-th">
+          <th className=Styles.th>
             (ReasonReact.stringToElement("lolking"))
           </th>
         </tr>
       </thead>
-      <tbody className="players-table-tbody">
+      <tbody>
         (ReasonReact.arrayToElement(Array.of_list(renderableList)))
       </tbody>
     </table>,
