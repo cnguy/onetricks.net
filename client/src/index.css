@@ -69,22 +69,6 @@ html {
   opacity: 0.8;
 }
 
-.number-text {
-  display: inline-block;
-  font-family: 'Open Sans', serif;
-  color: white;
-}
-
-.one-digit {
-  margin: 28% 41%;
-  font-size: 20px;
-}
-
-.two-digit {
-  margin: 28% 33%;
-  font-size: 20px;
-}
-
 .players-table-view {
   background-color: #37474F;
   padding: 10px;
