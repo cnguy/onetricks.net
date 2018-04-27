@@ -65,9 +65,8 @@ let make =
   {
     ...component,
     render: _self => {
-      let simpleList = players;
-      let sortedList =
-        simpleList
+      let renderableList =
+        players
         |> (
           switch (sortKey) {
           | Sort.Region => Sorts.region
@@ -78,15 +77,8 @@ let make =
           | Sort.WinRate => Sorts.winRate
           | _ => Sorts.id
           }
-        );
-      let finalList =
-        if (sortReverse) {
-          List.rev(sortedList);
-        } else {
-          sortedList;
-        };
-      let renderableList =
-        finalList
+        )
+        |> (if (sortReverse) {List.rev} else {Sorts.id})
         |> List.mapi((index, player) =>
              <PlayerRow
                key=(string_of_int(player.id))
@@ -94,22 +86,16 @@ let make =
                player
              />
            );
-      let scores = players |> getOverallWinRate;
-      let wins = scores.wins;
-      let losses = scores.losses;
+      let {wins, losses} = players |> getOverallWinRate;
       if (show) {
         <div className=Styles.container>
           <div className=Styles.header>
-            (
-              ReasonReact.stringToElement(
-                string_of_int(List.length(finalList)),
-              )
-            )
-            (ReasonReact.stringToElement(" "))
+            (ReactUtils.ite(List.length(renderableList)))
+            (ReactUtils.ste(" "))
             <ChampIcon name=champ mini=true />
-            (ReasonReact.stringToElement(" "))
-            (ReasonReact.stringToElement("One Trick Ponies"))
-            (ReasonReact.stringToElement(" "))
+            (ReactUtils.ste(" "))
+            (ReactUtils.ste("One Trick Ponies"))
+            (ReactUtils.ste(" "))
             <WinRate wins losses />
           </div>
           <PlayersTable renderableList onSort sortKey sortReverse />

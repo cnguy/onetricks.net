@@ -29,34 +29,26 @@ let make = (~onSort, ~sortKey, ~sortReverse, ~renderableList, _children) => {
       <thead>
         <tr>
           (
-            ReasonReact.arrayToElement(
-              Array.of_list(
-                List.map(
-                  ((key, displayText)) =>
-                    <th className=Styles.th>
-                      <PlayersSortBtn
-                        onSort
-                        sortKey=key
-                        activeSortKey=sortKey
-                        isReversed=sortReverse>
-                        ...displayText
-                      </PlayersSortBtn>
-                    </th>,
-                  sortButtonsInfo,
-                ),
+            ReactUtils.lte(
+              List.map(
+                ((key, displayText)) =>
+                  <th className=Styles.th>
+                    <PlayersSortBtn
+                      onSort
+                      sortKey=key
+                      activeSortKey=sortKey
+                      isReversed=sortReverse>
+                      ...displayText
+                    </PlayersSortBtn>
+                  </th>,
+                sortButtonsInfo,
               ),
             )
           )
-          <th className=Styles.th>
-            (ReasonReact.stringToElement("op.gg"))
-          </th>
-          <th className=Styles.th>
-            (ReasonReact.stringToElement("lolking"))
-          </th>
+          <th className=Styles.th> (ReactUtils.ste("op.gg")) </th>
+          <th className=Styles.th> (ReactUtils.ste("lolking")) </th>
         </tr>
       </thead>
-      <tbody>
-        (ReasonReact.arrayToElement(Array.of_list(renderableList)))
-      </tbody>
+      <tbody> (ReactUtils.lte(renderableList)) </tbody>
     </table>,
 };
