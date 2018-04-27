@@ -1,7 +1,7 @@
 open Types;
 
 type action =
-  | SetMatches(option(miniGameRecords));
+  | SetMatches(option(miniGameRecords), bool);
 
 type state = {
   matches: option(miniGameRecords),
@@ -87,15 +87,16 @@ let make =
     initialState: () => {matches: Some([]), isLoading: true},
     reducer: (action, _state) =>
       switch (action) {
-      | SetMatches(matches) =>
-        ReasonReact.Update({matches, isLoading: false})
+      | SetMatches(matches, isLoading) =>
+        ReasonReact.Update({matches, isLoading})
       },
     didMount: self => {
-      update(p => self.send(SetMatches(p)));
+      update(p => self.send(SetMatches(p, false)));
       NoUpdate;
     },
     willReceiveProps: self => {
-      update(p => self.send(SetMatches(p)));
+      self.send(SetMatches(self.state.matches, true));
+      update(p => self.send(SetMatches(p, false)));
       self.state;
     },
     render: self =>
