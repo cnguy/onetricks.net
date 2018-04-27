@@ -24,31 +24,34 @@ let rankPredicate = (a: player, b: player) =>
     1;
   };
 
-let regionPredicate = (a: player, b: player) =>
-  if (a.region < b.region) {
+let regionPredicate = (a: player, b: player) => {
+  let left = a.region |> Region.toString;
+  let right = b.region |> Region.toString;
+  if (left < right) {
     (-1);
-  } else if (a.region == b.region) {
+  } else if (left == right) {
     rankPredicate(a, b);
   } else {
     1;
   };
+};
 
 let winsPredicate = (a: player, b) =>
   if (a.wins < b.wins) {
-    (-1);
+    1;
   } else if (a.wins == b.wins) {
     rankPredicate(a, b);
   } else {
-    1;
+    (-1);
   };
 
 let lossesPredicate = (a: player, b: player) =>
   if (a.losses < b.losses) {
-    (-1);
+    1;
   } else if (a.losses == b.losses) {
     rankPredicate(a, b);
   } else {
-    1;
+    (-1);
   };
 
 let winRatePredicate = (a: player, b: player) => {
