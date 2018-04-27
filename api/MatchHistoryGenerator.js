@@ -107,6 +107,7 @@ const processPlayers = async (players, championId, roleNumbers) => {
     ))
         .reduce((t, c) => t.concat(c), [])
         .sort((a, b) => b.timestamp - a.timestamp)
+        .slice(0, 100)
 
     const res = await Promise.all(
         payload.map(async ({ gameId, region, summonerId, ...rest }) => ({
