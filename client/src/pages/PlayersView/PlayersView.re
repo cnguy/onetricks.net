@@ -16,12 +16,32 @@ module Styles = {
   let container =
     style([backgroundColor(hex("37474F")), padding(px(10))]);
   let header = style([fontSize(em(1.5)), padding2(~v=em(0.8), ~h=`zero)]);
+  let stats = style([display(inlineBlock), padding2(~v=`zero, ~h=px(5))]);
+  let icon =
+    style([
+      width(px(25)),
+      height(px(25)),
+      padding2(~v=`zero, ~h=px(3)),
+      media(
+        "only screen and (min-width: 768px)",
+        [width(px(35)), height(px(35))],
+      ),
+      verticalAlign(`bottom),
+    ]);
 };
 
 type winLosses = {
   wins: int,
   losses: int,
 };
+
+module IntMap =
+  Map.Make(
+    {
+      type t = int;
+      let compare = compare;
+    },
+  );
 
 let getOverallWinRate = (players: players) =>
   players
@@ -138,6 +158,9 @@ let make =
                              {wins: t.wins, losses: t.losses + 1},
                          {wins: 0, losses: 0},
                        );
+                  /* inefficient */
+                  let keystones = IntMap.empty;
+                  let summonerSpells = IntMap.empty;
                   <div>
                     (
                       ReactUtils.ste(
@@ -147,6 +170,97 @@ let make =
                       )
                     )
                     <WinRate wins losses />
+                    <div>
+                      (
+                        ReactUtils.lte(
+                          matches
+                          |> List.fold_left(
+                               (t, c: Types.miniGameRecord) =>
+                                 t |> IntMap.mem(c.perks.perk0) ?
+                                   t
+                                   |> IntMap.add(
+                                        c.perks.perk0,
+                                        (t |> IntMap.find(c.perks.perk0)) + 1,
+                                      ) :
+                                   t |> IntMap.add(c.perks.perk0, 1),
+                               keystones,
+                             )
+                          |> IntMap.bindings
+                          |> List.sort((a, b) => {
+                               let first = Pervasives.snd(a);
+                               let second = Pervasives.snd(b);
+                               if (first < second) {
+                                 1;
+                               } else if (first == second) {
+                                 0;
+                               } else {
+                                 (-1);
+                               };
+                             })
+                          |> List.map(((key, av)) =>
+                               <div className=Styles.stats>
+                                 (ReactUtils.ite(av))
+                                 <S3Image
+                                   kind=S3Image.ActualPerk
+                                   itemId=key
+                                   className=Styles.icon
+                                 />
+                               </div>
+                             ),
+                        )
+                      )
+                    </div>
+                    <div>
+                      (
+                        ReactUtils.lte(
+                          matches
+                          |> List.fold_left(
+                               (t, c: Types.miniGameRecord) => {
+                                 let first = c.summonerSpells.d;
+                                 let second = c.summonerSpells.f;
+                                 let tmp =
+                                   t |> IntMap.mem(first) ?
+                                     t
+                                     |> IntMap.add(
+                                          first,
+                                          (t |> IntMap.find(first)) + 1,
+                                        ) :
+                                     t |> IntMap.add(first, 1);
+                                 tmp |> IntMap.mem(second) ?
+                                   t
+                                   |> IntMap.add(
+                                        second,
+                                        (t |> IntMap.find(second)) + 1,
+                                      ) :
+                                   t |> IntMap.add(second, 1);
+                               },
+                               summonerSpells,
+                             )
+                          |> IntMap.bindings
+                          |> List.sort((a, b) => {
+                               let first = Pervasives.snd(a);
+                               let second = Pervasives.snd(b);
+                               if (first < second) {
+                                 1;
+                               } else if (first == second) {
+                                 0;
+                               } else {
+                                 (-1);
+                               };
+                             })
+                          |> List.map(((key, av)) =>
+                               <div className=Styles.stats>
+                                 (ReactUtils.ite(av))
+                                 <S3Image
+                                   kind=S3Image.SummonerSpell
+                                   itemId=key
+                                   className=Styles.icon
+                                 />
+                               </div>
+                             ),
+                        )
+                      )
+                    </div>
                   </div>;
                 | (false, None) =>
                   ReactUtils.ste(
