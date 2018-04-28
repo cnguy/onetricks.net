@@ -218,6 +218,7 @@ let make =
                                (t, c: Types.miniGameRecord) => {
                                  let first = c.summonerSpells.d;
                                  let second = c.summonerSpells.f;
+                                 Js.log();
                                  let tmp =
                                    t |> IntMap.mem(first) ?
                                      t
@@ -227,12 +228,12 @@ let make =
                                         ) :
                                      t |> IntMap.add(first, 1);
                                  tmp |> IntMap.mem(second) ?
-                                   t
+                                   tmp
                                    |> IntMap.add(
                                         second,
                                         (t |> IntMap.find(second)) + 1,
                                       ) :
-                                   t |> IntMap.add(second, 1);
+                                   tmp |> IntMap.add(second, 1);
                                },
                                summonerSpells,
                              )
