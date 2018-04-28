@@ -1,5 +1,7 @@
 open Types;
 
+type retainedProps = Region.regions;
+
 type action =
   | SetMatches(option(miniGameRecords), bool);
 
@@ -9,7 +11,8 @@ type state = {
   isLoading: bool,
 };
 
-let component = ReasonReact.reducerComponent("PlayersViewRe");
+let component =
+  ReasonReact.reducerComponentWithRetainedProps("PlayersViewRe");
 
 module Styles = {
   open Css;
@@ -93,6 +96,7 @@ let make =
     |> ignore;
   {
     ...component,
+    retainedProps: regions,
     initialState: () => {matches: Some([]), isLoading: true},
     reducer: (action, _state) =>
       switch (action) {
@@ -104,8 +108,10 @@ let make =
       NoUpdate;
     },
     willReceiveProps: self => {
-      self.send(SetMatches(self.state.matches, true)); /* unnecssary state setting but i'm sleepy */
-      update(p => self.send(SetMatches(p, false)));
+      if (self.retainedProps != regions) {
+        self.send(SetMatches(self.state.matches, true));
+        update(p => self.send(SetMatches(p, false)));
+      };
       self.state;
     },
     render: self => {
