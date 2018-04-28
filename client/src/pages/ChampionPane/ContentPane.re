@@ -29,8 +29,7 @@ let make =
                 <h5 className="rank-header">
                   (
                     ReasonReact.stringToElement(
-                      "Challenger/Master One Trick Ponies in "
-                      ++ regionInfoText,
+                      "Challenger & Masters One Tricks in " ++ regionInfoText,
                     )
                   )
                 </h5>
@@ -60,8 +59,8 @@ let make =
                   <div className="rank-pane challengers-pane">
                     <h5 className="rank-header">
                       (
-                        ReasonReact.stringToElement(
-                          "Challenger One Trick Ponies in " ++ regionInfoText,
+                        ReactUtils.ste(
+                          "Challenger One Tricks in " ++ regionInfoText,
                         )
                       )
                     </h5>
@@ -79,7 +78,7 @@ let make =
                   <div className="rank-pane masters-pane">
                     <h5 className="rank-header">
                       (
-                        ReasonReact.stringToElement(
+                        ReactUtils.ste(
                           "Masters One Trick Ponies in " ++ regionInfoText,
                         )
                       )

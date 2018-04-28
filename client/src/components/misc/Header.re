@@ -18,7 +18,7 @@ module Styles = {
     ]);
 };
 
-let title = "League of Legends One Trick Ponies";
+let title = "League of Legends One Tricks";
 
 let caption = "Jack of No Trades, Master of One";
 
