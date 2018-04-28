@@ -57,10 +57,10 @@ let make =
                   }
                 )>
                 <option value="players">
-                  (ReasonReact.stringToElement("by number of players"))
+                  (ReactUtils.ste("Sort champion icons by number of players"))
                 </option>
                 <option value="winrate">
-                  (ReasonReact.stringToElement("by win rate"))
+                  (ReactUtils.ste("Sort champion icons by win rate"))
                 </option>
               </select>
             | _ => ReasonReact.nullElement
