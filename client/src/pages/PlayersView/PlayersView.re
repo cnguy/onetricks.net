@@ -218,7 +218,6 @@ let make =
                                (t, c: Types.miniGameRecord) => {
                                  let first = c.summonerSpells.d;
                                  let second = c.summonerSpells.f;
-                                 Js.log();
                                  let tmp =
                                    t |> IntMap.mem(first) ?
                                      t
