@@ -144,7 +144,7 @@ let make =
             (ReactUtils.ste(" "))
             <ChampIcon name=champ mini=true />
             (ReactUtils.ste(" "))
-            (ReactUtils.ste("One Trick Ponies"))
+            (ReactUtils.ste("One Tricks"))
             (ReactUtils.ste(" "))
             <WinRate wins losses />
             <div>
