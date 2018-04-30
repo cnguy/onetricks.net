@@ -173,12 +173,6 @@ let make = _children => {
   render: self => {
     let regionatedOneTricks: oneTricks =
       self.state.championPane.oneTricks
-      |> (
-        switch (self.state.championPane.sortBy) {
-        | Sorts.WinRate => Sorts.oneTricksByWinRate
-        | _ => Sorts.numberOfOneTricks
-        }
-      )
       |> List.map(({champion, players}) => {
            let newPlayers =
              if (! self.state.misc.isMultiRegionFilterOn
@@ -195,6 +189,12 @@ let make = _children => {
              };
            {champion, players: newPlayers};
          })
+      |> (
+        switch (self.state.championPane.sortBy) {
+        | Sorts.WinRate => Sorts.oneTricksByWinRate
+        | _ => Sorts.numberOfOneTricks
+        }
+      )
       |> List.filter(({players}) => List.length(players) > 0)
       |> OneTricksHelpers.filterBySearchKey(self.state.championPane.searchKey);
     <Router.Container>
