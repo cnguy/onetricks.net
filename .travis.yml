@@ -1,6 +1,6 @@
 language: node_js
 
-script: sh -c 'cd client && yarn && yarn buckle:reset && yarn build && yarn test'
+script: sh -c 'cd client && npm install && npm run buckle:reset && npm run build && npm run test'
 
 
 node_js:
