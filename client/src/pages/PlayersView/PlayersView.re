@@ -46,6 +46,14 @@ module IntMap =
     },
   );
 
+module IntTupleMap =
+  Map.Make(
+    {
+      type t = (int, int);
+      let compare = compare;
+    },
+  );
+
 let getOverallWinRate = (players: players) =>
   players
   |> List.fold_left(
@@ -166,7 +174,7 @@ let make =
                        );
                   /* inefficient */
                   let keystones = IntMap.empty;
-                  let summonerSpells = IntMap.empty;
+                  let summonerSpells = IntTupleMap.empty;
                   <div>
                     (
                       ReactUtils.ste(
@@ -224,25 +232,23 @@ let make =
                                (t, c: Types.miniGameRecord) => {
                                  let first = c.summonerSpells.d;
                                  let second = c.summonerSpells.f;
-                                 let tmp =
-                                   t |> IntMap.mem(first) ?
-                                     t
-                                     |> IntMap.add(
-                                          first,
-                                          (t |> IntMap.find(first)) + 1,
-                                        ) :
-                                     t |> IntMap.add(first, 1);
-                                 tmp |> IntMap.mem(second) ?
-                                   tmp
-                                   |> IntMap.add(
-                                        second,
-                                        (t |> IntMap.find(second)) + 1,
+                                 let tuple =
+                                   if (first > second) {
+                                     (first, second);
+                                   } else {
+                                     (second, first);
+                                   };
+                                 t |> IntTupleMap.mem(tuple) ?
+                                   t
+                                   |> IntTupleMap.add(
+                                        tuple,
+                                        (t |> IntTupleMap.find(tuple)) + 1,
                                       ) :
-                                   tmp |> IntMap.add(second, 1);
+                                   t |> IntTupleMap.add(tuple, 1);
                                },
                                summonerSpells,
                              )
-                          |> IntMap.bindings
+                          |> IntTupleMap.bindings
                           |> List.sort((a, b) => {
                                let first = Pervasives.snd(a);
                                let second = Pervasives.snd(b);
@@ -255,11 +261,30 @@ let make =
                                };
                              })
                           |> List.map(((key, av)) =>
-                               <div className=Styles.stats>
-                                 (ReactUtils.ite(av))
+                               <div>
+                                 (
+                                   /* yikes! */
+                                   ReactUtils.ste(
+                                     string_of_int(
+                                       int_of_float(
+                                         float_of_int(av)
+                                         /. float_of_int(
+                                              List.length(matches),
+                                            )
+                                         *. 100.,
+                                       ),
+                                     )
+                                     ++ "%",
+                                   )
+                                 )
                                  <S3Image
                                    kind=S3Image.SummonerSpell
-                                   itemId=key
+                                   itemId=(Pervasives.fst(key))
+                                   className=Styles.icon
+                                 />
+                                 <S3Image
+                                   kind=S3Image.SummonerSpell
+                                   itemId=(Pervasives.snd(key))
                                    className=Styles.icon
                                  />
                                </div>
