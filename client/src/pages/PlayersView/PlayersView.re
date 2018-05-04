@@ -155,6 +155,7 @@ let make =
             (ReactUtils.ste("One Tricks"))
             (ReactUtils.ste(" "))
             <WinRate wins losses />
+            <PlayersTable renderableList onSort sortKey sortReverse />
             <div>
               (
                 switch (self.state.isLoading, self.state.matches) {
@@ -175,6 +176,43 @@ let make =
                   /* inefficient */
                   let keystones = IntMap.empty;
                   let summonerSpells = IntTupleMap.empty;
+                  let summonerSpellsSetsItems =
+                    matches
+                    |> List.fold_left(
+                         (t, c: Types.miniGameRecord) =>
+                           t |> IntMap.mem(c.perks.perk0) ?
+                             t
+                             |> IntMap.add(
+                                  c.perks.perk0,
+                                  (t |> IntMap.find(c.perks.perk0)) + 1,
+                                ) :
+                             t |> IntMap.add(c.perks.perk0, 1),
+                         keystones,
+                       )
+                    |> IntMap.bindings
+                    |> List.sort((a, b) => {
+                         let first = Pervasives.snd(a);
+                         let second = Pervasives.snd(b);
+                         if (first < second) {
+                           1;
+                         } else if (first == second) {
+                           0;
+                         } else {
+                           (-1);
+                         };
+                       })
+                    |> List.map(((key, av)) =>
+                         (
+                           <div className=Styles.stats>
+                             <S3Image
+                               kind=S3Image.ActualPerk
+                               itemId=key
+                               className=Styles.icon
+                             />
+                           </div>,
+                           av,
+                         )
+                       );
                   <div>
                     (
                       ReactUtils.ste(
@@ -291,6 +329,10 @@ let make =
                              ),
                         )
                       )
+                      <PercentageTable
+                        items=summonerSpellsSetsItems
+                        outOf=(List.length(matches))
+                      />
                     </div>
                   </div>;
                 | (false, None) =>
@@ -303,7 +345,6 @@ let make =
               )
             </div>
           </div>
-          <PlayersTable renderableList onSort sortKey sortReverse />
         </div>;
       } else {
         ReasonReact.nullElement;
