@@ -38,22 +38,6 @@ type winLosses = {
   losses: int,
 };
 
-module IntMap =
-  Map.Make(
-    {
-      type t = int;
-      let compare = compare;
-    },
-  );
-
-module IntTupleMap =
-  Map.Make(
-    {
-      type t = (int, int);
-      let compare = compare;
-    },
-  );
-
 let getOverallWinRate = (players: players) =>
   players
   |> List.fold_left(
@@ -155,7 +139,6 @@ let make =
             (ReactUtils.ste("One Tricks"))
             (ReactUtils.ste(" "))
             <WinRate wins losses />
-            <PlayersTable renderableList onSort sortKey sortReverse />
             <div>
               (
                 switch (self.state.isLoading, self.state.matches) {
@@ -173,46 +156,6 @@ let make =
                              {wins: t.wins, losses: t.losses + 1},
                          {wins: 0, losses: 0},
                        );
-                  /* inefficient */
-                  let keystones = IntMap.empty;
-                  let summonerSpells = IntTupleMap.empty;
-                  let summonerSpellsSetsItems =
-                    matches
-                    |> List.fold_left(
-                         (t, c: Types.miniGameRecord) =>
-                           t |> IntMap.mem(c.perks.perk0) ?
-                             t
-                             |> IntMap.add(
-                                  c.perks.perk0,
-                                  (t |> IntMap.find(c.perks.perk0)) + 1,
-                                ) :
-                             t |> IntMap.add(c.perks.perk0, 1),
-                         keystones,
-                       )
-                    |> IntMap.bindings
-                    |> List.sort((a, b) => {
-                         let first = Pervasives.snd(a);
-                         let second = Pervasives.snd(b);
-                         if (first < second) {
-                           1;
-                         } else if (first == second) {
-                           0;
-                         } else {
-                           (-1);
-                         };
-                       })
-                    |> List.map(((key, av)) =>
-                         (
-                           <div className=Styles.stats>
-                             <S3Image
-                               kind=S3Image.ActualPerk
-                               itemId=key
-                               className=Styles.icon
-                             />
-                           </div>,
-                           av,
-                         )
-                       );
                   <div>
                     (
                       ReactUtils.ste(
@@ -222,118 +165,6 @@ let make =
                       )
                     )
                     <WinRate wins losses />
-                    <div>
-                      (
-                        ReactUtils.lte(
-                          matches
-                          |> List.fold_left(
-                               (t, c: Types.miniGameRecord) =>
-                                 t |> IntMap.mem(c.perks.perk0) ?
-                                   t
-                                   |> IntMap.add(
-                                        c.perks.perk0,
-                                        (t |> IntMap.find(c.perks.perk0)) + 1,
-                                      ) :
-                                   t |> IntMap.add(c.perks.perk0, 1),
-                               keystones,
-                             )
-                          |> IntMap.bindings
-                          |> List.sort((a, b) => {
-                               let first = Pervasives.snd(a);
-                               let second = Pervasives.snd(b);
-                               if (first < second) {
-                                 1;
-                               } else if (first == second) {
-                                 0;
-                               } else {
-                                 (-1);
-                               };
-                             })
-                          |> List.map(((key, av)) =>
-                               <div className=Styles.stats>
-                                 (ReactUtils.ite(av))
-                                 <S3Image
-                                   kind=S3Image.ActualPerk
-                                   itemId=key
-                                   className=Styles.icon
-                                 />
-                               </div>
-                             ),
-                        )
-                      )
-                    </div>
-                    <div>
-                      (
-                        ReactUtils.lte(
-                          matches
-                          |> List.fold_left(
-                               (t, c: Types.miniGameRecord) => {
-                                 let first = c.summonerSpells.d;
-                                 let second = c.summonerSpells.f;
-                                 let tuple =
-                                   if (first > second) {
-                                     (first, second);
-                                   } else {
-                                     (second, first);
-                                   };
-                                 t |> IntTupleMap.mem(tuple) ?
-                                   t
-                                   |> IntTupleMap.add(
-                                        tuple,
-                                        (t |> IntTupleMap.find(tuple)) + 1,
-                                      ) :
-                                   t |> IntTupleMap.add(tuple, 1);
-                               },
-                               summonerSpells,
-                             )
-                          |> IntTupleMap.bindings
-                          |> List.sort((a, b) => {
-                               let first = Pervasives.snd(a);
-                               let second = Pervasives.snd(b);
-                               if (first < second) {
-                                 1;
-                               } else if (first == second) {
-                                 0;
-                               } else {
-                                 (-1);
-                               };
-                             })
-                          |> List.map(((key, av)) =>
-                               <div>
-                                 (
-                                   /* yikes! */
-                                   ReactUtils.ste(
-                                     string_of_int(
-                                       int_of_float(
-                                         float_of_int(av)
-                                         /. float_of_int(
-                                              List.length(matches),
-                                            )
-                                         *. 100.,
-                                       ),
-                                     )
-                                     ++ "%",
-                                   )
-                                 )
-                                 <S3Image
-                                   kind=S3Image.SummonerSpell
-                                   itemId=(Pervasives.fst(key))
-                                   className=Styles.icon
-                                 />
-                                 <S3Image
-                                   kind=S3Image.SummonerSpell
-                                   itemId=(Pervasives.snd(key))
-                                   className=Styles.icon
-                                 />
-                               </div>
-                             ),
-                        )
-                      )
-                      <PercentageTable
-                        items=summonerSpellsSetsItems
-                        outOf=(List.length(matches))
-                      />
-                    </div>
                   </div>;
                 | (false, None) =>
                   ReactUtils.ste(
@@ -345,6 +176,7 @@ let make =
               )
             </div>
           </div>
+          <PlayersTable renderableList onSort sortKey sortReverse />
         </div>;
       } else {
         ReasonReact.nullElement;

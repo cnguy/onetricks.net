@@ -3,6 +3,7 @@ type route =
   | PlayersView(string, Rank.rank)
   | Matchups(string, Rank.rank)
   | MatchHistory(string, Rank.rank)
+  | RunesSummonersItems(string, Rank.rank)
   | FAQ
   | RiotEndorsement
   | NotFound;
@@ -27,6 +28,12 @@ let routeFromUrl = (url: ReasonReact.Router.url) =>
     MatchHistory(championName, Rank.Challenger)
   | (["champions", championName, "history"], "rank=masters") =>
     MatchHistory(championName, Rank.Masters)
+  | (["champions", championName, "runes-summoners-items"], "") =>
+    RunesSummonersItems(championName, Rank.All)
+  | (["champions", championName, "runes-summoners-items"], "rank=challenger") =>
+    RunesSummonersItems(championName, Rank.Challenger)
+  | (["champions", championName, "runes-summoners-items"], "rank=masters") =>
+    RunesSummonersItems(championName, Rank.Masters)
   | (["faq"], "") => FAQ
   | (["riot-endorsement"], "") => RiotEndorsement
   | _ => NotFound
@@ -41,6 +48,11 @@ let routeToUrl = (route: route) =>
     "/champions/" ++ championName ++ "/matchups" ++ Rank.toRoute(rank)
   | MatchHistory(championName, rank) =>
     "/champions/" ++ championName ++ "/history" ++ Rank.toRoute(rank)
+  | RunesSummonersItems(championName, rank) =>
+    "/champions/"
+    ++ championName
+    ++ "/runes-summoners-items"
+    ++ Rank.toRoute(rank)
   | FAQ => "/faq"
   | RiotEndorsement => "/riot-endorsement"
   | NotFound => "/404"

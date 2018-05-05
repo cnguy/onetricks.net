@@ -279,6 +279,27 @@ let make = _children => {
                      </li>
                      <li>
                        <Link
+                         route=(
+                           RouterConfig.RunesSummonersItems(
+                             championName,
+                             rank,
+                           )
+                         )
+                         isActive=(
+                           url
+                           |> RouterConfig.isRouteOrSubroute(
+                                ~ofRoute=
+                                  RouterConfig.RunesSummonersItems(
+                                    championName,
+                                    rank,
+                                  ),
+                              )
+                         )>
+                         (ReactUtils.ste("runes, summoners, & items"))
+                       </Link>
+                     </li>
+                     <li>
+                       <Link
                          route=(RouterConfig.Matchups(championName, rank))
                          isActive=(
                            url
@@ -372,6 +393,18 @@ let make = _children => {
                    </div>
                  | RouterConfig.MatchHistory(currentChampion, rank) =>
                    <MatchHistory
+                     championName=currentChampion
+                     ranks=[rank]
+                     regions=(
+                               if (self.state.misc.isMultiRegionFilterOn) {
+                                 self.state.misc.regions;
+                               } else {
+                                 [self.state.misc.region];
+                               }
+                             )
+                   />
+                 | RouterConfig.RunesSummonersItems(currentChampion, rank) =>
+                   <RunesSummonersItems
                      championName=currentChampion
                      ranks=[rank]
                      regions=(
