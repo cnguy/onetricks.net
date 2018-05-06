@@ -64,12 +64,12 @@ app.get('/all', (req, res, next) => {
     }
 })
 
-const oneParamParseInt = n => parseInt(n, 10)
+const oneParamParseInt = (n: string): number => parseInt(n, 10)
 
-const tryMatchHistoryFromCache = url => {
+const tryMatchHistoryFromCache = (url: string): any => {
     return new Promise((resolve, reject) => {
         if ((kayn as any).config.cacheOptions.cache) {
-            (kayn as any).config.cacheOptions.cache.get({ key: url }, (err, data) => {
+            (kayn as any).config.cacheOptions.cache.get({ key: url }, (err: any, data: any[]) => {
                 if (data) {
                     return resolve(data)
                 } else {
@@ -86,7 +86,7 @@ app.get('/match-history', async (req, res, next) => {
     try {
         res.json(await tryMatchHistoryFromCache(req.url))
     } catch (ex) {
-        const { championId } = req.query
+        const championId = parseInt(req.query.championId)
         const ranks = req.query.ranks.split(',')
         const regions = req.query.regions.split(',')
         const roleNumbers = req.query.roleNumbers
@@ -112,7 +112,7 @@ app.get('/static-champion-by-name/:name/id', (req, res, next) => {
 
 app.use((req, res, next) => res.json({ statusCode: 404, url: req.url }))
 
-app.use((err, req, res, next) => {
+app.use((err: any, req: any, res: any, next: any) => {
     res.json({
         statusCode: err.status || 500,
         error: err,

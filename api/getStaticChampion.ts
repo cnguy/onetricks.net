@@ -11,7 +11,7 @@ const staticChampionKeys = Object.keys(staticChampions.data)
  * @param {number} id - The ID of the champion in `https://ddragon.leagueoflegends.com/cdn/7.24.2/data/en_US/champion.json`.
  * @returns {object} the static champion object (pretty much always.
  */
-const getStaticChampion = id => {
+const getStaticChampion = (id: number) => {
     const targetKey = staticChampionKeys.find(
         key => parseInt(staticChampions.data[key].id) === id,
     )!
@@ -19,7 +19,7 @@ const getStaticChampion = id => {
     // It should always return.
 }
 
-export const getStaticChampionByName = name => {
+export const getStaticChampionByName = (name: string) => {
     const targetKey = staticChampionKeys.find(key => {
         if (
             staticChampions.data[key].key === 'MonkeyKing' &&

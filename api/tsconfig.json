@@ -10,7 +10,7 @@
         "moduleResolution": "node",
         "lib": [
             "es2015",
-            "dom"
+            "es7"
         ],
         "types": [
             "node",
@@ -18,7 +18,8 @@
             "jsonfile",
             "cors",
             "compression"
-        ]
+        ],
+        "noImplicitAny": true
     },
     "exclude": [
         "node_modules",

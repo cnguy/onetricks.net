@@ -5,11 +5,17 @@ import * as mongoose from 'mongoose'
 require('./models')
 const PLAYER_SCHEMA_NAME = 'Player'
 const Player = mongoose.model(PLAYER_SCHEMA_NAME)
+// @ts-ignore
 import RegionHelper from 'kayn/dist/lib/Utils/RegionHelper'
+
 const { asPlatformID } = RegionHelper
+
 
 import { getStaticChampionByName } from './getStaticChampion'
 import MatchResponseHelper from './MatchResponseHelper'
+import { MatchV3MatchDto } from 'kayn/typings/dtos';
+import { Player } from './models';
+import { MongoError } from 'mongodb';
 
 if (process.env.NODE_ENV === 'development') {
     mongoose.connect('mongodb://mongo/one-tricks')
@@ -19,8 +25,8 @@ if (process.env.NODE_ENV === 'development') {
     throw new Error('.env file is missing NODE_ENV environment variable.')
 }
 
-const findPlayers = async (ranks, regions) => {
-    return new Promise((resolve, reject) => {
+const findPlayers = async (ranks: string[], regions: string[]): Promise<any> =>
+    new Promise((resolve, reject) => {
         Player.find(
             {
                 rank: { $in: ranks.map(r => r.charAt(0).toLowerCase()) },
@@ -28,24 +34,23 @@ const findPlayers = async (ranks, regions) => {
             },
             (err, docs) => {
                 if (err) return reject(err)
-                if (docs) return resolve((docs as any).map(({ _doc }) => _doc))
+                if (docs) return resolve((docs as any).map(({ _doc }: any) => _doc))
             },
         )
     })
-}
 
-const processMatch = (match, summonerId) => {
+const processMatch = (match: MatchV3MatchDto, summonerId: number) => {
     // kda, summoners, champ that they were against, did they win?
     return MatchResponseHelper.getMatchInfoForSummoner(match, summonerId)
 }
 
-const processPlayers = async (players, championId, roleNumbers) => {
+const processPlayers = async (players: Player[], championId: number, roleNumbers: number[]) => {
     const playersWithChampIds = players
         .map(({ champ, ...rest }) => ({
             ...rest,
             championId: parseInt(getStaticChampionByName(champ).id),
         }))
-        .filter(el => el.championId === parseInt(championId))
+        .filter(el => el.championId === championId)
 
     const payload = (await Promise.all(
         playersWithChampIds.map(async ({ id, championId, region }) => {
@@ -70,20 +75,27 @@ const processPlayers = async (players, championId, roleNumbers) => {
                         role,
                         lane,
                         platformId,
-                    }) => ({
-                        accountId,
-                        name,
-                        summonerId: id,
-                        gameId,
-                        championId: champion,
-                        timestamp,
-                        role,
-                        lane,
-                        platformId,
-                        region,
-                    }),
+                    }: {
+                            gameId: number,
+                            champion: number,
+                            timestamp: number,
+                            role: string,
+                            lane: string,
+                            platformId: string,
+                        }) => ({
+                            accountId,
+                            name,
+                            summonerId: id,
+                            gameId,
+                            championId: champion,
+                            timestamp,
+                            role,
+                            lane,
+                            platformId,
+                            region,
+                        }),
             )
-                .filter(({ role, lane, platformId, region }) => {
+                .filter(({ role, lane, platformId, region }: { role: string, lane: string, platformId: string, region: string }) => {
                     // Ignore matches not in user's current region.
                     if (platformId.toLowerCase() !== asPlatformID(region)) {
                         return false
@@ -106,11 +118,11 @@ const processPlayers = async (players, championId, roleNumbers) => {
         }),
     ))
         .reduce((t, c) => (t as any).concat(c), [])
-        .sort((a, b) => b.timestamp - a.timestamp)
+        .sort((a: any, b: any) => b.timestamp - a.timestamp)
         .slice(0, 100)
 
     const res = await Promise.all(
-        payload.map(async ({ gameId, region, summonerId, ...rest }) => ({
+        payload.map(async ({ gameId, region, summonerId, ...rest }: { gameId: number, region: string, summonerId: number }) => ({
             gameId,
             region,
             summonerId,
@@ -125,7 +137,7 @@ const processPlayers = async (players, championId, roleNumbers) => {
     return res
 }
 
-const main = async (ranks, regions, championId, roleNumbers) => {
+const main = async (ranks: string[], regions: string[], championId: number, roleNumbers: number[]) => {
     const players = await findPlayers(ranks, regions)
     return await processPlayers(players, championId, roleNumbers)
 }

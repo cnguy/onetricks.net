@@ -5,6 +5,7 @@ import { REGIONS } from 'kayn'
 import * as mongoose from 'mongoose'
 import getStats from './getStats'
 import getStaticChampion from './getStaticChampion'
+import { LeagueV3LeagueListDTO } from 'kayn/typings/dtos';
 
 require('./models')
 const PLAYER_SCHEMA_NAME = 'Player'
@@ -21,10 +22,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // temp
-const isOneTrick = (otGames, total) => otGames / total >= 0.6
+const isOneTrick = (otGames: number, total: number): boolean => otGames / total >= 0.6
 // 0.45 works for accurate stats + large number of games
 
-const getLeagueByRank = async (region, rank) => {
+const getLeagueByRank = async (region: string, rank: string) => {
     if (rank === 'challengers') {
         return kayn.Challenger.list(TARGET_QUEUE).region(region)
     }
@@ -44,7 +45,7 @@ const getLeagueByRank = async (region, rank) => {
  * @param {object} champData - The static champion DTO returned by the API.
  * @returns {object} a one trick DTO that fits into our MongoDB Player Schema.
  */
-const createOneTrick = (id, wins, losses, champData) => {
+const createOneTrick = (id: number, wins: number, losses: number, champData: { id: string, key: string }) => {
     // Put all bandaid fixes here.
     if (champData && champData.id === 'MonkeyKing') {
         return {
@@ -70,7 +71,7 @@ const createOneTrick = (id, wins, losses, champData) => {
  * @param {string} rank - 'challengers' or 'masters'.
  * @param {string} region
  */
-const clearPlayersInDB = async (rank, region) =>
+const clearPlayersInDB = async (rank: string, region: string): Promise<any> =>
     new Promise((resolve, reject) => {
         Player.collection.remove(
             {
@@ -93,7 +94,7 @@ const clearPlayersInDB = async (rank, region) =>
  * @param {string} region
  * @param {string} rank
  */
-const insertPlayersIntoDB = async (oneTricks, region, rank) => {
+const insertPlayersIntoDB = async (oneTricks: any[], region: string, rank: string) => {
     const payload = oneTricks.map(el => ({
         ...el,
         ...{
@@ -115,10 +116,10 @@ const insertPlayersIntoDB = async (oneTricks, region, rank) => {
 }
 
 // Mutating function... I want to use asyncMapOverChunk from ./stats hmm.
-const chunkGenerate = async (generator, entries) => {
-    let results = []
+const chunkGenerate = async (generator: any, entries: LeagueV3LeagueListDTO[]) => {
+    let results: any[] = []
     const summonersChunkSize = entries.length / 4
-    const processChunk = async chunk => Promise.all(chunk.map(generator))
+    const processChunk = async (chunk: any) => Promise.all(chunk.map(generator))
     for (let i = 0; i < entries.length; i += summonersChunkSize) {
         const chunk = await processChunk(
             entries.slice(i, i + summonersChunkSize),
@@ -131,12 +132,12 @@ const chunkGenerate = async (generator, entries) => {
 }
 
 // getOneTrick is a helper function for allowing us to process requests in chunks.
-const getOneTrick = region => async ({ wins, losses, playerOrTeamId }) => {
+const getOneTrick = (region: string) => async ({ wins, losses, playerOrTeamId }: { wins: number, losses: number, playerOrTeamId: number }) => {
     const totalGames = wins + losses
     const playerStats = await getStats(playerOrTeamId)
     if (!playerStats) return true
     const champStats = playerStats.champions.find(
-        ({ stats: { totalSessionsPlayed } }) =>
+        ({ stats: { totalSessionsPlayed } }: { stats: { totalSessionsPlayed: number } }) =>
             isOneTrick(totalSessionsPlayed, totalGames),
     )
     if (!champStats) return true
@@ -173,10 +174,10 @@ const getOneTrick = region => async ({ wins, losses, playerOrTeamId }) => {
  * @param {string} rank - This should work with getLeagueByRank. (Either 'challengers' or 'masters').
  * @param {string} region - An abbreviated region ('na1', 'euw', etc). Use `REGIONS` from `kayn`.
  */
-async function generate(rank, region) {
+async function generate(rank: string, region: string) {
     try {
         const { entries } = await getLeagueByRank(region, rank)
-        const oneTricks = await chunkGenerate(getOneTrick(region), entries)
+        const oneTricks = await chunkGenerate(getOneTrick(region), entries!)
         console.log('oneTricks:', oneTricks.length)
         await clearPlayersInDB(rank.charAt(0), region)
         await insertPlayersIntoDB(oneTricks, region, rank)
@@ -190,10 +191,10 @@ async function generate(rank, region) {
 const main = async () =>
     new Promise((resolve, reject) =>
         setTimeout(async () => {
-            const processChunk = async (rank, chunk) =>
+            const processChunk = async (rank: string, chunk: any[]) =>
                 Promise.all(chunk.map(r => generate(rank, REGIONS[r])))
             const keys = Object.keys(REGIONS)
-            const start = async (rank, chunkSize) => {
+            const start = async (rank: string, chunkSize: number) => {
                 for (let i = 0; i < keys.length; i += chunkSize) {
                     await processChunk(rank, keys.slice(i, i + chunkSize))
                 }

@@ -8,4 +8,12 @@ const PlayerSchema = new mongoose.Schema({
     region: String,
 })
 
+export interface Player {
+    id: number,
+    name: string,
+    champ: string,
+    rank: string,
+    region: string,
+}
+
 mongoose.model('Player', PlayerSchema)
