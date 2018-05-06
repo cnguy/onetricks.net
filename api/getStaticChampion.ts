@@ -1,4 +1,4 @@
-import jsonfile from 'jsonfile'
+import * as jsonfile from 'jsonfile'
 
 const staticChampions = jsonfile.readFileSync('./static_champions.json')
 
@@ -14,7 +14,7 @@ const staticChampionKeys = Object.keys(staticChampions.data)
 const getStaticChampion = id => {
     const targetKey = staticChampionKeys.find(
         key => parseInt(staticChampions.data[key].id) === id,
-    )
+    )!
     return staticChampions.data[targetKey]
     // It should always return.
 }
@@ -31,7 +31,7 @@ export const getStaticChampionByName = name => {
             staticChampions.data[key].key.toLowerCase() === name.toLowerCase()
         )
     })
-    return staticChampions.data[targetKey]
+    return staticChampions.data[targetKey!]
 }
 
 export default getStaticChampion

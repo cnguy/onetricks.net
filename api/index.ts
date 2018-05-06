@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-syntax */
-import express from 'express'
-import compression from 'compression'
-import cors from 'cors'
+import * as express from 'express'
+import * as compression from 'compression'
+import * as cors from 'cors'
 
 const app = express()
 app.use(compression())
@@ -9,7 +9,7 @@ app.use(cors())
 
 require('dotenv').config()
 
-import mongoose from 'mongoose'
+import * as mongoose from 'mongoose'
 require('./models')
 
 import kayn from './kayn'
@@ -20,7 +20,7 @@ if (process.env.NODE_ENV === 'development') {
     mongoose.connect('mongodb://mongo:27017/one-tricks')
 } else {
     try {
-        mongoose.connect(process.env.MONGO_URI)
+        mongoose.connect(process.env.MONGO_URI!)
     } catch (ex) {
         console.error('exception..:', ex)
     }
@@ -68,8 +68,8 @@ const oneParamParseInt = n => parseInt(n, 10)
 
 const tryMatchHistoryFromCache = url => {
     return new Promise((resolve, reject) => {
-        if (kayn.config.cacheOptions.cache) {
-            kayn.config.cacheOptions.cache.get({ key: url }, (err, data) => {
+        if ((kayn as any).config.cacheOptions.cache) {
+            (kayn as any).config.cacheOptions.cache.get({ key: url }, (err, data) => {
                 if (data) {
                     return resolve(data)
                 } else {
@@ -93,8 +93,8 @@ app.get('/match-history', async (req, res, next) => {
             .split(',')
             .map(oneParamParseInt)
         const data = await MHGenerator(ranks, regions, championId, roleNumbers)
-        if (kayn.config.cacheOptions.cache) {
-            kayn.config.cacheOptions.cache.set(
+        if ((kayn as any).config.cacheOptions.cache) {
+            (kayn as any).config.cacheOptions.cache.set(
                 { key: req.url, ttl: 100000 },
                 data,
             )

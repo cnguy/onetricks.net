@@ -2,7 +2,7 @@ require('dotenv').config('./.env')
 
 import kayn from './kayn'
 import { REGIONS } from 'kayn'
-import mongoose from 'mongoose'
+import * as mongoose from 'mongoose'
 import getStats from './getStats'
 import getStaticChampion from './getStaticChampion'
 
@@ -15,7 +15,7 @@ const TARGET_QUEUE = 'RANKED_SOLO_5x5'
 if (process.env.NODE_ENV === 'development') {
     mongoose.connect('mongodb://mongo/one-tricks')
 } else if (process.env.NODE_ENV === 'production') {
-    mongoose.connect(process.env.MONGO_URI)
+    mongoose.connect(process.env.MONGO_URI!)
 } else {
     throw new Error('.env file is missing NODE_ENV environment variable.')
 }
@@ -107,7 +107,7 @@ const insertPlayersIntoDB = async (oneTricks, region, rank) => {
 
         Player.collection.insert(payload, (err, docs) => {
             if (err) {
-                throw new Error(err)
+                throw new Error(err.message)
             }
             resolve(true)
         })
@@ -125,7 +125,7 @@ const chunkGenerate = async (generator, entries) => {
         )
         // Deal with return-early-case in getOneTrick.
         const filtered = chunk.filter(el => typeof el === 'object')
-        results = results.concat(filtered)
+        results = results.concat(filtered as any)
     }
     return results
 }
@@ -133,7 +133,7 @@ const chunkGenerate = async (generator, entries) => {
 // getOneTrick is a helper function for allowing us to process requests in chunks.
 const getOneTrick = region => async ({ wins, losses, playerOrTeamId }) => {
     const totalGames = wins + losses
-    const playerStats = await getStats(playerOrTeamId, region)
+    const playerStats = await getStats(playerOrTeamId)
     if (!playerStats) return true
     const champStats = playerStats.champions.find(
         ({ stats: { totalSessionsPlayed } }) =>

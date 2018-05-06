@@ -1,7 +1,7 @@
 require('dotenv').config('./.env')
 
 import kayn from './kayn'
-import mongoose from 'mongoose'
+import * as mongoose from 'mongoose'
 require('./models')
 const PLAYER_SCHEMA_NAME = 'Player'
 const Player = mongoose.model(PLAYER_SCHEMA_NAME)
@@ -14,7 +14,7 @@ import MatchResponseHelper from './MatchResponseHelper'
 if (process.env.NODE_ENV === 'development') {
     mongoose.connect('mongodb://mongo/one-tricks')
 } else if (process.env.NODE_ENV === 'production') {
-    mongoose.connect(process.env.MONGO_URI)
+    mongoose.connect(process.env.MONGO_URI!)
 } else {
     throw new Error('.env file is missing NODE_ENV environment variable.')
 }
@@ -28,7 +28,7 @@ const findPlayers = async (ranks, regions) => {
             },
             (err, docs) => {
                 if (err) return reject(err)
-                if (docs) return resolve(docs.map(({ _doc }) => _doc))
+                if (docs) return resolve((docs as any).map(({ _doc }) => _doc))
             },
         )
     })
@@ -53,7 +53,7 @@ const processPlayers = async (players, championId, roleNumbers) => {
                 .id(id)
                 .region(region)
             const { matches } = await kayn.Matchlist.by
-                .accountID(accountId)
+                .accountID(accountId!)
                 .query({
                     champion: championId,
                     queue: 420,
@@ -61,7 +61,7 @@ const processPlayers = async (players, championId, roleNumbers) => {
                     endIndex: 20,
                 })
                 .region(region)
-            return matches
+            return (matches as any)
                 .map(
                     ({
                         gameId,
@@ -82,7 +82,7 @@ const processPlayers = async (players, championId, roleNumbers) => {
                         platformId,
                         region,
                     }),
-                )
+            )
                 .filter(({ role, lane, platformId, region }) => {
                     // Ignore matches not in user's current region.
                     if (platformId.toLowerCase() !== asPlatformID(region)) {
@@ -105,7 +105,7 @@ const processPlayers = async (players, championId, roleNumbers) => {
                 })
         }),
     ))
-        .reduce((t, c) => t.concat(c), [])
+        .reduce((t, c) => (t as any).concat(c), [])
         .sort((a, b) => b.timestamp - a.timestamp)
         .slice(0, 100)
 
