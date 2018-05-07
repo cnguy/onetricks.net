@@ -1,22 +1,24 @@
+import { MatchV3MatchDto, MatchV3TeamStatsDto, MatchV3ParticipantDto } from "kayn/typings/dtos";
+
 // copy-pasted from stats for now (slightly modified)
 class MatchResponseHelper {
-    static findParticipantIdentity = (match, summonerID) =>
-        match.participantIdentities.find(
+    static findParticipantIdentity = (match: MatchV3MatchDto, summonerID: number) =>
+        match!.participantIdentities!.find(
             ({ player }) =>
                 !player
-                    ? undefined
-                    : player.summonerId === parseInt(summonerID),
+                    ? false
+                    : player.summonerId === summonerID,
         )
 
-    static findParticipant = (match, participantID) =>
-        match.participants.find(
+    static findParticipant = (match: MatchV3MatchDto, participantID: number) =>
+        match!.participants!.find(
             ({ participantId }) => participantId === participantID,
         )
 
-    static didTeamWin = (match, teamID) =>
-        didWin(match.teams.find(({ teamId }) => teamId === teamID))
+    static didTeamWin = (match: MatchV3MatchDto, teamID: number): boolean =>
+        didWin(match!.teams!.find(({ teamId }) => teamId === teamID)!)
 
-    static getMatchInfoForSummoner = (match, summonerID) => {
+    static getMatchInfoForSummoner = (match: MatchV3MatchDto, summonerID: number) => {
         const participantIdentity = MatchResponseHelper.findParticipantIdentity(
             match,
             summonerID,
@@ -25,18 +27,18 @@ class MatchResponseHelper {
         const { participantId: participantID } = participantIdentity
         const participant = MatchResponseHelper.findParticipant(
             match,
-            participantID,
+            participantID as number,
         )
-        const { teamId: teamID, spell1Id, spell2Id } = participant
-        const { stats } = participant
-        const didWin = MatchResponseHelper.didTeamWin(match, teamID)
+        const { teamId: teamID, spell1Id, spell2Id } = participant as MatchV3ParticipantDto
+        const { stats } = participant as MatchV3ParticipantDto
+        const didWin = MatchResponseHelper.didTeamWin(match, teamID!)
         const items = [
-            stats.item0,
-            stats.item1,
-            stats.item2,
-            stats.item3,
-            stats.item4,
-            stats.item5,
+            stats!.item0,
+            stats!.item1,
+            stats!.item2,
+            stats!.item3,
+            stats!.item4,
+            stats!.item5,
         ]
         const {
             perk0,
@@ -68,7 +70,8 @@ class MatchResponseHelper {
             kills,
             deaths,
             assists,
-        } = stats
+        } = stats as any
+        // MatchV3ParticipantStatsDto does not have perks yet (Riot has not updated their docs)
 
         const perks = {
             perk0,
@@ -107,7 +110,7 @@ class MatchResponseHelper {
             },
             didWin,
             items,
-            trinket: stats.item6,
+            trinket: stats!.item6,
             summonerSpells: {
                 d: spell1Id,
                 f: spell2Id,
@@ -117,6 +120,6 @@ class MatchResponseHelper {
     }
 }
 
-const didWin = ({ win }) => win === 'Win'
+const didWin = ({ win }: MatchV3TeamStatsDto): boolean => win === 'Win'
 
 export default MatchResponseHelper
