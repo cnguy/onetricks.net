@@ -5,7 +5,7 @@ import { REGIONS } from 'kayn'
 import * as mongoose from 'mongoose'
 import getStats from './getStats'
 import getStaticChampion from './getStaticChampion'
-import { LeagueV3LeagueListDTO } from 'kayn/typings/dtos';
+import { LeagueV3LeagueListDTO, LolStaticDataV3ChampionDto } from 'kayn/typings/dtos';
 
 require('./models')
 const PLAYER_SCHEMA_NAME = 'Player'
@@ -45,9 +45,9 @@ const getLeagueByRank = async (region: string, rank: string) => {
  * @param {object} champData - The static champion DTO returned by the API.
  * @returns {object} a one trick DTO that fits into our MongoDB Player Schema.
  */
-const createOneTrick = (id: number, wins: number, losses: number, champData: { id: string, key: string }) => {
+const createOneTrick = (id: number, wins: number, losses: number, champData: LolStaticDataV3ChampionDto) => {
     // Put all bandaid fixes here.
-    if (champData && champData.id === 'MonkeyKing') {
+    if (champData && champData.key === 'MonkeyKing') {
         return {
             champ: 'Wukong',
             id,
@@ -152,15 +152,13 @@ const getOneTrick = (region: string) => async ({ wins, losses, playerOrTeamId }:
     const champId = champStats.id
     if (champId !== 0) {
         // Some ID's funnily equaled 0 (in the past).
-        const champData = getStaticChampion(champId)
-        const { summonerId } = playerStats
-
+        const { summonerId } = playerStats;
         return {
             ...createOneTrick(
                 summonerId,
                 totalSessionsWon,
                 totalSessionsLost,
-                champData,
+                getStaticChampion(champId),
             ),
             name: (await kayn.Summoner.by.id(summonerId).region(region)).name,
         }

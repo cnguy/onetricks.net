@@ -44,15 +44,29 @@ const processMatch = (match: MatchV3MatchDto, summonerId: number) => {
     return MatchResponseHelper.getMatchInfoForSummoner(match, summonerId)
 }
 
+
+interface MatchHistoryItem {
+    accountId: number,
+    name: string,
+    summonerId: number,
+    gameId: number,
+    championId: number,
+    timestamp: number,
+    role: string,
+    lane: string,
+    platformId: string,
+    region: string,
+}
+
 const processPlayers = async (players: Player[], championId: number, roleNumbers: number[]) => {
     const playersWithChampIds = players
         .map(({ champ, ...rest }) => ({
             ...rest,
-            championId: parseInt(getStaticChampionByName(champ).id),
+            championId: getStaticChampionByName(champ).id!,
         }))
         .filter(el => el.championId === championId)
 
-    const payload = (await Promise.all(
+    const payload: MatchHistoryItem[] = (await Promise.all(
         playersWithChampIds.map(async ({ id, championId, region }) => {
             const { accountId, name } = await kayn.Summoner.by
                 .id(id)
@@ -117,12 +131,12 @@ const processPlayers = async (players: Player[], championId: number, roleNumbers
                 })
         }),
     ))
-        .reduce((t, c) => (t as any).concat(c), [])
-        .sort((a: any, b: any) => b.timestamp - a.timestamp)
+        .reduce((t, c) => t.concat(c), [])
+        .sort((a: MatchHistoryItem, b: MatchHistoryItem) => b.timestamp - a.timestamp)
         .slice(0, 100)
 
     const res = await Promise.all(
-        payload.map(async ({ gameId, region, summonerId, ...rest }: { gameId: number, region: string, summonerId: number }) => ({
+        payload.map(async ({ gameId, region, summonerId, ...rest }) => ({
             gameId,
             region,
             summonerId,
