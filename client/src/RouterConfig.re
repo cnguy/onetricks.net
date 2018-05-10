@@ -5,6 +5,7 @@ type route =
   | MatchHistory(string, Rank.rank)
   | RunesSummonersItems(string, Rank.rank)
   | FAQ
+  | FeatureRequests
   | RiotEndorsement
   | NotFound;
 
@@ -34,6 +35,7 @@ let routeFromUrl = (url: ReasonReact.Router.url) =>
     RunesSummonersItems(championName, Rank.Challenger)
   | (["champions", championName, "runes-summoners-items"], "rank=masters") =>
     RunesSummonersItems(championName, Rank.Masters)
+  | (["feature-requests"], "") => FeatureRequests
   | (["faq"], "") => FAQ
   | (["riot-endorsement"], "") => RiotEndorsement
   | _ => NotFound
@@ -54,6 +56,7 @@ let routeToUrl = (route: route) =>
     ++ "/runes-summoners-items"
     ++ Rank.toRoute(rank)
   | FAQ => "/faq"
+  | FeatureRequests => "/feature-requests"
   | RiotEndorsement => "/riot-endorsement"
   | NotFound => "/404"
   };

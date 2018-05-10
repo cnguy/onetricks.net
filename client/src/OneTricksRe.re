@@ -215,6 +215,12 @@ let make = _children => {
                </Link>
                (ReactUtils.ste(" | "))
                <Link
+                 route=RouterConfig.FeatureRequests
+                 isActive=(currentRoute == RouterConfig.FeatureRequests)>
+                 (ReactUtils.ste("feature requests & bug reports"))
+               </Link>
+               (ReactUtils.ste(" | "))
+               <Link
                  route=RouterConfig.RiotEndorsement
                  isActive=(currentRoute == RouterConfig.RiotEndorsement)>
                  (ReactUtils.ste("(lack of) Riot Endorsement"))
@@ -415,6 +421,7 @@ let make = _children => {
                                }
                              )
                    />
+                 | RouterConfig.FeatureRequests => <FeatureRequests />
                  | RouterConfig.FAQ => <FAQ />
                  | RouterConfig.RiotEndorsement => <Copyright />
                  | RouterConfig.NotFound => <NotFound />
