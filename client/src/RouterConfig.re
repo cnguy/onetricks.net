@@ -35,8 +35,8 @@ let routeFromUrl = (url: ReasonReact.Router.url) =>
     RunesSummonersItems(championName, Rank.Challenger)
   | (["champions", championName, "runes-summoners-items"], "rank=masters") =>
     RunesSummonersItems(championName, Rank.Masters)
-  | (["feature-requests"], "") => FeatureRequests
   | (["faq"], "") => FAQ
+  | (["feature-requests"], "") => FeatureRequests
   | (["riot-endorsement"], "") => RiotEndorsement
   | _ => NotFound
   };
