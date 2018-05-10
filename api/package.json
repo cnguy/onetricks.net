@@ -13,7 +13,7 @@
     "typescript": "^2.8.3"
   },
   "scripts": {
-    "start": "DEBUG=kayn:*:request:error ts-node index.ts > debug.txt",
+    "start": "DEBUG=kayn:*:request:error ts-node index.ts",
     "build": "tsc",
     "generate-one-tricks": "babel-node ./stats/OneTricksGenerator.js",
     "lint": "node_modules/.bin/eslint client",

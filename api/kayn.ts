@@ -9,10 +9,10 @@ const cache =
             port: 19169,
             keyPrefix: 'kayn-',
             password: process.env.REDIS_PASSWORD,
-        } as any)
+        })
         : new LRUCache({ max: 1000 })
 
-const kayn = Kayn()({
+export default Kayn()({
     debugOptions: {
         isEnabled: true,
         showKey: true,
@@ -28,5 +28,3 @@ const kayn = Kayn()({
         },
     },
 })
-
-export default kayn

@@ -39,11 +39,6 @@ const getLeagueByRank = async (region: string, rank: string) => {
  * createOneTrick products the DTO that will be stored in our MongoDB database.
  * This is not to be applied to Riot's Static endpoint. It is to be applied to
  * the source (DDragon) instead.
- * @param {number} id - The summoner ID.
- * @param {number} wins - The number of wins on the champion being processed.
- * @param {number} losses - The number of losses on the champion being processed.
- * @param {object} champData - The static champion DTO returned by the API.
- * @returns {object} a one trick DTO that fits into our MongoDB Player Schema.
  */
 const createOneTrick = (id: number, wins: number, losses: number, champData: LolStaticDataV3ChampionDto) => {
     // Put all bandaid fixes here.
@@ -68,8 +63,6 @@ const createOneTrick = (id: number, wins: number, losses: number, champData: Lol
 /**
  * clearsPlayerInDB removes all one tricks from the database given a rank and region.
  * This is an async/awaitable wrapper function to prevent callback hell.
- * @param {string} rank - 'challengers' or 'masters'.
- * @param {string} region
  */
 const clearPlayersInDB = async (rank: string, region: string): Promise<any> =>
     new Promise((resolve, reject) => {
@@ -90,9 +83,6 @@ const clearPlayersInDB = async (rank: string, region: string): Promise<any> =>
 
 /**
  * insertPlayersIntoDB inserts a set of one tricks into the database.
- * @param {[]object} payload - An object of one trick DTO's.
- * @param {string} region
- * @param {string} rank
  */
 const insertPlayersIntoDB = async (oneTricks: any[], region: string, rank: string) => {
     const payload = oneTricks.map(el => ({
@@ -169,8 +159,6 @@ const getOneTrick = (region: string) => async ({ wins, losses, playerOrTeamId }:
 
 /**
  * generate generates all the one tricks given a combination of rank and region.
- * @param {string} rank - This should work with getLeagueByRank. (Either 'challengers' or 'masters').
- * @param {string} region - An abbreviated region ('na1', 'euw', etc). Use `REGIONS` from `kayn`.
  */
 async function generate(rank: string, region: string) {
     try {

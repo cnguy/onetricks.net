@@ -43,9 +43,14 @@ app.listen(app.get('port'), () => {
 import generator from './StatsGenerator'
 
 const main = async () => {
-    console.log('begin')
-    await generator()
-    console.log('done')
+    try {
+        console.log('begin')
+        await generator()
+        console.log('done')
+    } catch (ex) {
+        console.log(ex)
+    }
+    process.exit()
 }
 
 // main()

@@ -9,7 +9,7 @@
     "mongoose": "^5.0.14"
   },
   "scripts": {
-    "start": "babel-node index.js",
+    "start": "DEBUG=kayn:request:*:error babel-node index.js > debug.txt",
     "start-debug": "DEBUG=kayn:* yarn start"
   },
   "devDependencies": {

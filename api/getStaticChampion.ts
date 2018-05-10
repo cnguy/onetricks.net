@@ -9,8 +9,6 @@ const staticChampionKeys = Object.keys(staticChampions.data)
 /**
  * getStaticChampion replaces the need for kayn.Static.Champion.get which gets
  * rate limited very easily.
- * @param {number} id - The ID of the champion in `https://ddragon.leagueoflegends.com/cdn/7.24.2/data/en_US/champion.json`.
- * @returns {object} the static champion object (pretty much always.
  */
 const getStaticChampion = (id: number): LolStaticDataV3ChampionDto => {
     const targetKey = staticChampionKeys.find(
