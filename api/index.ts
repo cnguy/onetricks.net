@@ -1,6 +1,6 @@
 import * as koa from 'koa'
-import * as koaRouter from 'koa-router'
 import * as koaCompress from 'koa-compress'
+import * as koaRouter from 'koa-router'
 import * as mongoose from 'mongoose'
 
 import generator from './OneTricksGenerator'
