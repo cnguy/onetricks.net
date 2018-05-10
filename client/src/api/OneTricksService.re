@@ -46,7 +46,7 @@ let fallbackGet = (cb: oneTricks => unit) : unit => {
 
 let get = (cb: oneTricks => unit) =>
   Js.Promise.(
-    Fetch.fetch(url ++ "/all?region=all")
+    Fetch.fetch(url ++ "/one-tricks")
     |> then_(Fetch.Response.json)
     |> then_(payload =>
          payload |> Decoder.players |> parseIntoOneTricks |> cb |> resolve

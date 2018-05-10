@@ -16,8 +16,8 @@
             "node",
             "express",
             "jsonfile",
-            "cors",
-            "compression"
+            "koa",
+            "koa-router"
         ],
         "noImplicitAny": true
     },
