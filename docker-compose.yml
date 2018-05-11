@@ -1,17 +1,5 @@
 version: "3"
 services:
-  stats:
-    container_name: one-tricks-stats
-    restart: always
-    build: ./stats
-    links:
-      - mongo
-      - redis
-    ports:
-      - "3002:3002"
-    environment:
-      - NODE_ENV=development
-      - DEBUG_COLORS=true
   api:
     container_name: one-tricks-api
     restart: always

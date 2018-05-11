@@ -12,7 +12,7 @@
     "typescript": "^2.8.3"
   },
   "scripts": {
-    "start": "DEBUG=kayn:*:request:error ts-node index.ts",
+    "start": "DEBUG=kayn:*:request:error ts-node index.ts > debug.txt",
     "build": "tsc"
   },
   "devDependencies": {

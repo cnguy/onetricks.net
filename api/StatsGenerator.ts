@@ -1,5 +1,3 @@
-require('dotenv').config('./.env')
-
 import {
     Kayn,
     REGIONS,
@@ -8,6 +6,7 @@ import {
     LRUCache,
     RedisCache,
 } from 'kayn'
+// @ts-ignore
 import RegionHelper from 'kayn/dist/lib/Utils/RegionHelper'
 
 const { asPlatformID } = RegionHelper
@@ -16,8 +15,8 @@ import { Stats } from './mongodb'
 
 import ChampionStats from './entities/ChampionStats'
 import OneTrick from './entities/OneTrick'
-import PlayerStats, { loadPlayerStats } from './entities/PlayerStats'
-import Summoner from './entities/Summoner'
+import PlayerStats, { loadPlayerStats, _PlayerStats, RawPlayerStats } from './entities/PlayerStats'
+import Summoner, { RawSummoner } from './entities/Summoner'
 
 import asyncMapOverArrayInChunks from './utils/generic/asyncMapOverArrayInChunks'
 import range from './utils/generic/range'
@@ -26,27 +25,29 @@ import MatchResponseHelper from './utils/response/MatchResponseHelper'
 
 import LeagueKaynHelper from './utils/kayn-dependent/LeagueKaynHelper'
 import MatchlistKaynHelper from './utils/kayn-dependent/MatchlistKaynHelper'
+import { MatchV3MatchDto } from 'kayn/typings/dtos';
 
 const LEAGUE_QUEUE = 'RANKED_SOLO_5x5'
 
 // Local Helpers
 
 // processMatch is a mutating function dependent on the PlayerStats class.
-const processMatch = playerStats => match => {
+const processMatch = (playerStats: _PlayerStats) => (match: MatchV3MatchDto) => {
     const summonerID = playerStats.summonerID
     const data = MatchResponseHelper.getMatchInfoForSummoner(match, summonerID)
     if (!data) return
     const { didWin, championID, gameID } = data
-    if (playerStats.containsChampion(championID)) {
-        playerStats.editExistingChampion(championID, didWin, gameID)
+    if (playerStats.containsChampion(championID!)) {
+        playerStats.editExistingChampion(championID!, didWin, gameID!)
     } else {
-        playerStats.pushChampion(ChampionStats(championID, didWin), gameID)
+        playerStats.pushChampion(ChampionStats(championID!, didWin), gameID!)
     }
 }
-const inPlatform = region => ({ platformId: platformID }) =>
-    platformID.toLowerCase() === asPlatformID(region)
 
-const storePlayerStats = (summonerId, json) =>
+const inPlatform = (region: string) => ({ platformId: platformID }: MatchV3MatchDto) =>
+    platformID!.toLowerCase() === asPlatformID(region)
+
+const storePlayerStats = (summonerId: number, json: RawPlayerStats) =>
     Stats.findOneAndUpdate(
         {
             summonerId,
@@ -62,7 +63,7 @@ const storePlayerStats = (summonerId, json) =>
         },
     )
 
-const getPlayer = summonerId => Stats.findOne({ summonerId })
+const getPlayer = (summonerId: number) => Stats.findOne({ summonerId })
 
 const main = async () => {
     const kayn = Kayn()({
@@ -83,24 +84,25 @@ const main = async () => {
         },
     })
 
-    const tryCatchGetPlayerStats = async (summonerId, region) => {
+    const tryCatchGetPlayerStats = async (summonerId: number, region: string) => {
         try {
-            return loadPlayerStats(await getPlayer(summonerId))
+            const player: any = await getPlayer(summonerId)
+            return loadPlayerStats(player)
         } catch (ex) {
             return PlayerStats(summonerId, region)
         }
     }
 
-    const makeOne = async (summonerID, accountID, region) => {
+    const makeOne = async (summonerID: number, accountID: number, region: string) => {
         console.log('Processing:', summonerID, accountID, region)
         const playerStats = await tryCatchGetPlayerStats(summonerID, region) // This is named `fullListOfMatches` because it's a list of the match
         // objects, not matchlist objects.
         const fullListOfMatches = (await MatchlistKaynHelper.getEntireMatchlist(
             kayn,
-        )(accountID, region)).filter(
-            el =>
+        )(accountID, region))!.filter(
+            (el: MatchV3MatchDto) =>
                 inPlatform(region)(el) &&
-                playerStats.doesNotContainMatch(el.gameId),
+                playerStats.doesNotContainMatch(el.gameId!),
         )
 
         const matches = await MatchlistKaynHelper.rawMatchlistToMatches(kayn)(
@@ -123,13 +125,13 @@ const main = async () => {
         }
     }
 
-    const makeStats = async (rank, region, summoners) => {
+    const makeStats = async (rank: string, region: string, summoners: RawSummoner[]) => {
         const summonersChunkSize = summoners.length / 4
 
         await asyncMapOverArrayInChunks(
             summoners,
             summonersChunkSize,
-            async ({ id: summonerID, accountID }) => {
+            async ({ id: summonerID, accountID }: RawSummoner) => {
                 try {
                     await makeOne(summonerID, accountID, region)
                 } catch (exception) {
@@ -141,12 +143,11 @@ const main = async () => {
         return true
     }
 
-    const processStatsInChunks = async (rank, region) => {
-        const league = await kayn[rank].list(LEAGUE_QUEUE).region(region)
+    const processStatsInChunks = async (rank: string, region: string) => {
+        const league = await (kayn as any)[rank].list(LEAGUE_QUEUE).region(region)
+        const promises: Promise<RawSummoner>[] = league.entries.map(LeagueKaynHelper.leagueEntryToSummoner(kayn)(region))
         const summoners = await Promise.all(
-            league.entries.map(
-                LeagueKaynHelper.leagueEntryToSummoner(kayn)(region),
-            ),
+            promises
         )
         const len = summoners.length
         const chunkSize = 25
@@ -171,8 +172,8 @@ const main = async () => {
     // keep this at 1 for now and play it safe.
     const challengersChunkSize = 11
     const mastersChunkSize = 4
-    const processChunk = async (rank, chunk) =>
-        Promise.all(chunk.map(r => processStatsInChunks(rank, REGIONS[r])))
+    const processChunk = async (rank: string, chunk: string[]) =>
+        Promise.all(chunk.map(r => processStatsInChunks(rank, (REGIONS as any)[r])))
     for (let i = 0; i < keys.length; i += challengersChunkSize) {
         console.log(
             'starting',

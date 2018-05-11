@@ -4,10 +4,12 @@ import * as koaRouter from 'koa-router'
 import * as mongoose from 'mongoose'
 
 import generator from './OneTricksGenerator'
+import StatsGenerator from './StatsGenerator'
 import { getStaticChampionByName } from './getStaticChampion'
 import kayn from './kayn'
 import MHGenerator from './MatchHistoryGenerator'
 import { setInterval } from 'timers'
+import { Player } from './mongodb';
 
 require('dotenv').config()
 require('./models')
@@ -16,18 +18,6 @@ const PORT: number = 80
 
 const app = new koa()
 const router = new koaRouter()
-const Player = mongoose.model('Player')
-
-if (process.env.NODE_ENV === 'development') {
-    mongoose.connect('mongodb://mongo:27017/one-tricks')
-} else {
-    try {
-        mongoose.connect(process.env.MONGO_URI!)
-    } catch (ex) {
-        console.error("Invalid MONGO_URI. Check Dockerfile.")
-        process.exit(1)
-    }
-}
 
 app.use(koaCompress())
 app.listen(PORT)
@@ -94,6 +84,7 @@ router.get('/static-champion-by-name/:name/id', async ctx => {
 })
 
 const main = async () => {
+    /*
     try {
         console.log('starting script')
         const done = await generator()
@@ -103,7 +94,10 @@ const main = async () => {
         }, 86400000)
     } catch (exception) {
         console.log(exception)
-    }
+    }*/
+    console.log('start')
+    const done = await StatsGenerator()
+    console.log('done')
 }
 
-// main()
+main()

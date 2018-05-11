@@ -1,1 +1,0 @@
-Stats microservice that aggregates stats and exposes an API at one-tricks-stats:3002/api/stats/:summonerId.
