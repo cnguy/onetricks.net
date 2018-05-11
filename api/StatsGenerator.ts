@@ -34,7 +34,7 @@ const LEAGUE_QUEUE = 'RANKED_SOLO_5x5'
 // processMatch is a mutating function dependent on the PlayerStats class.
 const processMatch = (playerStats: _PlayerStats) => (match: MatchV3MatchDto) => {
     const summonerID = playerStats.summonerID
-    const data = MatchResponseHelper.getMatchInfoForSummoner(match, summonerID)
+    const data = MatchResponseHelper.getChampionWin(match, summonerID)
     if (!data) return
     const { didWin, championID, gameID } = data
     if (playerStats.containsChampion(championID!)) {

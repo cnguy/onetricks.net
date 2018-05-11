@@ -12,7 +12,7 @@ const { asPlatformID } = RegionHelper
 
 
 import { getStaticChampionByName } from './getStaticChampion'
-import MatchResponseHelper from './MatchResponseHelper'
+import MatchResponseHelper from './utils/response/MatchResponseHelper'
 import { MatchV3MatchDto } from 'kayn/typings/dtos';
 import { Player } from './models';
 import { MongoError } from 'mongodb';
