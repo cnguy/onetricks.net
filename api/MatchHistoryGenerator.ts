@@ -1,29 +1,17 @@
 require('dotenv').config('./.env')
 
 import kayn from './kayn'
-import * as mongoose from 'mongoose'
-require('./models')
-const PLAYER_SCHEMA_NAME = 'Player'
-const Player = mongoose.model(PLAYER_SCHEMA_NAME)
 // @ts-ignore
 import RegionHelper from 'kayn/dist/lib/Utils/RegionHelper'
 
 const { asPlatformID } = RegionHelper
 
-
 import { getStaticChampionByName } from './getStaticChampion'
 import MatchResponseHelper from './utils/response/MatchResponseHelper'
 import { MatchV3MatchDto } from 'kayn/typings/dtos';
-import { Player } from './models';
 import { MongoError } from 'mongodb';
-
-if (process.env.NODE_ENV === 'development') {
-    mongoose.connect('mongodb://mongo/one-tricks')
-} else if (process.env.NODE_ENV === 'production') {
-    mongoose.connect(process.env.MONGO_URI!)
-} else {
-    throw new Error('.env file is missing NODE_ENV environment variable.')
-}
+import { Player } from './mongodb';
+import { Player as PlayerType } from './models';
 
 const findPlayers = async (ranks: string[], regions: string[]): Promise<any> =>
     new Promise((resolve, reject) => {
@@ -44,7 +32,6 @@ const processMatch = (match: MatchV3MatchDto, summonerId: number) => {
     return MatchResponseHelper.getMatchInfoForSummoner(match, summonerId)
 }
 
-
 interface MatchHistoryItem {
     accountId: number,
     name: string,
@@ -58,7 +45,7 @@ interface MatchHistoryItem {
     region: string,
 }
 
-const processPlayers = async (players: Player[], championId: number, roleNumbers: number[]) => {
+const processPlayers = async (players: PlayerType[], championId: number, roleNumbers: number[]) => {
     const playersWithChampIds = players
         .map(({ champ, ...rest }) => ({
             ...rest,

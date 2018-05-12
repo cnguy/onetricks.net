@@ -2,24 +2,12 @@ require('dotenv').config('./.env')
 
 import kayn from './kayn'
 import { REGIONS } from 'kayn'
-import * as mongoose from 'mongoose'
 import getStats from './getStats'
 import getStaticChampion from './getStaticChampion'
 import { LeagueV3LeagueListDTO, LolStaticDataV3ChampionDto } from 'kayn/typings/dtos';
-
-require('./models')
-const PLAYER_SCHEMA_NAME = 'Player'
-const Player = mongoose.model(PLAYER_SCHEMA_NAME)
+import { Player } from './mongodb';
 
 const TARGET_QUEUE = 'RANKED_SOLO_5x5'
-
-if (process.env.NODE_ENV === 'development') {
-    mongoose.connect('mongodb://mongo/one-tricks')
-} else if (process.env.NODE_ENV === 'production') {
-    mongoose.connect(process.env.MONGO_URI!)
-} else {
-    throw new Error('.env file is missing NODE_ENV environment variable.')
-}
 
 // temp
 const isOneTrick = (otGames: number, total: number): boolean => otGames / total >= 0.6
