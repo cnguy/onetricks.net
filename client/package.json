@@ -17,7 +17,7 @@
     "react-dom": "^15.4.0",
     "reason-js": "^0.3.0",
     "reason-react": "0.4.1",
-    "reason-reroute": "^0.0.4",
+    "reason-reroute": "git+https://github.com/cnguy/reroute",
     "reason-scripts": "^0.8.0"
   },
   "scripts": {
