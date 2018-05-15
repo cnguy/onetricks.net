@@ -11,7 +11,9 @@ let make = (~isMultiRegionFilterOn, ~region, ~setRegionFilter, _children) => {
         id="region"
         onChange=setRegionFilter
         value=region>
-        <option value="all"> (ReasonReact.stringToElement("All")) </option>
+        <option value="all">
+          (ReasonReact.stringToElement("All Regions"))
+        </option>
         (
           ReasonReact.arrayToElement(
             Array.map(
