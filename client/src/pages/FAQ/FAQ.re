@@ -45,15 +45,13 @@ let make = _children => {
   ...component,
   render: _self =>
     <div className="faq">
-      <h3 className="faq-header"> (ReasonReact.stringToElement("faq")) </h3>
+      <h3 className="faq-header"> (ReactUtils.ste("faq")) </h3>
       <div className=Styles.qa>
         (
-          ReasonReact.arrayToElement(
-            Array.of_list(
-              List.map(
-                ((question, answer)) => <QA key=question question answer />,
-                qas,
-              ),
+          ReactUtils.lte(
+            List.map(
+              ((question, answer)) => <QA key=question question answer />,
+              qas,
             ),
           )
         )

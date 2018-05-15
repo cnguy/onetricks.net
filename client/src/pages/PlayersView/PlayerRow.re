@@ -41,10 +41,7 @@ let make = (~number: int, ~player: Types.player, _children) => {
       </td>
       <td className="players-table-td">
         (
-          player.region
-          |> Region.toString
-          |> String.uppercase
-          |> ReasonReact.stringToElement
+          player.region |> Region.toString |> String.uppercase |> ReactUtils.ste
         )
       </td>
       <td className="players-table-td">
@@ -63,18 +60,18 @@ let make = (~number: int, ~player: Types.player, _children) => {
           )
           target="_blank"
           rel="noopener noreferrer">
-          (ReasonReact.stringToElement(player.name))
+          (ReactUtils.ste(player.name))
         </a>
       </td>
       <td
         className="players-table-td"
         style=(ReactDOMRe.Style.make(~color="#98fb98", ()))>
-        (ReasonReact.stringToElement(string_of_int(player.wins)))
+        (ReactUtils.ste(string_of_int(player.wins)))
       </td>
       <td
         className="players-table-td"
         style=(ReactDOMRe.Style.make(~color="#ff6961", ()))>
-        (ReasonReact.stringToElement(string_of_int(player.losses)))
+        (ReactUtils.ste(string_of_int(player.losses)))
       </td>
       <td className="players-table-td">
         <WinRate wins=player.wins losses=player.losses />
@@ -92,7 +89,7 @@ let make = (~number: int, ~player: Types.player, _children) => {
           )
           target="_blank"
           rel="noopener noreferrer">
-          (player.region |> Region.toString |> ReasonReact.stringToElement)
+          (player.region |> Region.toString |> ReactUtils.ste)
         </a>
       </td>
       <td className="players-table-td">
@@ -108,7 +105,7 @@ let make = (~number: int, ~player: Types.player, _children) => {
           )
           target="_blank"
           rel="noopener noreferrer">
-          (ReasonReact.stringToElement("go"))
+          (ReactUtils.ste("go"))
         </a>
       </td>
     </tr>,

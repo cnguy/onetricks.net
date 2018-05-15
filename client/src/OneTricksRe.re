@@ -166,10 +166,8 @@ let make = _children => {
       ReasonReact.Router.unwatchUrl,
     ),
   ],
-  didMount: self => {
-    OneTricksService.get(payload => self.send(SetOneTricks(payload)));
-    NoUpdate;
-  },
+  didMount: self =>
+    OneTricksService.get(payload => self.send(SetOneTricks(payload))),
   render: self => {
     let regionatedOneTricks: oneTricks =
       self.state.championPane.oneTricks
@@ -340,7 +338,7 @@ let make = _children => {
                        </Link>
                      </li>
                    </ul>;
-                 | _ => ReasonReact.nullElement
+                 | _ => ReasonReact.null
                  }
                )
                (

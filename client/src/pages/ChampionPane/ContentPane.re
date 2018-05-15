@@ -15,10 +15,10 @@ let make =
       (
         if (isMultiRegionFilterOn && List.length(regions) == 0) {
           <div className="empty-results">
-            (ReasonReact.stringToElement("No region is selected."))
+            (ReactUtils.ste("No region is selected."))
           </div>;
         } else {
-          ReasonReact.nullElement;
+          ReasonReact.null;
         }
       )
       (
@@ -28,7 +28,7 @@ let make =
               <div className="rank-pane">
                 <h5 className="rank-header">
                   (
-                    ReasonReact.stringToElement(
+                    ReactUtils.ste(
                       "Challenger & Masters One Tricks in " ++ regionInfoText,
                     )
                   )
@@ -37,7 +37,7 @@ let make =
               </div>
             </div>;
           } else {
-            ReasonReact.nullElement;
+            ReasonReact.null;
           };
         } else {
           let challengers =
@@ -51,7 +51,7 @@ let make =
               ~rank=Rank.Masters,
             );
           if (List.length(challengers) === 0 && List.length(masters) === 0) {
-            ReasonReact.nullElement;
+            ReasonReact.null;
           } else {
             <div className="content-pane separated-pane">
               (
@@ -70,7 +70,7 @@ let make =
                     />
                   </div>;
                 } else {
-                  ReasonReact.nullElement;
+                  ReasonReact.null;
                 }
               )
               (
@@ -86,7 +86,7 @@ let make =
                     <ChampionPane champions=masters leagueType=Rank.Masters />
                   </div>;
                 } else {
-                  ReasonReact.nullElement;
+                  ReasonReact.null;
                 }
               )
             </div>;

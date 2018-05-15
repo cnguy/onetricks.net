@@ -40,7 +40,7 @@ let make = (~route: RouterConfig.route, ~isActive: bool, children) => {
   render: _self =>
     <Router.Link route>
       <span className=(Styles.className(isActive))>
-        (ReasonReact.arrayToElement(children))
+        (ReactUtils.ate(children))
       </span>
     </Router.Link>,
 };

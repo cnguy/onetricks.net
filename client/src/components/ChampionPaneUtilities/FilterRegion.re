@@ -26,19 +26,16 @@ let make = (~toggleRegion, ~toggleMultiRegionFilter, ~regions, _children) => {
             </FilterBtn>,
           rs,
         );
-      <div className="filter-row">
-        (ReasonReact.arrayToElement(buttons))
-        extra
-      </div>;
+      <div className="filter-row"> (ReactUtils.ate(buttons)) extra </div>;
     };
     let closeButton =
       <button
         className="close-adv-filter"
         onClick=(_event => toggleMultiRegionFilter())>
-        (ReasonReact.stringToElement("Close"))
+        (ReactUtils.ste("Close"))
       </button>;
     <div className="filter-bar">
-      (makeRow(firstSetOfRegions, ReasonReact.nullElement))
+      (makeRow(firstSetOfRegions, ReasonReact.null))
       (makeRow(secondSetOfRegions, closeButton))
     </div>;
   },

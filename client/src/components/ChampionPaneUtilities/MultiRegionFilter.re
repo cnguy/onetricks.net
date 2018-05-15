@@ -18,7 +18,7 @@ let make =
           <div
             className="adv-filtering-open"
             onClick=(_event => toggleMultiRegionFilter())>
-            (ReasonReact.stringToElement("Multiple Regions"))
+            (ReactUtils.ste("Multiple Regions"))
           </div>;
         }
       )

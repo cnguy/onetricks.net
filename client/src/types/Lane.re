@@ -10,6 +10,7 @@ let fromString = (laneStr: string) =>
   | "JUNGLE" => Jungle
   | "MID" => Middle
   | "BOTTOM" => Bottom
+  | _ => failwith("Invalid lane string.")
   };
 
 let toString = (lane: lane) =>

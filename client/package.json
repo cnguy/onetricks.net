@@ -5,7 +5,7 @@
   "proxy": "http://one-tricks-api:3001/",
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
-    "bs-platform": "^2.1.0",
+    "bs-platform": "3.0.0",
     "webpack-bundle-analyzer": "^2.11.1"
   },
   "dependencies": {
@@ -16,7 +16,7 @@
     "react-addons-perf": "^15.4.2",
     "react-dom": "^15.4.0",
     "reason-js": "^0.3.0",
-    "reason-react": "^0.3.4",
+    "reason-react": "0.4.1",
     "reason-reroute": "^0.0.4",
     "reason-scripts": "^0.8.0"
   },

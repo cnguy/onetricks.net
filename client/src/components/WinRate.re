@@ -25,7 +25,7 @@ let make = (~wins: int, ~losses: int, _children) => {
     let style = ReactDOMRe.Style.make(~color=coloredWinRate, ());
     <span style>
       (
-        ReasonReact.stringToElement(
+        ReactUtils.ste(
           String.sub(string_of_float(Pervasives.ceil(winRate)), 0, 2) ++ "%",
         )
       )

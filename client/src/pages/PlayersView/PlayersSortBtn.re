@@ -34,11 +34,9 @@ let make =
     let triString = grabTriString(~sortKey, ~activeSortKey, ~isReversed);
     let triangle =
       if (String.length(triString) > 0) {
-        <span className="sort-tri">
-          (ReasonReact.stringToElement(triString))
-        </span>;
+        <span className="sort-tri"> (ReactUtils.ste(triString)) </span>;
       } else {
-        ReasonReact.nullElement;
+        ReasonReact.null;
       };
     let cn =
       Styles.sort
@@ -50,8 +48,8 @@ let make =
         }
       );
     <span className=cn onClick=(_event => onSort(sortKey))>
-      (ReasonReact.stringToElement(children))
-      (ReasonReact.stringToElement(" "))
+      (ReactUtils.ste(children))
+      (ReactUtils.ste(" "))
       triangle
     </span>;
   },

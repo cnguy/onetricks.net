@@ -83,10 +83,7 @@ let make =
       | SetMatches(matches, isLoading) =>
         ReasonReact.Update({matches, isLoading})
       },
-    didMount: self => {
-      update(p => self.send(SetMatches(p, false)));
-      NoUpdate;
-    },
+    didMount: self => update(p => self.send(SetMatches(p, false))),
     willReceiveProps: self => {
       self.send(SetMatches(self.state.matches, true));
       update(p => self.send(SetMatches(p, false)));

@@ -12,7 +12,7 @@ let make = (~areChampionPanesMerged, ~onClick, _children) => {
         <span className="merge-sep-text">
           <span className="merge-sep-action">
             (
-              ReasonReact.stringToElement(
+              ReactUtils.ste(
                 if (areChampionPanesMerged) {
                   "Separate into Challenger's and Master's sections"
                 } else {
@@ -23,6 +23,6 @@ let make = (~areChampionPanesMerged, ~onClick, _children) => {
           </span>
         </span>
       </button>
-    | _ => ReasonReact.nullElement
+    | _ => ReasonReact.null
     },
 };

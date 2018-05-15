@@ -10,10 +10,7 @@ let setTimeout: (unit => unit, int) => unit = [%bs.raw
 
 let make = _children => {
   ...component,
-  didMount: _self => {
-    setTimeout(() => ReasonReact.Router.push("/"), 5000);
-    NoUpdate;
-  },
+  didMount: _self => setTimeout(() => ReasonReact.Router.push("/"), 5000),
   render: _self => {
     let url =
       switch (ReasonReact.Router.dangerouslyGetInitialUrl()) {

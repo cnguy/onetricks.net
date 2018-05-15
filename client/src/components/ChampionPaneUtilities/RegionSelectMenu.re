@@ -4,22 +4,20 @@ let make = (~isMultiRegionFilterOn, ~region, ~setRegionFilter, _children) => {
   ...component,
   render: _self =>
     if (isMultiRegionFilterOn) {
-      ReasonReact.nullElement;
+      ReasonReact.null;
     } else {
       <select
         className="region-select"
         id="region"
         onChange=setRegionFilter
         value=region>
-        <option value="all">
-          (ReasonReact.stringToElement("All Regions"))
-        </option>
+        <option value="all"> (ReactUtils.ste("All Regions")) </option>
         (
-          ReasonReact.arrayToElement(
+          ReactUtils.ate(
             Array.map(
               region =>
                 <option value=region key=region>
-                  (ReasonReact.stringToElement(String.uppercase(region)))
+                  (ReactUtils.ste(String.uppercase(region)))
                 </option>,
               Region.list |> Region.toStringList |> Array.of_list,
             ),

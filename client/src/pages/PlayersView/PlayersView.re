@@ -95,10 +95,7 @@ let make =
       | SetMatches(matches, isLoading) =>
         ReasonReact.Update({matches, isLoading})
       },
-    didMount: self => {
-      update(p => self.send(SetMatches(p, false)));
-      NoUpdate;
-    },
+    didMount: self => update(p => self.send(SetMatches(p, false))),
     willReceiveProps: self => {
       if (self.retainedProps != regions) {
         self.send(SetMatches(self.state.matches, true));
@@ -179,7 +176,7 @@ let make =
           <PlayersTable renderableList onSort sortKey sortReverse />
         </div>;
       } else {
-        ReasonReact.nullElement;
+        ReasonReact.null;
       };
     },
   };

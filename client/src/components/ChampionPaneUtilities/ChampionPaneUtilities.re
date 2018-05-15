@@ -63,7 +63,7 @@ let make =
                   (ReactUtils.ste("Sort champion icons by win rate"))
                 </option>
               </select>
-            | _ => ReasonReact.nullElement
+            | _ => ReasonReact.null
             }
           )
         </div>
@@ -80,7 +80,7 @@ let make =
     ) {
     | ([], _rest) => comp
     | (["champions", ..._rest], _) => comp
-    | _ => ReasonReact.nullElement
+    | _ => ReasonReact.null
     };
   },
 };

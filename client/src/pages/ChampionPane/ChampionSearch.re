@@ -35,9 +35,9 @@ let make = (~onChange, ~value, ~resetSearchKey, _children) => {
           placeholder="search champions"
         />
         <span className=Styles.clearInput onClick=resetSearchKey>
-          (ReasonReact.stringToElement({js|✗|js}))
+          (ReactUtils.ste({js|✗|js}))
         </span>
       </span>
-    | _ => ReasonReact.nullElement
+    | _ => ReasonReact.null
     },
 };
