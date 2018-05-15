@@ -5,7 +5,6 @@
     },
     "bs-dependencies": [
       "reason-react",
-      "reason-js",
       "reason-reroute",
       "bs-fetch",
       "@glennsl/bs-json",

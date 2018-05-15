@@ -1309,9 +1309,9 @@ bs-css@^6.6.0:
   dependencies:
     glamor "^2.0.0"
 
-bs-fetch@BuckleTypes/bs-fetch:
-  version "0.2.0"
-  resolved "https://codeload.github.com/BuckleTypes/bs-fetch/tar.gz/1499f5c1eaf0ab77640fe9e5d376b5c89ac9d550"
+bs-fetch@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/bs-fetch/-/bs-fetch-0.2.1.tgz#165bed867009f2e91efb959ca1c0ff940d8cd19a"
 
 bs-loader@^1.8.0:
   version "1.8.2"
@@ -6333,12 +6333,6 @@ realpath-native@^1.0.0:
   dependencies:
     util.promisify "^1.0.0"
 
-reason-js@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/reason-js/-/reason-js-0.3.0.tgz#87ef218bf10e4e9be93bc44b459bec2c60cfdd02"
-  dependencies:
-    bs-fetch BuckleTypes/bs-fetch
-
 reason-react@0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/reason-react/-/reason-react-0.4.1.tgz#f1c8bf0d116be6bf43109912ee4d95e58dd7c64f"
@@ -6346,9 +6340,9 @@ reason-react@0.4.1:
     react ">=15.0.0 || >=16.0.0"
     react-dom ">=15.0.0 || >=16.0.0"
 
-reason-reroute@^0.0.4:
+"reason-reroute@git+https://github.com/cnguy/reroute":
   version "0.0.4"
-  resolved "https://registry.yarnpkg.com/reason-reroute/-/reason-reroute-0.0.4.tgz#ea480951222da8059c739c645ee9b68860f27738"
+  resolved "git+https://github.com/cnguy/reroute#e35c64f4bf4e9b3a5b5a3daac8087135f3f08c3a"
 
 reason-scripts@^0.8.0:
   version "0.8.0"
