@@ -28,7 +28,12 @@ let make = (~onChange, ~value, ~resetSearchKey, _children) => {
     | ([], "") =>
       <span className="champion-search">
         <img src=searchIcon className="champion-search__icon" />
-        <input className="filter-champs" onChange value />
+        <input
+          className="filter-champs"
+          onChange
+          value
+          placeholder="search champions"
+        />
         <span className=Styles.clearInput onClick=resetSearchKey>
           (ReasonReact.stringToElement({js|✗|js}))
         </span>

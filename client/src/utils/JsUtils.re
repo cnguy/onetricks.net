@@ -6,4 +6,11 @@ module String = {
         }
     |}
   ];
+  let keepOnlyAlphabetical: string => string = [%bs.raw
+    {|
+      function keepOnlyAlphabetical(name) {
+          return name.replace(/[^0-9a-z]/gi, '');
+      }
+    |}
+  ];
 };

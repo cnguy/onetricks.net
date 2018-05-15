@@ -81,7 +81,7 @@ let make = _children => {
         ...state,
         championPane: {
           ...state.championPane,
-          searchKey: String.lowercase(value),
+          searchKey: value,
         },
       })
     | SetSortKey(sortKey) =>
@@ -196,7 +196,13 @@ let make = _children => {
         }
       )
       |> List.filter(({players}) => List.length(players) > 0)
-      |> OneTricksHelpers.filterBySearchKey(self.state.championPane.searchKey);
+      |> OneTricksHelpers.filterBySearchKey(
+           String.lowercase(
+             JsUtils.String.keepOnlyAlphabetical(
+               self.state.championPane.searchKey,
+             ),
+           ),
+         );
     <Router.Container>
       ...(
            (~currentRoute) =>
