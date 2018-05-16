@@ -25,14 +25,13 @@ let parseIntoOneTricks = (decoded: players) : oneTricks =>
 /* TODO: Add API call handling before fallback. Use repromise let-bindings? */
 let url =
   switch (Environment.nodeEnv()) {
-  | Environment.Production => "https://cors-anywhere.herokuapp.com/http://api.onetricks.net"
-  | Environment.Development =>
-    "https://cors-anywhere.herokuapp.com/" ++ Environment.ngrokURL()
+  | Environment.Production => "http://api.onetricks.net"
+  | Environment.Development => "http://localhost"
   };
 
 let fallbackGet = (cb: oneTricks => unit) : unit => {
   Js.Promise.(
-    Fetch.fetch("https://media.onetricks.net/api/fallback-3-26-2018.json")
+    Fetch.fetch("http://media.onetricks.net/api/fallback-3-26-2018.json")
     |> then_(Fetch.Response.json)
     |> then_(payload =>
          payload |> Decoder.players |> parseIntoOneTricks |> cb |> resolve

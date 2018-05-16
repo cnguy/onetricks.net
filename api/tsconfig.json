@@ -17,7 +17,8 @@
             "express",
             "jsonfile",
             "koa",
-            "koa-router"
+            "koa-router",
+            "koa2-cors"
         ],
         "noImplicitAny": true
     },

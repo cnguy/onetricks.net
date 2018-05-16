@@ -8,5 +8,3 @@ let nodeEnv = () =>
   | "production" => Production
   | _ => Development
   };
-
-let ngrokURL = () : string => [%bs.raw {| process.env.REACT_APP_NGROK_URL |}];

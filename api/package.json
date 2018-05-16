@@ -8,6 +8,7 @@
     "koa": "^2.5.1",
     "koa-compress": "^3.0.0",
     "koa-router": "^7.4.0",
+    "koa2-cors": "^2.0.5",
     "mongoose": "^5.0.0",
     "typescript": "^2.8.3"
   },
@@ -20,6 +21,7 @@
     "@types/koa": "^2.0.45",
     "@types/koa-compress": "^2.0.8",
     "@types/koa-router": "^7.0.28",
+    "@types/koa2-cors": "^2.0.1",
     "@types/mongoose": "^5.0.12",
     "@types/node": "^10.0.4",
     "@types/request": "^2.47.0",

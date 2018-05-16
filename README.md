@@ -18,33 +18,36 @@ Note that this codebase is also very old, and my main goal now that I finished b
 
 ```make run # docker-compose up --build```
 
-Currently, the stats/api scripts have to be ran individually via the uncommenting of their respective index.js main function calls.
-
 # Deployment
 
-## DigitalOcean
+## Server
 
 ```sh
 # Make sure that you're pointing to your own droplet IP address!
-make deploy-digital-ocean
+sudo make prep-digital-ocean
 ```
 
 In DigitalOcean console:
 
 ```sh
 # Make sure that you fill out the docker-compose.prod.yml file!
-make run-prod
+sudo make run-prod
+```
+
+## Frontend
+
+```sh
+yarn build && yarn deploy
 ```
 
 # Overview
 
-This web application is now comprised of 6 components:
-1) Stats microservice (WIP)
-2) Site API microservice
-3) React Client in ReasonML that is deployed to [surge.sh](https://surge.sh)
-4) MongoDB (via [mlab](https://mlab.com)) for storing One Tricks and Stats
-5) Redis (via [redislabs](https://redislabs.com)) for caching Riot League of Legends API requests as well as my own site API calls in production. node-lru-cache or Redis can be used for development caching
-6) AWS S3/CloudFlare for asset caching
+This web application is now comprised of 5 components:
+1) Site API (stats, one tricks) 
+2) React Client in ReasonML that is deployed to [surge.sh](https://surge.sh)
+3) MongoDB (via [mlab](https://mlab.com)) for storing One Tricks and Stats
+4) Redis (via [redislabs](https://redislabs.com)) for caching Riot League of Legends API requests as well as my own site API calls in production. node-lru-cache or Redis can be used for development caching
+5) AWS S3/CloudFlare for asset caching
 
 The scripts build up two important datasets (currently you can run them by just uncommenting the respective index.js main function calls):
 

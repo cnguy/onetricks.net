@@ -1,17 +1,5 @@
 version: "3"
 services:
-  stats:
-    container_name: one-tricks-stats
-    restart: always
-    image: user/one-tricks-stats
-    ports:
-      - "3002:3002"
-    environment:
-      - DEBUG=kayn:*:request:error
-      - DEBUG_COLORS=true
-      - NODE_ENV=production
-      - MONGO_URI=mongodb://db_username:db_password@ds######.mlab.com:#####/one-tricks
-      - REDIS_PASSWORD=
   api:
     container_name: one-tricks-api
     restart: always

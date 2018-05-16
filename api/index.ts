@@ -1,3 +1,4 @@
+import * as cors from 'koa2-cors'
 import * as koa from 'koa'
 import * as koaCompress from 'koa-compress'
 import * as koaRouter from 'koa-router'
@@ -20,6 +21,7 @@ const app = new koa()
 const router = new koaRouter()
 
 app.use(koaCompress())
+app.use(cors({ origin: '*' }))
 app.listen(PORT)
 
 router.get('/one-tricks', async (ctx) => {
