@@ -40,9 +40,24 @@ interface MatchHistoryItem {
     championId: number,
     timestamp: number,
     role: string,
-    lane: string,
     platformId: string,
     region: string,
+}
+
+const getRole = (role: string, lane: string): string | null => {
+    if (role === 'SOLO' && lane === 'TOP') {
+        return 'TOP'
+    } else if (role === 'NONE' && lane === 'JUNGLE') {
+        return 'JUNGLE'
+    } else if (role === 'SOLO' && lane === 'MID') {
+        return 'MID'
+    } else if (role === 'DUO_CARRY' && lane === 'BOTTOM') {
+        return 'BOT_CARRY'
+    } else if (role === 'DUO_SUPPORT' && lane === 'BOTTOM') {
+        return 'BOT_SUPPORT'
+    } else {
+        return null
+    }
 }
 
 const processPlayers = async (players: PlayerType[], championId: number, roleNumbers: number[]) => {
@@ -90,26 +105,25 @@ const processPlayers = async (players: PlayerType[], championId: number, roleNum
                             gameId,
                             championId: champion,
                             timestamp,
-                            role,
-                            lane,
+                            role: getRole(role, lane),
                             platformId,
                             region,
                         }),
             )
-                .filter(({ role, lane, platformId, region }: { role: string, lane: string, platformId: string, region: string }) => {
+                .filter(({ role, platformId, region }: { role: string | null, platformId: string, region: string }) => {
                     // Ignore matches not in user's current region.
                     if (platformId.toLowerCase() !== asPlatformID(region)) {
                         return false
                     }
-                    if (role === 'SOLO' && lane === 'TOP') {
+                    if (role === 'TOP') {
                         return roleNumbers.includes(1)
-                    } else if (role === 'NONE' && lane === 'JUNGLE') {
+                    } else if (role === 'JUNGLE') {
                         return roleNumbers.includes(2)
-                    } else if (role === 'SOLO' && lane === 'MID') {
+                    } else if (role === 'MID') {
                         return roleNumbers.includes(3)
-                    } else if (role === 'DUO_CARRY' && lane === 'BOTTOM') {
+                    } else if (role === 'BOT_CARRY') {
                         return roleNumbers.includes(4)
-                    } else if (role === 'DUO_SUPPORT' && lane === 'BOTTOM') {
+                    } else if (role === 'BOT_SUPPORT') {
                         return roleNumbers.includes(5)
                     } else {
                         // console.log('My code is wrong:', role, lane)

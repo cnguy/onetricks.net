@@ -16,6 +16,25 @@ let toInt = (role: role) =>
   | Support => 5
   };
 
+let fromString = (roleStr: string) =>
+  switch (roleStr) {
+  | "TOP" => Top
+  | "JUNGLE" => Jungle
+  | "MID" => Middle
+  | "BOT_CARRY" => DuoCarry
+  | "BOT_SUPPORT" => Support
+  | _ => failwith("Invalid role string.")
+  };
+
+let toString = (role: role) =>
+  switch (role) {
+  | Top => "TOP"
+  | Jungle => "JUNGLE"
+  | Middle => "MID"
+  | DuoCarry => "DUO CARRY"
+  | Support => "SUPPORT"
+  };
+
 let toCsvString = (roles: roles) => {
   let tmp: string =
     roles

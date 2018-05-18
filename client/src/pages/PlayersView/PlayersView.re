@@ -38,6 +38,16 @@ type winLosses = {
   losses: int,
 };
 
+module RoleMap =
+  Map.Make(
+    {
+      type t = Role.role;
+      let compare = compare;
+    },
+  );
+
+type roleWinsLossesMap = RoleMap.t(winLosses);
+
 let getOverallWinRate = (players: players) =>
   players
   |> List.fold_left(
@@ -153,6 +163,47 @@ let make =
                              {wins: t.wins, losses: t.losses + 1},
                          {wins: 0, losses: 0},
                        );
+                  let winRatesByRoles =
+                    matches
+                    |> List.fold_left(
+                         (t, c: Types.miniGameRecord) =>
+                           t |> RoleMap.mem(c.role) ?
+                             c.didWin ?
+                               t
+                               |> RoleMap.add(
+                                    c.role,
+                                    {
+                                      wins:
+                                        (t |> RoleMap.find(c.role)).wins + 1,
+                                      losses:
+                                        (t |> RoleMap.find(c.role)).losses,
+                                    },
+                                  ) :
+                               t
+                               |> RoleMap.add(
+                                    c.role,
+                                    {
+                                      wins: (t |> RoleMap.find(c.role)).wins,
+                                      losses:
+                                        (t |> RoleMap.find(c.role)).losses + 1,
+                                    },
+                                  ) :
+                             c.didWin ?
+                               t |> RoleMap.add(c.role, {wins: 1, losses: 0}) :
+                               t |> RoleMap.add(c.role, {wins: 0, losses: 1}),
+                         RoleMap.empty,
+                       );
+                  let winsLossesByRoleComps =
+                    winRatesByRoles
+                    |> RoleMap.bindings
+                    |> List.map(((a, b)) =>
+                         <div>
+                           (ReactUtils.ste(Role.toString(a)))
+                           (ReactUtils.ite(b.wins))
+                           (ReactUtils.ste("/"))
+                           (ReactUtils.ite(b.losses))
+                         </div>
+                       );
                   <div>
                     (
                       ReactUtils.ste(
@@ -162,6 +213,7 @@ let make =
                       )
                     )
                     <WinRate wins losses />
+                    (ReactUtils.lte(winsLossesByRoleComps))
                   </div>;
                 | (false, None) =>
                   ReactUtils.ste(
