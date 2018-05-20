@@ -202,15 +202,25 @@ let make =
                          + snd(b).losses ?
                            (-1) : 1
                        )
-                    |> List.map(((a, b)) =>
+                    |> List.map(((a, {wins, losses})) =>
                          <div>
                            <S3Image
                              kind=S3Image.Role
                              itemId=(Role.toInt(a))
+                             className=Styles.icon
                            />
-                           (ReactUtils.ite(b.wins))
-                           (ReactUtils.ste("/"))
-                           (ReactUtils.ite(b.losses))
+                           <WinRate wins losses />
+                           (
+                             ReactUtils.ste(
+                               " over "
+                               ++ string_of_int(wins + losses)
+                               ++ StringUtils.pluralize(
+                                    " game",
+                                    wins + losses,
+                                  )
+                               ++ ".",
+                             )
+                           )
                          </div>
                        );
                   <div>
