@@ -196,9 +196,18 @@ let make =
                   let winsLossesByRoleComps =
                     winRatesByRoles
                     |> RoleMap.bindings
+                    |> List.sort((a, b) =>
+                         snd(a).wins
+                         + snd(a).losses > snd(b).wins
+                         + snd(b).losses ?
+                           (-1) : 1
+                       )
                     |> List.map(((a, b)) =>
                          <div>
-                           (ReactUtils.ste(Role.toString(a)))
+                           <S3Image
+                             kind=S3Image.Role
+                             itemId=(Role.toInt(a))
+                           />
                            (ReactUtils.ite(b.wins))
                            (ReactUtils.ste("/"))
                            (ReactUtils.ite(b.losses))

@@ -4,7 +4,8 @@ type kind =
   | Item
   | ActualPerk
   | PerkStyle
-  | SummonerSpell;
+  | SummonerSpell
+  | Role;
 
 let make = (~kind: kind, ~itemId: int, ~className="", ~key="", _children) => {
   ...component,
@@ -18,6 +19,7 @@ let make = (~kind: kind, ~itemId: int, ~className="", ~key="", _children) => {
           | SummonerSpell => "summoner-spells"
           | ActualPerk => "perks/actual"
           | PerkStyle => "perks/styles"
+          | Role => "roles"
           }
         )
         ++ "/"
