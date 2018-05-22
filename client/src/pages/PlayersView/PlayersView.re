@@ -33,10 +33,7 @@ module Styles = {
     ]);
 };
 
-type winLosses = {
-  wins: int,
-  losses: int,
-};
+type winsAndLosses = (int, int);
 
 module RoleMap =
   Map.Make(
@@ -46,16 +43,16 @@ module RoleMap =
     },
   );
 
-type roleWinsLossesMap = RoleMap.t(winLosses);
+type roleWinsLossesMap = RoleMap.t(winsAndLosses);
 
 let getOverallWinRate = (players: players) =>
   players
   |> List.fold_left(
-       (a: winLosses, b: player) => {
-         wins: a.wins + b.wins,
-         losses: a.losses + b.losses,
-       },
-       {wins: 0, losses: 0},
+       (a: winsAndLosses, b: player) => (
+         fst(a) + b.wins,
+         snd(a) + b.losses,
+       ),
+       (0, 0),
      );
 
 let make =
@@ -135,7 +132,7 @@ let make =
                player
              />
            );
-      let {wins, losses} = players |> getOverallWinRate;
+      let (wins, losses) = players |> getOverallWinRate;
       if (show) {
         <div className=Styles.container>
           <div className=Styles.header>
@@ -154,14 +151,13 @@ let make =
                     "No games found to calculate past 100 matches stats.",
                   )
                 | (false, Some(matches)) =>
-                  let {wins, losses} =
+                  let (wins, losses) =
                     matches
                     |> List.fold_left(
                          (t, c: Types.miniGameRecord) =>
                            c.didWin ?
-                             {wins: t.wins + 1, losses: t.losses} :
-                             {wins: t.wins, losses: t.losses + 1},
-                         {wins: 0, losses: 0},
+                             (fst(t) + 1, snd(t)) : (fst(t), snd(t) + 1),
+                         (0, 0),
                        );
                   let winRatesByRoles =
                     matches
@@ -172,37 +168,34 @@ let make =
                                t
                                |> RoleMap.add(
                                     c.role,
-                                    {
-                                      wins:
-                                        (t |> RoleMap.find(c.role)).wins + 1,
-                                      losses:
-                                        (t |> RoleMap.find(c.role)).losses,
-                                    },
+                                    (
+                                      fst(t |> RoleMap.find(c.role)) + 1,
+                                      snd(t |> RoleMap.find(c.role)),
+                                    ),
                                   ) :
                                t
                                |> RoleMap.add(
                                     c.role,
-                                    {
-                                      wins: (t |> RoleMap.find(c.role)).wins,
-                                      losses:
-                                        (t |> RoleMap.find(c.role)).losses + 1,
-                                    },
+                                    (
+                                      fst(t |> RoleMap.find(c.role)),
+                                      snd(t |> RoleMap.find(c.role)) + 1,
+                                    ),
                                   ) :
                              c.didWin ?
-                               t |> RoleMap.add(c.role, {wins: 1, losses: 0}) :
-                               t |> RoleMap.add(c.role, {wins: 0, losses: 1}),
+                               t |> RoleMap.add(c.role, (1, 0)) :
+                               t |> RoleMap.add(c.role, (0, 1)),
                          RoleMap.empty,
                        );
                   let winsLossesByRoleComps =
                     winRatesByRoles
                     |> RoleMap.bindings
                     |> List.sort((a, b) =>
-                         snd(a).wins
-                         + snd(a).losses > snd(b).wins
-                         + snd(b).losses ?
+                         fst(snd(a))
+                         + snd(snd(a)) > fst(snd(b))
+                         + snd(snd(b)) ?
                            (-1) : 1
                        )
-                    |> List.map(((a, {wins, losses})) =>
+                    |> List.map(((a, (wins, losses))) =>
                          <div>
                            <S3Image
                              kind=S3Image.Role
