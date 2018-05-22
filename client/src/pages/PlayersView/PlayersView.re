@@ -191,7 +191,7 @@ let make =
                     |> RoleMap.bindings
                     |> List.sort(
                          ((_, (wins1, losses1)), (_, (wins2, losses2))) =>
-                         wins1 + losses1 > wins2 + losses2 ? (-1) : 1
+                         wins2 + losses2 - (wins1 + losses1)
                        )
                     |> List.map(((a, (wins, losses))) =>
                          <div>
