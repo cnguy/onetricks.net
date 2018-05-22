@@ -189,11 +189,9 @@ let make =
                   let winsLossesByRoleComps =
                     winRatesByRoles
                     |> RoleMap.bindings
-                    |> List.sort((a, b) =>
-                         fst(snd(a))
-                         + snd(snd(a)) > fst(snd(b))
-                         + snd(snd(b)) ?
-                           (-1) : 1
+                    |> List.sort(
+                         ((_, (wins1, losses1)), (_, (wins2, losses2))) =>
+                         wins1 + losses1 > wins2 + losses2 ? (-1) : 1
                        )
                     |> List.map(((a, (wins, losses))) =>
                          <div>
