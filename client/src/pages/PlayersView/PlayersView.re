@@ -154,9 +154,13 @@ let make =
                   let (wins, losses) =
                     matches
                     |> List.fold_left(
-                         (t, c: Types.miniGameRecord) =>
-                           c.didWin ?
-                             (fst(t) + 1, snd(t)) : (fst(t), snd(t) + 1),
+                         (
+                           (currentWins, currentLosses),
+                           {didWin}: Types.miniGameRecord,
+                         ) =>
+                           didWin ?
+                             (currentWins + 1, currentLosses) :
+                             (currentWins, currentLosses + 1),
                          (0, 0),
                        );
                   let winRatesByRoles =
