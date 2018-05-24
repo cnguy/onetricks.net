@@ -29,12 +29,14 @@ module Styles = {
         [width(px(35)), height(px(35))],
       ),
     ]);
+  let blockIcon =
+    style([display(`block), margin2(~v=`zero, ~h=`auto), padding(px(5))]);
   let rowWin =
     style([
       background(
         linearGradient(
-          `deg(180),
-          [(0, hex("43A047")), (180, hex("1B5E20"))],
+          `deg(90),
+          [(0, rgba(67, 160, 71, 0.6)), (90 * 2, rgba(38, 50, 56, 0.55))],
         ),
       ),
     ]);
@@ -42,8 +44,8 @@ module Styles = {
     style([
       background(
         linearGradient(
-          `deg(180),
-          [(0, hex("E53935")), (180, hex("B71C1C"))],
+          `deg(90),
+          [(0, rgba(229, 57, 53, 0.6)), (90 * 2, rgba(38, 50, 56, 0.55))],
         ),
       ),
     ]);
@@ -146,12 +148,24 @@ let make =
                          <S3Image
                            kind=S3Image.ActualPerk
                            itemId=el.perks.perk0
-                           className=Styles.icon
+                           className=(Styles.icon ++ " " ++ Styles.blockIcon)
                          />
                          <S3Image
                            kind=S3Image.PerkStyle
                            itemId=el.perks.perkSubStyle
-                           className=Styles.icon
+                           className=(Styles.icon ++ " " ++ Styles.blockIcon)
+                         />
+                       </td>
+                       <td>
+                         <S3Image
+                           kind=S3Image.SummonerSpell
+                           itemId=el.summonerSpells.d
+                           className=(Styles.icon ++ " " ++ Styles.blockIcon)
+                         />
+                         <S3Image
+                           kind=S3Image.SummonerSpell
+                           itemId=el.summonerSpells.f
+                           className=(Styles.icon ++ " " ++ Styles.blockIcon)
                          />
                        </td>
                        <td>
@@ -183,18 +197,6 @@ let make =
                          <S3Image
                            kind=S3Image.Item
                            itemId=el.trinket
-                           className=Styles.icon
-                         />
-                       </td>
-                       <td>
-                         <S3Image
-                           kind=S3Image.SummonerSpell
-                           itemId=el.summonerSpells.d
-                           className=Styles.icon
-                         />
-                         <S3Image
-                           kind=S3Image.SummonerSpell
-                           itemId=el.summonerSpells.f
                            className=Styles.icon
                          />
                        </td>
