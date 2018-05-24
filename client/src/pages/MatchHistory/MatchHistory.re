@@ -134,15 +134,13 @@ let make =
                        </td>
                        <td> (ReactUtils.ste(el.name)) </td>
                        <td>
-                         (
-                           ReactUtils.ste(
-                             (el.kda.kills |> string_of_int)
-                             ++ "/"
-                             ++ (el.kda.deaths |> string_of_int)
-                             ++ "/"
-                             ++ (el.kda.assists |> string_of_int),
-                           )
-                         )
+                         <KDA
+                           kda={
+                             kills: el.kda.kills,
+                             deaths: el.kda.deaths,
+                             assists: el.kda.assists,
+                           }
+                         />
                        </td>
                        <td>
                          <S3Image
