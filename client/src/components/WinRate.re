@@ -1,17 +1,20 @@
 let component = ReasonReact.statelessComponent("WinRate");
 
 let getHexColorFromWinrate = (wr: float) =>
-  if (wr < 50.0) {
-    "#ff0000";
-  } else if (wr < 55.0) {
-    "#ffffff";
-  } else if (wr < 60.0) {
-    "#00ff00";
-  } else if (wr < 65.0) {
-    "#00ccff";
-  } else {
-    "#ffa500";
-  };
+  (
+    if (wr < 50.0) {
+      ColorTier.Poor;
+    } else if (wr < 55.0) {
+      ColorTier.Okay;
+    } else if (wr < 60.0) {
+      ColorTier.Average;
+    } else if (wr < 65.0) {
+      ColorTier.Great;
+    } else {
+      ColorTier.Excellent;
+    }
+  )
+  |> ColorTier.toHex;
 
 let make = (~wins: int, ~losses: int, _children) => {
   ...component,
