@@ -13,13 +13,13 @@ type kda = {
 
 let getHexColorFromFloat = (kda: float) =>
   (
-    if (kda < 1.) {
+    if (kda < 2.) {
       ColorTier.Poor;
-    } else if (kda < 2.) {
-      ColorTier.Okay;
     } else if (kda < 3.) {
-      ColorTier.Average;
+      ColorTier.Okay;
     } else if (kda < 4.) {
+      ColorTier.Average;
+    } else if (kda < 5.) {
       ColorTier.Great;
     } else {
       ColorTier.Excellent;
