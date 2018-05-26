@@ -18,7 +18,7 @@ let searchIcon: string = [%bs.raw
 |}
 ];
 
-let make = (~onChange, ~value, ~resetSearchKey, _children) => {
+let make = (~onChange, ~value: string, _children) => {
   ...component,
   render: _self =>
     switch (
@@ -32,11 +32,8 @@ let make = (~onChange, ~value, ~resetSearchKey, _children) => {
           className="filter-champs"
           onChange
           value
-          placeholder="search champions"
+          placeholder="Search Champions"
         />
-        <span className=Styles.clearInput onClick=resetSearchKey>
-          (ReactUtils.ste({js|✗|js}))
-        </span>
       </span>
     | _ => ReasonReact.null
     },

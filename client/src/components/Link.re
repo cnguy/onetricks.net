@@ -6,7 +6,7 @@ module Styles = {
   open Css;
   let link =
     style([
-      color(hex("AAA")),
+      color(white),
       textDecoration(none),
       cursor(`pointer),
       textTransform(uppercase),

@@ -205,7 +205,15 @@ let make = _children => {
       ...(
            (~currentRoute) =>
              <div className="one-tricks-re">
-               <Header />
+               <Header
+                 searchKey=self.state.championPane.searchKey
+                 onSearchKeyChange=(
+                   event =>
+                     self.send(
+                       SetSearchKey(ReactUtils.getEventValue(event)),
+                     )
+                 )
+               />
                <Link
                  route=RouterConfig.Home
                  isActive=(currentRoute == RouterConfig.Home)>
@@ -232,20 +240,12 @@ let make = _children => {
                <ChampionPaneUtilities
                  areChampionPanesMerged=self.state.misc.areChampionPanesMerged
                  isMultiRegionFilterOn=self.state.misc.isMultiRegionFilterOn
-                 searchKey=self.state.championPane.searchKey
-                 resetSearchKey=(_event => self.send(SetSearchKey("")))
                  regions=(
                    self.state.misc.regions
                    |> Array.of_list
                    |> Array.map(Region.toString)
                  )
                  toggleMerge=(_event => self.send(ToggleMerge))
-                 onSearchKeyChange=(
-                   event =>
-                     self.send(
-                       SetSearchKey(ReactUtils.getEventValue(event)),
-                     )
-                 )
                  region=(Region.toString(self.state.misc.region))
                  toggleRegion=(
                    regionValue => self.send(ToggleRegion(regionValue))
