@@ -163,7 +163,7 @@ const main = async (mode = Modes.BruteForceAll) => {
                 let sliceToProcess: RawSummoner[] = []
                 if (mode === Modes.BruteForceAll) {
                     sliceToProcess = summoners.slice(i, i + chunkSize)
-                } else if (mode == Modes.Update) {
+                } else if (mode === Modes.Update) {
                     // async filter not possible btw so just gonna use map
                     const summonersNotInDatabase = (await Promise.all(summoners.slice(i, i + chunkSize).map(async (summoner) => {
                         const count = await Stats.count({ summonerId: summoner.id }).exec()
