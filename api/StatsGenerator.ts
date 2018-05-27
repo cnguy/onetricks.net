@@ -11,7 +11,7 @@ import RegionHelper from 'kayn/dist/lib/Utils/RegionHelper'
 
 const { asPlatformID } = RegionHelper
 
-import { Stats } from './mongodb'
+import { Stats, Player } from './mongodb'
 
 import ChampionStats from './entities/ChampionStats'
 import OneTrick from './entities/OneTrick'
@@ -65,7 +65,11 @@ const storePlayerStats = (summonerId: number, json: RawPlayerStats) =>
 
 const getPlayer = (summonerId: number) => Stats.findOne({ summonerId })
 
-const main = async () => {
+export enum Modes {
+    Update, BruteForceAll
+}
+
+const main = async (mode = Modes.BruteForceAll) => {
     const kayn = Kayn()({
         debugOptions: {
             isEnabled: true,
@@ -156,7 +160,18 @@ const main = async () => {
             console.log('starting:', rank, region, i, i + chunkSize)
             console.log('======')
             try {
-                await makeStats(rank, region, summoners.slice(i, i + chunkSize))
+                let sliceToProcess: RawSummoner[] = []
+                if (mode === Modes.BruteForceAll) {
+                    sliceToProcess = summoners.slice(i, i + chunkSize)
+                } else if (mode == Modes.Update) {
+                    // async filter not possible btw so just gonna use map
+                    const summonersNotInDatabase = (await Promise.all(summoners.slice(i, i + chunkSize).map(async (summoner) => {
+                        const count = await Stats.count({ summonerId: summoner.id }).exec()
+                        return (count === 0) ? summoner : undefined
+                    }))).filter(Boolean)
+                    sliceToProcess = (summonersNotInDatabase as RawSummoner[])
+                }
+                await makeStats(rank, region, sliceToProcess)
             } catch (exception) {
                 console.log('makeStats failed...', exception)
             }

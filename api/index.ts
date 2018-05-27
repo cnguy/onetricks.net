@@ -5,7 +5,7 @@ import * as koaRouter from 'koa-router'
 import * as mongoose from 'mongoose'
 
 import generator from './OneTricksGenerator'
-import StatsGenerator from './StatsGenerator'
+import StatsGenerator, { Modes } from './StatsGenerator'
 import { getStaticChampionByName } from './getStaticChampion'
 import kayn from './kayn'
 import MHGenerator from './MatchHistoryGenerator'
@@ -85,21 +85,25 @@ router.get('/static-champion-by-name/:name/id', async ctx => {
     ctx.body = getStaticChampionByName(name).id
 })
 
-const main = async () => {
-    /*
+import * as schedule from 'node-schedule'
+
+const main = async (mode = Modes.Update) => {
     try {
-        console.log('starting script')
-        const done = await generator()
-        console.log('script done:', done)
-        setInterval(async () => {
-            await generator()
-        }, 86400000)
-    } catch (exception) {
-        console.log(exception)
-    }*/
-    console.log('start')
-    const done = await StatsGenerator()
-    console.log('done')
+        // docker uses UTC time.
+        // 7:35 AM UTC => 12:35 AM PST.
+        schedule.scheduleJob('35 7 * * *', async () => {
+            console.log('STARTING STATS')
+            await StatsGenerator(mode)
+            console.log('END STATS')
+            if (mode === Modes.Update) {
+                console.log('START ONE TRICKS')
+                await generator()
+                console.log('END ONE TRICKS')
+            }
+        })
+    } catch (ex) {
+        console.error(ex)
+    }
 }
 
-// main()
+main()
