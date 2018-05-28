@@ -89,9 +89,8 @@ import * as schedule from 'node-schedule'
 
 const main = async (mode = Modes.Update) => {
     try {
-        // docker uses UTC time.
-        // 7:35 AM UTC => 12:35 AM PST.
-        schedule.scheduleJob('35 7 * * *', async () => {
+        // NOTE: Docker uses UTC time!!! So UTC + 5 hours = PST version.
+        schedule.scheduleJob('25 5 * * *', async () => {
             console.log('STARTING STATS')
             await StatsGenerator(mode)
             console.log('END STATS')
