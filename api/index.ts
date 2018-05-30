@@ -3,6 +3,7 @@ import * as koa from 'koa'
 import * as koaCompress from 'koa-compress'
 import * as koaRouter from 'koa-router'
 import * as mongoose from 'mongoose'
+import * as schedule from 'node-schedule'
 
 import generator from './OneTricksGenerator'
 import StatsGenerator, { Modes } from './StatsGenerator'
@@ -85,7 +86,6 @@ router.get('/static-champion-by-name/:name/id', async ctx => {
     ctx.body = getStaticChampionByName(name).id
 })
 
-import * as schedule from 'node-schedule'
 
 const main = async (mode = Modes.Update) => {
     try {
