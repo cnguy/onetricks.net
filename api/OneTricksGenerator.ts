@@ -6,6 +6,7 @@ import getStats from './getStats'
 import getStaticChampion from './getStaticChampion'
 import { LeagueV3LeagueListDTO, LolStaticDataV3ChampionDto } from 'kayn/typings/dtos';
 import { Player } from './mongodb';
+import MatchResponseHelper from './utils/response/MatchResponseHelper';
 
 const TARGET_QUEUE = 'RANKED_SOLO_5x5'
 
@@ -131,6 +132,22 @@ const getOneTrick = (region: string) => async ({ wins, losses, playerOrTeamId }:
     if (champId !== 0) {
         // Some ID's funnily equaled 0 (in the past).
         const { summonerId } = playerStats;
+        const { name, accountId } = await kayn.Summoner.by.id(summonerId).region(region)
+        const recentMatchlist = await kayn.Matchlist.Recent.by.accountID(accountId!).region(region).query({ champion: champId, queue: 420 })
+        const matches = await Promise.all(recentMatchlist.matches!.map(async match => await kayn.Match.get(match.gameId!).region(region)))
+
+        // Ignore players that haven't played the 'one trick' recently (2 week range).
+        // We don't want players who quit the champion.
+        if (matches.length > 0) {
+            const twoWeeks = 60 * 60 * 24 * 7 * 2
+            const now = new Date() as any
+            const matchDate = new Date(matches[0].gameCreation!) as any
+            const diff: number = now - matchDate
+            if (diff > twoWeeks) {
+                return true
+            }
+        }
+
         return {
             ...createOneTrick(
                 summonerId,
@@ -138,7 +155,8 @@ const getOneTrick = (region: string) => async ({ wins, losses, playerOrTeamId }:
                 totalSessionsLost,
                 getStaticChampion(champId),
             ),
-            name: (await kayn.Summoner.by.id(summonerId).region(region)).name,
+            name,
+            accountId,
         }
     }
 

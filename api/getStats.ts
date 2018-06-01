@@ -1,9 +1,5 @@
-import * as request from 'request'
 import { Stats } from './mongodb';
 
-/**
- * getStats gets stats from our stats API.
- */
 const getStats = async (summonerID: number): Promise<any> =>
     Stats.findOne({ summonerId: summonerID })
 

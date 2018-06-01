@@ -3,6 +3,7 @@ import * as koa from 'koa'
 import * as koaCompress from 'koa-compress'
 import * as koaRouter from 'koa-router'
 import * as mongoose from 'mongoose'
+import * as schedule from 'node-schedule'
 
 import generator from './OneTricksGenerator'
 import StatsGenerator, { Modes } from './StatsGenerator'
@@ -85,13 +86,11 @@ router.get('/static-champion-by-name/:name/id', async ctx => {
     ctx.body = getStaticChampionByName(name).id
 })
 
-import * as schedule from 'node-schedule'
 
 const main = async (mode = Modes.Update) => {
     try {
-        // docker uses UTC time.
-        // 7:35 AM UTC => 12:35 AM PST.
-        schedule.scheduleJob('35 7 * * *', async () => {
+        // NOTE: Docker uses UTC time!!! So UTC + 5 hours = PST version.
+        schedule.scheduleJob('25 5 * * *', async () => {
             console.log('STARTING STATS')
             await StatsGenerator(mode)
             console.log('END STATS')

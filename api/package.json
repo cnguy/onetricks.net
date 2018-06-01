@@ -26,7 +26,6 @@
     "@types/mongoose": "^5.0.12",
     "@types/node": "^10.0.4",
     "@types/node-schedule": "^1.2.2",
-    "@types/request": "^2.47.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-eslint": "^7.2.3",
