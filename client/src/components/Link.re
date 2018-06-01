@@ -7,7 +7,6 @@ module Styles = {
   let link =
     style([
       color(white),
-      textDecoration(none),
       cursor(`pointer),
       textTransform(uppercase),
       fontWeight(700),

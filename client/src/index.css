@@ -10,6 +10,15 @@ html {
   height: auto;
 }
 
+a, a:visited, a:focus {
+  text-decoration: none;
+}
+
+a:focus {
+  outline: 0;
+  border: 0;
+}
+
 .float-left {
   float: left;
 }
