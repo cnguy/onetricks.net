@@ -1,10 +1,21 @@
 let component = ReasonReact.statelessComponent("PercentageTable");
 
+module Styles = {
+  open Css;
+  let main =
+    style([
+      media(
+        "only screen and (min-width: 768px)",
+        [flexGrow(1), flexShrink(1), width(`percent(50.))],
+      ),
+    ]);
+};
+
 let make =
     (~items: list((ReasonReact.reactElement, int)), ~outOf: int, children) => {
   ...component,
   render: _self =>
-    <div>
+    <div className=Styles.main>
       <h3> children </h3>
       <table>
         <thead> <tr> <th /> <th /> <th /> </tr> </thead>

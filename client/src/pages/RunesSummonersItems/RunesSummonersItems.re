@@ -29,6 +29,13 @@ let component = ReasonReact.reducerComponent("RunesSummonersItems");
 
 module Styles = {
   open Css;
+  let flexBox =
+    style([
+      media(
+        "only screen and (min-width: 768px)",
+        [display(`flex), flexWrap(`wrap)],
+      ),
+    ]);
   let stats = style([display(inlineBlock), padding2(~v=`zero, ~h=px(5))]);
   let icon =
     style([
@@ -259,7 +266,7 @@ let make =
                  av,
                )
              );
-        <div>
+        <div className=Styles.flexBox>
           <PercentageTable items=keystonesTuple outOf=(List.length(matches))>
             ...(ReactUtils.ste("Popular Keystones"))
           </PercentageTable>
