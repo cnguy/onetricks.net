@@ -13,7 +13,7 @@ module Styles = {
   let caption =
     style([
       fontSize(em(0.8)),
-      color(grey),
+      color(white),
       fontStyle(italic),
       marginTop(px(0)),
     ]);
