@@ -293,6 +293,6 @@ a:focus {
   padding: 0 10px 0 0;
 }
 
-.fliter-champs, button, select {
+.filter-champs, button, select {
   text-transform: capitalize;
 }
