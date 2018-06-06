@@ -154,7 +154,7 @@ const main = async (mode = Modes.BruteForceAll) => {
             promises
         )
         const len = summoners.length
-        const chunkSize = 25
+        const chunkSize = 20
         for (let i = 0; i < len; i += chunkSize) {
             console.log('======')
             console.log('starting:', rank, region, i, i + chunkSize)
