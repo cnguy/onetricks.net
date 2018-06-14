@@ -164,17 +164,15 @@ let make =
                IntTupleMap.empty,
              )
           |> IntTupleMap.bindings
-          |> List.sort((a, b) => {
-               let first = Pervasives.snd(a);
-               let second = Pervasives.snd(b);
-               if (first < second) {
+          |> List.sort(((_, count1), (_, count2)) =>
+               if (count1 < count2) {
                  1;
-               } else if (first == second) {
+               } else if (count1 == count2) {
                  0;
                } else {
                  (-1);
-               };
-             })
+               }
+             )
           |> List.map(((key, av)) =>
                (
                  <div>
@@ -206,17 +204,15 @@ let make =
                IntMap.empty,
              )
           |> IntMap.bindings
-          |> List.sort((a, b) => {
-               let first = Pervasives.snd(a);
-               let second = Pervasives.snd(b);
-               if (first < second) {
+          |> List.sort(((_, count1), (_, count2)) =>
+               if (count1 < count2) {
                  1;
-               } else if (first == second) {
+               } else if (count1 == count2) {
                  0;
                } else {
                  (-1);
-               };
-             })
+               }
+             )
           |> List.map(((key, av)) =>
                (
                  <div className=Styles.stats>
@@ -241,17 +237,15 @@ let make =
                IntMap.empty,
              )
           |> IntMap.bindings
-          |> List.sort((a, b) => {
-               let first = Pervasives.snd(a);
-               let second = Pervasives.snd(b);
-               if (first < second) {
+          |> List.sort(((_, count1), (_, count2)) =>
+               if (count1 < count2) {
                  1;
-               } else if (first == second) {
+               } else if (count1 == count2) {
                  0;
                } else {
                  (-1);
-               };
-             })
+               }
+             )
           |> List.map(((key, av)) =>
                (
                  <div className=Styles.stats>
