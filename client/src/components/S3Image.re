@@ -12,7 +12,7 @@ let make = (~kind: kind, ~itemId: int, ~className="", ~key="", _children) => {
   render: _self =>
     <img
       src=(
-        "https://s3-us-west-1.amazonaws.com/media.onetricks.net/images/"
+        "http://s3-us-west-1.amazonaws.com/media.onetricks.net/images/"
         ++ (
           switch (kind) {
           | Item => "items"

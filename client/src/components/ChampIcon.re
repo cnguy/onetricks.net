@@ -4,7 +4,7 @@ let getIcon: string => string = [%bs.raw
   {| function (name) {
       // Still have to handle default case somehow... Ideally
       // pure CSS solution?
-      return 'https://media.onetricks.net/' + name.toLowerCase() + 'square-min.png'
+      return 'http://media.onetricks.net/' + name.toLowerCase() + 'square-min.png'
 }
 |}
 ];
