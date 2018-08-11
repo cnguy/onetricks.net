@@ -62,7 +62,7 @@ let fromString = regionStr =>
 
 let toStringList = (regions: regions) => regions |> List.map(toString);
 
-let toReadableStringList = (regions: list(string)) : string => {
+let toReadableStringList = (regions: list(string)): string => {
   let tmp: string =
     regions
     |> List.fold_left(

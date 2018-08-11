@@ -61,7 +61,7 @@ let routeToUrl = (route: route) =>
   | NotFound => "/404"
   };
 
-let isRouteOrSubroute = (url: ReasonReact.Router.url, ~ofRoute: route) : bool => {
+let isRouteOrSubroute = (url: ReasonReact.Router.url, ~ofRoute: route): bool => {
   let currentRoute = url |> routeFromUrl;
   currentRoute == ofRoute;
 };

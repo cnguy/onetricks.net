@@ -4,7 +4,7 @@ let sanitize = a => a |> String.lowercase |> String.trim;
 
 let none = list => list;
 
-let lexiSort = (a: string, b: string) : int =>
+let lexiSort = (a: string, b: string): int =>
   if (a < b) {
     (-1);
   } else if (a > b) {
@@ -89,7 +89,7 @@ type oneTricksListSort =
   | Number
   | WinRate;
 
-let numberOfOneTricks = (list: oneTricks) : oneTricks =>
+let numberOfOneTricks = (list: oneTricks): oneTricks =>
   list
   |> List.sort((a: oneTrick, b: oneTrick) =>
        if (List.length(a.players) > List.length(b.players)) {
@@ -106,7 +106,7 @@ type winsLosses = {
   losses: int,
 };
 
-let oneTricksWinRate = (list: players) : float => {
+let oneTricksWinRate = (list: players): float => {
   let wl =
     list
     |> List.fold_left(
@@ -120,7 +120,7 @@ let oneTricksWinRate = (list: players) : float => {
   wins /. (wins +. float_of_int(wl.losses));
 };
 
-let oneTricksByWinRate = (list: oneTricks) : oneTricks =>
+let oneTricksByWinRate = (list: oneTricks): oneTricks =>
   list
   |> List.sort((a, b) => {
        let winRateA = oneTricksWinRate(a.players);

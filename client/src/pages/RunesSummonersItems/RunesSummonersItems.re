@@ -10,20 +10,16 @@ type state = {
 };
 
 module IntMap =
-  Map.Make(
-    {
-      type t = int;
-      let compare = compare;
-    },
-  );
+  Map.Make({
+    type t = int;
+    let compare = compare;
+  });
 
 module IntTupleMap =
-  Map.Make(
-    {
-      type t = (int, int);
-      let compare = compare;
-    },
-  );
+  Map.Make({
+    type t = (int, int);
+    let compare = compare;
+  });
 
 let component = ReasonReact.reducerComponent("RunesSummonersItems");
 

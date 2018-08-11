@@ -1,6 +1,6 @@
 open Types;
 
-let parseIntoOneTricks = (decoded: players) : oneTricks =>
+let parseIntoOneTricks = (decoded: players): oneTricks =>
   decoded
   |> List.fold_left(
        (total, curr: player) => {
@@ -29,7 +29,7 @@ let url =
   | Environment.Development => "http://localhost"
   };
 
-let fallbackGet = (cb: oneTricks => unit) : unit => {
+let fallbackGet = (cb: oneTricks => unit): unit => {
   Js.Promise.(
     Fetch.fetch("http://media.onetricks.net/api/fallback-3-26-2018.json")
     |> then_(Fetch.Response.json)

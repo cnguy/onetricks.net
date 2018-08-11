@@ -5,20 +5,21 @@
   "proxy": "http://one-tricks-api:3001/",
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
-    "bs-platform": "3.0.0",
+    "bs-platform": "4.0.3",
     "webpack-bundle-analyzer": "^2.11.1"
   },
   "dependencies": {
     "@glennsl/bs-json": "^1.2.0",
     "babel-polyfill": "^6.26.0",
-    "bs-css": "^6.6.0",
-    "bs-fetch": "^0.2.1",
+    "bs-css": "^7.0.1",
+    "bs-fetch": "git+https://github.com/cnguy/bs-fetch#bs-platform-updates",
     "react": "^15.4.0",
     "react-addons-perf": "^15.4.2",
     "react-dom": "^15.4.0",
-    "reason-react": "0.4.1",
-    "reason-reroute": "git+https://github.com/cnguy/reroute",
-    "reason-scripts": "^0.8.0"
+    "reason-react": "^0.5.3",
+    "reason-reroute": "git+https://github.com/cnguy/reroute#upgrade-major-deps",
+    "reason-scripts": "^0.8.0",
+    "upgrade-reason-react": "https://github.com/chenglou/upgrade-reason-react#0.4.2-to-0.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

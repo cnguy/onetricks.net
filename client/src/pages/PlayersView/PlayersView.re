@@ -36,12 +36,10 @@ module Styles = {
 type winsAndLosses = (int, int);
 
 module RoleMap =
-  Map.Make(
-    {
-      type t = Role.role;
-      let compare = compare;
-    },
-  );
+  Map.Make({
+    type t = Role.role;
+    let compare = compare;
+  });
 
 type roleWinsLossesMap = RoleMap.t(winsAndLosses);
 
