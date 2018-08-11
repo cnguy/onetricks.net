@@ -9,10 +9,10 @@
     "webpack-bundle-analyzer": "^2.11.1"
   },
   "dependencies": {
-    "@glennsl/bs-json": "^1.2.0",
+    "@glennsl/bs-json": "^3.0.0",
     "babel-polyfill": "^6.26.0",
     "bs-css": "^7.0.1",
-    "bs-fetch": "git+https://github.com/cnguy/bs-fetch#bs-platform-updates",
+    "bs-fetch": "^0.3.0",
     "react": "^15.4.0",
     "react-addons-perf": "^15.4.2",
     "react-dom": "^15.4.0",

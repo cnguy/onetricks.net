@@ -91,7 +91,7 @@ let make = _children => {
           sortKey,
           shouldSortReverse:
             if (sortKey == state.playersView.sortKey) {
-              !state.playersView.shouldSortReverse;
+              ! state.playersView.shouldSortReverse;
             } else {
               false;
             },
@@ -126,7 +126,7 @@ let make = _children => {
             } else {
               [state.misc.region];
             },
-          isMultiRegionFilterOn: !state.misc.isMultiRegionFilterOn,
+          isMultiRegionFilterOn: ! state.misc.isMultiRegionFilterOn,
         },
       })
     | ToggleMerge =>
@@ -134,7 +134,7 @@ let make = _children => {
         ...state,
         misc: {
           ...state.misc,
-          areChampionPanesMerged: !state.misc.areChampionPanesMerged,
+          areChampionPanesMerged: ! state.misc.areChampionPanesMerged,
         },
       })
     | ToggleRegion(r) =>
@@ -154,26 +154,23 @@ let make = _children => {
       });
     | _ => ReasonReact.Update(state)
     },
-  subscriptions: _self => [
-    Sub(
-      () =>
-        ReasonReact.Router.watchUrl(url =>
-          GoogleAnalytics.send(
-            [%bs.raw {| window.location.pathname |}],
-            url.search,
-          )
-        ),
-      ReasonReact.Router.unwatchUrl,
-    ),
-  ],
-  didMount: self =>
-    OneTricksService.get(payload => self.send(SetOneTricks(payload))),
+  didMount: self => {
+    let watcherID =
+      ReasonReact.Router.watchUrl(url =>
+        GoogleAnalytics.send(
+          [%bs.raw {| window.location.pathname |}],
+          url.search,
+        )
+      );
+    self.onUnmount(() => ReasonReact.Router.unwatchUrl(watcherID));
+    OneTricksService.get(payload => self.send(SetOneTricks(payload)));
+  },
   render: self => {
     let regionatedOneTricks: oneTricks =
       self.state.championPane.oneTricks
       |> List.map(({champion, players}) => {
            let newPlayers =
-             if (!self.state.misc.isMultiRegionFilterOn
+             if (! self.state.misc.isMultiRegionFilterOn
                  && Region.toString(self.state.misc.region) == "all") {
                /* optimization */
                players;
