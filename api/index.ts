@@ -100,6 +100,17 @@ const main = async (mode = Modes.Update) => {
                 console.log('END ONE TRICKS')
             }
         })
+
+        schedule.scheduleJob('20 12 * * 0', async () => {
+            console.log('STARTING STATS')
+            await StatsGenerator(mode)
+            console.log('END STATS')
+            if (mode === Modes.BruteForceAll) {
+                console.log('START ONE TRICKS')
+                await generator()
+                console.log('END ONE TRICKS')
+            }
+        })
     } catch (ex) {
         console.error(ex)
     }
