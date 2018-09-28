@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "gmail-send": "^1.2.14",
     "jsonfile": "^4.0.0",
     "kayn": "^0.8.11",
     "koa": "^2.5.1",
