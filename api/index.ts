@@ -89,7 +89,7 @@ router.get('/static-champion-by-name/:name/id', async ctx => {
 
 const main = async (mode = Modes.Update) => {
     try {
-        // NOTE: Docker uses UTC time!!! So UTC + 5 hours = PST version.
+        // NOTE: Docker uses UTC time!!!
         schedule.scheduleJob('25 5 * * *', async () => {
             console.log('STARTING STATS')
             await StatsGenerator(mode)
@@ -101,15 +101,13 @@ const main = async (mode = Modes.Update) => {
             }
         })
 
-        schedule.scheduleJob('20 12 * * 0', async () => {
+        schedule.scheduleJob('35 18 * * 5', async () => {
             console.log('STARTING STATS')
-            await StatsGenerator(mode)
+            await StatsGenerator(Modes.BruteForceAll)
             console.log('END STATS')
-            if (mode === Modes.BruteForceAll) {
-                console.log('START ONE TRICKS')
-                await generator()
-                console.log('END ONE TRICKS')
-            }
+            console.log('START ONE TRICKS')
+            await generator()
+            console.log('END ONE TRICKS')
         })
     } catch (ex) {
         console.error(ex)
