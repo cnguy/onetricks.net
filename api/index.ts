@@ -39,20 +39,22 @@ router.get('/one-tricks', async (ctx) => {
     }
 })
 
-router.get('/analyzed', async (ctx) => {
-    try {
-        ctx.body = await tryFromCache('analyzed')
-    } catch (ex) {
-        const stats = await Stats.find().exec()
-        const next = stats
-            .map((el: any) => el.matchesProcessed)
-            .reduce((t, c) => t.concat(c), [])
-        ctx.body = {
-            playersAnalyzed: stats.length,
-            matchesAnalyzed: (new Set(next)).size
+if (process.env.NODE_ENV !== 'production') {
+    router.get('/analyzed', async (ctx) => {
+        try {
+            ctx.body = await tryFromCache('analyzed')
+        } catch (ex) {
+            const stats = await Stats.find().exec()
+            const next = stats
+                .map((el: any) => el.matchesProcessed)
+                .reduce((t, c) => t.concat(c), [])
+            ctx.body = {
+                playersAnalyzed: stats.length,
+                matchesAnalyzed: (new Set(next)).size
+            }
         }
-    }
-})
+    })
+}
 
 router.get('/match-history', async (ctx) => {
     const { url } = ctx

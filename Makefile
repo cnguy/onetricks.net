@@ -5,6 +5,9 @@ build-api:
 	cd api;\
 	sudo docker build . -t cnguy/one-tricks-api
 
+deploy:
+	sudo docker push cnguy/one-tricks-api
+
 run-prod:
 	docker-compose -f docker-compose.prod.yml pull;\
 	docker-compose -f docker-compose.prod.yml up --build;
