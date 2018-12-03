@@ -242,6 +242,7 @@ let make =
                  (-1);
                }
              )
+          |> List.filter(((key, _)) => key != 0)
           |> List.map(((key, av)) =>
                (
                  <div className=Styles.stats>

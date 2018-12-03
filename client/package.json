@@ -28,7 +28,7 @@
     "eject": "react-scripts eject",
     "prepare": "npm link bs-platform",
     "analyze-bundle": "node ./build.js",
-    "deploy": "cd build && surge && cd -",
+    "deploy": "cd build && npx surge && cd -",
     "buckle:up": "bsb -make-world -w",
     "buckle:down": "bsb -clean-world",
     "buckle:reset": "bsb -clean-world && bsb -make-world"
