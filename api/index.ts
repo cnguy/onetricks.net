@@ -10,7 +10,8 @@ import StatsGenerator, { Modes } from './StatsGenerator'
 import { getStaticChampionByName } from './getStaticChampion'
 import kayn from './kayn'
 import MHGenerator from './MatchHistoryGenerator'
-import { Player } from './mongodb';
+import { Player, Stats } from './mongodb';
+import { RedisCache, LRUCache } from 'kayn';
 
 const gmail = gmailSend({
     user: process.env.GMAIL_USERNAME,
@@ -38,10 +39,25 @@ router.get('/one-tricks', async (ctx) => {
     }
 })
 
+router.get('/analyzed', async (ctx) => {
+    try {
+        ctx.body = await tryFromCache('analyzed')
+    } catch (ex) {
+        const stats = await Stats.find().exec()
+        const next = stats
+            .map((el: any) => el.matchesProcessed)
+            .reduce((t, c) => t.concat(c), [])
+        ctx.body = {
+            playersAnalyzed: stats.length,
+            matchesAnalyzed: (new Set(next)).size
+        }
+    }
+})
+
 router.get('/match-history', async (ctx) => {
     const { url } = ctx
     try {
-        ctx.body = await tryMatchHistoryFromCache(url)
+        ctx.body = await tryFromCache(url)
     } catch (ex) {
         const championId = parseInt(ctx.query.championId)
         const ranks: string[] = ctx.query.ranks.split(',')
@@ -50,12 +66,10 @@ router.get('/match-history', async (ctx) => {
             .split(',')
             .map(oneParamParseInt)
         const data = await MHGenerator(ranks, regions, championId, roleNumbers)
-        if ((kayn as any).config.cacheOptions.cache) {
-            (kayn as any).config.cacheOptions.cache.set(
+            ; (matchHistoryCache as any).set(
                 { key: url, ttl: 100000 },
                 data,
             )
-        }
         ctx.body = data
     }
 })
@@ -66,19 +80,24 @@ app
 
 const oneParamParseInt = (n: string): number => parseInt(n, 10)
 
-const tryMatchHistoryFromCache = (url: string): any => {
+const matchHistoryCache = process.env.NODE_ENV === 'production'
+    ? new RedisCache({
+        host: process.env.REDIS_MH,
+        port: process.env.REDIS_MH_PORT as any,
+        keyPrefix: 'kayn-',
+        password: process.env.REDIS_MH_PASSWORD,
+    })
+    : new LRUCache({ max: 1000 })
+
+const tryFromCache = (url: string): any => {
     return new Promise((resolve, reject) => {
-        if ((kayn as any).config.cacheOptions.cache) {
-            (kayn as any).config.cacheOptions.cache.get({ key: url }, (err: any, data: any[]) => {
-                if (data) {
-                    return resolve(data)
-                } else {
-                    return reject(err)
-                }
-            })
-        } else {
-            return reject()
-        }
+        (matchHistoryCache as any).get({ key: url }, (err: any, data: any) => {
+            if (data) {
+                return resolve(data)
+            } else {
+                return reject(err)
+            }
+        })
     })
 }
 

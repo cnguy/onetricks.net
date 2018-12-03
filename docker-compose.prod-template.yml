@@ -11,6 +11,12 @@ services:
       - DEBUG_COLORS=true
       - NODE_ENV=production
       - MONGO_URI=mongodb://db_username:db_password@ds######.mlab.com:#####/one-tricks
+      - REDIS_KAYN=
+      - REDIS_KAYN_PORT=
+      - REDIS_KAYN_PASSWORD=
+      - REDIS_MH=
+      - REDIS_MH_PORT=
+      - REDIS_MH_PASSWORD=
       - REDIS_PASSWORD=
       - GMAIL_USERNAME=
       - GMAIL_PASSWORD=
