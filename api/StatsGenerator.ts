@@ -66,7 +66,7 @@ const storePlayerStats = (summonerId: number, json: RawPlayerStats) =>
 const getPlayer = (summonerId: number) => Stats.findOne({ summonerId })
 
 export enum Modes {
-    Update, BruteForceAll
+    Update, BruteForceAll, SequentialAll
 }
 
 const main = async (mode = Modes.BruteForceAll) => {
@@ -183,10 +183,8 @@ const main = async (mode = Modes.BruteForceAll) => {
     }
 
     const keys = Object.keys(REGIONS)
-    // Masive amounts of paralle calls seem to break riot-ratelimiter,
-    // keep this at 1 for now and play it safe.
-    const challengersChunkSize = 11
-    const mastersChunkSize = 4
+    const challengersChunkSize = mode !== Modes.SequentialAll ? 11 : 1
+    const mastersChunkSize = mode !== Modes.SequentialAll ? 4 : 1
     const processChunk = async (rank: string, chunk: string[]) =>
         Promise.all(chunk.map(r => processStatsInChunks(rank, (REGIONS as any)[r])))
     for (let i = 0; i < keys.length; i += challengersChunkSize) {

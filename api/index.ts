@@ -114,7 +114,7 @@ router.get('/static-champion-by-name/:name/id', async ctx => {
 
 // TODO: Convert to async / await function.
 const sendUpdateMail = (type: Modes, dateText: string) => {
-    const typeText = type === Modes.Update ? 'update' : 'bruteForceAll'
+    const typeText = type === Modes.Update ? 'update' : (type === Modes.BruteForceAll ? 'bruteForceAll' : 'sequentialAll')
     const currentDate = new Date(Date.now())
     currentDate.setHours(currentDate.getHours() - 7)
     gmail({
@@ -147,9 +147,9 @@ const main = async (mode = Modes.Update) => {
 
         schedule.scheduleJob('35 18 * * 5', async () => {
             console.log('STARTING STATS')
-            sendUpdateMail(Modes.BruteForceAll, "start")
-            await StatsGenerator(Modes.BruteForceAll)
-            sendUpdateMail(Modes.BruteForceAll, "finish")
+            sendUpdateMail(Modes.SequentialAll, "start")
+            await StatsGenerator(Modes.SequentialAll)
+            sendUpdateMail(Modes.SequentialAll, "finish")
             console.log('END STATS')
             console.log('START ONE TRICKS')
             await generator()
