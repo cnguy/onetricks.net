@@ -4,7 +4,7 @@ import kayn from './kayn'
 import { REGIONS } from 'kayn'
 import getStats from './getStats'
 import getStaticChampion from './getStaticChampion'
-import { LeagueV3LeagueListDTO, LolStaticDataV3ChampionDto } from 'kayn/typings/dtos';
+import { LeagueV3LeagueListDTO, LeagueV4LeagueListDTO, LeagueV4LeagueItemDTO } from 'kayn/typings/dtos';
 import { Player } from './mongodb';
 import MatchResponseHelper from './utils/response/MatchResponseHelper';
 
@@ -16,10 +16,10 @@ const isOneTrick = (otGames: number, total: number): boolean => otGames / total 
 
 const getLeagueByRank = async (region: string, rank: string) => {
     if (rank === 'challengers') {
-        return kayn.Challenger.list(TARGET_QUEUE).region(region)
+        return kayn.ChallengerV4.list(TARGET_QUEUE).region(region)
     }
     if (rank === 'masters') {
-        return kayn.Master.list(TARGET_QUEUE).region(region)
+        return kayn.MasterV4.list(TARGET_QUEUE).region(region)
     }
     throw new Error('Parameter `rank` is not correct.')
 }
@@ -29,7 +29,7 @@ const getLeagueByRank = async (region: string, rank: string) => {
  * This is not to be applied to Riot's Static endpoint. It is to be applied to
  * the source (DDragon) instead.
  */
-const createOneTrick = (id: number, wins: number, losses: number, champData: LolStaticDataV3ChampionDto) => {
+const createOneTrick = (id: string, wins: number, losses: number, champData: any) => {
     // Put all bandaid fixes here.
     if (champData && champData.key === 'MonkeyKing') {
         return {
@@ -95,7 +95,7 @@ const insertPlayersIntoDB = async (oneTricks: any[], region: string, rank: strin
 }
 
 // Mutating function... I want to use asyncMapOverChunk from ./stats hmm.
-const chunkGenerate = async (generator: any, entries: LeagueV3LeagueListDTO[]) => {
+const chunkGenerate = async (generator: any, entries: LeagueV4LeagueItemDTO[]) => {
     let results: any[] = []
     const summonersChunkSize = entries.length / 4
     const processChunk = async (chunk: any) => Promise.all(chunk.map(generator))
@@ -131,8 +131,8 @@ const getOneTrick = (region: string) => async ({ wins, losses, playerOrTeamId }:
     const champId = champStats.id
     if (champId !== 0) {
         // Some ID's funnily equaled 0 (in the past).
-        const { summonerId } = playerStats;
-        const { name, accountId } = await kayn.Summoner.by.id(summonerId).region(region)
+        const { summonerId }: { summonerId: string } = playerStats;
+        const { name, accountId } = await kayn.SummonerV4.by.id(summonerId).region(region)
         //        const recentMatchlist = await kayn.Matchlist.Recent.by.accountID(accountId!).region(region).query({ champion: champId, queue: 420 })
         //const matches = await Promise.all(recentMatchlist.matches!.map(async match => await kayn.Match.get(match.gameId!).region(region)))
 

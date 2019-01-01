@@ -1,7 +1,7 @@
-import { MatchV3MatchDto, MatchV3TeamStatsDto, MatchV3ParticipantDto } from "kayn/typings/dtos";
+import { MatchV3MatchDto, MatchV3TeamStatsDto, MatchV3ParticipantDto, MatchV4MatchDto, MatchV4TeamStatsDto } from "kayn/typings/dtos";
 
 class MatchResponseHelper {
-    static findParticipantIdentity = (match: MatchV3MatchDto, summonerID: number) =>
+    static findParticipantIdentity = (match: MatchV4MatchDto, summonerID: string) =>
         match!.participantIdentities!.find(
             ({ player }) =>
                 !player
@@ -9,15 +9,15 @@ class MatchResponseHelper {
                     : player.summonerId === summonerID,
         )
 
-    static findParticipant = (match: MatchV3MatchDto, participantID: number) =>
+    static findParticipant = (match: MatchV4MatchDto, participantID: number) =>
         match!.participants!.find(
             ({ participantId }) => participantId === participantID,
         )
 
-    static didTeamWin = (match: MatchV3MatchDto, teamID: number): boolean =>
+    static didTeamWin = (match: MatchV4MatchDto, teamID: number): boolean =>
         didWin(match!.teams!.find(({ teamId }) => teamId === teamID)!)
 
-    static getChampionWin = (match: MatchV3MatchDto, summonerID: number) => {
+    static getChampionWin = (match: MatchV4MatchDto, summonerID: string) => {
         const { gameId: gameID } = match
 
         const participantIdentity = MatchResponseHelper.findParticipantIdentity(
@@ -40,7 +40,7 @@ class MatchResponseHelper {
         }
     }
 
-    static getMatchInfoForSummoner = (match: MatchV3MatchDto, summonerID: number) => {
+    static getMatchInfoForSummoner = (match: MatchV4MatchDto, summonerID: string) => {
         const participantIdentity = MatchResponseHelper.findParticipantIdentity(
             match,
             summonerID,
@@ -142,6 +142,6 @@ class MatchResponseHelper {
     }
 }
 
-const didWin = ({ win }: MatchV3TeamStatsDto): boolean => win === 'Win'
+const didWin = ({ win }: MatchV4TeamStatsDto): boolean => win === 'Win'
 
 export default MatchResponseHelper

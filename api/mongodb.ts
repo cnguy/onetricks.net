@@ -4,6 +4,7 @@ require('./models')
 
 export const Player = mongoose.model('Player')
 export const Stats = mongoose.model('Stats')
+export const StatsV4 = mongoose.model('StatsV4')
 
 if (process.env.NODE_ENV === 'development') {
     mongoose.connect('mongodb://mongo:27017/one-tricks')

@@ -1,15 +1,15 @@
 export interface RawSummoner {
-    id: number
+    id: string
     name: string
-    accountID: number
+    accountID: string
 }
 
 export class _Summoner {
-    id: number
+    id: string
     name: string
-    accountID: number
+    accountID: string
 
-    constructor(summonerID: number, summonerName: string, accountID: number) {
+    constructor(summonerID: string, summonerName: string, accountID: string) {
         this.id = summonerID
         this.name = summonerName
         this.accountID = accountID
@@ -26,6 +26,6 @@ export class _Summoner {
     }
 }
 
-const Summoner = (id: number, name: string, accountID: number) => new _Summoner(id, name, accountID)
+const Summoner = (id: string, name: string, accountID: string) => new _Summoner(id, name, accountID)
 
 export default Summoner

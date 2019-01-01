@@ -46,5 +46,41 @@ export interface Stats {
     region: string
 }
 
+
+const StatsSchemaV4 = new mongoose.Schema({
+    summonerId: String,
+    accountId: String,
+    puuid: String,
+    champions: [
+        {
+            id: Number,
+            stats: {
+                wins: Number,
+                losses: Number,
+                totalSessionsPlayed: Number,
+            },
+        },
+    ],
+    matchesProcessed: [Number],
+    region: String,
+})
+
+export interface StatsV4 {
+    summonerId: string,
+    accountId: string,
+    puuid: string,
+    champions: {
+        id: number,
+        stats: {
+            wins: number,
+            losses: number,
+            totalSessionsPlayed: number
+        }
+    }[],
+    matchesProcessed: number[]
+    region: string
+}
+
 mongoose.model('Stats', StatsSchema)
 mongoose.model('Player', PlayerSchema)
+mongoose.model('StatsV4', StatsSchemaV4)

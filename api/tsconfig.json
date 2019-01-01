@@ -26,5 +26,5 @@
         "node_modules",
         "tsDist",
         "dist",
-    ]
+    ],
 }

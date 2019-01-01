@@ -2,19 +2,19 @@ import ChampionStats, { RawChampionStats, _ChampionStats } from './ChampionStats
 import { _OneTrick } from './OneTrick';
 
 export interface RawPlayerStats {
-    summonerId: number
+    summonerId: string
     champions: RawChampionStats[]
     matchesProcessed: number[]
     region: string
 }
 
 export class _PlayerStats {
-    summonerID: number
+    summonerID: string
     ChampionStats: _ChampionStats[]
     matchesProcessed: number[]
     region: string
 
-    constructor(summonerID: number, region: string) {
+    constructor(summonerID: string, region: string) {
         this.summonerID = summonerID
         this.ChampionStats = []
         this.matchesProcessed = []
@@ -75,11 +75,11 @@ export class _PlayerStats {
     }
 }
 
-const PlayerStats = (summonerID: number, region: string) =>
+const PlayerStats = (summonerID: string, region: string) =>
     new _PlayerStats(summonerID, region)
 
 export const loadPlayerStats = (playerStats: RawPlayerStats) => {
-    const p = PlayerStats(0, "")
+    const p = PlayerStats("", "")
     p.load(playerStats)
     return p
 }

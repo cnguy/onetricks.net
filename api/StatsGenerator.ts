@@ -11,7 +11,7 @@ import RegionHelper from 'kayn/dist/lib/Utils/RegionHelper'
 
 const { asPlatformID } = RegionHelper
 
-import { Stats, Player } from './mongodb'
+import { StatsV4, Player } from './mongodb'
 
 import ChampionStats from './entities/ChampionStats'
 import OneTrick from './entities/OneTrick'
@@ -25,14 +25,14 @@ import MatchResponseHelper from './utils/response/MatchResponseHelper'
 
 import LeagueKaynHelper from './utils/kayn-dependent/LeagueKaynHelper'
 import MatchlistKaynHelper from './utils/kayn-dependent/MatchlistKaynHelper'
-import { MatchV3MatchDto } from 'kayn/typings/dtos';
+import { MatchV3MatchDto, MatchV4MatchDto } from 'kayn/typings/dtos';
 
 const LEAGUE_QUEUE = 'RANKED_SOLO_5x5'
 
 // Local Helpers
 
 // processMatch is a mutating function dependent on the PlayerStats class.
-const processMatch = (playerStats: _PlayerStats) => (match: MatchV3MatchDto) => {
+const processMatch = (playerStats: _PlayerStats) => (match: MatchV4MatchDto) => {
     const summonerID = playerStats.summonerID
     const data = MatchResponseHelper.getChampionWin(match, summonerID)
     if (!data) return
@@ -47,8 +47,8 @@ const processMatch = (playerStats: _PlayerStats) => (match: MatchV3MatchDto) => 
 const inPlatform = (region: string) => ({ platformId: platformID }: MatchV3MatchDto) =>
     platformID!.toLowerCase() === asPlatformID(region)
 
-const storePlayerStats = (summonerId: number, json: RawPlayerStats) =>
-    Stats.findOneAndUpdate(
+const storePlayerStats = (summonerId: string, json: RawPlayerStats) =>
+    StatsV4.findOneAndUpdate(
         {
             summonerId,
         },
@@ -63,7 +63,7 @@ const storePlayerStats = (summonerId: number, json: RawPlayerStats) =>
         },
     )
 
-const getPlayer = (summonerId: number) => Stats.findOne({ summonerId })
+const getPlayer = (summonerId: string) => StatsV4.findOne({ summonerId })
 
 export enum Modes {
     Update, BruteForceAll, SequentialAll
@@ -88,7 +88,7 @@ const main = async (mode = Modes.BruteForceAll) => {
         },
     })
 
-    const tryCatchGetPlayerStats = async (summonerId: number, region: string) => {
+    const tryCatchGetPlayerStats = async (summonerId: string, region: string) => {
         try {
             const player: any = await getPlayer(summonerId)
             return loadPlayerStats(player)
@@ -97,7 +97,7 @@ const main = async (mode = Modes.BruteForceAll) => {
         }
     }
 
-    const makeOne = async (summonerID: number, accountID: number, region: string) => {
+    const makeOne = async (summonerID: string, accountID: string, region: string) => {
         console.log('Processing:', summonerID, accountID, region)
         const playerStats = await tryCatchGetPlayerStats(summonerID, region) // This is named `fullListOfMatches` because it's a list of the match
         // objects, not matchlist objects.
@@ -166,7 +166,7 @@ const main = async (mode = Modes.BruteForceAll) => {
                 } else if (mode === Modes.Update) {
                     // async filter not possible btw so just gonna use map
                     const summonersNotInDatabase = (await Promise.all(sliceToProcess.map(async (summoner) => {
-                        const count = await Stats.count({ summonerId: summoner.id }).exec()
+                        const count = await StatsV4.count({ summonerId: summoner.id }).exec()
                         return (count === 0) ? summoner : undefined
                     }))).filter(Boolean)
                     sliceToProcess = (summonersNotInDatabase as RawSummoner[])

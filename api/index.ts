@@ -1,3 +1,5 @@
+/// <reference path="gmail-send.d.ts" />
+
 import * as cors from 'koa2-cors'
 import * as koa from 'koa'
 import * as koaCompress from 'koa-compress'
@@ -132,6 +134,7 @@ const sendUpdateMail = (type: Modes, dateText: string) => {
 const main = async (mode = Modes.Update) => {
     try {
         // NOTE: Docker uses UTC time!!!
+        /*
         schedule.scheduleJob('25 5 * * *', async () => {
             console.log('STARTING STATS')
             sendUpdateMail(Modes.Update, "start")
@@ -154,7 +157,11 @@ const main = async (mode = Modes.Update) => {
             console.log('START ONE TRICKS')
             await generator()
             console.log('END ONE TRICKS')
-        })
+            })
+            */
+        const s = await kayn.SummonerV4.by.name('Contractz')
+        console.log(s)
+        console.log(s.summonerLevel!)
     } catch (ex) {
         console.error(ex)
     }

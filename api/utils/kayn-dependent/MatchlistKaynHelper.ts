@@ -28,17 +28,17 @@ class MatchlistKaynHelper {
     }
 
     static getRankedMatchlistForIndexQuery = (kayn: kayn.KaynClass) => (
-        accountID: number,
+        accountID: string,
         region: string,
         indexQuery?: { beginIndex?: number, endIndex?: number },
     ) =>
-        kayn.Matchlist.by
+        kayn.MatchlistV4.by
             .accountID(accountID)
             .region(region)
             .query(MATCHLIST_CONFIG)
             .query(indexQuery || {})
 
-    static getEntireMatchlist = (kayn: kayn.KaynClass) => async (accountID: number, region: string) => {
+    static getEntireMatchlist = (kayn: kayn.KaynClass) => async (accountID: string, region: string) => {
         const {
             matches,
             totalGames,

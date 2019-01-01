@@ -8,7 +8,7 @@ const { asPlatformID } = RegionHelper
 
 import { getStaticChampionByName } from './getStaticChampion'
 import MatchResponseHelper from './utils/response/MatchResponseHelper'
-import { MatchV3MatchDto } from 'kayn/typings/dtos';
+import { MatchV3MatchDto, MatchV4MatchDto } from 'kayn/typings/dtos';
 import { MongoError } from 'mongodb';
 import { Player } from './mongodb';
 import { Player as PlayerType } from './models';
@@ -27,15 +27,15 @@ const findPlayers = async (ranks: string[], regions: string[]): Promise<any> =>
         )
     })
 
-const processMatch = (match: MatchV3MatchDto, summonerId: number) => {
+const processMatch = (match: MatchV4MatchDto, summonerId: string) => {
     // kda, summoners, champ that they were against, did they win?
     return MatchResponseHelper.getMatchInfoForSummoner(match, summonerId)
 }
 
 interface MatchHistoryItem {
-    accountId: number,
+    accountId: string,
     name: string,
-    summonerId: number,
+    summonerId: string,
     gameId: number,
     championId: number,
     timestamp: number,
@@ -109,7 +109,7 @@ const processPlayers = async (players: PlayerType[], championId: number, roleNum
                             platformId,
                             region,
                         }),
-            )
+                )
                 .filter(({ role, platformId, region }: { role: string | null, platformId: string, region: string }) => {
                     // Ignore matches not in user's current region.
                     if (platformId.toLowerCase() !== asPlatformID(region)) {
@@ -143,7 +143,7 @@ const processPlayers = async (players: PlayerType[], championId: number, roleNum
             summonerId,
             ...rest,
             ...processMatch(
-                await kayn.Match.get(gameId).region(region),
+                await kayn.MatchV4.get(gameId).region(region),
                 summonerId,
             ),
         })),

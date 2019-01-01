@@ -1,16 +1,16 @@
 import Summoner, { RawSummoner } from '../../entities/Summoner'
-import { LeagueV3LeagueListDTO, LeagueV3LeaguePositionDTO } from 'kayn/typings/dtos';
+import { LeagueV3LeagueListDTO, LeagueV3LeaguePositionDTO, LeagueV4LeaguePositionDTO } from 'kayn/typings/dtos';
 import * as kayn from 'kayn'
 
 class LeagueKaynHelper {
     static leagueEntryToSummoner = (kayn: kayn.KaynClass) => (region: string) => async ({
-        playerOrTeamId,
-        playerOrTeamName,
-    }: LeagueV3LeaguePositionDTO): Promise<RawSummoner> =>
+        summonerId,
+        summonerName,
+    }: LeagueV4LeaguePositionDTO): Promise<RawSummoner> =>
         Summoner(
-            parseInt(playerOrTeamId!),
-            playerOrTeamName!,
-            (await kayn.Summoner.by.id(parseInt(playerOrTeamId!)).region(region))
+            summonerId!,
+            summonerName!,
+            (await kayn.SummonerV4.by.id(summonerId!).region(region))
                 .accountId!,
         ).asObject()
 }
