@@ -74,7 +74,7 @@ let getMatchHistoryForChampionAndRegions =
       ~regions: Region.regions,
       ~championId: int,
       ~roles: Role.roles,
-      cb: option(miniGameRecords) => unit,
+      cb: Result.t(miniGameRecords, string) => unit,
     ) => {
   let requestURL =
     url
@@ -91,9 +91,9 @@ let getMatchHistoryForChampionAndRegions =
     Fetch.fetch(requestURL)
     |> then_(Fetch.Response.json)
     |> then_(payload =>
-         Some(Decoder.miniGameRecords(payload)) |> cb |> resolve
+         Result.Ok(Decoder.miniGameRecords(payload)) |> cb |> resolve
        )
-    |> catch(_error => None |> cb |> resolve)
+    |> catch(_error => Result.Error("") |> cb |> resolve)
   )
   |> ignore;
 };

@@ -1,12 +1,14 @@
 open Types;
+open RequestStatus;
+open Result;
 
 type action =
-  | SetMatches(option(miniGameRecords), bool);
+  | LoadMatches
+  | ReceiveMatches(Result.t(miniGameRecords, string));
 
 type state = {
-  matches: option(miniGameRecords),
   /* Note that isLoading does not reset back to false on regions change at the moment. */
-  isLoading: bool,
+  matches: RequestStatus.t(Result.t(miniGameRecords, string)),
 };
 
 let component = ReasonReact.reducerComponent("MatchHistory");
@@ -80,31 +82,34 @@ let make =
           payload =>
           cb(payload)
         )
-      | None => cb(None)
+      | None => cb(Error(""))
       }
     )
     |> ignore;
   {
     ...component,
-    initialState: () => {matches: Some([]), isLoading: true},
+    initialState: () => {matches: NotAsked},
     reducer: (action, _state) =>
       switch (action) {
-      | SetMatches(matches, isLoading) =>
-        ReasonReact.Update({matches, isLoading})
+      | LoadMatches =>
+        UpdateWithSideEffects(
+          {matches: Loading},
+          (({send}) => update(payload => send(ReceiveMatches(payload)))),
+        )
+      | ReceiveMatches(payload) => Update({matches: Done(payload)})
       },
-    didMount: self => update(p => self.send(SetMatches(p, false))),
+    didMount: self => self.send(LoadMatches),
     willReceiveProps: self => {
-      self.send(SetMatches(self.state.matches, true));
-      update(p => self.send(SetMatches(p, false)));
+      self.send(LoadMatches);
       self.state;
     },
     render: self =>
-      switch (self.state.isLoading, self.state.matches) {
-      | (false, Some([])) =>
+      switch (self.state.matches) {
+      | Done(Ok([])) =>
         ReactUtils.ste(
           "No games found. Either there are no one tricks playing this champion in this region or set of regions, or the current players probably do not play their one trick champions anymore.",
         )
-      | (false, Some(matches)) =>
+      | Done(Ok(matches)) =>
         <table className=Styles.table>
           <thead>
             <tr>
@@ -216,11 +221,11 @@ let make =
             )
           </tbody>
         </table>
-      | (false, None) =>
+      | Done(Error(_)) =>
         ReactUtils.ste(
           "There was an error with the server. Sorry about this! It'll probably be fixed by the next day.",
         )
-      | (true, _) =>
+      | _ =>
         ReactUtils.ste(
           "Currently loading match history! Please wait. This might take a while if the data is uncached.",
         )

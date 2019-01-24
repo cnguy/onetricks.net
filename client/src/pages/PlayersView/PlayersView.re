@@ -3,12 +3,12 @@ open Types;
 type retainedProps = Region.regions;
 
 type action =
-  | SetMatches(option(miniGameRecords), bool);
+  | LoadMatches
+  | ReceiveMatches(Result.t(miniGameRecords, string));
 
 type state = {
-  matches: option(miniGameRecords),
   /* Note that isLoading does not reset back to false on regions change at the moment. */
-  isLoading: bool,
+  matches: RequestStatus.t(Result.t(miniGameRecords, string)),
 };
 
 let component =
@@ -87,24 +87,27 @@ let make =
           payload =>
           cb(payload)
         )
-      | None => cb(None)
+      | None => cb(Error(""))
       }
     )
     |> ignore;
   {
     ...component,
+    initialState: () => {matches: NotAsked},
     retainedProps: regions,
-    initialState: () => {matches: Some([]), isLoading: true},
     reducer: (action, _state) =>
       switch (action) {
-      | SetMatches(matches, isLoading) =>
-        ReasonReact.Update({matches, isLoading})
+      | LoadMatches =>
+        UpdateWithSideEffects(
+          {matches: Loading},
+          (({send}) => update(payload => send(ReceiveMatches(payload)))),
+        )
+      | ReceiveMatches(payload) => Update({matches: Done(payload)})
       },
-    didMount: self => update(p => self.send(SetMatches(p, false))),
+    didMount: self => self.send(LoadMatches),
     willReceiveProps: self => {
       if (self.retainedProps != regions) {
-        self.send(SetMatches(self.state.matches, true));
-        update(p => self.send(SetMatches(p, false)));
+        self.send(LoadMatches);
       };
       self.state;
     },
@@ -143,12 +146,12 @@ let make =
             <WinRate wins losses />
             <div>
               (
-                switch (self.state.isLoading, self.state.matches) {
-                | (false, Some([])) =>
+                switch (self.state.matches) {
+                | Done(Ok([])) =>
                   ReactUtils.ste(
                     "No games found to calculate past 100 matches stats.",
                   )
-                | (false, Some(matches)) =>
+                | Done(Ok(matches)) =>
                   let (wins, losses) =
                     matches
                     |> List.fold_left(
@@ -227,12 +230,11 @@ let make =
                     <WinRate wins losses />
                     (ReactUtils.lte(winsLossesByRoleComps))
                   </div>;
-                | (false, None) =>
+                | Done(Error(_)) =>
                   ReactUtils.ste(
                     "There was an error with the server. Sorry about this! It'll probably be fixed by the next day.",
                   )
-                | (true, _) =>
-                  ReactUtils.ste("Currently loading past games stats...")
+                | _ => ReactUtils.ste("Currently loading past games stats...")
                 }
               )
             </div>
