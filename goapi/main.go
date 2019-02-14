@@ -8,15 +8,13 @@ import (
 	"os"
 	"time"
 
-	"github.com/mongodb/mongo-go-driver/bson"
-
 	"github.com/gorilla/mux"
 	"github.com/joho/godotenv"
 	"github.com/mongodb/mongo-go-driver/mongo"
 
-	"github.com/cnguy/riot/apiclient"
-	"github.com/cnguy/riot/constants/region"
-	"github.com/cnguy/riot/ratelimit"
+	"github.com/yuhanfang/riot/apiclient"
+	"github.com/yuhanfang/riot/constants/region"
+	"github.com/yuhanfang/riot/ratelimit"
 )
 
 func respondWithJSON(w http.ResponseWriter, statusCode int, payload interface{}) {
@@ -40,28 +38,14 @@ type oneTrick struct {
 	Region string `json:"region"`
 }
 
-func (app *app) getThings(w http.ResponseWriter, r *http.Request) {
-	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
-	collection := app.Database.Database("one-tricks").Collection("players")
-
-	cursor, err := collection.Find(app.Context, bson.D{})
-	if err != nil {
-		println("getThings err:", err)
-		respondWithError(w, http.StatusInternalServerError, err.Error())
-	}
-	var oneTricks []oneTrick
-	for cursor.Next(ctx) {
-		var result bson.M
-		var oneTrick oneTrick
-		err := cursor.Decode(&result)
-		if err != nil {
-			log.Fatal(err)
-		}
-		bsonBytes, _ := bson.Marshal(result)
-		bson.Unmarshal(bsonBytes, &oneTrick)
-		oneTricks = append(oneTricks, oneTrick)
-	}
-	respondWithJSON(w, http.StatusOK, oneTricks)
+type oneTrickV4 struct {
+	AccountID string        `json:"accountId"`
+	Champ     string        `json:"championName"`
+	Wins      int           `json:"wins"`
+	Losses    int           `json:"losses"`
+	Name      string        `json:"name"`
+	Rank      string        `json:"rank"`
+	Region    region.Region `json:"region"`
 }
 
 type app struct {
@@ -102,10 +86,6 @@ func (app *app) initialize() {
 
 }
 
-func (app *app) initializeRoutes() {
-	app.Router.HandleFunc("/api/v1/test", app.getThings).Methods("GET")
-}
-
 func (app *app) run() {
 	port := "4000"
 	log.Fatal(http.ListenAndServe(":"+port, app.Router))
@@ -114,7 +94,7 @@ func (app *app) run() {
 func main() {
 	app := app{}
 	app.initialize()
-	aggregator := NewAggregator(app.RiotAPI, &InMemorySink{})
+	aggregator := newAggregator(app.RiotAPI, &inMemorySink{})
 	err := aggregator.GenerateStats(app.Context, region.NA1)
 	if err != nil {
 		println("error generating stats", err.Error())

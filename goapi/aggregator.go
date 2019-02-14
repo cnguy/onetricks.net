@@ -7,12 +7,12 @@ import (
 	"sync"
 	"time"
 
-	"github.com/cnguy/riot/apiclient"
-	"github.com/cnguy/riot/constants/queue"
-	"github.com/cnguy/riot/constants/region"
+	"github.com/yuhanfang/riot/apiclient"
+	"github.com/yuhanfang/riot/constants/queue"
+	"github.com/yuhanfang/riot/constants/region"
 )
 
-type Match struct {
+type match struct {
 	GameID       int64
 	PlatformID   string
 	GameCreation int64
@@ -21,30 +21,30 @@ type Match struct {
 	AccountIDs   []string
 }
 
-type Sink interface {
-	DoesMatchExist(ctx context.Context, r region.Region, matchID int64) (bool, error)
-	SaveMatches(ctx context.Context, matches []Match) error
+type sink interface {
+	doesMatchExist(ctx context.Context, r region.Region, matchID int64) (bool, error)
+	saveMatches(ctx context.Context, matches []match) error
 }
 
-type InMemorySink struct{}
+type inMemorySink struct{}
 
-func (sink *InMemorySink) DoesMatchExist(ctx context.Context, r region.Region, matchID int64) (bool, error) {
+func (sink *inMemorySink) doesMatchExist(ctx context.Context, r region.Region, matchID int64) (bool, error) {
 	return false, nil
 }
-func (sink *InMemorySink) SaveMatches(ctx context.Context, matches []Match) error {
+func (sink *inMemorySink) saveMatches(ctx context.Context, matches []match) error {
 	return nil
 }
 
-type Aggregator struct {
+type aggregator struct {
 	client apiclient.Client
-	sink   Sink
+	sink   sink
 }
 
-func NewAggregator(client apiclient.Client, sink Sink) *Aggregator {
-	return &Aggregator{client: client, sink: sink}
+func newAggregator(client apiclient.Client, sink sink) *aggregator {
+	return &aggregator{client: client, sink: sink}
 }
 
-func (aggregator *Aggregator) getAccountIDsInLeague(ctx context.Context, region region.Region, league *apiclient.LeagueList) ([]string, error) {
+func (aggregator *aggregator) getAccountIDsInLeague(ctx context.Context, region region.Region, league *apiclient.LeagueList) ([]string, error) {
 	var (
 		accounts   = make(chan string)
 		accountIDs []string
@@ -89,7 +89,7 @@ func (aggregator *Aggregator) getAccountIDsInLeague(ctx context.Context, region 
 	return accountIDs, nil
 }
 
-func (aggregator *Aggregator) getMatchIDsFromMatchlist(ctx context.Context, region region.Region, accountID string, matchlist apiclient.Matchlist) ([]int64, error) {
+func (aggregator *aggregator) getMatchIDsFromMatchlist(ctx context.Context, region region.Region, accountID string, matchlist apiclient.Matchlist) ([]int64, error) {
 	queues := []queue.Queue{queue.RankedSolo5x5}
 	beginTime := int64(1548316800 * 1000 * 1000 * 1000)
 	beginTimeT := time.Unix(beginTime/1000/1000/1000, 0)
@@ -122,12 +122,11 @@ func (aggregator *Aggregator) getMatchIDsFromMatchlist(ctx context.Context, regi
 	return matchIDs, nil
 }
 
-func (aggregator *Aggregator) GetSinkMatchesFromMatchIDs(ctx context.Context, region region.Region, matchIDs []int64) ([]Match, error) {
-	matches := make([]Match, len(matchIDs))
+func (aggregator *aggregator) GetSinkMatchesFromMatchIDs(ctx context.Context, region region.Region, matchIDs []int64) ([]match, error) {
+	matches := make([]match, len(matchIDs))
 
-	for i, matchID := range matchIDs {
-		println(matchID)
-		match, err := aggregator.client.GetMatch(ctx, region, matchID)
+	for i, id := range matchIDs {
+		m, err := aggregator.client.GetMatch(ctx, region, id)
 		if err != nil {
 			println("GetSinkMatchesFromMatchIDs err:", err.Error())
 		} else {
@@ -137,26 +136,24 @@ func (aggregator *Aggregator) GetSinkMatchesFromMatchIDs(ctx context.Context, re
 				accountIDs  []string
 			)
 
-			for _, participantIdentity := range match.ParticipantIdentities {
-				accountIDs = append(accountIDs, participantIdentity.Player.CurrentAccountID)
+			// The order of `ParticipantIdentities` and `Participants` should be the same.
+			for i := range m.ParticipantIdentities {
+				accountIDs = append(accountIDs, m.ParticipantIdentities[i].Player.CurrentAccountID)
+				championIDs = append(championIDs, int(m.Participants[i].ChampionID))
 			}
 
-			for _, participant := range match.Participants {
-				championIDs = append(championIDs, int(participant.ChampionID))
-			}
-
-			if match.Teams[0].Win == "Win" {
+			if m.Teams[0].Win == "Win" {
 				win = 1
-			} else if match.Teams[1].Win == "Win" {
+			} else if m.Teams[1].Win == "Win" {
 				win = 2
 			} else {
 				win = 0
 			}
 
-			sinkMatch := Match{
-				GameID:       match.GameID,
-				PlatformID:   match.PlatformID,
-				GameCreation: match.GameCreation.Duration().Nanoseconds(),
+			sinkMatch := match{
+				GameID:       m.GameID,
+				PlatformID:   m.PlatformID,
+				GameCreation: m.GameCreation.Duration().Nanoseconds(),
 				Win:          win,
 				ChampionIDs:  championIDs,
 				AccountIDs:   accountIDs,
@@ -169,7 +166,7 @@ func (aggregator *Aggregator) GetSinkMatchesFromMatchIDs(ctx context.Context, re
 	return matches, nil
 }
 
-func (aggregator *Aggregator) GetMatchIDsForAccounts(ctx context.Context, region region.Region, accountIDs []string) ([]int64, error) {
+func (aggregator *aggregator) GetMatchIDsForAccounts(ctx context.Context, region region.Region, accountIDs []string) ([]int64, error) {
 	matchIDs := make([]int64, 0)
 
 	for _, accountID := range accountIDs {
@@ -187,7 +184,7 @@ func (aggregator *Aggregator) GetMatchIDsForAccounts(ctx context.Context, region
 			if err == nil {
 				println("len of ms", len(ms))
 				for _, m := range ms {
-					exists, err := aggregator.sink.DoesMatchExist(ctx, region, m)
+					exists, err := aggregator.sink.doesMatchExist(ctx, region, m)
 					if err != nil {
 						log.Printf("MatchExists failed for region %s game %d: %v", region, m, err)
 					}
@@ -206,7 +203,7 @@ func (aggregator *Aggregator) GetMatchIDsForAccounts(ctx context.Context, region
 	return matchIDs, nil
 }
 
-func (aggregator *Aggregator) GenerateStats(ctx context.Context, region region.Region) error {
+func (aggregator *aggregator) GenerateStats(ctx context.Context, region region.Region) error {
 	println("generating stats")
 	// Load Master, Challenger, and Grandmaster leagues.
 	masters, err := aggregator.client.GetMasterLeague(ctx, region, queue.RankedSolo5x5)
