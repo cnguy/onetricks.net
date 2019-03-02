@@ -3,7 +3,8 @@ open Types;
 let player = json =>
   Json.Decode.{
     championName: json |> field("champ", string),
-    id: json |> field("id", int),
+    accountId: json |> field("accountId", string),
+    /*id: json |> field("id", int),*/
     name: json |> field("name", string),
     rank: json |> field("rank", string) |> Rank.fromString,
     region: json |> field("region", string) |> Region.fromString,
@@ -55,8 +56,8 @@ let miniGameRecord = json =>
   Json.Decode.{
     gameId: json |> field("gameId", int),
     region: json |> field("region", string) |> Region.fromString,
-    summonerId: json |> field("summonerId", int),
-    accountId: json |> field("accountId", int),
+    summonerId: json |> field("summonerId", string),
+    accountId: json |> field("accountId", string),
     name: json |> field("name", string),
     championId: json |> field("championId", int),
     timestamp: json |> field("timestamp", int),

@@ -1,6 +1,6 @@
 type player = {
   championName: string,
-  id: int,
+  accountId: string,
   name: string,
   rank: Rank.rank,
   region: Region.region,
@@ -60,8 +60,8 @@ type perks = {
 type miniGameRecord = {
   gameId: int,
   region: Region.region,
-  summonerId: int,
-  accountId: int,
+  summonerId: string,
+  accountId: string,
   name: string,
   championId: int,
   timestamp: int,

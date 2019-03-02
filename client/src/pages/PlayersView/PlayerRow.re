@@ -25,13 +25,6 @@ let generateOpGGLink = (region, name) =>
     "https://" ++ region ++ ".op.gg/summoner/userName=" ++ name;
   };
 
-let generateLink = (name, region, opgg, id) =>
-  if (opgg) {
-    generateOpGGLink(region, name);
-  } else {
-    "http://www.lolking.net/summoner/" ++ region ++ "/" ++ id ++ "/" ++ name;
-  };
-
 let make = (~number: int, ~player: Types.player, _children) => {
   ...component,
   render: _self =>
@@ -51,12 +44,7 @@ let make = (~number: int, ~player: Types.player, _children) => {
         <a
           className="table-player-link"
           href=(
-            generateLink(
-              player.name,
-              player.region |> Region.toString,
-              true,
-              string_of_int(player.id),
-            )
+            generateOpGGLink(player.region |> Region.toString, player.name)
           )
           target="_blank"
           rel="noopener noreferrer">
@@ -80,32 +68,11 @@ let make = (~number: int, ~player: Types.player, _children) => {
         <a
           className="table-player-link"
           href=(
-            generateLink(
-              player.name,
-              player.region |> Region.toString,
-              true,
-              string_of_int(player.id),
-            )
+            generateOpGGLink(player.region |> Region.toString, player.name)
           )
           target="_blank"
           rel="noopener noreferrer">
           (player.region |> Region.toString |> ReactUtils.ste)
-        </a>
-      </td>
-      <td className="players-table-td">
-        <a
-          className="table-player-link"
-          href=(
-            generateLink(
-              player.name,
-              player.region |> Region.toString,
-              false,
-              string_of_int(player.id),
-            )
-          )
-          target="_blank"
-          rel="noopener noreferrer">
-          (ReactUtils.ste("go"))
         </a>
       </td>
     </tr>,

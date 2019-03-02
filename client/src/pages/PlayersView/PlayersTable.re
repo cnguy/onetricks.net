@@ -46,7 +46,6 @@ let make = (~onSort, ~sortKey, ~sortReverse, ~renderableList, _children) => {
             )
           )
           <th className=Styles.th> (ReactUtils.ste("op.gg")) </th>
-          <th className=Styles.th> (ReactUtils.ste("lolking")) </th>
         </tr>
       </thead>
       <tbody> (ReactUtils.lte(renderableList)) </tbody>

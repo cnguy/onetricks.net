@@ -123,12 +123,8 @@ let make =
           }
         )
         |> (if (sortReverse) {List.rev} else {Sorts.id})
-        |> List.mapi((index, player) =>
-             <PlayerRow
-               key=(string_of_int(player.id))
-               number=(index + 1)
-               player
-             />
+        |> List.mapi((index, player: Types.player) =>
+             <PlayerRow key=player.accountId number=(index + 1) player />
            );
       let (wins, losses) = players |> getOverallWinRate;
       if (show) {
