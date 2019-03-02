@@ -94,10 +94,11 @@ func (app *app) run() {
 func main() {
 	app := app{}
 	app.initialize()
-	aggregator := newAggregator(app.RiotAPI, &inMemorySink{})
-	err := aggregator.GenerateStats(app.Context, region.NA1)
-	if err != nil {
-		println("error generating stats", err.Error())
-	}
+	/*
+		aggregator := newAggregator(app.RiotAPI, &inMemorySink{})
+		err := aggregator.GenerateStats(app.Context, region.NA1)
+		if err != nil {
+			println("error generating stats", err.Error())
+		}*/
 	// app.run()
 }
