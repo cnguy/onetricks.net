@@ -14,9 +14,9 @@ let make = (~areChampionPanesMerged, ~onClick, _children) => {
             (
               ReactUtils.ste(
                 if (areChampionPanesMerged) {
-                  "Separate into Challenger's and Master's sections"
+                  "Separate into Challenger's, Grandmaster's, & Master's sections"
                 } else {
-                  "Merge Challenger's and Master's sections"
+                  "Merge Challenger's, Grandmaster's, & Master's sections"
                 },
               )
             )

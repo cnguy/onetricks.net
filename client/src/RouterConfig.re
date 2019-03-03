@@ -15,6 +15,8 @@ let routeFromUrl = (url: ReasonReact.Router.url) =>
   | (["champions", championName], "") => PlayersView(championName, Rank.All)
   | (["champions", championName], "rank=challenger") =>
     PlayersView(championName, Rank.Challenger)
+  | (["champions", championName], "rank=grandmasters") =>
+    PlayersView(championName, Rank.Grandmasters)
   | (["champions", championName], "rank=masters") =>
     PlayersView(championName, Rank.Masters)
   | (["champions", championName, "matchups"], "") =>

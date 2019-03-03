@@ -4,15 +4,20 @@ let challengerIcon: string = [%bs.raw
   {| require('../../assets/rank-icons/challengers.png') |}
 ];
 
+let grandmasterIcon: string = [%bs.raw
+  {| require('../../assets/rank-icons/grandmaster.png') |}
+];
+
 let mastersIcon: string = [%bs.raw
   {| require('../../assets/rank-icons/masters.png') |}
 ];
 
 let getRankIcon = (~rank) =>
-  if (rank == "c") {
-    challengerIcon;
-  } else {
-    mastersIcon /* Obviously not good if we have multiple ranks. */;
+  switch (rank) {
+  | "c" => challengerIcon
+  | "g" => grandmasterIcon
+  | "m" => mastersIcon
+  | _ => mastersIcon
   };
 
 let getRankImage = rank =>

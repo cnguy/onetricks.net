@@ -15,29 +15,29 @@ let make =
     ...component,
     render: _self =>
       <div>
-        {
+        (
           if (isMultiRegionFilterOn && List.length(regions) == 0) {
             <div className="empty-results">
-              {ReactUtils.ste("No region is selected.")}
+              (ReactUtils.ste("No region is selected."))
             </div>;
           } else {
             ReasonReact.null;
           }
-        }
-        {
+        )
+        (
           if (areChampionPanesMerged) {
             if (List.length(allPlayers) > 0) {
               <div className="content-pane merged-pane">
                 <div className="rank-pane">
                   <h5 className="rank-header">
-                    {
+                    (
                       ReactUtils.ste(
                         createHeaderText(
                           allPlayers,
-                          "Challenger & Masters One Tricks in",
+                          "Challenger, Grandmasters, & Masters One Tricks in",
                         ),
                       )
-                    }
+                    )
                   </h5>
                   <ChampionPane champions=allPlayers />
                 </div>
@@ -46,32 +46,40 @@ let make =
               ReasonReact.null;
             };
           } else {
+            /* How to utilize partition instead of multiple O(n) filters? */
             let challengers =
               OneTricksHelpers.filterPlayersByRank(
                 allPlayers,
                 ~rank=Rank.Challenger,
+              );
+            let grandmasters =
+              OneTricksHelpers.filterPlayersByRank(
+                allPlayers,
+                ~rank=Rank.Grandmasters,
               );
             let masters =
               OneTricksHelpers.filterPlayersByRank(
                 allPlayers,
                 ~rank=Rank.Masters,
               );
-            if (List.length(challengers) === 0 && List.length(masters) === 0) {
+            if (List.length(challengers) === 0
+                && List.length(grandmasters) === 0
+                && List.length(masters) === 0) {
               ReasonReact.null;
             } else {
               <div className="content-pane separated-pane">
-                {
+                (
                   if (List.length(challengers) > 0) {
                     <div className="rank-pane challengers-pane">
                       <h5 className="rank-header">
-                        {
+                        (
                           ReactUtils.ste(
                             createHeaderText(
                               challengers,
                               "Challenger One Tricks in",
                             ),
                           )
-                        }
+                        )
                       </h5>
                       <ChampionPane
                         champions=challengers
@@ -81,19 +89,41 @@ let make =
                   } else {
                     ReasonReact.null;
                   }
-                }
-                {
+                )
+                (
+                  if (List.length(grandmasters) > 0) {
+                    <div className="rank-pane grandmasters-pane">
+                      <h5 className="rank-header">
+                        (
+                          ReactUtils.ste(
+                            createHeaderText(
+                              masters,
+                              "Grandmasters One Trick Ponies in",
+                            ),
+                          )
+                        )
+                      </h5>
+                      <ChampionPane
+                        champions=grandmasters
+                        leagueType=Rank.Grandmasters
+                      />
+                    </div>;
+                  } else {
+                    ReasonReact.null;
+                  }
+                )
+                (
                   if (List.length(masters) > 0) {
                     <div className="rank-pane masters-pane">
                       <h5 className="rank-header">
-                        {
+                        (
                           ReactUtils.ste(
                             createHeaderText(
                               masters,
                               "Masters One Trick Ponies in",
                             ),
                           )
-                        }
+                        )
                       </h5>
                       <ChampionPane
                         champions=masters
@@ -103,11 +133,11 @@ let make =
                   } else {
                     ReasonReact.null;
                   }
-                }
+                )
               </div>;
             };
           }
-        }
+        )
       </div>,
   };
 };
