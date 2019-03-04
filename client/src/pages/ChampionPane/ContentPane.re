@@ -97,7 +97,7 @@ let make =
                         (
                           ReactUtils.ste(
                             createHeaderText(
-                              masters,
+                              grandmasters,
                               "Grandmasters One Trick Ponies in",
                             ),
                           )
