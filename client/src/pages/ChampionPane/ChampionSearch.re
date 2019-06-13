@@ -12,11 +12,7 @@ module Styles = {
     ]);
 };
 
-let searchIcon: string = [%bs.raw
-  {|
-  require("../../assets/misc/search.svg")
-|}
-];
+let searchIcon = "http://media.onetricks.net/images/misc/search.svg";
 
 let make = (~onChange, ~value: string, _children) => {
   ...component,

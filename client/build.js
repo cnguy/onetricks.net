@@ -12,3 +12,4 @@ webpackConfigProd.plugins.push(
 )
 
 require("reason-scripts/scripts/build")
+

@@ -1,38 +1,35 @@
-  {
-    "name": "onetricks.net",
-    "reason": {
-      "react-jsx": 2
+{
+  "name": "react-hooks-template",
+  "reason": {
+    "react-jsx": 2
+  },
+  "package-specs": [
+    {
+      "module": "commonjs",
+      "in-source": true
+    }
+  ],
+  "suffix": ".bs.js",
+  "namespace": true,
+  "refmt": 3,
+  "bs-dependencies": [
+    "reason-react",
+    "reason-reroute",
+    "bs-fetch",
+    "@glennsl/bs-json",
+    "bs-css"
+  ],
+  "bs-dev-dependencies": [
+    "@glennsl/bs-jest"
+  ],
+  "sources": [
+    {
+      "dir": "src",
+      "subdirs": true
     },
-    "bs-dependencies": [
-      "reason-react",
-      "reason-reroute",
-      "bs-fetch",
-      "@glennsl/bs-json",
-      "bs-css"
-    ],
-    "bs-dev-dependencies": [
-      "@glennsl/bs-jest"
-    ],
-    "sources": [
-      {
-        "dir": "src",
-        "subdirs": true
-      },
-      {
-        "dir": "__tests__",
-        "type": "dev"
-      }
-    ],
-    "package-specs": [
-      {
-        "module": "commonjs",
-        "in-source": true
-      }
-    ],
-    "refmt": 3,
-    "suffix": ".js", /* use this instead of .bs.js, reason-scripts relies on .js */
-    "bsc-flags": [
-      "-bs-no-version-header",
-      "-bs-super-errors"
-    ]
-  }
+    {
+      "dir": "__tests__",
+      "type": "dev"
+    }
+  ]
+}

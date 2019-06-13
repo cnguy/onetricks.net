@@ -13,6 +13,37 @@ let extractPlayers = (~currentChampion: string, listOfOneTricks) => {
   };
 };
 
+/*
+ /* filterByMultiplePredicates allows us to partition a list into a list of
+    n lists. It is done imperatively for performance, and because
+    it is actually easier to implement it that way. */
+ let filterByMultiplePredicates =
+     (~oneTricks: list(oneTricks), predicates: list(oneTricks => bool)) => {
+   /*
+      Firstly, start by imperatively looping over oneTricks.
+      Then, for each predicate, create a new "bucket". If
+      a oneTrick is true under this predicate, put it in that predicate's bucket.
+
+      You put it in nth bucket based on the nth predicate. Therefore, we need indices.
+    */
+   let buckets: ref(array(oneTricks)) = ref([||]);
+   let predicatesLength = List.length(predicates);
+   for (_ in 0 to predicatesLength) {
+     buckets.contents = Array.append(buckets.contents, [||]);
+   };
+   let oneTricks = oneTricks |> Array.of_list;
+   let predicates = predicates |> Array.of_list;
+   let oneTricksLength = Array.length(oneTricks);
+   for (i in 0 to oneTricksLength) {
+     for (j in 0 to predicatesLength) {
+       if ((predicates[j])(oneTricks[i])) {
+         buckets.contents[j] = Array.append(buckets.contents[j], oneTricks[i]);
+       };
+     };
+   };
+   buckets;
+ };*/
+
 let filterPlayersByRank = (oneTricks, ~rank: Rank.rank) =>
   if (Rank.toString(rank) == "") {
     oneTricks;

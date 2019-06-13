@@ -9,7 +9,7 @@ module Styles = {
       color(white),
       cursor(`pointer),
       textTransform(uppercase),
-      fontWeight(700),
+      fontWeight(`bold),
       hover([
         color(white),
         cursor(`pointer),
@@ -21,7 +21,7 @@ module Styles = {
     style([
       color(white),
       borderBottom(px(1), `solid, white),
-      fontWeight(700),
+      fontWeight(`bold),
     ]);
   let className = (isActive: bool) =>
     link
@@ -38,8 +38,8 @@ let make = (~route: RouterConfig.route, ~isActive: bool, children) => {
   ...component,
   render: _self =>
     <Router.Link route>
-      <span className=(Styles.className(isActive))>
-        (ReactUtils.ate(children))
+      <span className={Styles.className(isActive)}>
+        {ReactUtils.ate(children)}
       </span>
     </Router.Link>,
 };
