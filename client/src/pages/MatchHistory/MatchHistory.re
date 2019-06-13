@@ -1,3 +1,4 @@
+[@bs.config {jsx: 3}]
 open Types;
 
 type action =
@@ -108,9 +109,9 @@ let make =
         <table className=Styles.table>
           <thead>
             <tr>
-              <th> (ReactUtils.ste("Region")) </th>
-              <th> (ReactUtils.ste("Name")) </th>
-              <th> (ReactUtils.ste("KDA")) </th>
+              <th> {ReactUtils.ste("Region")} </th>
+              <th> {ReactUtils.ste("Name")} </th>
+              <th> {ReactUtils.ste("KDA")} </th>
               <th />
               <th />
               <th />
@@ -118,102 +119,96 @@ let make =
             </tr>
           </thead>
           <tbody>
-            (
-              ReactUtils.lte(
-                matches
-                |> List.map(el =>
-                     <tr
-                       key=(string_of_int(el.gameId))
-                       className=(el.didWin ? Styles.rowWin : Styles.rowLose)>
-                       <td>
-                         (
-                           ReactUtils.ste(
-                             el.region |> Region.toString |> String.uppercase,
-                           )
-                         )
-                       </td>
-                       <td> (ReactUtils.ste(el.name)) </td>
-                       <td>
-                         <div>
-                           <KDA
-                             kda={
-                               kills: el.kda.kills,
-                               deaths: el.kda.deaths,
-                               assists: el.kda.assists,
-                             }
-                           />
-                         </div>
-                         <div>
-                           <KDA
-                             kda={
-                               kills: el.kda.kills,
-                               deaths: el.kda.deaths,
-                               assists: el.kda.assists,
-                             }
-                             asDecimal=true
-                           />
-                         </div>
-                       </td>
-                       <td>
-                         <S3Image
-                           kind=S3Image.ActualPerk
-                           itemId=el.perks.perk0
-                           className=(Styles.icon ++ " " ++ Styles.blockIcon)
-                         />
-                         <S3Image
-                           kind=S3Image.PerkStyle
-                           itemId=el.perks.perkSubStyle
-                           className=(Styles.icon ++ " " ++ Styles.blockIcon)
-                         />
-                       </td>
-                       <td>
-                         <S3Image
-                           kind=S3Image.SummonerSpell
-                           itemId=el.summonerSpells.d
-                           className=(Styles.icon ++ " " ++ Styles.blockIcon)
-                         />
-                         <S3Image
-                           kind=S3Image.SummonerSpell
-                           itemId=el.summonerSpells.f
-                           className=(Styles.icon ++ " " ++ Styles.blockIcon)
-                         />
-                       </td>
-                       <td>
-                         (
-                           ReactUtils.lte(
-                             el.items
-                             |> List.mapi((index, item) =>
-                                  if (item != 0) {
-                                    <S3Image
-                                      kind=S3Image.Item
-                                      itemId=item
-                                      className=Styles.icon
-                                      key=(
-                                        string_of_int(el.gameId)
-                                        ++ "-"
-                                        ++ string_of_int(item)
-                                        ++ "-"
-                                        ++ string_of_int(index)
-                                      )
-                                    />;
-                                  } else {
-                                    ReasonReact.null;
-                                  }
-                                ),
-                           )
-                         )
-                       </td>
-                       <td>
-                         <S3Image
-                           kind=S3Image.Item
-                           itemId=el.trinket
-                           className=Styles.icon
-                         />
-                       </td>
-                     </tr>
-                   ),
-              )
-            )
+            {ReactUtils.lte(
+               matches
+               |> List.map(el =>
+                    <tr
+                      key={string_of_int(el.gameId)}
+                      className={el.didWin ? Styles.rowWin : Styles.rowLose}>
+                      <td>
+                        {ReactUtils.ste(
+                           el.region |> Region.toString |> String.uppercase,
+                         )}
+                      </td>
+                      <td> {ReactUtils.ste(el.name)} </td>
+                      <td>
+                        <div>
+                          <KDA
+                            kda={
+                              kills: el.kda.kills,
+                              deaths: el.kda.deaths,
+                              assists: el.kda.assists,
+                            }
+                          />
+                        </div>
+                        <div>
+                          <KDA
+                            kda={
+                              kills: el.kda.kills,
+                              deaths: el.kda.deaths,
+                              assists: el.kda.assists,
+                            }
+                            asDecimal=true
+                          />
+                        </div>
+                      </td>
+                      <td>
+                        <S3Image
+                          kind=S3Image.ActualPerk
+                          itemId={el.perks.perk0}
+                          className={Styles.icon ++ " " ++ Styles.blockIcon}
+                        />
+                        <S3Image
+                          kind=S3Image.PerkStyle
+                          itemId={el.perks.perkSubStyle}
+                          className={Styles.icon ++ " " ++ Styles.blockIcon}
+                        />
+                      </td>
+                      <td>
+                        <S3Image
+                          kind=S3Image.SummonerSpell
+                          itemId={el.summonerSpells.d}
+                          className={Styles.icon ++ " " ++ Styles.blockIcon}
+                        />
+                        <S3Image
+                          kind=S3Image.SummonerSpell
+                          itemId={el.summonerSpells.f}
+                          className={Styles.icon ++ " " ++ Styles.blockIcon}
+                        />
+                      </td>
+                      <td>
+                        {ReactUtils.lte(
+                           el.items
+                           |> List.mapi((index, item) =>
+                                if (item != 0) {
+                                  <S3Image
+                                    kind=S3Image.Item
+                                    itemId=item
+                                    className=Styles.icon
+                                    key={
+                                      string_of_int(el.gameId)
+                                      ++ "-"
+                                      ++ string_of_int(item)
+                                      ++ "-"
+                                      ++ string_of_int(index)
+                                    }
+                                  />;
+                                } else {
+                                  ReasonReact.null;
+                                }
+                              ),
+                         )}
+                      </td>
+                      <td>
+                        <S3Image
+                          kind=S3Image.Item
+                          itemId={el.trinket}
+                          className=Styles.icon
+                        />
+                      </td>
+                    </tr>
+                  ),
+             )}
           </tbody>
         </table>
       | (false, None) =>

@@ -36,16 +36,16 @@ let make = (~kda: kda, ~asDecimal: bool=false, _children) => {
         /. float_of_int(kda.deaths);
       let style =
         ReactDOMRe.Style.make(~color=getHexColorFromFloat(kdaValue), ());
-      <span style> (ReactUtils.ste(string_of_float(kdaValue))) </span>;
+      <span style> {ReactUtils.ste(string_of_float(kdaValue))} </span>;
     } else {
       let separator =
-        <span className=Styles.muted> (ReactUtils.ste(" / ")) </span>;
+        <span className=Styles.muted> {ReactUtils.ste(" / ")} </span>;
       <span>
-        (ReactUtils.ite(kda.kills))
+        {ReactUtils.ite(kda.kills)}
         separator
-        (ReactUtils.ite(kda.deaths))
+        {ReactUtils.ite(kda.deaths)}
         separator
-        (ReactUtils.ite(kda.assists))
+        {ReactUtils.ite(kda.assists)}
       </span>;
     },
 };
