@@ -15,7 +15,11 @@ import { StatsV4, Player } from './mongodb'
 
 import ChampionStats from './entities/ChampionStats'
 import OneTrick from './entities/OneTrick'
-import PlayerStats, { loadPlayerStats, _PlayerStats, RawPlayerStats } from './entities/PlayerStats'
+import PlayerStats, {
+    loadPlayerStats,
+    _PlayerStats,
+    RawPlayerStats,
+} from './entities/PlayerStats'
 import Summoner, { RawSummoner } from './entities/Summoner'
 
 import asyncMapOverArrayInChunks from './utils/generic/asyncMapOverArrayInChunks'
@@ -25,14 +29,16 @@ import MatchResponseHelper from './utils/response/MatchResponseHelper'
 
 import LeagueKaynHelper from './utils/kayn-dependent/LeagueKaynHelper'
 import MatchlistKaynHelper from './utils/kayn-dependent/MatchlistKaynHelper'
-import { MatchV3MatchDto, MatchV4MatchDto } from 'kayn/typings/dtos';
+import { MatchV4MatchDto } from 'kayn/typings/dtos'
 
 const LEAGUE_QUEUE = 'RANKED_SOLO_5x5'
 
 // Local Helpers
 
 // processMatch is a mutating function dependent on the PlayerStats class.
-const processMatch = (playerStats: _PlayerStats) => (match: MatchV4MatchDto) => {
+const processMatch = (playerStats: _PlayerStats) => (
+    match: MatchV4MatchDto,
+) => {
     const summonerID = playerStats.summonerID
     const data = MatchResponseHelper.getChampionWin(match, summonerID)
     if (!data) return
@@ -44,8 +50,9 @@ const processMatch = (playerStats: _PlayerStats) => (match: MatchV4MatchDto) => 
     }
 }
 
-const inPlatform = (region: string) => ({ platformId: platformID }: MatchV3MatchDto) =>
-    platformID!.toLowerCase() === asPlatformID(region)
+const inPlatform = (region: string) => ({
+    platformId: platformID,
+}: MatchV4MatchDto) => platformID!.toLowerCase() === asPlatformID(region)
 
 const storePlayerStats = (summonerId: string, json: RawPlayerStats) =>
     StatsV4.findOneAndUpdate(
@@ -66,7 +73,9 @@ const storePlayerStats = (summonerId: string, json: RawPlayerStats) =>
 const getPlayer = (summonerId: string) => StatsV4.findOne({ summonerId })
 
 export enum Modes {
-    Update, BruteForceAll, SequentialAll
+    Update,
+    BruteForceAll,
+    SequentialAll,
 }
 
 const main = async (mode = Modes.BruteForceAll) => {
@@ -88,7 +97,10 @@ const main = async (mode = Modes.BruteForceAll) => {
         },
     })
 
-    const tryCatchGetPlayerStats = async (summonerId: string, region: string) => {
+    const tryCatchGetPlayerStats = async (
+        summonerId: string,
+        region: string,
+    ) => {
         try {
             const player: any = await getPlayer(summonerId)
             return loadPlayerStats(player)
@@ -97,20 +109,24 @@ const main = async (mode = Modes.BruteForceAll) => {
         }
     }
 
-    const makeOne = async (summonerID: string, accountID: string, region: string) => {
+    const makeOne = async (
+        summonerID: string,
+        accountID: string,
+        region: string,
+    ) => {
         console.log('Processing:', summonerID, accountID, region)
         const playerStats = await tryCatchGetPlayerStats(summonerID, region) // This is named `fullListOfMatches` because it's a list of the match
         // objects, not matchlist objects.
         const fullListOfMatches = (await MatchlistKaynHelper.getEntireMatchlist(
             kayn,
         )(accountID, region))!.filter(
-            (el: MatchV3MatchDto) =>
+            (el: MatchV4MatchDto) =>
                 inPlatform(region)(el) &&
                 playerStats.doesNotContainMatch(el.gameId!),
         )
 
         const matches = await MatchlistKaynHelper.rawMatchlistToMatches(kayn)(
-            fullListOfMatches,
+            fullListOfMatches.map(match => match.gameId!),
             region,
         )
 
@@ -129,7 +145,11 @@ const main = async (mode = Modes.BruteForceAll) => {
         }
     }
 
-    const makeStats = async (rank: string, region: string, summoners: RawSummoner[]) => {
+    const makeStats = async (
+        rank: string,
+        region: string,
+        summoners: RawSummoner[],
+    ) => {
         const summonersChunkSize = summoners.length / 4
 
         await asyncMapOverArrayInChunks(
@@ -148,11 +168,13 @@ const main = async (mode = Modes.BruteForceAll) => {
     }
 
     const processStatsInChunks = async (rank: string, region: string) => {
-        const league = await (kayn as any)[rank].list(LEAGUE_QUEUE).region(region)
-        const promises: Promise<RawSummoner>[] = league.entries.map(LeagueKaynHelper.leagueEntryToSummoner(kayn)(region))
-        const summoners = await Promise.all(
-            promises
+        const league = await (kayn as any)[rank]
+            .list(LEAGUE_QUEUE)
+            .region(region)
+        const promises: Promise<RawSummoner>[] = league.entries.map(
+            LeagueKaynHelper.leagueEntryToSummoner(kayn)(region),
         )
+        const summoners = await Promise.all(promises)
         const len = summoners.length
         const chunkSize = 20
         for (let i = 0; i < len; i += chunkSize) {
@@ -160,16 +182,23 @@ const main = async (mode = Modes.BruteForceAll) => {
             console.log('starting:', rank, region, i, i + chunkSize)
             console.log('======')
             try {
-                let sliceToProcess: RawSummoner[] = summoners.slice(i, i + chunkSize)
+                let sliceToProcess: RawSummoner[] = summoners.slice(
+                    i,
+                    i + chunkSize,
+                )
                 if (mode === Modes.BruteForceAll) {
                     // pass
                 } else if (mode === Modes.Update) {
                     // async filter not possible btw so just gonna use map
-                    const summonersNotInDatabase = (await Promise.all(sliceToProcess.map(async (summoner) => {
-                        const count = await StatsV4.count({ summonerId: summoner.id }).exec()
-                        return (count === 0) ? summoner : undefined
-                    }))).filter(Boolean)
-                    sliceToProcess = (summonersNotInDatabase as RawSummoner[])
+                    const summonersNotInDatabase = (await Promise.all(
+                        sliceToProcess.map(async summoner => {
+                            const count = await StatsV4.count({
+                                summonerId: summoner.id,
+                            }).exec()
+                            return count === 0 ? summoner : undefined
+                        }),
+                    )).filter(Boolean)
+                    sliceToProcess = summonersNotInDatabase as RawSummoner[]
                 }
                 await makeStats(rank, region, sliceToProcess)
             } catch (exception) {
@@ -186,7 +215,9 @@ const main = async (mode = Modes.BruteForceAll) => {
     const challengersChunkSize = mode !== Modes.SequentialAll ? 11 : 1
     const mastersChunkSize = mode !== Modes.SequentialAll ? 4 : 1
     const processChunk = async (rank: string, chunk: string[]) =>
-        Promise.all(chunk.map(r => processStatsInChunks(rank, (REGIONS as any)[r])))
+        Promise.all(
+            chunk.map(r => processStatsInChunks(rank, (REGIONS as any)[r])),
+        )
     for (let i = 0; i < keys.length; i += challengersChunkSize) {
         console.log(
             'starting',

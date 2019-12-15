@@ -3,7 +3,11 @@ export class _OneTrick {
     summonerName: string
     championName: string
 
-    constructor(summonerID: number, summonerName: string, championName: string) {
+    constructor(
+        summonerID: number,
+        summonerName: string,
+        championName: string,
+    ) {
         this.summonerID = summonerID
         this.summonerName = summonerName
         this.championName = championName
@@ -18,7 +22,10 @@ export class _OneTrick {
     }
 }
 
-const OneTrick = (summonerID: number, summonerName: string, championName: string) =>
-    new _OneTrick(summonerID, summonerName, championName)
+const OneTrick = (
+    summonerID: number,
+    summonerName: string,
+    championName: string,
+) => new _OneTrick(summonerID, summonerName, championName)
 
 export default OneTrick

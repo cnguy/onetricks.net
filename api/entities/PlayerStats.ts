@@ -1,5 +1,8 @@
-import ChampionStats, { RawChampionStats, _ChampionStats } from './ChampionStats'
-import { _OneTrick } from './OneTrick';
+import ChampionStats, {
+    RawChampionStats,
+    _ChampionStats,
+} from './ChampionStats'
+import { _OneTrick } from './OneTrick'
 
 export interface RawPlayerStats {
     summonerId: string
@@ -79,7 +82,7 @@ const PlayerStats = (summonerID: string, region: string) =>
     new _PlayerStats(summonerID, region)
 
 export const loadPlayerStats = (playerStats: RawPlayerStats) => {
-    const p = PlayerStats("", "")
+    const p = PlayerStats('', '')
     p.load(playerStats)
     return p
 }

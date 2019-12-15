@@ -8,10 +8,9 @@ const { asPlatformID } = RegionHelper
 
 import { getStaticChampionByName } from './getStaticChampion'
 import MatchResponseHelper from './utils/response/MatchResponseHelper'
-import { MatchV3MatchDto, MatchV4MatchDto } from 'kayn/typings/dtos';
-import { MongoError } from 'mongodb';
-import { Player } from './mongodb';
-import { Player as PlayerType } from './models';
+import { MatchV4MatchDto } from 'kayn/typings/dtos'
+import { Player } from './mongodb'
+import { Player as PlayerType } from './models'
 
 const findPlayers = async (ranks: string[], regions: string[]): Promise<any> =>
     new Promise((resolve, reject) => {
@@ -22,7 +21,8 @@ const findPlayers = async (ranks: string[], regions: string[]): Promise<any> =>
             },
             (err, docs) => {
                 if (err) return reject(err)
-                if (docs) return resolve((docs as any).map(({ _doc }: any) => _doc))
+                if (docs)
+                    return resolve((docs as any).map(({ _doc }: any) => _doc))
             },
         )
     })
@@ -33,15 +33,15 @@ const processMatch = (match: MatchV4MatchDto, summonerId: string) => {
 }
 
 interface MatchHistoryItem {
-    accountId: string,
-    name: string,
-    summonerId: string,
-    gameId: number,
-    championId: number,
-    timestamp: number,
-    role: string,
-    platformId: string,
-    region: string,
+    accountId: string
+    name: string
+    summonerId: string
+    gameId: number
+    championId: number
+    timestamp: number
+    role: string
+    platformId: string
+    region: string
 }
 
 const getRole = (role: string, lane: string): string | null => {
@@ -60,7 +60,11 @@ const getRole = (role: string, lane: string): string | null => {
     }
 }
 
-const processPlayers = async (players: PlayerType[], championId: number, roleNumbers: number[]) => {
+const processPlayers = async (
+    players: PlayerType[],
+    championId: number,
+    roleNumbers: number[],
+) => {
     const playersWithChampIds = players
         .map(({ champ, ...rest }) => ({
             ...rest,
@@ -92,48 +96,61 @@ const processPlayers = async (players: PlayerType[], championId: number, roleNum
                         lane,
                         platformId,
                     }: {
-                            gameId: number,
-                            champion: number,
-                            timestamp: number,
-                            role: string,
-                            lane: string,
-                            platformId: string,
-                        }) => ({
-                            accountId,
-                            name,
-                            summonerId: id,
-                            gameId,
-                            championId: champion,
-                            timestamp,
-                            role: getRole(role, lane),
-                            platformId,
-                            region,
-                        }),
+                        gameId: number
+                        champion: number
+                        timestamp: number
+                        role: string
+                        lane: string
+                        platformId: string
+                    }) => ({
+                        accountId,
+                        name,
+                        summonerId: id,
+                        gameId,
+                        championId: champion,
+                        timestamp,
+                        role: getRole(role, lane),
+                        platformId,
+                        region,
+                    }),
                 )
-                .filter(({ role, platformId, region }: { role: string | null, platformId: string, region: string }) => {
-                    // Ignore matches not in user's current region.
-                    if (platformId.toLowerCase() !== asPlatformID(region)) {
-                        return false
-                    }
-                    if (role === 'TOP') {
-                        return roleNumbers.includes(1)
-                    } else if (role === 'JUNGLE') {
-                        return roleNumbers.includes(2)
-                    } else if (role === 'MID') {
-                        return roleNumbers.includes(3)
-                    } else if (role === 'BOT_CARRY') {
-                        return roleNumbers.includes(4)
-                    } else if (role === 'BOT_SUPPORT') {
-                        return roleNumbers.includes(5)
-                    } else {
-                        // console.log('My code is wrong:', role, lane)
-                        return false
-                    }
-                })
+                .filter(
+                    ({
+                        role,
+                        platformId,
+                        region,
+                    }: {
+                        role: string | null
+                        platformId: string
+                        region: string
+                    }) => {
+                        // Ignore matches not in user's current region.
+                        if (platformId.toLowerCase() !== asPlatformID(region)) {
+                            return false
+                        }
+                        if (role === 'TOP') {
+                            return roleNumbers.includes(1)
+                        } else if (role === 'JUNGLE') {
+                            return roleNumbers.includes(2)
+                        } else if (role === 'MID') {
+                            return roleNumbers.includes(3)
+                        } else if (role === 'BOT_CARRY') {
+                            return roleNumbers.includes(4)
+                        } else if (role === 'BOT_SUPPORT') {
+                            return roleNumbers.includes(5)
+                        } else {
+                            // console.log('My code is wrong:', role, lane)
+                            return false
+                        }
+                    },
+                )
         }),
     ))
         .reduce((t, c) => t.concat(c), [])
-        .sort((a: MatchHistoryItem, b: MatchHistoryItem) => b.timestamp - a.timestamp)
+        .sort(
+            (a: MatchHistoryItem, b: MatchHistoryItem) =>
+                b.timestamp - a.timestamp,
+        )
         .slice(0, 100)
 
     const res = await Promise.all(
@@ -143,7 +160,7 @@ const processPlayers = async (players: PlayerType[], championId: number, roleNum
             summonerId,
             ...rest,
             ...processMatch(
-                await kayn.MatchV4.get(gameId).region(region),
+                await kayn.Match.get(gameId).region(region),
                 summonerId,
             ),
         })),
@@ -152,7 +169,12 @@ const processPlayers = async (players: PlayerType[], championId: number, roleNum
     return res
 }
 
-const main = async (ranks: string[], regions: string[], championId: number, roleNumbers: number[]) => {
+const main = async (
+    ranks: string[],
+    regions: string[],
+    championId: number,
+    roleNumbers: number[],
+) => {
     const players = await findPlayers(ranks, regions)
     return await processPlayers(players, championId, roleNumbers)
 }

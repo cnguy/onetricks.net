@@ -4,15 +4,20 @@ services:
     container_name: one-tricks-api
     restart: always
     build: ./api
+    depends_on:
+      - mongo
+      - redis
     links:
       - mongo
       - redis
     ports:
       - "80:80"
     environment:
+      - RIOT_LOL_API_KEY=${RIOT_LOL_API_KEY}
       - NODE_ENV=development
       - DEBUG=kayn:*
       - DEBUG_COLORS=true
+      - WAIT_HOSTS=mongo:27017
 #  client:
  #   container_name: one-tricks-client
   #  command: yarn start 

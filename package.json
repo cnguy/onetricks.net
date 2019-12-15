@@ -1,5 +1,5 @@
 {
-  "name": "OneTricks",
+  "name": "onetricks",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/cnguy/OneTricks",
@@ -10,7 +10,7 @@
   },
   "scripts": {
     "lint-client": "prettier --no-semi --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./client/src/**/*.js\"",
-    "lint-api": "prettier --no-semi --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./api/{,!(node_modules)/**/}*.js\"",
+    "lint-api": "prettier --no-semi --single-quote --list-different --trailing-comma all --tab-width 4 --write \"./api/{,!(node_modules)/**/}*.ts\"",
     "lint": "yarn lint-client; yarn lint-api;"
   },
   "dependencies": {}

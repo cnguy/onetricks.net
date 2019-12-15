@@ -1,1 +1,1 @@
-declare module 'gmail-send';
+declare module 'gmail-send'

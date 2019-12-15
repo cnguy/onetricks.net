@@ -9,11 +9,11 @@ const PlayerSchema = new mongoose.Schema({
 })
 
 export interface Player {
-    id: number,
-    name: string,
-    champ: string,
-    rank: string,
-    region: string,
+    id: string
+    name: string
+    champ: string
+    rank: string
+    region: string
 }
 
 const StatsSchema = new mongoose.Schema({
@@ -33,19 +33,18 @@ const StatsSchema = new mongoose.Schema({
 })
 
 export interface Stats {
-    summonerId: number,
+    summonerId: number
     champions: {
-        id: number,
+        id: number
         stats: {
-            wins: number,
-            losses: number,
+            wins: number
+            losses: number
             totalSessionsPlayed: number
         }
-    }[],
+    }[]
     matchesProcessed: number[]
     region: string
 }
-
 
 const StatsSchemaV4 = new mongoose.Schema({
     summonerId: String,
@@ -66,21 +65,82 @@ const StatsSchemaV4 = new mongoose.Schema({
 })
 
 export interface StatsV4 {
-    summonerId: string,
-    accountId: string,
-    puuid: string,
+    summonerId: string
+    accountId: string
+    puuid: string
     champions: {
-        id: number,
+        id: number
         stats: {
-            wins: number,
-            losses: number,
+            wins: number
+            losses: number
             totalSessionsPlayed: number
         }
-    }[],
+    }[]
     matchesProcessed: number[]
     region: string
 }
 
+export interface ParticipantStats {
+    won: boolean
+    items: number[]
+    kda: number[]
+    perks: number[][]
+    perkStyles: number[]
+    statPerks: number[]
+}
+
+export interface Participant {
+    id: number
+    championID: number
+    spells: number[]
+    stats: ParticipantStats
+}
+
+export interface ParticipantIdentity {
+    id: Number
+    accountID: String
+    summonerName: String
+    summonerID: String
+}
+
+export interface MatchV4 {
+    gameID: number
+    platformID: string
+    gameCreation: number
+    participants: Participant[]
+    participantIdentities: ParticipantIdentity[]
+}
+
+const MatchSchemaV4 = new mongoose.Schema({
+    gameID: Number,
+    platformID: String,
+    gameCreation: Number,
+    participants: [
+        {
+            id: Number,
+            championID: Number,
+            spells: [Number],
+            stats: {
+                won: Boolean,
+                items: [Number],
+                kda: [Number],
+                perks: [[Number]],
+                perkStyles: [Number],
+                statPerks: [Number],
+            },
+        },
+    ],
+    participantIdentities: [
+        {
+            id: Number,
+            accountID: String,
+            summonerName: String,
+            summonerID: String,
+        },
+    ],
+})
+
+mongoose.model('Match', MatchSchemaV4)
 mongoose.model('Stats', StatsSchema)
 mongoose.model('Player', PlayerSchema)
 mongoose.model('StatsV4', StatsSchemaV4)

@@ -26,6 +26,7 @@ export class _Summoner {
     }
 }
 
-const Summoner = (id: string, name: string, accountID: string) => new _Summoner(id, name, accountID)
+const Summoner = (id: string, name: string, accountID: string) =>
+    new _Summoner(id, name, accountID)
 
 export default Summoner

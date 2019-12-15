@@ -4,16 +4,13 @@ import * as cors from 'koa2-cors'
 import * as koa from 'koa'
 import * as koaCompress from 'koa-compress'
 import * as koaRouter from 'koa-router'
-import * as schedule from 'node-schedule'
 import * as gmailSend from 'gmail-send'
 
-import generator from './OneTricksGenerator'
-import StatsGenerator, { Modes } from './StatsGenerator'
+import MatchSaver from './MatchSaver'
 import { getStaticChampionByName } from './getStaticChampion'
-import kayn from './kayn'
 import MHGenerator from './MatchHistoryGenerator'
-import { Player, Stats } from './mongodb';
-import { RedisCache, LRUCache } from 'kayn';
+import { Player, Stats } from './mongodb'
+import { RedisCache, LRUCache } from 'kayn'
 
 const gmail = gmailSend({
     user: process.env.GMAIL_USERNAME,
@@ -33,7 +30,7 @@ app.use(koaCompress())
 app.use(cors({ origin: '*' }))
 app.listen(PORT)
 
-router.get('/one-tricks', async (ctx) => {
+router.get('/one-tricks', async ctx => {
     try {
         ctx.body = await Player.find().exec()
     } catch (ex) {
@@ -42,7 +39,7 @@ router.get('/one-tricks', async (ctx) => {
 })
 
 if (process.env.NODE_ENV !== 'production') {
-    router.get('/analyzed', async (ctx) => {
+    router.get('/analyzed', async ctx => {
         try {
             ctx.body = await tryFromCache('analyzed')
         } catch (ex) {
@@ -52,13 +49,13 @@ if (process.env.NODE_ENV !== 'production') {
                 .reduce((t, c) => t.concat(c), [])
             ctx.body = {
                 playersAnalyzed: stats.length,
-                matchesAnalyzed: (new Set(next)).size
+                matchesAnalyzed: new Set(next).size,
             }
         }
     })
 }
 
-router.get('/match-history', async (ctx) => {
+router.get('/match-history', async ctx => {
     const { url } = ctx
     try {
         ctx.body = await tryFromCache(url)
@@ -70,32 +67,28 @@ router.get('/match-history', async (ctx) => {
             .split(',')
             .map(oneParamParseInt)
         const data = await MHGenerator(ranks, regions, championId, roleNumbers)
-            ; (matchHistoryCache as any).set(
-                { key: url, ttl: 100000 },
-                data,
-            )
+        ;(matchHistoryCache as any).set({ key: url, ttl: 100000 }, data)
         ctx.body = data
     }
 })
 
-app
-    .use(router.routes())
-    .use(router.allowedMethods())
+app.use(router.routes()).use(router.allowedMethods())
 
 const oneParamParseInt = (n: string): number => parseInt(n, 10)
 
-const matchHistoryCache = process.env.NODE_ENV === 'production'
-    ? new RedisCache({
-        host: process.env.REDIS_MH,
-        port: process.env.REDIS_MH_PORT as any,
-        keyPrefix: 'kayn-',
-        password: process.env.REDIS_MH_PASSWORD,
-    })
-    : new LRUCache({ max: 1000 })
+const matchHistoryCache =
+    process.env.NODE_ENV === 'production'
+        ? new RedisCache({
+              host: process.env.REDIS_MH,
+              port: process.env.REDIS_MH_PORT as any,
+              keyPrefix: 'kayn-',
+              password: process.env.REDIS_MH_PASSWORD,
+          })
+        : new LRUCache({ max: 1000 })
 
 const tryFromCache = (url: string): any => {
     return new Promise((resolve, reject) => {
-        (matchHistoryCache as any).get({ key: url }, (err: any, data: any) => {
+        ;(matchHistoryCache as any).get({ key: url }, (err: any, data: any) => {
             if (data) {
                 return resolve(data)
             } else {
@@ -116,19 +109,33 @@ router.get('/static-champion-by-name/:name/id', async ctx => {
 
 // TODO: Convert to async / await function.
 const sendUpdateMail = (type: Modes, dateText: string) => {
-    const typeText = type === Modes.Update ? 'update' : (type === Modes.BruteForceAll ? 'bruteForceAll' : 'sequentialAll')
+    const typeText =
+        type === Modes.Update
+            ? 'update'
+            : type === Modes.BruteForceAll ? 'bruteForceAll' : 'sequentialAll'
     const currentDate = new Date(Date.now())
     currentDate.setHours(currentDate.getHours() - 7)
-    gmail({
-        subject: `onetricks.net build (${typeText})`,
-        text: `${dateText}: ` +
-            currentDate.getDate() + "/"
-            + (currentDate.getMonth() + 1) + "/"
-            + currentDate.getFullYear() + " @ "
-            + currentDate.getHours() + ":"
-            + currentDate.getMinutes() + ":"
-            + currentDate.getSeconds()
-    }, function (err: any, done: any) { console.log(err, done) })
+    gmail(
+        {
+            subject: `onetricks.net build (${typeText})`,
+            text:
+                `${dateText}: ` +
+                currentDate.getDate() +
+                '/' +
+                (currentDate.getMonth() + 1) +
+                '/' +
+                currentDate.getFullYear() +
+                ' @ ' +
+                currentDate.getHours() +
+                ':' +
+                currentDate.getMinutes() +
+                ':' +
+                currentDate.getSeconds(),
+        },
+        function(err: any, done: any) {
+            console.log(err, done)
+        },
+    )
 }
 
 const main = async (mode = Modes.Update) => {
@@ -159,9 +166,9 @@ const main = async (mode = Modes.Update) => {
             console.log('END ONE TRICKS')
             })
             */
-        const s = await kayn.SummonerV4.by.name('Contractz')
-        console.log(s)
-        console.log(s.summonerLevel!)
+        console.log('starting matches')
+        await MatchSaver()
+        console.log('saved all matches')
     } catch (ex) {
         console.error(ex)
     }

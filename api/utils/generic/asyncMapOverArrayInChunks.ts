@@ -1,6 +1,10 @@
 import range from './range'
 
-const asyncMapOverArrayInChunks = async (array: any[], chunkSize: number, mapFunction: any) => {
+const asyncMapOverArrayInChunks = async (
+    array: any[],
+    chunkSize: number,
+    mapFunction: any,
+) => {
     const initialValue = {
         total: [],
         index: 0,

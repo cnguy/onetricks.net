@@ -1,12 +1,17 @@
-import { MatchV3MatchDto, MatchV3TeamStatsDto, MatchV3ParticipantDto, MatchV4MatchDto, MatchV4TeamStatsDto } from "kayn/typings/dtos";
+import {
+    MatchV4MatchDto,
+    MatchV4TeamStatsDto,
+    MatchV4ParticipantDto,
+} from 'kayn/typings/dtos'
 
 class MatchResponseHelper {
-    static findParticipantIdentity = (match: MatchV4MatchDto, summonerID: string) =>
+    static findParticipantIdentity = (
+        match: MatchV4MatchDto,
+        summonerID: string,
+    ) =>
         match!.participantIdentities!.find(
             ({ player }) =>
-                !player
-                    ? false
-                    : player.summonerId === summonerID,
+                !player ? false : player.summonerId === summonerID,
         )
 
     static findParticipant = (match: MatchV4MatchDto, participantID: number) =>
@@ -40,7 +45,10 @@ class MatchResponseHelper {
         }
     }
 
-    static getMatchInfoForSummoner = (match: MatchV4MatchDto, summonerID: string) => {
+    static getMatchInfoForSummoner = (
+        match: MatchV4MatchDto,
+        summonerID: string,
+    ) => {
         const participantIdentity = MatchResponseHelper.findParticipantIdentity(
             match,
             summonerID,
@@ -51,8 +59,12 @@ class MatchResponseHelper {
             match,
             participantID as number,
         )
-        const { teamId: teamID, spell1Id, spell2Id } = participant as MatchV3ParticipantDto
-        const { stats } = participant as MatchV3ParticipantDto
+        const {
+            teamId: teamID,
+            spell1Id,
+            spell2Id,
+        } = participant as MatchV4ParticipantDto
+        const { stats } = participant as MatchV4ParticipantDto
         const didWin = MatchResponseHelper.didTeamWin(match, teamID!)
         const items = [
             stats!.item0,

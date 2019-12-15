@@ -1,4 +1,4 @@
-import { Stats } from './mongodb';
+import { Stats } from './mongodb'
 
 const getStats = async (summonerID: number): Promise<any> =>
     Stats.findOne({ summonerId: summonerID })
